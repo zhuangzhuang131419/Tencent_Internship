@@ -37,16 +37,14 @@ sysinfo.txt
 
 # 忽略全部，除了Asset里的InternshipTask和KiHanProxy
 # 保留InternshipTask
-/*
-!/Assets
-/Assets/*
-!/Assets/InternshipTask
-
-!/Assets/Scripts
-/Assets/Scripts/*
-!/Assets/Scripts/Manager
-/Assets/Scripts/Manager*
-!/Assets/Scripts/Manager/Network
-/Assets/Scripts/Manager/Network*
-!/Assets/Scripts/Manager/Network/KiHanProxy.cs
+KiHan/*
+!KiHan/Assets
+KiHan/Assets/*
+!KiHan/Assets/Scripts
+KiHan/Assets/Scripts/*
+!KiHan/Assets/Scripts/Manager
+KiHan/Assets/Scripts/Manager/*
+!KiHan/Assets/Scripts/Manager/Network
+KiHan/Assets/Scripts/Manager/Network/*
+!KiHan/Assets/Scripts/Manager/Network/KiHanProxy.cs
 
