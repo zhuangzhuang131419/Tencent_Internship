@@ -34,3 +34,19 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# 忽略全部，除了Asset里的InternshipTask和KiHanProxy
+# 保留InternshipTask
+/*
+!/Asset
+/Asset/*
+!/Asset/InternshipTask
+
+!/Asset/Scripts
+/Asset/Scripts/*
+!/Asset/Scripts/Manager
+/Asset/Scripts/Manager*
+!/Asset/Scripts/Manager/NetWork
+/Asset/Scripts/Manager/NetWork*
+!/Asset/Scripts/Manager/NetWork/KiHanProxy.cs
+
