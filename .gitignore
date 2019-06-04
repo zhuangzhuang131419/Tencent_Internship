@@ -51,8 +51,13 @@ KiHan/Assets/Scripts/Manager/*
 KiHan/Assets/Scripts/Manager/KHDebuger/*
 !KiHan/Assets/Scripts/Manager/KHDebuger/KHDebugerGUI.cs
 
-# 保留KiHanProxy
 !KiHan/Assets/Scripts/Manager/Network
 KiHan/Assets/Scripts/Manager/Network/*
+
+# 保留KiHanProxy
 !KiHan/Assets/Scripts/Manager/Network/KiHanProxy.cs
+
+# 保留NetworkManager
+!KiHan/Assets/Scripts/Manager/Network/NetworkManager.cs
+
 
