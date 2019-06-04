@@ -35,11 +35,15 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-# 忽略全部，除了Asset里的InternshipTask和KiHanProxy
+# 保留InternshipTask和KiHanProxy
 # 保留InternshipTask
 KiHan/*
 !KiHan/Assets
 KiHan/Assets/*
+!KiHan/Assets/InternshipTask
+
+
+# 保留KiHanProxy
 !KiHan/Assets/Scripts
 KiHan/Assets/Scripts/*
 !KiHan/Assets/Scripts/Manager
