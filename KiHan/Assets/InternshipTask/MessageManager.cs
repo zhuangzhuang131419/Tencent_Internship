@@ -13,7 +13,7 @@ namespace KH
     public class MessageManager
     {
         static private MessageManager messageManagerInstance = null;
-        public static readonly string DEST_PATH = "F:\\Internship\\Log\\Temp.dat";
+        public static readonly string DEST_PATH = "F:\\Tencent_Internship\\KiHan\\log\\Temp.dat";
 
         static public MessageManager Instance
         {
@@ -174,17 +174,10 @@ namespace KH
             byte[] tempBuffer1 = new byte[from];
             byte[] tempBuffer2 = new byte[fileStream.Length - to];
             fileStream.Position = 0;
-            if (from != 0 && fileStream.Read(tempBuffer1, 0, tempBuffer1.Length) == tempBuffer1.Length)
-            {
-                Debug.Log(fileStream.Position);
-                Debug.Log("begin:" + from + "  " + "end: " + to);
-            }
+            if (from != 0 && fileStream.Read(tempBuffer1, 0, tempBuffer1.Length) == tempBuffer1.Length) { }
 
             fileStream.Position = to;
-            if (to != fileStream.Length && fileStream.Read(tempBuffer2, 0, tempBuffer2.Length) == tempBuffer2.Length)
-            {
-                Debug.Log(fileStream.Position);
-            }
+            if (to != fileStream.Length && fileStream.Read(tempBuffer2, 0, tempBuffer2.Length) == tempBuffer2.Length) { }
             fileStream.Close();
 
             FileStream tempFileStream = new FileStream(DEST_PATH, FileMode.Truncate, FileAccess.ReadWrite);
@@ -240,8 +233,6 @@ namespace KH
                                 message = (MessageBody)bf.Deserialize(mStream);
                                 mStream.Close();
                             }
-
-                            Debug.Log("message cmdID:" + message.CmdID + " --- cmdID:" + cmdID);
 
                             if (message.CmdID == cmdID)
                             {
