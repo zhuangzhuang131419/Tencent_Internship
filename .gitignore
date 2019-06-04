@@ -35,19 +35,23 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-# 保留InternshipTask和KiHanProxy
 # 保留InternshipTask
 KiHan/*
 !KiHan/Assets
 KiHan/Assets/*
 !KiHan/Assets/InternshipTask
 
-
-# 保留KiHanProxy
 !KiHan/Assets/Scripts
 KiHan/Assets/Scripts/*
 !KiHan/Assets/Scripts/Manager
 KiHan/Assets/Scripts/Manager/*
+
+# 保留KHDebugerGUI
+!KiHan/Assets/Scripts/Manager/KHDebuger
+KiHan/Assets/Scripts/Manager/KHDebuger/*
+!KiHan/Assets/Scripts/Manager/KHDebuger/KHDebugerGUI.cs
+
+# 保留KiHanProxy
 !KiHan/Assets/Scripts/Manager/Network
 KiHan/Assets/Scripts/Manager/Network/*
 !KiHan/Assets/Scripts/Manager/Network/KiHanProxy.cs
