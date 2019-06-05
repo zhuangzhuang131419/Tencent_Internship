@@ -412,6 +412,9 @@ namespace KH
 			//AddDbgGUI("组织拍卖测试",OnGuildAuctionTest);
 			//AddDbgGUI("锦标赛入口", OnChampionshipTest);
 			AddDbgGUI("leozzzhangTest", OnLeozzzhangTest);
+
+            AddDbgGUI("bobcczhengTest", OnBobcczhengTest);
+
 			//AddDbgGUI("3v3擂台赛", OnChallengeTest);
             AddDbgGUI("BundleLoadTest", OnBundleLoadTest);
             AddDbgGUI("ResLoadTest", OnResLoadTest);
@@ -3027,6 +3030,31 @@ namespace KH
             
             GUILayout.EndVertical();
 		}
+
+        private void OnBobcczhengTest()
+        {
+            MessageManager msgManager = MessageManager.Instance;
+            GUILayout.BeginVertical();
+            GUILayout.Label("从本地反序列化消息:" + msgManager.IsDeserializeFromLocal);
+            GUILayout.Label("从服务器序列化消息:" + msgManager.IsSerializeToLocal);
+
+            string str1 = msgManager.IsDeserializeFromLocal ? "关闭" : "开启";
+            str1 += "本地反序列化读取";
+            if (GUILayout.Button(str1))
+            {
+                msgManager.IsDeserializeFromLocal = !msgManager.IsDeserializeFromLocal;
+            }
+
+            string str2 = msgManager.IsSerializeToLocal ? "关闭" : "开启";
+            str2 += "服务器序列化储存";
+            if (GUILayout.Button(str2))
+            {
+                msgManager.IsSerializeToLocal = !msgManager.IsSerializeToLocal;
+            }
+            GUILayout.EndVertical();
+
+        }
+
 		static string testBgm = "9001";
 		public delegate void myDelegate();
 

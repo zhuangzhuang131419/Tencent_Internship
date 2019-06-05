@@ -14,6 +14,11 @@ namespace KH
     {
         static private MessageManager messageManagerInstance = null;
         public static readonly string DEST_PATH = "F:\\Tencent_Internship\\KiHan\\log\\Temp.dat";
+        // 内存中保存的一系列message，方便在给定cmdID的情况下取出
+        public List<MessageBody> messagesBodyList = null;
+
+        private bool isSerializeToLocal = true;
+        private bool isDeserializeFromLocal = false;
 
         static public MessageManager Instance
         {
@@ -28,7 +33,38 @@ namespace KH
             }
         }
 
+        public bool IsSerializeToLocal
+        {
+            get { return isSerializeToLocal; }
+            set { isSerializeToLocal = value; }
+        }
+
+        public bool IsDeserializeFromLocal
+        {
+            get { return isDeserializeFromLocal; }
+            set { isDeserializeFromLocal = value; }
+        }
+
         private MessageManager() { }
+
+        /// <summary>
+        /// 把读到的消息包序列化到本地
+        /// </summary>
+        /// <param name="msgs"></param>
+        /// <param name="messageType"></param>
+        public void serializeToLocal(List<object> msgs, Type messageType, uint cmdID)
+        {
+            MessageBody packedMessageBody = new MessageBody(messageType, cmdID);
+            foreach (object msg in msgs)
+            {
+                packedMessageBody.MessageBodyBuffer.Add(PBSerializer.NSerialize(msg));
+            }
+            string destinationPath = MessageManager.DEST_PATH;
+            Debug.Log("序列化前" + msgs.Count);
+            Debug.Log("message type:" + messageType.ToString());
+            Debug.Log("cmdID: " + cmdID.ToString());
+            serializeToLocal(packedMessageBody, DEST_PATH);
+        }
 
         /// <summary>
         /// 把服务器接收来的消息包序列化到本地
@@ -81,6 +117,45 @@ namespace KH
                 fileStream.Close();
             }
             Debug.Log("file stream has already been closed.");
+        }
+
+
+        /// <summary>
+        /// 从本地读取包，仅在mock server下使用
+        /// </summary>
+        /// <param name="cmdID"></param>
+        public List<object> ReadMessageFromLocal(uint cmdID)
+        {
+            //从这个地址固定读取
+            MessageBody packedMessage01 = deserializeFromLocalByCmdIDCache(cmdID);
+            //msgManager.deserializeFromLocal(MessageManager.DEST_PATH, 1);
+            if (packedMessage01 != null)
+            {
+                Debug.LogWarning(packedMessage01.CmdID + "--" + cmdID + "对应 的message的type是" + packedMessage01.MessageType);
+                try
+                {
+                    List<object> messageBodyResult = new List<object>();
+                    foreach (byte[] msgBodyBuffer in packedMessage01.MessageBodyBuffer)
+                    {
+                        messageBodyResult.Add(PBSerializer.NDeserialize(msgBodyBuffer, packedMessage01.MessageType));
+                    }
+                    Debug.Log("messageBodyResult.Count = " + messageBodyResult.Count);
+
+                    // 成功解析出message
+                    return messageBodyResult;
+
+                }
+                catch (Exception)
+                {
+                    Debug.LogWarning("NDeserialize 出现了异常");
+                    return null;
+                }
+            }
+            else
+            {
+                Debug.LogWarning(cmdID + "没有对应的message");
+                return null;
+            }
         }
 
         /// <summary>
@@ -187,9 +262,105 @@ namespace KH
             Debug.Log("删除成功");           
         }
 
+        public MessageBody deserializeFromLocalByCmdIDCache(uint cmdID)
+        {
+            if (messagesBodyList != null)
+            {
+                // 直接从提前存好的内存中读取
+                return getMessageBodyFromResults(cmdID);
+            }
+
+            messagesBodyList = new List<MessageBody>();
+            // 将本地文件读进内存
+            MessageBody tempMessageBody = null;
+            MessageBody resultMessageBody = null;
+            FileStream fileStream = null;
+            long beginDeletePosition = 0;
+            long endDeletePosition = 0;
+            BinaryFormatter bf = new BinaryFormatter();
+            try
+            {
+                fileStream = new FileStream(DEST_PATH, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Debug.LogWarning("读取路径出现问题");
+            }
+            catch (FileNotFoundException)
+            {
+                Debug.LogWarning("无法找到文件");
+            }
+
+            if (fileStream != null)
+            {
+                byte[] messageHeadBuffer = new byte[MessageBody.MessageHeadLength];
+                byte[] messageBodyBuffer;
+                int messageBodyLength;
+                // 开始读取
+                do
+                {
+                    // 读取message head来获得message body的长度
+                    long beginPosition = fileStream.Position;
+                    if (fileStream.Read(messageHeadBuffer, 0, MessageBody.MessageHeadLength) == MessageBody.MessageHeadLength)
+                    {
+                        messageBodyLength = BitConverter.ToInt32(messageHeadBuffer, 0);
+                        // Debug.Log("message body length: " + messageBodyLength);
+                        messageBodyBuffer = new byte[messageBodyLength];
+                        
+                        if (fileStream.Read(messageBodyBuffer, 0, messageBodyLength) == messageBodyLength)
+                        {
+                            // 通过获得的message body长度来获取message body的buffer
+                            long endPosition = fileStream.Position;
+                            using (MemoryStream mStream = new MemoryStream())
+                            {
+                                mStream.Write(messageBodyBuffer, 0, messageBodyLength);
+                                mStream.Flush();
+                                mStream.Seek(0, SeekOrigin.Begin);
+                                tempMessageBody = (MessageBody)bf.Deserialize(mStream);
+                                mStream.Close();
+                            }
+
+                            messagesBodyList.Add(tempMessageBody);
+
+                            if (tempMessageBody.CmdID == cmdID)
+                            {
+                                beginDeletePosition = beginPosition;
+                                endDeletePosition = endPosition;
+                                resultMessageBody = tempMessageBody;
+                                Debug.Log("读取成功");
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogWarning("CmdID::超出message包的范围");
+                            fileStream.Close();
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        if (resultMessageBody == null)
+                        {
+                            Debug.LogWarning("CmdID::超出message包的范围");
+                        }
+                        // deleteBuffer(fileStream, beginDeletePosition, endDeletePosition);
+                        fileStream.Close();
+                        return resultMessageBody;
+                    }
+                } while (true);
+            }
+            else
+            {
+                Debug.LogWarning("file stream == null");
+                return null;
+            }
+        }
+
         public MessageBody deserializeFromLocalByCmdID(uint cmdID)
         {
-            MessageBody message = null;
+            // 将本地文件读进内存
+            MessageBody tempMessageBody = null;
+            MessageBody resultMessageBody = null;
             FileStream fileStream = null;
             BinaryFormatter bf = new BinaryFormatter();
             try
@@ -218,9 +389,9 @@ namespace KH
                     if (fileStream.Read(messageHeadBuffer, 0, MessageBody.MessageHeadLength) == MessageBody.MessageHeadLength)
                     {
                         messageBodyLength = BitConverter.ToInt32(messageHeadBuffer, 0);
-                        Debug.Log("message body length: " + messageBodyLength);
+                        // Debug.Log("message body length: " + messageBodyLength);
                         messageBodyBuffer = new byte[messageBodyLength];
-                        
+
                         if (fileStream.Read(messageBodyBuffer, 0, messageBodyLength) == messageBodyLength)
                         {
                             // 通过获得的message body长度来获取message body的buffer
@@ -230,15 +401,16 @@ namespace KH
                                 mStream.Write(messageBodyBuffer, 0, messageBodyLength);
                                 mStream.Flush();
                                 mStream.Seek(0, SeekOrigin.Begin);
-                                message = (MessageBody)bf.Deserialize(mStream);
+                                tempMessageBody = (MessageBody)bf.Deserialize(mStream);
                                 mStream.Close();
                             }
 
-                            if (message.CmdID == cmdID)
+                            if (tempMessageBody.CmdID == cmdID)
                             {
                                 deleteBuffer(fileStream, beginPosition, endPosition);
-                                fileStream.Close();
-                                return message;
+                                resultMessageBody = tempMessageBody;
+                                Debug.Log("读取成功");
+                                return resultMessageBody;
                             }
                         }
                         else
@@ -250,9 +422,12 @@ namespace KH
                     }
                     else
                     {
-                        Debug.LogWarning("CmdID::超出message包的范围");
+                        if (resultMessageBody == null)
+                        {
+                            Debug.LogWarning("CmdID::超出message包的范围");
+                        }
                         fileStream.Close();
-                        return null;
+                        return resultMessageBody;
                     }
                 } while (true);
             }
@@ -261,6 +436,19 @@ namespace KH
                 Debug.LogWarning("file stream == null");
                 return null;
             }
+        }
+
+        private MessageBody getMessageBodyFromResults(uint cmdID)
+        {
+            foreach (MessageBody messageBody in messagesBodyList)
+            {
+                if (messageBody.CmdID == cmdID)
+                {
+                    Debug.Log("读取成功");
+                    return messageBody;
+                }
+            }
+            return null;
         }
     }
 }

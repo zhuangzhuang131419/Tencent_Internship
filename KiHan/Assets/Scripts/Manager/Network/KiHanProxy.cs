@@ -316,26 +316,7 @@ namespace KH.Network
             , int connID = -1)
         {
             bool result = false;
-
-            // Update by Chicheng
-            bool bMockServer = true;
-            // 模拟服务器，从本地读包
-            if (bMockServer)
-            {
-                Debug.LogWarning("模拟服务器，从本地读包");
-                // 反序列化之后的结果
-                List<object> messagesBody = ReadMessageFromLocal(cmdId);
-                try
-                {
-                    __Proxy.AddMessage(cmdId, serialNumber, messagesBody);
-                    Debug.Log("消息发送成功");
-                }
-                catch (NullReferenceException)
-                {
-                    Debug.LogWarning("AddMessage出错");
-                }
-            }
-
+            
             IConnection conn = _defaultConn;
             if (connID != -1)
             {
@@ -387,46 +368,6 @@ namespace KH.Network
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// 从本地读取包，仅在mock server下使用
-        /// </summary>
-        /// <param name="cmdID"></param>
-        private static List<object> ReadMessageFromLocal(uint cmdID)
-        {
-            MessageManager msgManager = MessageManager.Instance;
-            //从这个地址固定读取
-            MessageBody packedMessage01 = msgManager.deserializeFromLocalByCmdID(cmdID);
-                //msgManager.deserializeFromLocal(MessageManager.DEST_PATH, 1);
-
-            if (packedMessage01 != null)
-            {
-                Debug.LogWarning(packedMessage01.CmdID + "--" + cmdID + "对应 的message的type是" + packedMessage01.MessageType);
-                try
-                {
-                    List<object> messageBodyResult = new List<object>();
-                    foreach (byte[] msgBodyBuffer in packedMessage01.MessageBodyBuffer)
-                    {
-                        messageBodyResult.Add(PBSerializer.NDeserialize(msgBodyBuffer, packedMessage01.MessageType));
-                    }
-                    Debug.Log("messageBodyResult.Count = " + messageBodyResult.Count);
-
-                    // 成功解析出message
-                    return messageBodyResult;
-
-                }
-                catch (Exception)
-                {
-                    Debug.LogWarning("NDeserialize 出现了异常");
-                    return null;
-                }
-            }
-            else
-            {
-                Debug.LogWarning("没有对应的message");
-                return null;
-            }
         }
 
         private bool WriteMSG(uint cmdId, object message, uint serialNumber = 0, int connID = -1)
@@ -571,33 +512,16 @@ namespace KH.Network
                         }
 
                         // Update by Chicheng
-                        Debug.LogWarning("把读到的消息包序列化到本地");
-                        serializeToLocal(msgs, messageType, head.CmdId);
+                        MessageManager msgManager = MessageManager.Instance;
+                        if (msgManager.IsSerializeToLocal)
+                        {
+                            Debug.LogWarning("把读到的消息包序列化到本地");
+                            msgManager.serializeToLocal(msgs, messageType, head.CmdId);
+                        }
                     }
                 }
                 return msgs;
             }
-
-        }
-
-        /// <summary>
-        /// 把读到的消息包序列化到本地
-        /// </summary>
-        /// <param name="msgs"></param>
-        /// <param name="messageType"></param>
-        private static void serializeToLocal(List<object> msgs, Type messageType, uint cmdID)
-        {
-            MessageManager msgManager = MessageManager.Instance;
-            MessageBody packedMessageBody = new MessageBody(messageType, cmdID);
-            foreach (object msg in msgs)
-            {
-                packedMessageBody.MessageBodyBuffer.Add(PBSerializer.NSerialize(msg));
-            }
-            string destinationPath = MessageManager.DEST_PATH;
-            Debug.Log("序列化前" + msgs.Count);
-            Debug.Log("message type:" + messageType.ToString());
-            Debug.Log("cmdID: " + cmdID.ToString());
-            msgManager.serializeToLocal(packedMessageBody, destinationPath);
         }
 
         public void Dispose()

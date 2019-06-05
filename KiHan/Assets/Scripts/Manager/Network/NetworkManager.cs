@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Apollo;
@@ -451,7 +452,41 @@ namespace KH
             , string tag = "None")
         {
             uint serial = router.NextSerial(cmdId, tag);
-            bool result = proxy.Write(cmdId, message, serial, connID);
+            bool result = true;
+
+            // Update by Chicheng
+            MessageManager msgManager = MessageManager.Instance;
+            // 模拟服务器，从本地读包
+            if (msgManager.IsDeserializeFromLocal)
+            {
+                Debug.LogWarning("模拟服务器，从本地读包");
+                // 反序列化之后的结果
+                List<object> messagesBody = msgManager.ReadMessageFromLocal(cmdId);
+                try
+                {
+                    foreach (object messageBody in messagesBody)
+                    {
+                        __Proxy.AddMessage(cmdId, serial, messageBody);
+                        result &= proxy.Write(cmdId, messageBody, serial, connID);
+                    }
+                    Debug.Log("消息已发送");
+                }
+                catch (NullReferenceException)
+                {
+                    Debug.LogWarning("AddMessage出错");
+                }
+                catch (Exception)
+                {
+                    Debug.LogWarning("其他错误");
+                }
+            }
+            else
+            {
+                result = proxy.Write(cmdId, message, serial, connID);
+            }
+
+
+            
 
             if (!result)
             {
