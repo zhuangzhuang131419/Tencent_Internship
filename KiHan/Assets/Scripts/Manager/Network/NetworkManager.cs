@@ -464,11 +464,7 @@ namespace KH
                 List<object> messagesBody = msgManager.ReadMessageFromLocal(cmdId);
                 try
                 {
-                    foreach (object messageBody in messagesBody)
-                    {
-                        __Proxy.AddMessage(cmdId, serial, messageBody);
-                        result &= proxy.Write(cmdId, messageBody, serial, connID);
-                    }
+                    __Proxy.__QueueAddMessage(cmdId, serial, messagesBody);
                     Debug.Log("消息已发送");
                 }
                 catch (NullReferenceException)
