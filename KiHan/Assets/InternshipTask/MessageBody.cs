@@ -20,7 +20,8 @@ namespace KH
         private Type messageType;
         // 已经被序列化成byte字符串的消息包
         private List<byte[]> messageBodyBuffer = new List<byte[]>();
-        private MemoryStream messageBodyStream;
+        private ulong timeStamp;
+        private uint serial;
 
         public MessageBody()
         {
@@ -40,62 +41,45 @@ namespace KH
             this.cmdId = cmdID;
         }
 
-        public MessageBody(Type messageType, MemoryStream messageBodyStream, uint cmdID)
+        public MessageBody(Type messageType, uint cmdID, ulong timeStamp, uint serial)
         {
             this.messageType = messageType;
-            this.messageBodyStream = messageBodyStream;
             this.cmdId = cmdID;
+            this.timeStamp = timeStamp;
+            this.serial = serial;
         }
-
 
 
         public static int MessageHeadLength
         {
-            get
-            {
-                return MESSAGEHEADLENGTH;
-            }
+            get { return MESSAGEHEADLENGTH; }
         }
 
         public Type MessageType
         {
-            get
-            {
-                return messageType;
-            }
-
-            set
-            {
-                MessageType = value;
-            }
+            get { return messageType; }
+            set { MessageType = value; }
         }
 
         public List<byte[]> MessageBodyBuffer
         {
-            get
-            {
-                return messageBodyBuffer;
-            }
-            set
-            {
-                messageBodyBuffer = value;
-            }
-        }
-
-        public MemoryStream MessageBodyStream
-        {
-            get
-            {
-                return messageBodyStream;
-            }
+            get { return messageBodyBuffer; }
+            set { messageBodyBuffer = value; }
         }
 
         public uint CmdID
         {
-            get
-            {
-                return cmdId;
-            }
+            get { return cmdId; }
+        }
+
+        public ulong TimeStamp
+        {
+            get { return timeStamp; }
+        }
+
+        public uint Serial
+        {
+            get { return serial; }
         }
     }
 }

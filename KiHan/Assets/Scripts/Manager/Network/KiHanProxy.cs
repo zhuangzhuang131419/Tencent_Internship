@@ -516,7 +516,14 @@ namespace KH.Network
                         if (msgManager.IsSerializeToLocal)
                         {
                             Debug.LogWarning("把读到的消息包序列化到本地");
-                            msgManager.serializeToLocal(msgs, messageType, head.CmdId);
+                            RemoteModel remoteModel = RemoteModel.Instance;
+                            msgManager.serializeToLocal(msgs, messageType, head.CmdId, remoteModel.CurrentTime, head.Serial);
+                            if (head.Serial == 0)
+                            {
+                                Debug.LogWarning("这个消息包是NTF");
+                                Debug.Log("message type:" + messageType.ToString());
+                                Debug.Log("cmdID: " + head.CmdId.ToString());
+                            }
                         }
                     }
                 }

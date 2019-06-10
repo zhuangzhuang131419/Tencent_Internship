@@ -52,17 +52,13 @@ namespace KH
         /// </summary>
         /// <param name="msgs"></param>
         /// <param name="messageType"></param>
-        public void serializeToLocal(List<object> msgs, Type messageType, uint cmdID)
+        public void serializeToLocal(List<object> msgs, Type messageType, uint cmdID, ulong timeStamp, uint serial)
         {
-            MessageBody packedMessageBody = new MessageBody(messageType, cmdID);
+            MessageBody packedMessageBody = new MessageBody(messageType, cmdID, timeStamp, serial);
             foreach (object msg in msgs)
             {
                 packedMessageBody.MessageBodyBuffer.Add(PBSerializer.NSerialize(msg));
             }
-            string destinationPath = MessageManager.DEST_PATH;
-            Debug.Log("序列化前" + msgs.Count);
-            Debug.Log("message type:" + messageType.ToString());
-            Debug.Log("cmdID: " + cmdID.ToString());
             serializeToLocal(packedMessageBody, DEST_PATH);
         }
 
