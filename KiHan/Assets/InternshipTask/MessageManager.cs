@@ -127,7 +127,7 @@ namespace KH
             //msgManager.deserializeFromLocal(MessageManager.DEST_PATH, 1);
             if (packedMessage01 != null)
             {
-                Debug.LogWarning(packedMessage01.CmdID + "--" + cmdID + "对应 的message的type是" + packedMessage01.MessageType);
+                Debug.LogWarning(cmdID + "对应 的message的type是" + packedMessage01.MessageType);
                 try
                 {
                     List<object> messageBodyResult = new List<object>();

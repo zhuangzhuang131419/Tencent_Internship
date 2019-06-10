@@ -316,7 +316,7 @@ namespace KH.Network
             , int connID = -1)
         {
             bool result = false;
-            
+
             IConnection conn = _defaultConn;
             if (connID != -1)
             {
@@ -324,16 +324,16 @@ namespace KH.Network
             }
 
             ///连接不为空或者尝试可以发送...
-            if(conn != null && conn.TryDoSend(cmdId))
+            if (conn != null && conn.TryDoSend(cmdId))
             {
                 clearStreams();
 
                 _send_head.CmdId = cmdId;
                 _send_head.ZoneId = ZoneId;
                 _send_head.MessageId = _messageId++;
-            
-                if (    connectionHook != null 
-                    &&  connectionHook.FilterCmd(cmdId, message, _messageId - 1, serialNumber))
+
+                if (connectionHook != null
+                    && connectionHook.FilterCmd(cmdId, message, _messageId - 1, serialNumber))
                 {
                     connectionHook.HookMessage(_send_head, message, WriteMSG);
                     return true;
@@ -360,9 +360,13 @@ namespace KH.Network
                 }
                 _send_head.BodyLength = (uint)sendMessageBodyStream.Length;
                 _send_head.Serial = serialNumber;
-                
-                result = conn.DoSend(_send_head, message, sendMessageBodyStream);
 
+                MessageManager msgManager = MessageManager.Instance;
+                // 模拟服务器，从本地读包
+                if (!msgManager.IsDeserializeFromLocal)
+                {
+                    result = conn.DoSend(_send_head, message, sendMessageBodyStream);
+                }
                 if (!result) _messageId--;
 
             }
@@ -521,9 +525,9 @@ namespace KH.Network
                             if (head.Serial == 0)
                             {
                                 Debug.LogWarning("这个消息包是NTF");
-                                Debug.Log("message type:" + messageType.ToString());
-                                Debug.Log("cmdID: " + head.CmdId.ToString());
                             }
+                            Debug.Log("message type:" + messageType.ToString());
+                            Debug.Log("cmdID: " + head.CmdId.ToString());
                         }
                     }
                 }

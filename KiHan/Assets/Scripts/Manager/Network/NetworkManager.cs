@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -480,9 +480,6 @@ namespace KH
             {
                 result = proxy.Write(cmdId, message, serial, connID);
             }
-
-
-            
 
             if (!result)
             {
