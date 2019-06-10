@@ -60,4 +60,7 @@ KiHan/Assets/Scripts/Manager/Network/*
 # 保留NetworkManager
 !KiHan/Assets/Scripts/Manager/Network/NetworkManager.cs
 
+# 保留NetworkMessageNetworkQueue
+!KiHan/Assets/Scripts/Manager/Network/NetworkMessageQueue.cs
+
 
