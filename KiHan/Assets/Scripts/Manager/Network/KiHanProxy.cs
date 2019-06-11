@@ -42,6 +42,9 @@ namespace KH.Network
 
         public static bool bSimulationLossNetworkMessage = false;
 
+        // 消息管理器（序列化，反序列化）
+        private MessageManager msgManager = MessageManager.Instance;
+
         public KiHanProxy()
         {
             _connectionDict = new Dictionary<int, IConnection>();
@@ -62,6 +65,7 @@ namespace KH.Network
             this._defaultConn = null;
             this._send_head.MagicNum = (ushort)MagicNum;
             this._send_head.Format = ClientHeadFormatType.Protobuf;
+
         }
 
         public void Update()
@@ -71,7 +75,7 @@ namespace KH.Network
             {
                 _connectionsArr[i].DoReceive();
             }
-            
+
             ///信息分发...
             _messageQueue.Distribute();
             ///超时检测
@@ -516,15 +520,16 @@ namespace KH.Network
                         }
 
                         // Update by Chicheng
-                        MessageManager msgManager = MessageManager.Instance;
+                        
                         if (msgManager.IsSerializeToLocal)
                         {
                             Debug.LogWarning("把读到的消息包序列化到本地");
                             RemoteModel remoteModel = RemoteModel.Instance;
-                            msgManager.serializeToLocal(msgs, messageType, head.CmdId, remoteModel.CurrentTime, head.Serial);
+                            ulong timeStamp = remoteModel.CurrentTime;
+                            msgManager.serializeToLocal(msgs, messageType, head.CmdId, timeStamp, head.Serial);
                             if (head.Serial == 0)
                             {
-                                Debug.LogWarning("这个消息包是NTF");
+                                Debug.LogWarning("这个消息包是NTF" + "时间戳是：" + timeStamp);
                             }
                             Debug.Log("message type:" + messageType.ToString());
                             Debug.Log("cmdID: " + head.CmdId.ToString());

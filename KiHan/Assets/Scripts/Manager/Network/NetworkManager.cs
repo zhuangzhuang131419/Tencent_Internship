@@ -135,6 +135,16 @@ namespace KH
             }
 
             _fix_udpate = false;
+
+            /// Update by Chicheng
+            /// 检测NTF
+            //RemoteModel remoteModel = RemoteModel.Instance;
+            //MessageManager msgManager = MessageManager.Instance;
+            //MessageBody NTFMessageBody = msgManager.deserializeFromLocalByTimeStamp(1560234066);
+            //if (NTFMessageBody != null)
+            //{
+            //    Debug.LogWarning("获得NTF消息包");
+            //}
         }
 
         static public void FixUpdate()
@@ -469,11 +479,11 @@ namespace KH
                 }
                 catch (NullReferenceException)
                 {
-                    Debug.LogWarning("AddMessage出错");
+                    Debug.LogWarning("NullReferenceException");
                 }
                 catch (Exception)
                 {
-                    Debug.LogWarning("其他错误");
+                    Debug.LogWarning("Exception");
                 }
             }
             else
