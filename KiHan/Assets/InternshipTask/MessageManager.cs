@@ -55,10 +55,34 @@ namespace KH
         public void serializeToLocal(List<object> msgs, Type messageType, uint cmdID, ulong timeStamp, uint serial)
         {
             MessageBody packedMessageBody = new MessageBody(messageType, cmdID, timeStamp, serial);
-            foreach (object msg in msgs)
+            // 如果是NTF包，List<object>会有两项
+            try
             {
-                packedMessageBody.MessageBodyBuffer.Add(PBSerializer.NSerialize(msg));
+                switch (msgs.Count)
+                {
+                    case 1:
+                        // 非NTF包
+                        packedMessageBody.MessagesBodyBuffer.Add(PBSerializer.NSerialize(msgs[0]));
+                        break;
+                    case 2:
+                        // NTF包
+
+                        // 测试是否可以反序列化
+						// Debug.LogWarning("测试是否可以反序列化");
+                        PBSerializer.NDeserialize(PBSerializer.NSerialize(msgs[1]), messageType);
+                        packedMessageBody.MessagesBodyBuffer.Add(PBSerializer.NSerialize(msgs[1]));
+                        break;
+                    default:
+                        Debug.LogError("出错");
+                        break;
+                }
             }
+            catch
+            {
+                Debug.LogError("序列化出现问题");
+                Debug.LogError("消息数量：" + msgs.Count + " ；序列号：" + serial);
+            }
+            
             serializeToLocal(packedMessageBody, DEST_PATH);
         }
 
@@ -117,26 +141,20 @@ namespace KH
 
 
         /// <summary>
-        /// 从本地读取包，仅在mock server下使用
+        /// 根据cmdID从本地读取包，仅在mock server下使用
         /// </summary>
         /// <param name="cmdID"></param>
         public List<object> ReadMessageFromLocal(uint cmdID)
         {
             //从这个地址固定读取
             MessageBody packedMessage01 = deserializeFromLocalByCmdIDCache(cmdID);
-            //msgManager.deserializeFromLocal(MessageManager.DEST_PATH, 1);
             if (packedMessage01 != null)
             {
-                Debug.LogWarning(cmdID + "对应 的message的type是" + packedMessage01.MessageType);
-                if (packedMessage01.Serial == 0)
-                {
-                    Debug.LogWarning("解析出的包序列号是0");
-                }
-
+                Debug.Log("利用cmdID成功读取");
                 try
                 {
                     List<object> messageBodyResult = new List<object>();
-                    foreach (byte[] msgBodyBuffer in packedMessage01.MessageBodyBuffer)
+                    foreach (byte[] msgBodyBuffer in packedMessage01.MessagesBodyBuffer)
                     {
                         messageBodyResult.Add(PBSerializer.NDeserialize(msgBodyBuffer, packedMessage01.MessageType));
                     }
@@ -147,7 +165,7 @@ namespace KH
                 }
                 catch (Exception)
                 {
-                    Debug.LogWarning("NDeserialize 出现了异常");
+                    Debug.LogWarning("ReadMessageFromLocal：NDeserialize 出现了异常");
                     return null;
                 }
             }
@@ -471,10 +489,6 @@ namespace KH
                 }
                 else
                 {
-                    if (resultMessageBody == null)
-                    {
-                        Debug.LogWarning("CmdID::超出message包的范围");
-                    }
                     fileStream.Close();
                     Debug.Log("一共有" + messagesBodySet.Count + "消息包");
                     return;

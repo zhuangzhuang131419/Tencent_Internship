@@ -138,13 +138,40 @@ namespace KH
 
             /// Update by Chicheng
             /// 检测NTF
-            //RemoteModel remoteModel = RemoteModel.Instance;
-            //MessageManager msgManager = MessageManager.Instance;
-            //MessageBody NTFMessageBody = msgManager.deserializeFromLocalByTimeStamp(1560234066);
-            //if (NTFMessageBody != null)
-            //{
-            //    Debug.LogWarning("获得NTF消息包");
-            //}
+            MessageManager msgManager = MessageManager.Instance;
+            if (msgManager.IsDeserializeFromLocal)
+            {
+                ReadNTFMessageFromLocal();
+            }
+        }
+
+        /// <summary>
+        /// 从本地主动获取NTF消息包
+        /// </summary>
+        private static void ReadNTFMessageFromLocal()
+        {
+            MessageManager msgManager = MessageManager.Instance;
+            RemoteModel remoteModel = RemoteModel.Instance;
+            // ulong time = 1560234066;
+            MessageBody NTFMessageBody = msgManager.deserializeFromLocalByTimeStamp(remoteModel.CurrentTime);
+            if (NTFMessageBody != null)
+            {
+
+                List<object> messagesBody = new List<object>();
+                try
+                {
+                    if (NTFMessageBody.MessagesBodyBuffer.Count != 1)
+                    {
+                        Debug.LogError("序列化错误");
+                    }
+                    messagesBody.Add(PBSerializer.NDeserialize(NTFMessageBody.MessagesBodyBuffer[0], NTFMessageBody.MessageType));
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning(e.Message);
+                }
+                __Proxy.__QueueAddMessage(NTFMessageBody.CmdID, 0, messagesBody);
+            }
         }
 
         static public void FixUpdate()
@@ -479,11 +506,7 @@ namespace KH
                 }
                 catch (NullReferenceException)
                 {
-                    Debug.LogWarning("NullReferenceException");
-                }
-                catch (Exception)
-                {
-                    Debug.LogWarning("Exception");
+					return false;
                 }
             }
             else

@@ -61,7 +61,7 @@ namespace KH
             set { MessageType = value; }
         }
 
-        public List<byte[]> MessageBodyBuffer
+        public List<byte[]> MessagesBodyBuffer
         {
             get { return messageBodyBuffer; }
             set { messageBodyBuffer = value; }
