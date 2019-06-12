@@ -46,6 +46,7 @@ KiHan/Assets/Scripts/*
 !KiHan/Assets/Scripts/Manager
 KiHan/Assets/Scripts/Manager/*
 
+
 # 保留KHDebugerGUI
 !KiHan/Assets/Scripts/Manager/KHDebuger
 KiHan/Assets/Scripts/Manager/KHDebuger/*
@@ -62,5 +63,19 @@ KiHan/Assets/Scripts/Manager/Network/*
 
 # 保留NetworkMessageNetworkQueue
 !KiHan/Assets/Scripts/Manager/Network/NetworkMessageQueue.cs
+
+# 保留FSPClient
+!KiHan/Assets/Scripts/Manager/Network/FSP
+KiHan/Assets/Scripts/Manager/Network/FSP/*
+!KiHan/Assets/Scripts/Manager/Network/FSP/Client
+KiHan/Assets/Scripts/Manager/Network/FSP/Client/*
+!KiHan/Assets/Scripts/Manager/Network/FSP/Client/FSPClient.cs
+
+# 保留PVPRealTimeOperation
+!KiHan/Assets/Scripts/Plugin
+KiHan/Assets/Scripts/Plugin/*
+!KiHan/Assets/Scripts/Plugin/PVPRealTime
+KiHan/Assets/Scripts/Plugin/PVPRealTime/*
+!KiHan/Assets/Scripts/Plugin/PVPRealTime/PVPRealTimeOperation.cs
 
 
