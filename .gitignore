@@ -35,10 +35,12 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-# 保留InternshipTask
+
 KiHan/*
 !KiHan/Assets
 KiHan/Assets/*
+
+# 保留InternshipTask
 !KiHan/Assets/InternshipTask
 
 !KiHan/Assets/Scripts
@@ -77,5 +79,10 @@ KiHan/Assets/Scripts/Plugin/*
 !KiHan/Assets/Scripts/Plugin/PVPRealTime
 KiHan/Assets/Scripts/Plugin/PVPRealTime/*
 !KiHan/Assets/Scripts/Plugin/PVPRealTime/PVPRealTimeOperation.cs
+
+# 保留Resources/Scene
+!KiHan/Assets/Resources
+KiHan/Assets/Resources/*
+!KiHan/Assets/Resources/Scene
 
 
