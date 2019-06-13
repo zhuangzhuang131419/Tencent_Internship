@@ -578,12 +578,12 @@ namespace KH
                 GUILayout.Label("boss plot id");
                 RoguelikeBossPlotID = GUILayout.TextField(RoguelikeBossPlotID, 100);
 
-                if (SGUILayout.Button("打开幻之试练"))
+                if (SGUILayout.Button("打开幻之试炼"))
                 {
                     KHPluginManager.Instance.GetPluginByName(RoguelikePlugin.pluginName).SendMessage("Open");
                 }
 
-                if (SGUILayout.Button("打开幻之试练外部场景"))
+                if (SGUILayout.Button("打开幻之试炼外部场景"))
                 {
                     KHPluginManager.Instance.GetPluginByName(RoguelikePlugin.pluginName).SendMessage("RoguelikeOperation_EnterOuterScene");
                 }
@@ -2949,6 +2949,11 @@ namespace KH
 		{
 			GUILayout.BeginVertical();
 
+			if (GUILayout.Button("不公平之战测试"))
+			{
+				KHPluginManager.Instance.GetPluginByName(UnfairBattlePlugin.pluginName).SendMessage("QueayUnfairBattle", null);
+			}
+
 		    if (GUILayout.Button("【巅峰赛】入口"))
 		    {
 		        KHPluginManager.Instance.GetPluginByName(PVPConquestPlugin.pluginName).SendMessage(PVPConquestOperation.ConquerGetBattleDetail, null);
@@ -5086,9 +5091,9 @@ namespace KH
             {
                 KHPluginManager.Instance.SendMessage(UltimateKillPlugin.pluginName, UltimateKillSceneOperation.EnterXuanBaSaiScene);
             }
-            if (GUILayout.Button("打开马上开始界面"))
+            if (GUILayout.Button("打开冠军宣言"))
             {
-
+                KHPluginManager.Instance.SendMessage(UltimateKillPlugin.pluginName, "ShowView", new ShowViewArgument(UIDef.ULTIMATE_KILL_FINISHED_VIEW));
             }
             if (GUILayout.Button("打开活动结束"))
             {
@@ -5107,7 +5112,7 @@ namespace KH
             {
                 InputWinArgument argument = new InputWinArgument(19, "ZhuFu", (string a)=> { UIAPI.ShowMsgTip(a); });
                 KHPluginManager.Instance.SendMessage(UltimateKillPlugin.pluginName, "ShowView", new ShowViewArgument(UIDef.UK_INPUT_WINDOW, false, argument));
-            }
+            } 
             if (GUILayout.Button("随机100"))
             {
                 UIAPI.ShowMsgTip(UnityEngine.Random.Range(1, 101).ToString());
@@ -5134,6 +5139,52 @@ namespace KH
             if (GUILayout.Button("拉一次巅峰对决气泡"))
             {
                 KHPluginManager.Instance.SendMessage(UltimateKillPlugin.pluginName, UltimateKillOperation.UKBubble);
+            }
+
+            if (GUILayout.Button("点击技能"))
+            {
+
+                GameObject go = GameObject.Find(UINewUserGuideMainView.handFocus.tag);
+                go = go == null ? GameObject.FindGameObjectWithTag(UINewUserGuideMainView.handFocus.tag) : go;
+                if (go != null)
+                {
+                    var button = go.GetComponentInChildren<SpellSlot>();
+                    if (button != null)
+                    {
+                        button.OnKHHover(false);
+                    }
+                }
+            }
+
+            if (GUILayout.Button("打开防沉迷"))
+            {
+                ZoneAntiAddictionNtf zoneAntiAddictionNtfResp = new ZoneAntiAddictionNtf();
+                KHUIManager.getInstance().OpenWindow(UIDef.ANTI_ADDICTION_NTF, _data: zoneAntiAddictionNtfResp);
+
+            }
+            if (GUILayout.Button("打开新手"))
+            {
+                GuideToClickArg arg = new GuideToClickArg();
+                arg.gameObjectTabName = "PlayerBar.PVE";
+                arg.isShow = true;
+                arg.showMask = true;
+                arg.needMask = true;
+                arg.featureID = 17;
+                object[] winArg = new object[] { 2, arg };
+                KHPluginManager.Instance.SendMessage(KH.Plugins.NewUserGuidePlugin.NAME, "ShowView", new ShowViewArgument()
+                {
+                    title = UIDef.NEW_USER_GUIDE_MAIN_VIEW,
+                    data = winArg
+                });
+
+            }
+            if (GUILayout.Button("TopWindow"))
+            {
+                var w = KHUIManager.getInstance().GetTopWindow();
+                if (w != null)
+                {
+                    UIAPI.ShowMsgOK(w.name);
+                }
             }
         }
         
