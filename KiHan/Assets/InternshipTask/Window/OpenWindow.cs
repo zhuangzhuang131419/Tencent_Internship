@@ -7,18 +7,21 @@ using System;
 
 public class OpenWindow : EditorWindow {
 
-    string MapPrefabID = "";
-    string MapID = "";
+    private string mapPrefabID = "10102";
+    private string mapID = "10102";
 
+    public string MapPrefabID
+    {
+        set { mapPrefabID = value; }
+    }
 
-    //bool groupEnabled = false;
-    //bool myBool1 = true;
-    //bool myBool2 = false;
-    //float myFloat1 = 1.0f;
-    //float myFloat2 = .5f;
+    public string MapID
+    {
+        set { mapID = value; }
+    }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
 	}
 	
@@ -29,20 +32,8 @@ public class OpenWindow : EditorWindow {
 
     void OnGUI()
     {
-        //在弹出窗口中控制变量
-        MapPrefabID = EditorGUILayout.TextField("MapPrefab ID:", MapPrefabID);
-        MapID = EditorGUILayout.TextField("地图ID", MapID);
-
-
-        // myBool1 = EditorGUILayout.Toggle("Open Optional Settings", myBool1);
-        // myFloat1 = EditorGUILayout.Slider("myFloat1", myFloat1, -3, 3);
-
-
-        //创建一个GUILayout 通过groupEnabled 来控制当前GUILayout是否在Editor里面可以编辑
-        //groupEnabled = EditorGUILayout.BeginToggleGroup("Optional Settings", groupEnabled);
-        //myBool2 = EditorGUILayout.Toggle("myBool2", myBool2);
-        //myFloat2 = EditorGUILayout.Slider("myFloat2", myFloat2, -3, 3);
-        //EditorGUILayout.EndToggleGroup();
+        mapPrefabID = EditorGUILayout.TextField("MapPrefab ID:", mapPrefabID);
+        mapID = EditorGUILayout.TextField("地图ID", mapID);
 
         //打开按钮
         if (GUI.Button(new Rect(60, 180, 100, 30), "打开"))
@@ -55,68 +46,77 @@ public class OpenWindow : EditorWindow {
     void OnOpenPress()
     {
         Debug.Log("Comfirm On Pressed");
-        GetDirs();
+        SearchRelatedPrefab();
     }
 
 
-    private void GetDirs()
+    private void SearchRelatedPrefab()
     {
         bool isMapPrefabExist = false;
+        bool isMapIDExist = false;
         try
         {
+
+            // 检索Resources\Scene
             string targetMapPath = "";
             foreach (string path in Directory.GetFiles(MapEditor.MAP_PREFAB_ID_PATH))
             {
                 //获取所有文件夹中包含后缀为 .prefab 的路径
-                if (Path.GetExtension(path) == ".prefab" && (Path.GetFileNameWithoutExtension(path) == MapPrefabID))
+                if (Path.GetExtension(path) == ".prefab" && (Path.GetFileNameWithoutExtension(path) == mapPrefabID))
                 {
                     isMapPrefabExist = true;
-                    // targetMapPath = path.Substring(path.IndexOf("Scene//"));
+                    targetMapPath = "Scene/" + mapPrefabID;
                 }
             }
 
-            if (!isMapPrefabExist)
-            {
-                // 弹出提示信息
-                GetWindow(typeof(MessageWindow));
-            }
-            else
-            {
-                // 加载Prefab资源
-                Debug.Log("加载Prefab资源");
-                // GameObject targetMap = (GameObject)Resources.Load(targetMapPath);
-                GameObject targetMap = (GameObject)Resources.Load("Scene//10102.prefab");
-                if (targetMap != null)
-                {
-                    Instantiate(targetMap);
-                }
-                else
-                {
-                    Debug.Log("Load失败");
-                }
-                
-            }
-
-
+            // 检索Resources\Config\Map
             DirectoryInfo mapDir = new DirectoryInfo(MapEditor.MAP_ID_PATH);
-            if (!mapDir.Exists)
-            {
-                Directory.CreateDirectory(MapEditor.MAP_ID_PATH);
-                Debug.Log("是否新建地图");
-            }
-            else
+            if (mapDir.Exists)
             {
                 foreach (string path in Directory.GetFiles(MapEditor.MAP_ID_PATH))
                 {
-                    //获取所有文件夹中包含后缀为 .prefab 的路径
-                    if (Path.GetFileNameWithoutExtension(path) == MapID)
+                    if (Path.GetFileNameWithoutExtension(path) == mapID)
                     {
-                        Debug.Log(isMapPrefabExist);
+                        isMapIDExist = true;
                     }
                 }
             }
 
-            
+            if (isMapIDExist && isMapPrefabExist)
+            {
+                MapEditor.loadMap(targetMapPath, mapID);
+                Close();
+            }
+            else if (!isMapPrefabExist)
+            {
+                // 弹出提示信息
+                MessageWindow messageWindow = CreateInstance<MessageWindow>();
+                messageWindow.TitleText = "Map prefab 不存在";
+                messageWindow.Comfirm = delegate(EditorWindow window) { window.Close(); };
+                messageWindow.Cancel = delegate(EditorWindow window) { window.Close(); };
+                messageWindow.Show();
+            }
+            else
+            {
+                // 提示是否新建地图
+                MessageWindow messageWindow = CreateInstance<MessageWindow>();
+                messageWindow.TitleText = "是否新建地图";
+                messageWindow.Comfirm = delegate (EditorWindow window) 
+                {
+                    Directory.CreateDirectory(MapEditor.MAP_ID_PATH);
+                    Directory.CreateDirectory(MapEditor.MAP_ID_PATH + "\\" + mapID);
+                    window.Close();
+
+
+                    CreateWindow createWindow = CreateInstance<CreateWindow>();
+                    createWindow.MapPrefabID = mapPrefabID;
+                    createWindow.MapID = mapID;
+                    createWindow.Show();
+                    
+                };
+                messageWindow.Cancel = delegate (EditorWindow window) { window.Close(); };
+                messageWindow.Show();
+            }
         }
         catch (Exception e)
         {

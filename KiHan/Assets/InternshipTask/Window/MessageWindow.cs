@@ -7,17 +7,52 @@ using System;
 
 public class MessageWindow : EditorWindow {
 
-    string message = "Map prefab 不存在";
+    private comfirmDelegate comfirm;
+    private cancelDelegate cancel;
+    private string titleText;
+
+    public comfirmDelegate Comfirm
+    {
+        set { comfirm = value; }
+    }
+
+    public cancelDelegate Cancel
+    {
+        set { cancel = value; }
+    }
+
+    public string TitleText
+    {
+        set { titleText = value; }
+    }
+
+    public delegate void comfirmDelegate(EditorWindow window);
+    public delegate void cancelDelegate(EditorWindow window);
+
+    void executeComfirm(comfirmDelegate comfirm)
+    {
+        comfirm(this);
+    }
+    void executeCancel(cancelDelegate cancel)
+    {
+        cancel(this);
+    }
 
     void OnGUI()
     {
-        // 显示通知信息
-        GUILayout.Label(message);
+        GUILayout.Label(titleText);
 
-        //打开按钮
-        if (GUI.Button(new Rect(60, 180, 100, 30), "确定"))
+        // 确定按钮
+        if (GUI.Button(new Rect(30, 180, 100, 30), "确定"))
         {
-            Close();
+            executeComfirm(comfirm);
+        }
+
+        // 取消按钮
+        if (GUI.Button(new Rect(200, 180, 100, 30), "取消"))
+        {
+            Debug.Log("取消");
+            executeCancel(cancel);
         }
     }
 }
