@@ -68,28 +68,28 @@ public class CreateWindow : EditorWindow {
         if (!isMapPrefabExist)
         {
             // 弹出提示信息
-            MessageWindow messageWindow = CreateInstance<MessageWindow>();
-            messageWindow.TitleText = "Map prefab 不存在";
-            messageWindow.Comfirm = delegate (EditorWindow window) { window.Close(); };
-            messageWindow.Cancel = delegate (EditorWindow window) { window.Close(); };
-            messageWindow.Show();
+            MessageWindow.CreateMessageBox(
+                "Map prefab 不存在",
+                delegate (EditorWindow window) { window.Close(); },
+                delegate (EditorWindow window) { window.Close(); }
+            );
         }
         else if (isMapIDExist)
         {
             // 是否打开地图
-            MessageWindow messageWindow = CreateInstance<MessageWindow>();
-            messageWindow.TitleText = "是否打开地图";
-            messageWindow.Comfirm = delegate (EditorWindow window) 
-            {
-                window.Close();
-                Close();
-                OpenWindow openWindow = CreateInstance<OpenWindow>();
-                openWindow.MapPrefabID = mapPrefabID;
-                openWindow.MapID = mapID;
-                openWindow.Show();
-            };
-            messageWindow.Cancel = delegate (EditorWindow window) { window.Close(); };
-            messageWindow.Show();
+            MessageWindow.CreateMessageBox(
+                "地图ID已存在，是否打开地图",
+                delegate (EditorWindow window)
+                {
+                    window.Close();
+                    Close();
+                    OpenWindow openWindow = CreateInstance<OpenWindow>();
+                    openWindow.MapPrefabID = mapPrefabID;
+                    openWindow.MapID = mapID;
+                    openWindow.Show();
+                },
+                delegate (EditorWindow window) { window.Close(); }
+            );
         }
         else
         {

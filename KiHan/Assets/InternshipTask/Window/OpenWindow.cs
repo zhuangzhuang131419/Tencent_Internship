@@ -90,32 +90,29 @@ public class OpenWindow : EditorWindow {
             else if (!isMapPrefabExist)
             {
                 // 弹出提示信息
-                MessageWindow messageWindow = CreateInstance<MessageWindow>();
-                messageWindow.TitleText = "Map prefab 不存在";
-                messageWindow.Comfirm = delegate(EditorWindow window) { window.Close(); };
-                messageWindow.Cancel = delegate(EditorWindow window) { window.Close(); };
-                messageWindow.Show();
+                MessageWindow.CreateMessageBox(
+                    "Map prefab 不存在",
+                    delegate (EditorWindow window) { window.Close(); },
+                    delegate (EditorWindow window) { window.Close(); }
+                );
             }
             else
             {
                 // 提示是否新建地图
-                MessageWindow messageWindow = CreateInstance<MessageWindow>();
-                messageWindow.TitleText = "是否新建地图";
-                messageWindow.Comfirm = delegate (EditorWindow window) 
-                {
-                    Directory.CreateDirectory(MapEditor.MAP_ID_PATH);
-                    Directory.CreateDirectory(MapEditor.MAP_ID_PATH + "\\" + mapID);
-                    window.Close();
+                MessageWindow.CreateMessageBox(
+                    "是否新建地图",
+                    delegate (EditorWindow window)
+                    {
+                        window.Close();
 
+                        CreateWindow createWindow = CreateInstance<CreateWindow>();
+                        createWindow.MapPrefabID = mapPrefabID;
+                        createWindow.MapID = mapID;
+                        createWindow.Show();
 
-                    CreateWindow createWindow = CreateInstance<CreateWindow>();
-                    createWindow.MapPrefabID = mapPrefabID;
-                    createWindow.MapID = mapID;
-                    createWindow.Show();
-                    
-                };
-                messageWindow.Cancel = delegate (EditorWindow window) { window.Close(); };
-                messageWindow.Show();
+                    },
+                    delegate (EditorWindow window) { window.Close(); }
+                );
             }
         }
         catch (Exception e)

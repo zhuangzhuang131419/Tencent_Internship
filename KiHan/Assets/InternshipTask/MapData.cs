@@ -3,20 +3,37 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 
-[Serializable]
-public class MapData
+public class MapData : MonoBehaviour
 {
-    public readonly int ID;
-    private string Desc;
+    private MapDataStruct mapDataStruct = new MapDataStruct();
 
-    private List<MapGenerator> mapGenerators = new List<MapGenerator>();
-
-    public MapData(string mapID)
+    public MapDataStruct DataStruct
     {
-        ID = int.Parse(mapID);
+        get { return mapDataStruct; }
+        set { mapDataStruct = value; }
+    }
+}
+
+[Serializable] 
+public class MapDataStruct
+{
+    private int id;
+    private string desc;
+    private List<MapGeneratorDataStruct> mapGenerators = new List<MapGeneratorDataStruct>();
+
+    public int ID
+    {
+        get { return id; }
+        set { id = value; }
     }
 
-    public List<MapGenerator> MapGenerators
+    public string Desc
+    {
+        get { return desc; }
+        set { desc = value; }
+    }
+
+    public List<MapGeneratorDataStruct> MapGenerators
     {
         get { return mapGenerators; }
         set { mapGenerators = value; }

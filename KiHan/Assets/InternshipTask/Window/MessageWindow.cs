@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using System.IO;
-using System;
 
 public class MessageWindow : EditorWindow {
 
@@ -54,5 +52,14 @@ public class MessageWindow : EditorWindow {
             Debug.Log("取消");
             executeCancel(cancel);
         }
+    }
+
+    public static void CreateMessageBox(string title, comfirmDelegate onComfirm, cancelDelegate onCancel)
+    {
+        MessageWindow messageWindow = CreateInstance<MessageWindow>();
+        messageWindow.TitleText = title;
+        messageWindow.Comfirm = onComfirm;
+        messageWindow.Cancel = onCancel;
+        messageWindow.Show();
     }
 }

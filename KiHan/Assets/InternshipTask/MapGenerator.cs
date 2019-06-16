@@ -3,43 +3,64 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 
-[Serializable]
-public class MapGenerator
+public class MapGenerator : MonoBehaviour
 {
-    private readonly int ID;
-    private string Desc;
-    private string name;
-    private int index;
+    private MapGeneratorDataStruct mapGeneratorStruct = new MapGeneratorDataStruct();
+
+    public MapGeneratorDataStruct DataStruct
+    {
+        get { return mapGeneratorStruct; }
+        set { mapGeneratorStruct = value; }
+    }
+}
+
+[Serializable]
+public class MapGeneratorDataStruct
+{
+    private int id;
+    private string desc;
+    private string generatorName;
+    private int index = 0;
 
     // 0/无，暂时无功能，占位用
     // 1/怪物，默认为怪物
-    private int Type;
+    private int type;
 
-    private List<Unit> units = new List<Unit>();
+    private List<UnitStruct> units = new List<UnitStruct>();
 
-    public MapGenerator() { }
-    public MapGenerator(string name, int index)
+    public int ID
     {
-        this.name = name;
-        this.index = index;
+        get { return id; }
+        set { id = value; }
+    }
+
+    public string Desc
+    {
+        get { return desc; }
+        set { desc = value; }
     }
 
     public string Name
     {
-        get { return name; }
+        get { return generatorName; }
+        set { generatorName = value; }
     }
 
     public int Index
     {
         get { return index; }
+        set { index = value; }
     }
 
-    public List<Unit> Units
+    public int Type
+    {
+        get { return type; }
+        set { type = value; }
+    }
+
+    public List<UnitStruct> Units
     {
         get { return units; }
         set { units = value; }
     }
-
-    
-
 }
