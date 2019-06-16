@@ -10,6 +10,7 @@ public class MapEditor : MonoBehaviour {
 
     public static readonly string MAP_PREFAB_ID_PATH = "Assets/Resources/Scene";
     public static readonly string MAP_ID_PATH = "Assets/Resources/Config/Map";
+    private static GameObject mapPrefab = null;
 
     // public static Map currentMap;
 
@@ -53,8 +54,18 @@ public class MapEditor : MonoBehaviour {
             fileStream.Close();
         }
 
-        // TODO
-        // PrefabUtility.SaveAsPrefabAsset(currentMap.MapObject, MAP_ID_PATH + "/" + currentMap.MapData.ID + "/" + currentMap.MapData.ID + ".prefab");
+        Debug.Log(MAP_ID_PATH + "/" + mapData.DataStruct.ID + "/" + mapData.DataStruct.ID + ".prefab");
+        if (mapPrefab != null)
+        {
+            try
+            {
+                PrefabUtility.CreatePrefab(MAP_ID_PATH + "/" + mapData.DataStruct.ID + "/" + mapData.DataStruct.ID + ".prefab", mapPrefab);
+            }
+            catch (Exception e)
+            {
+                Debug.Log("出错了" + e.Message);
+            }
+        }
     }
 
     /// <summary>
@@ -297,11 +308,11 @@ public class MapEditor : MonoBehaviour {
     public static void loadMap(string targetMapPath, string mapID)
     {
         // 加载Prefab资源
-        GameObject targetMap = (GameObject)Resources.Load(targetMapPath);
-        if (targetMap != null)
+        mapPrefab = (GameObject)Resources.Load(targetMapPath);
+        if (mapPrefab != null)
         {
             loadMapData(mapID);
-            Instantiate(targetMap);
+            Instantiate(mapPrefab);
         }
         else
         {
