@@ -23,6 +23,7 @@ public class MapGeneratorEditor : Editor
         mapGenerator.name = mapGenerator.DataStruct.Name + "_" + mapGenerator.DataStruct.Index;
         mapGenerator.DataStruct.Name = EditorGUILayout.TextField("Name", mapGenerator.DataStruct.Name);
         EditorGUILayout.IntField("Index", mapGenerator.DataStruct.Index);
+        mapGenerator.DataStruct.Position = new TransformPosition(mapGenerator.transform.position);
         mapGenerator.DataStruct.Type = EditorGUILayout.IntField("Type", mapGenerator.DataStruct.Type);
         EditorGUILayout.EndVertical();
     }

@@ -21,6 +21,7 @@ public class UnitStruct
     private int index;
     private string unitName;
     private string desc;
+    private TransformPosition transformPosition;
     private int unitID;
     private int createAction;
     private int createFrame;
@@ -44,6 +45,12 @@ public class UnitStruct
     {
         get { return desc; }
         set { desc = value; }
+    }
+
+    public TransformPosition Position
+    {
+        get { return transformPosition; }
+        set { transformPosition = value; }
     }
 
     public int ID

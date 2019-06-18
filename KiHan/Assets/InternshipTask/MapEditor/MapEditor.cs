@@ -123,9 +123,9 @@ public class MapEditor : MonoBehaviour {
             XmlNode centerToPlayer = xmlFile.CreateElement("centerToPlayer");
 
             actorID.InnerText = Convert.ToString(unit.ID);
-            map_pos_x.InnerText = Convert.ToString(generator.transform.position.x);
-            map_pos_y.InnerText = Convert.ToString(generator.transform.position.y);
-            map_pos_z.InnerText = Convert.ToString(generator.transform.position.z);
+            map_pos_x.InnerText = Convert.ToString(unit.Position.X);
+            map_pos_y.InnerText = Convert.ToString(unit.Position.Y);
+            map_pos_z.InnerText = Convert.ToString(unit.Position.Z);
             defaultVKey.InnerText = Convert.ToString(unit.CreateFrame);
             direction.InnerText = Convert.ToString(unit.Direction);
             delayCreateTime.InnerText = Convert.ToString(unit.DelayCreateTime);
@@ -228,6 +228,7 @@ public class MapEditor : MonoBehaviour {
             mapGenerator.DataStruct.Index = maxIndex + 1;
             mapGenerator.DataStruct.ID = maxID + 1;
             mapGenerator.DataStruct.Name = "MapGenerator" + mapGenerator.DataStruct.ID;
+            mapGenerator.DataStruct.Position = new TransformPosition(newGeneratorObject.transform.position);
             mapGenerator.DataStruct.Type = 1;
 
             // 添加数据
@@ -288,10 +289,43 @@ public class MapEditor : MonoBehaviour {
                 {
                     FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.ReadWrite);
                     BinaryFormatter bf = new BinaryFormatter();
+
                     mapData.DataStruct.MapGenerators.Add(bf.Deserialize(fileStream) as MapGeneratorDataStruct);
+
                     fileStream.Close();
                 }
             }
+
+            //// 读取xml文件
+            //foreach (var path in Directory.GetFiles(MAP_ID_PATH + "/" + mapID + "/MapGenerator"))
+            //{
+            //    if (path.IndexOf(".bytes") != -1 && path.IndexOf(".meta") == -1)
+            //    {
+            //        XmlDocument xmlFile = new XmlDocument();
+            //        xmlFile.LoadXml(path);
+            //        MapGeneratorDataStruct mapGeneratorStruct = new MapGeneratorDataStruct();
+
+            //        foreach (XmlNode item in xmlFile.FirstChild.SelectSingleNode("ary").SelectSingleNode("item"))
+            //        {
+            //            UnitStruct unitStruct = new UnitStruct();
+            //            // 加载数据
+            //            unitStruct.ID = int.Parse(item.SelectSingleNode("actorID").InnerText);
+            //            unitStruct.TransformPosition = new Vector3(
+            //                int.Parse(item.SelectSingleNode("map_pos_x").InnerText),
+            //                int.Parse(item.SelectSingleNode("map_pos_y").InnerText),
+            //                int.Parse(item.SelectSingleNode("map_pos_z").InnerText)
+            //                );
+            //            unitStruct.CreateAction = int.Parse(item.SelectSingleNode("defaultVKey").InnerText);
+            //            // TODO 待修改
+            //            unitStruct.CreateFrame = 0;
+            //            unitStruct.Direction = int.Parse(item.SelectSingleNode("direction").InnerText);
+            //            unitStruct.DelayCreateTime = int.Parse(item.SelectSingleNode("delayCreateTime").InnerText);
+            //            unitStruct.CenterToPlay = int.Parse(item.SelectSingleNode("centerToPlayer").InnerText);
+            //            mapGeneratorStruct.Units.Add(unitStruct);
+            //        }
+            //    }
+            //}
+
 
             mapData.DataStruct.ID = int.Parse(mapID);
             setHieraychy(mapData);
@@ -343,6 +377,13 @@ public class MapEditor : MonoBehaviour {
         foreach (MapGeneratorDataStruct generators in mapData.DataStruct.MapGenerators)
         {
             GameObject mapGeneratorObject = new GameObject(generators.Name + "_" + generators.Index);
+            mapGeneratorObject.transform.position = new Vector3(
+                generators.Position.X,
+                generators.Position.Y,
+                generators.Position.Z
+                );
+                
+
             mapGeneratorObject.transform.parent = rootGenerator.transform;
             MapGenerator mapGeneratorComponent = mapGeneratorObject.AddComponent<MapGenerator>();
             mapGeneratorComponent.DataStruct = generators;
@@ -358,6 +399,11 @@ public class MapEditor : MonoBehaviour {
             foreach (var unit in generators.Units)
             {
                 GameObject unitObject = new GameObject(unit.Name + "_" + unit.Index);
+                unitObject.transform.position = new Vector3(
+                    unit.Position.X,
+                    unit.Position.Y,
+                    unit.Position.Z
+                );
                 unitObject.transform.parent = mapGeneratorObject.transform;
                 Unit unitComponent = unitObject.AddComponent<Unit>();
                 unitComponent.DataStruct = unit;
@@ -391,7 +437,9 @@ public class MapEditor : MonoBehaviour {
                 // 暂时写死加载40001
                 // Debug.Log(MapEditor.ACTOR_PREFAB_PATH.Substring(MapEditor.ACTOR_PREFAB_PATH.IndexOf("Config")) + "/40001");
                 GameObject actor = Instantiate(Resources.Load("Actor/40001")) as GameObject;
+                // Debug.Log("之前位置：" + actor.transform.position);
                 actor.transform.parent = unit.transform;
+                actor.transform.position = unit.transform.position;
             }
         }
     }

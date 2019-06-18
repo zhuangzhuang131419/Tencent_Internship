@@ -93,8 +93,10 @@ public class UnitWindow : EditorWindow
             // 默认数据
             unitComponent.DataStruct.Index = maxIndex + 1;
             unitComponent.DataStruct.Name = "MonsterGenerator" + unitComponent.DataStruct.Index;
+            unitComponent.DataStruct.Position = new TransformPosition(newUnit.transform.position);
             unitComponent.DataStruct.CreateAction = -1;
             unitComponent.DataStruct.ID = int.Parse(unitID);
+            
 
             newUnit.transform.parent = Selection.gameObjects[0].transform;
 

@@ -21,6 +21,7 @@ public class MapGeneratorDataStruct
     private string desc;
     private string generatorName;
     private int index = 0;
+    private TransformPosition transformPosition;
 
     // 0/无，暂时无功能，占位用
     // 1/怪物，默认为怪物
@@ -62,5 +63,11 @@ public class MapGeneratorDataStruct
     {
         get { return units; }
         set { units = value; }
+    }
+
+    public TransformPosition Position
+    {
+        get { return transformPosition; }
+        set { transformPosition = value; }
     }
 }
