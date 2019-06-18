@@ -94,7 +94,7 @@ public class CreateWindow : EditorWindow {
         else
         {
             MapEditor.loadMap(targetMapPath, mapID);
-            Close();
         }
+		Close();
     }
 }

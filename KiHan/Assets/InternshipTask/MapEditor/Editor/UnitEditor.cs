@@ -23,7 +23,7 @@ public class UnitEditor : Editor
         unit.name = unit.DataStruct.Name + "_" + unit.DataStruct.Index;
         unit.DataStruct.Name = EditorGUILayout.TextField("Name", unit.DataStruct.Name);
         unit.DataStruct.Desc = EditorGUILayout.TextField("Desc", unit.DataStruct.Desc);
-        EditorGUILayout.IntField("Unit ID", unit.DataStruct.ID);
+        unit.DataStruct.ID = EditorGUILayout.IntField("Unit ID", unit.DataStruct.ID);
 
 
         unit.DataStruct.CreateAction = EditorGUILayout.IntField("Create Action", unit.DataStruct.CreateAction);

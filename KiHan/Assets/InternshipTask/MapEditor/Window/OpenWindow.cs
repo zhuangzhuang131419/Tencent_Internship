@@ -47,6 +47,8 @@ public class OpenWindow : EditorWindow {
     {
         Debug.Log("Comfirm On Pressed");
         SearchRelatedPrefab();
+        Close();
+
     }
 
 
@@ -119,10 +121,5 @@ public class OpenWindow : EditorWindow {
         {
             Debug.LogError(e.Message);
         }
-    }
-
-    void onWindow(int windowID)
-    {
-        Debug.Log("OnWindow");
     }
 }

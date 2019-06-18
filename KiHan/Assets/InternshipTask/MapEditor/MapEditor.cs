@@ -5,11 +5,14 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Xml;
 
 public class MapEditor : MonoBehaviour {
 
     public static readonly string MAP_PREFAB_ID_PATH = "Assets/Resources/Scene";
     public static readonly string MAP_ID_PATH = "Assets/Resources/Config/Map";
+    public static readonly string NINJA_XML_PATH = "Assets/EditorConfig/random_dungeon";
+    public static readonly string ACTOR_PREFAB_PATH = "Assets/Resources/Actor";
     private static GameObject mapPrefab = null;
 
     // public static Map currentMap;
@@ -32,11 +35,7 @@ public class MapEditor : MonoBehaviour {
     [MenuItem("MapEditor/保存")]
     public static void save()
     {
-        
-        // 检查数据
-        if (!checkValidity()) { return; }
-
-        // 通过检查，保存新的mapData
+        // 保存新的mapData
         MapData mapData = (MapData)FindObjectOfType(typeof(MapData));
         if (mapData == null)
         {
@@ -44,15 +43,34 @@ public class MapEditor : MonoBehaviour {
             return;
         }
 
+        // 更新DataStruct
+        mapData.DataStruct.MapGenerators.Clear();
+        foreach (MapGenerator generator in FindObjectsOfType<MapGenerator>())
+        {
+            generator.DataStruct.Units.Clear();
+            foreach (Unit unit in generator.GetComponentsInChildren<Unit>())
+            {
+                generator.DataStruct.Units.Add(unit.DataStruct);
+            }
+            Debug.Log("当前Generator有" + generator.DataStruct.Units.Count + "个Unit");
+            mapData.DataStruct.MapGenerators.Add(generator.DataStruct);
+        }
+        Debug.Log("当前有" + mapData.DataStruct.MapGenerators.Count + "个Generator");
+
+
+
+        // 检查数据
+        if (!checkValidity()) { return; }
+
         Directory.CreateDirectory(MAP_ID_PATH + "/" + mapData.DataStruct.ID + "/MapGenerator");
         // 依次保存每一个Generator
-        foreach (var generatorDataStruct in mapData.DataStruct.MapGenerators)
+
+        foreach (MapGenerator generator in mapData.GetComponentsInChildren<MapGenerator>())
         {
-            FileStream fileStream = new FileStream(MAP_ID_PATH + "/" + mapData.DataStruct.ID + "/MapGenerator/" + generatorDataStruct.ID + ".dat", FileMode.Create, FileAccess.ReadWrite);
-            BinaryFormatter bf = new BinaryFormatter();
-            bf.Serialize(fileStream, generatorDataStruct);
-            fileStream.Close();
+            saveWithSerialize(mapData, generator);
+            saveWithStandard(mapData, generator);
         }
+        
 
         Debug.Log(MAP_ID_PATH + "/" + mapData.DataStruct.ID + "/" + mapData.DataStruct.ID + ".prefab");
         if (mapPrefab != null)
@@ -66,6 +84,73 @@ public class MapEditor : MonoBehaviour {
                 Debug.Log("出错了" + e.Message);
             }
         }
+    }
+
+    private static void saveWithStandard(MapData mapData, MapGenerator generator)
+    {
+        // FileStream fileStream = new FileStream(MAP_ID_PATH + "/" + mapData.DataStruct.ID + "/MapGenerator/" + generatorDataStruct.ID + ".bytes", FileMode.Create, FileAccess.ReadWrite);
+        XmlDocument xmlFile = new XmlDocument();
+        XmlNode root = xmlFile.CreateElement("MonsterPackConfig");
+        XmlNode packID = xmlFile.CreateElement("packID");
+        XmlNode sceneResID = xmlFile.CreateElement("sceneResID");
+        XmlNode jumpInNumFrame = xmlFile.CreateElement("jumpInNumFrame");
+        XmlNode ary = xmlFile.CreateElement("ary");
+
+        packID.InnerText = Convert.ToString(generator.DataStruct.ID);
+        sceneResID.InnerText = Convert.ToString(mapData.DataStruct.ID);
+        //  jumpInNumFrame.InnerText = "jumpInNumFrame?";
+
+        xmlFile.AppendChild(root);
+        root.AppendChild(packID);
+        root.AppendChild(sceneResID);
+        root.AppendChild(jumpInNumFrame);
+        root.AppendChild(ary);
+
+        foreach (var unit in generator.DataStruct.Units)
+        {
+            XmlNode item = xmlFile.CreateElement("item");
+            ary.AppendChild(item);
+
+            jumpInNumFrame.InnerText = Convert.ToString(unit.CreateFrame);
+
+            XmlNode actorID = xmlFile.CreateElement("actorID");
+            XmlNode map_pos_x = xmlFile.CreateElement("map_pos_x");
+            XmlNode map_pos_y = xmlFile.CreateElement("map_pos_y");
+            XmlNode map_pos_z = xmlFile.CreateElement("map_pos_z");
+            XmlNode defaultVKey = xmlFile.CreateElement("defaultVKey");
+            XmlNode direction = xmlFile.CreateElement("direction");
+            XmlNode delayCreateTime = xmlFile.CreateElement("delayCreateTime");
+            XmlNode centerToPlayer = xmlFile.CreateElement("centerToPlayer");
+
+            actorID.InnerText = Convert.ToString(unit.ID);
+            map_pos_x.InnerText = Convert.ToString(generator.transform.position.x);
+            map_pos_y.InnerText = Convert.ToString(generator.transform.position.y);
+            map_pos_z.InnerText = Convert.ToString(generator.transform.position.z);
+            defaultVKey.InnerText = Convert.ToString(unit.CreateFrame);
+            direction.InnerText = Convert.ToString(unit.Direction);
+            delayCreateTime.InnerText = Convert.ToString(unit.DelayCreateTime);
+            centerToPlayer.InnerText = Convert.ToString(unit.CenterToPlay);
+            
+
+            item.AppendChild(actorID);
+            item.AppendChild(map_pos_x);
+            item.AppendChild(map_pos_y);
+            item.AppendChild(map_pos_z);
+            item.AppendChild(defaultVKey);
+            item.AppendChild(direction);
+            item.AppendChild(delayCreateTime);
+            item.AppendChild(centerToPlayer);
+        }
+        
+        xmlFile.Save(MAP_ID_PATH + "/" + mapData.DataStruct.ID + "/MapGenerator/" + generator.DataStruct.ID + ".xml");
+    }
+
+    private static void saveWithSerialize(MapData mapData, MapGenerator generator)
+    {
+        FileStream fileStream = new FileStream(MAP_ID_PATH + "/" + mapData.DataStruct.ID + "/MapGenerator/" + generator.DataStruct.ID + ".dat", FileMode.Create, FileAccess.ReadWrite);
+        BinaryFormatter bf = new BinaryFormatter();
+        bf.Serialize(fileStream, generator.DataStruct);
+        fileStream.Close();
     }
 
     /// <summary>
@@ -170,32 +255,7 @@ public class MapEditor : MonoBehaviour {
             && Selection.gameObjects[0].GetComponents<MapGenerator>()!= null
             && Selection.gameObjects[0].GetComponents<MapGenerator>().Length > 0)
         {
-            // 自动生成index
-            int maxIndex = -1;
-            foreach (var unit in Selection.gameObjects[0].GetComponentsInChildren<Unit>())
-            {
-                if (unit.DataStruct.Index > maxIndex)
-                {
-                    maxIndex = unit.DataStruct.Index;
-                }
-            }
-
-            GameObject newUnit = new GameObject();
-            Unit unitComponent = newUnit.AddComponent<Unit>();
-
-            // 默认数据
-            unitComponent.DataStruct.Index = maxIndex + 1;
-            unitComponent.DataStruct.Name = "MonsterGenerator" + unitComponent.DataStruct.Index;
-            unitComponent.DataStruct.CreateAction = -1;
-
-            newUnit.transform.parent = Selection.gameObjects[0].transform;
-
-            // 添加数据
-            Selection.gameObjects[0].GetComponent<MapGenerator>().DataStruct.Units.Add(unitComponent.DataStruct);
-
-            // 选中
-            EditorGUIUtility.PingObject(newUnit);
-            Selection.activeGameObject = newUnit;
+            EditorWindow.GetWindow(typeof(UnitWindow), true, "创建Unit");
         }
         else
         {
@@ -224,7 +284,7 @@ public class MapEditor : MonoBehaviour {
             foreach (var path in Directory.GetFiles(MAP_ID_PATH + "/" + mapID + "/MapGenerator"))
             {
                 // 跳过以.mata结尾的
-                if (path.IndexOf(".meta") == -1)
+                if (path.IndexOf(".dat") != -1 && path.IndexOf(".meta") == -1)
                 {
                     FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.ReadWrite);
                     BinaryFormatter bf = new BinaryFormatter();
@@ -308,15 +368,31 @@ public class MapEditor : MonoBehaviour {
     public static void loadMap(string targetMapPath, string mapID)
     {
         // 加载Prefab资源
+        Debug.Log("targetPath: " + targetMapPath);
         mapPrefab = (GameObject)Resources.Load(targetMapPath);
         if (mapPrefab != null)
         {
             loadMapData(mapID);
             Instantiate(mapPrefab);
+            loadActor();
         }
         else
         {
             Debug.Log("Load失败");
+        }
+    }
+
+    private static void loadActor()
+    {
+        foreach (var generator in FindObjectsOfType<MapGenerator>())
+        {
+            foreach (var unit in generator.GetComponentsInChildren<Unit>())
+            {
+                // 暂时写死加载40001
+                // Debug.Log(MapEditor.ACTOR_PREFAB_PATH.Substring(MapEditor.ACTOR_PREFAB_PATH.IndexOf("Config")) + "/40001");
+                GameObject actor = Instantiate(Resources.Load("Actor/40001")) as GameObject;
+                actor.transform.parent = unit.transform;
+            }
         }
     }
 }
