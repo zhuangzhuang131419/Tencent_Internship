@@ -17,7 +17,7 @@ namespace KH
         // 内存中保存的一系列message，方便在给定cmdID的情况下取出 （利用cmdID作key，避免重复）
         public Dictionary<uint, MessageBody> messagesBodySet = null;
 
-        private bool isSerializeToLocal = true;
+        private bool isSerializeToLocal = false;
         private bool isDeserializeFromLocal = false;
 
         static public MessageManager Instance

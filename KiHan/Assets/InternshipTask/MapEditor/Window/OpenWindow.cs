@@ -47,8 +47,14 @@ public class OpenWindow : EditorWindow {
     {
         Debug.Log("Comfirm On Pressed");
         SearchRelatedPrefab();
-        Close();
-
+        try
+        {
+            this.Close();
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Close发生错误：" + e.Message);
+        }
     }
 
 

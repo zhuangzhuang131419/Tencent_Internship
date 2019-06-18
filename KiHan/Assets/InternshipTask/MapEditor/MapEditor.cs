@@ -142,7 +142,7 @@ public class MapEditor : MonoBehaviour {
             item.AppendChild(centerToPlayer);
         }
         
-        xmlFile.Save(MAP_ID_PATH + "/" + mapData.DataStruct.ID + "/MapGenerator/" + generator.DataStruct.ID + ".xml");
+        xmlFile.Save(MAP_ID_PATH + "/" + mapData.DataStruct.ID + "/MapGenerator/" + generator.DataStruct.ID + ".bytes");
     }
 
     private static void saveWithSerialize(MapData mapData, MapGenerator generator)
