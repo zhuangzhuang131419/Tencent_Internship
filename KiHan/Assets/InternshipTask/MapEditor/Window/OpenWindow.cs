@@ -48,16 +48,8 @@ public class OpenWindow : EditorWindow
     // 添加监听事件
     void OnOpenPress()
     {
-        Debug.Log("Comfirm On Pressed");
         SearchRelatedPrefab();
-        try
-        {
-            this.Close();
-        }
-        catch (Exception e)
-        {
-            Debug.Log("Close发生错误：" + e.Message);
-        }
+        Close();
     }
 
 

@@ -28,6 +28,7 @@ public class UnitStruct
     private int direction;
     private int delayCreateTime;
     private int centerToPlayer;
+    private float height;
 
     public int Index
     {
@@ -87,5 +88,11 @@ public class UnitStruct
     {
         get { return centerToPlayer; }
         set { centerToPlayer = value; }
+    }
+
+    public float Height
+    {
+        get { return height; }
+        set { height = value; }
     }
 }

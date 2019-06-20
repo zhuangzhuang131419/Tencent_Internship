@@ -95,6 +95,7 @@ public class UnitWindow : EditorWindow
             unitComponent.DataStruct.Name = "MonsterGenerator" + unitComponent.DataStruct.Index;
             unitComponent.DataStruct.Position = new TransformPosition(newUnit.transform.position);
             unitComponent.DataStruct.CreateAction = -1;
+            unitComponent.DataStruct.Direction = -1;
             unitComponent.DataStruct.ID = int.Parse(unitID);
             
 
