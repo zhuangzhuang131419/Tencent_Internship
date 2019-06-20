@@ -40,6 +40,9 @@ KiHan/*
 !KiHan/Assets
 KiHan/Assets/*
 
+# 保留MapEditor
+!KiHan/Assets/MapEditor
+
 # 保留InternshipTask
 !KiHan/Assets/InternshipTask
 
