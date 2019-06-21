@@ -496,13 +496,12 @@ namespace KH
             // 模拟服务器，从本地读包
             if (msgManager.IsDeserializeFromLocal)
             {
-                Debug.LogWarning("模拟服务器，从本地读包");
+                // Debug.LogWarning("模拟服务器，从本地读包");
                 // 反序列化之后的结果
                 List<object> messagesBody = msgManager.ReadMessageFromLocal(cmdId);
                 try
                 {
                     __Proxy.__QueueAddMessage(cmdId, serial, messagesBody);
-                    Debug.Log("消息已发送");
                 }
                 catch (NullReferenceException)
                 {

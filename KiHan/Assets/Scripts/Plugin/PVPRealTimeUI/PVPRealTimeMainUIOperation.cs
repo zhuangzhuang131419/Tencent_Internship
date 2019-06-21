@@ -1262,6 +1262,33 @@ namespace KH
             , Action<PVPSyncData> reportFunction = null
             , string battleUIName = "")
         {
+            // Update by chicheng
+            MessageManager msgManager = MessageManager.Instance;
+            //if (msgManager.IsDeserializeFromLocal)
+            {
+                Debug.LogWarning("从本地读取战斗包");
+                //BattleFinalResultData battleFinalResult = msgManager.deserializeFromLocal<BattleFinalResultData>(MessageManager.BATTLE_RESULT);
+                //if (battleFinalResult != null)
+                //{
+                //    Debug.Log("读取成功, myResult:" + battleFinalResult.myResult);
+                //}
+                //else
+                //{
+                //    Debug.Log("读取失败");
+                //}
+                Debug.LogWarning("直接endfunction");
+                if (endFunction != null)
+                {
+                    Debug.LogWarning("EnterRealTimePVP 当前处于" + KHGlobalExt.app.CurrentContext.contextName);
+                    // KHGlobalExt.app.SwitchScene(KHLevelName.GAME);
+                    // endFunction();
+                }
+                else
+                {
+                    Debug.Log("endfunction 是null");
+                }
+            }
+
             if (ret_info.ret_code == 0)
             {
                 Debuger.Log(LOG_TAG, "EnterRealTimePVP() PlayMode={0}, pvpType={1}", playMode, pvptype);
@@ -1666,4 +1693,3 @@ namespace KH
 
     }
 }
-

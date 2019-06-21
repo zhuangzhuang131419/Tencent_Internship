@@ -14,6 +14,7 @@ namespace KH
     {
         static private MessageManager messageManagerInstance = null;
         public static readonly string DEST_PATH = "F:\\Tencent_Internship\\KiHan\\log\\Temp.dat";
+        public static readonly string BATTLE_RESULT = "F:\\Tencent_Internship\\KiHan\\log\\Result.dat";
         // 内存中保存的一系列message，方便在给定cmdID的情况下取出 （利用cmdID作key，避免重复）
         public Dictionary<uint, MessageBody> messagesBodySet = null;
 
@@ -52,7 +53,7 @@ namespace KH
         /// </summary>
         /// <param name="msgs"></param>
         /// <param name="messageType"></param>
-        public void serializeToLocal(List<object> msgs, Type messageType, uint cmdID, ulong timeStamp, uint serial)
+        public void serializeToLocalWithType(List<object> msgs, Type messageType, uint cmdID, ulong timeStamp, uint serial)
         {
             MessageBody packedMessageBody = new MessageBody(messageType, cmdID, timeStamp, serial);
             // 如果是NTF包，List<object>会有两项
@@ -90,7 +91,7 @@ namespace KH
         /// 把服务器接收来的消息包序列化到本地
         /// </summary>
         /// <param name="destinationPath">要存放的地址</param>
-        public void serializeToLocal(MessageBody messageBody, string destinationPath)
+        public void serializeToLocal<T>(T messageBody, string destinationPath)
         {
             // 要把type也序列化进去
             FileStream fileStream = null;
@@ -115,7 +116,17 @@ namespace KH
                 long beginPosition = fileStream.Seek(0, SeekOrigin.End);
                 BinaryFormatter bf = new BinaryFormatter();
                 // 初次序列化，获取数组的长度
-                bf.Serialize(fileStream, messageBody);
+                try
+                {
+                    bf.Serialize(fileStream, messageBody);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning("序列化出错");
+                    Debug.LogWarning(e.Message);
+                }
+
+                
                 long messageBodyLength = fileStream.Length - originalFileStreamLength;
 
                 byte[] messageBodyBuffer = new byte[messageBodyLength];
@@ -182,9 +193,9 @@ namespace KH
         /// <param name="messageBuffer"></param>
         /// <param name="count">取出第count个message</param>
         /// <returns>消息主体</returns>
-        public MessageBody deserializeFromLocal(string sourcePath, int count)
+        public T deserializeFromLocal<T>(string sourcePath, int count = 0)
         {
-            MessageBody message = null;
+            T message = default(T);
             FileStream fileStream = null;
             BinaryFormatter bf = new BinaryFormatter();
             try
@@ -219,7 +230,7 @@ namespace KH
                     else
                     {
                         Debug.LogWarning("超出message包的范围");
-                        return null;
+                        return default(T);
                     }
                 }
 
@@ -230,7 +241,7 @@ namespace KH
                     long beginPosition = fileStream.Position;
                     if (fileStream.Read(messageHeadBuffer, 0, MessageBody.MessageHeadLength) != MessageBody.MessageHeadLength)
                     {
-                        return null;
+                        return default(T);
                     }
                     messageBodyLength = BitConverter.ToInt32(messageHeadBuffer, 0);
                     messageBodyBuffer = new byte[messageBodyLength];
@@ -241,14 +252,23 @@ namespace KH
                         mStream.Write(messageBodyBuffer, 0, messageBodyLength);
                         mStream.Flush();
                         mStream.Seek(0, SeekOrigin.Begin);
-                        message = (MessageBody)bf.Deserialize(mStream);
+                        try
+                        {
+                            message = (T)bf.Deserialize(mStream);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogWarning("反序列化战斗包出错");
+                            Debug.LogWarning(e.Message);
+                        }
+                        
                         mStream.Close();
                     }
 
                     long endPosition = fileStream.Position;
 
                     // 读完这个包后要把这段数据去掉(beginPosition 到 endPosition 之间的)
-                    deleteBuffer(fileStream, beginPosition, endPosition);
+                    // deleteBuffer(fileStream, beginPosition, endPosition);
 
                 }
                 catch (IOException)

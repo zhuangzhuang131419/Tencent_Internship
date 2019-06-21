@@ -235,7 +235,6 @@ namespace KH
         public void Enter(object data = null)
         {
             Debuger.Log("PVPRealTimeOperation Enter()");
-
             _isLoadingStart = false;
 
             PVPRTParameter param = data as PVPRTParameter;
@@ -309,6 +308,8 @@ namespace KH
         private void  _Do_Enter(PVPRTParameter param)
         {
             Debuger.Log("_Do_Enter");
+            Debug.LogWarning("_Do_Enter 当前处于" + KHGlobalExt.app.CurrentContext.contextName);
+
             if (_isEnter) return;
                 _isEnter = true;
 
@@ -1051,6 +1052,7 @@ namespace KH
         private void _BattleResult(KHEvent e)
         {
             Debuger.Log("_BattleResult()");
+            Debug.LogWarning("_BattleResult 当前处于" + KHGlobalExt.app.CurrentContext.contextName);
             PVPRTRoundResult result = e.data as PVPRTRoundResult;
 
             //Debuger.Log("[_BattleResult] _BattleResult killflag = " + result.killFlag);
@@ -1778,6 +1780,20 @@ namespace KH
                             _DelayCallTimer = null;
                         }
 
+                        // Update by Chicheng
+                        MessageManager msgManager = MessageManager.Instance;
+                        if (msgManager.IsSerializeToLocal)
+                        {
+                            // 把战斗结果序列化到本地
+                            Debug.LogWarning("把战斗结果序列化到本地");
+                            msgManager.serializeToLocal(data, MessageManager.BATTLE_RESULT);
+                            BattleFinalResultData temp = msgManager.deserializeFromLocal<BattleFinalResultData>(MessageManager.BATTLE_RESULT);
+                            if (temp == null)
+                            {
+                                Debug.LogWarning("序列化出错");
+                            }
+                        }
+
                         _isShowResultWin = true;
 
                         runtimePRT.StopPlot();
@@ -2116,6 +2132,7 @@ namespace KH
         public void ExitBattle(object data = null)
         {
             Debuger.Log("ExitBattle() [PVP - ExitBattle] _endFunction == null ?" + (_endFunction == null).ToString());
+            Debug.LogWarning("ExitBattle 当前处于" + KHGlobalExt.app.CurrentContext.contextName);
 
             if (_endFunction != null)
             {
