@@ -27,10 +27,10 @@ public class UnitEditor : Editor
         unit.DataStruct.ID = EditorGUILayout.IntField("Unit ID", unit.DataStruct.ID);
         unit.DataStruct.CreateAction = EditorGUILayout.IntField("Create Action VKey", unit.DataStruct.CreateAction);
         unit.DataStruct.CreateFrame = EditorGUILayout.IntField("Create Frame", unit.DataStruct.CreateFrame);
+        unit.DataStruct.CreateHeight = EditorGUILayout.FloatField("CreateHeight", unit.DataStruct.CreateHeight);
         unit.DataStruct.Direction = EditorGUILayout.IntField("Direction", unit.DataStruct.Direction);
         unit.DataStruct.DelayCreateTime = EditorGUILayout.IntField("Delay Create Time", unit.DataStruct.DelayCreateTime);
-        unit.DataStruct.CenterToPlay = EditorGUILayout.IntField("Center To Play", unit.DataStruct.CenterToPlay);
-        unit.DataStruct.Height = EditorGUILayout.FloatField("Height", unit.DataStruct.Height);
+        unit.DataStruct.CenterToPlayer = EditorGUILayout.IntField("Center To Player", unit.DataStruct.CenterToPlayer);
         EditorGUILayout.EndVertical();
     }
 }

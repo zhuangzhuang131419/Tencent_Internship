@@ -14,7 +14,7 @@ public class MapEditor : MonoBehaviour
     public static readonly string MAP_ID_PATH = "Assets/Resources/Config/Map";
     public static readonly string NINJA_XML_PATH = "Assets/EditorConfig/random_dungeon";
     public static readonly string ACTOR_PREFAB_PATH = "Assets/Resources/Actor";
-    private static GameObject mapPrefab = null;
+    public static object mapDataPrefab = null;
 
     // public static Map currentMap;
 
@@ -99,20 +99,11 @@ public class MapEditor : MonoBehaviour
             saveWithXML(mapData, generator);
         }
 
-
-        Debug.Log(MAP_ID_PATH + "/" + mapData.DataStruct.ID + "/" + mapData.DataStruct.ID + ".prefab");
-        if (mapPrefab != null)
-        {
-            try
-            {
-                PrefabUtility.CreatePrefab(MAP_ID_PATH + "/" + mapData.DataStruct.ID + "/" + mapData.DataStruct.ID + ".prefab", mapPrefab);
-            }
-            catch (Exception e)
-            {
-                Debug.Log("出错了" + e.Message);
-            }
-        }
-    }
+		// apply
+        GameObject instance = mapData.gameObject;
+        var prefab = PrefabUtility.GetPrefabParent(PrefabUtility.FindValidUploadPrefabInstanceRoot(instance));
+        PrefabUtility.ReplacePrefab(instance, prefab);
+}
 
     private static void saveWithXML(MapData mapData, MapGenerator generator)
     {
@@ -152,12 +143,12 @@ public class MapEditor : MonoBehaviour
 
             actorID.InnerText = Convert.ToString(unit.ID);
             map_pos_x.InnerText = Convert.ToString(unit.Position.X * 10000);
-            map_pos_y.InnerText = Convert.ToString(unit.Height * 10000);
+            map_pos_y.InnerText = Convert.ToString(unit.CreateHeight * 10000);
             map_pos_z.InnerText = Convert.ToString(unit.Position.Y * 10000);
             defaultVKey.InnerText = Convert.ToString(unit.CreateFrame);
             direction.InnerText = Convert.ToString(unit.Direction);
             delayCreateTime.InnerText = Convert.ToString(unit.DelayCreateTime);
-            centerToPlayer.InnerText = Convert.ToString(unit.CenterToPlay);
+            centerToPlayer.InnerText = Convert.ToString(unit.CenterToPlayer);
 
 
             item.AppendChild(actorID);
@@ -284,7 +275,42 @@ public class MapEditor : MonoBehaviour
             && Selection.gameObjects[0].GetComponents<MapGenerator>() != null
             && Selection.gameObjects[0].GetComponents<MapGenerator>().Length > 0)
         {
-            EditorWindow.GetWindow(typeof(UnitWindow), true, "创建Unit");
+            // 自动生成index
+            int maxIndex = -1;
+            foreach (var unit in Selection.gameObjects[0].GetComponentsInChildren<Unit>())
+            {
+                if (unit.DataStruct.Index > maxIndex)
+                {
+                    maxIndex = unit.DataStruct.Index;
+                }
+            }
+
+            GameObject newUnit = new GameObject();
+            Unit unitComponent = newUnit.AddComponent<Unit>();
+
+            // 默认数据
+            unitComponent.DataStruct.Index = maxIndex + 1;
+            unitComponent.DataStruct.Name = "MonsterGenerator" + unitComponent.DataStruct.Index;
+            unitComponent.DataStruct.Position = new TransformPosition(newUnit.transform.position);
+            unitComponent.DataStruct.CreateAction = -1;
+            unitComponent.DataStruct.Direction = -1;
+            unitComponent.DataStruct.ID = 0;
+
+
+            newUnit.transform.parent = Selection.gameObjects[0].transform;
+
+            // 添加数据
+            Selection.gameObjects[0].GetComponent<MapGenerator>().DataStruct.Units.Add(unitComponent.DataStruct);
+
+            // 暂时写死加载40001
+            // Debug.Log(MapEditor.ACTOR_PREFAB_PATH.Substring(MapEditor.ACTOR_PREFAB_PATH.IndexOf("Config")) + "/40001");
+            GameObject actor = Instantiate(Resources.Load("Actor/40001")) as GameObject;
+            actor.transform.parent = newUnit.transform;
+
+
+            // 选中
+            EditorGUIUtility.PingObject(newUnit);
+            Selection.activeGameObject = newUnit;
         }
         else
         {
@@ -295,6 +321,8 @@ public class MapEditor : MonoBehaviour
             );
         }
     }
+
+     
 
     /// <summary>
     /// 加载mapData
@@ -352,12 +380,12 @@ public class MapEditor : MonoBehaviour
                     generator.Units[index].Position = new TransformPosition(
                         float.Parse(item.SelectSingleNode("map_pos_x").InnerText) / 10000,
                         float.Parse(item.SelectSingleNode("map_pos_z").InnerText) / 10000,
-                        generator.Units[index].Height
+                        generator.Units[index].CreateHeight
                         );
                     generator.Units[index].CreateAction = int.Parse(item.SelectSingleNode("defaultVKey").InnerText);
                     generator.Units[index].Direction = int.Parse(item.SelectSingleNode("direction").InnerText);
                     generator.Units[index].DelayCreateTime = int.Parse(item.SelectSingleNode("delayCreateTime").InnerText);
-                    generator.Units[index].CenterToPlay = int.Parse(item.SelectSingleNode("centerToPlayer").InnerText);
+                    generator.Units[index].CenterToPlayer = int.Parse(item.SelectSingleNode("centerToPlayer").InnerText);
                     index++;
                 }
             }
@@ -385,6 +413,9 @@ public class MapEditor : MonoBehaviour
         mapGenerator.transform.parent = mapDataObject.transform;
         GameObject monsterGenerator = new GameObject("MonsterGenerator");
         monsterGenerator.transform.parent = mapGenerator.transform;
+
+        // 绑定Prefab
+        PrefabUtility.ReplacePrefab(mapDataObject, PrefabUtility.CreatePrefab(MAP_ID_PATH + "/" + mapID + "/" + mapID + ".prefab", mapDataObject), ReplacePrefabOptions.ConnectToPrefab);
     }
 
     /// <summary>
@@ -448,12 +479,13 @@ public class MapEditor : MonoBehaviour
     {
         // 加载Prefab资源
         Debug.Log("targetPath: " + targetMapPath);
-        mapPrefab = (GameObject)Resources.Load(targetMapPath);
+        GameObject mapPrefab = (GameObject)Resources.Load(targetMapPath);
         if (mapPrefab != null)
         {
             loadMapData(mapID);
             Instantiate(mapPrefab);
             loadActor();
+
         }
         else
         {

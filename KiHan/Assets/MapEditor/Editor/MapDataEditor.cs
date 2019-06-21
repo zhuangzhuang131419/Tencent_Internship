@@ -11,7 +11,7 @@ public class MapDataEditor : Editor
     void OnEnable()
     {
         //获取当前编辑自定义Inspector的对象
-        mapData = (MapData)target;
+        mapData = FindObjectOfType<MapData>();
     }
 
     public override void OnInspectorGUI()

@@ -25,10 +25,10 @@ public class UnitStruct
     private int unitID;
     private int createAction;
     private int createFrame;
+    private float createHeight;
     private int direction;
     private int delayCreateTime;
     private int centerToPlayer;
-    private float height;
 
     public int Index
     {
@@ -84,15 +84,15 @@ public class UnitStruct
         set { delayCreateTime = value; }
     }
 
-    public int CenterToPlay
+    public int CenterToPlayer
     {
         get { return centerToPlayer; }
         set { centerToPlayer = value; }
     }
 
-    public float Height
+    public float CreateHeight
     {
-        get { return height; }
-        set { height = value; }
+        get { return createHeight; }
+        set { createHeight = value; }
     }
 }
