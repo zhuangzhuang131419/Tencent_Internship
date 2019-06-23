@@ -7,8 +7,8 @@ using System;
 
 public class CreateWindow : EditorWindow {
 
-    private string mapPrefabID = "10102";
-    private string mapID = "10102";
+    private string mapPrefabID = "";
+    private string mapID = "";
     
     public string MapPrefabID
     {
@@ -95,6 +95,6 @@ public class CreateWindow : EditorWindow {
         {
             MapEditor.loadMap(targetMapPath, mapID);
         }
-		Close();
+        Close();
     }
 }

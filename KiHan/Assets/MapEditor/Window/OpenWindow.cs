@@ -8,8 +8,8 @@ using System;
 public class OpenWindow : EditorWindow
 {
 
-    private string mapPrefabID = "10102";
-    private string mapID = "10102";
+    private string mapPrefabID = "";
+    private string mapID = "";
 
     public string MapPrefabID
     {
@@ -48,12 +48,15 @@ public class OpenWindow : EditorWindow
     // 添加监听事件
     void OnOpenPress()
     {
-        SearchRelatedPrefab();
+        if (SearchRelatedPrefab())
+        {
+            MapEditor.refreshFromXML();
+        }
         Close();
     }
 
 
-    private void SearchRelatedPrefab()
+    private bool SearchRelatedPrefab()
     {
         bool isMapPrefabExist = false;
         bool isMapIDExist = false;
@@ -86,7 +89,7 @@ public class OpenWindow : EditorWindow
         if (isMapIDExist && isMapPrefabExist)
         {
             MapEditor.loadMap(targetMapPath, mapID);
-            Close();
+            return true;
         }
         else if (!isMapPrefabExist)
         {
@@ -96,6 +99,7 @@ public class OpenWindow : EditorWindow
                 delegate (EditorWindow window) { window.Close(); },
                 delegate (EditorWindow window) { window.Close(); }
             );
+            return false;
         }
         else
         {
@@ -114,6 +118,7 @@ public class OpenWindow : EditorWindow
                 },
                 delegate (EditorWindow window) { window.Close(); }
             );
+            return false;
         }
     }
 }

@@ -17,20 +17,21 @@ public class UnitEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        base.DrawDefaultInspector();
         
         EditorGUILayout.BeginVertical();
-        EditorGUILayout.IntField("Unit Index", unit.DataStruct.Index);
-        unit.name = unit.DataStruct.Name + "_" + unit.DataStruct.Index;
-        unit.DataStruct.Name = EditorGUILayout.TextField("Name", unit.DataStruct.Name);
-        unit.DataStruct.Desc = EditorGUILayout.TextField("Desc", unit.DataStruct.Desc);
-        unit.DataStruct.Position = new TransformPosition(unit.transform.position);
-        unit.DataStruct.ID = EditorGUILayout.IntField("Unit ID", unit.DataStruct.ID);
-        unit.DataStruct.CreateAction = EditorGUILayout.IntField("Create Action VKey", unit.DataStruct.CreateAction);
-        unit.DataStruct.CreateFrame = EditorGUILayout.IntField("Create Frame", unit.DataStruct.CreateFrame);
-        unit.DataStruct.CreateHeight = EditorGUILayout.FloatField("CreateHeight", unit.DataStruct.CreateHeight);
-        unit.DataStruct.Direction = EditorGUILayout.IntField("Direction", unit.DataStruct.Direction);
-        unit.DataStruct.DelayCreateTime = EditorGUILayout.IntField("Delay Create Time", unit.DataStruct.DelayCreateTime);
-        unit.DataStruct.CenterToPlayer = EditorGUILayout.IntField("Center To Player", unit.DataStruct.CenterToPlayer);
+        // EditorGUILayout.IntField("Unit Index", unit.Index);
+        unit.name = unit.Name + "_" + unit.Index;
+        unit.Name = unit.Name;
+        //unit.Desc = EditorGUILayout.TextField("Desc", unit.Desc);
+        //unit.ID = EditorGUILayout.IntField("Unit ID", unit.ID);
+        //unit.CreateAction = EditorGUILayout.IntField("Create Action VKey", unit.CreateAction);
+        //unit.CreateFrame = EditorGUILayout.IntField("Create Frame", unit.CreateFrame);
+        //unit.CreateHeight = EditorGUILayout.FloatField("CreateHeight", unit.CreateHeight);
+        //unit.Direction = EditorGUILayout.IntField("Direction", unit.Direction);
+        //unit.DelayCreateTime = EditorGUILayout.IntField("Delay Create Time", unit.DelayCreateTime);
+        //unit.CenterToPlayer = EditorGUILayout.IntField("Center To Player", unit.CenterToPlayer);
         EditorGUILayout.EndVertical();
+        
     }
 }

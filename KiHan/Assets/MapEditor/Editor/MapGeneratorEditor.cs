@@ -16,15 +16,15 @@ public class MapGeneratorEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        base.DrawDefaultInspector();
         EditorGUILayout.BeginVertical();
 
-        EditorGUILayout.IntField("MapGenerator ID", mapGenerator.DataStruct.ID);
-        mapGenerator.DataStruct.Desc = EditorGUILayout.TextField("Desc", mapGenerator.DataStruct.Desc);
-        mapGenerator.name = mapGenerator.DataStruct.Name + "_" + mapGenerator.DataStruct.Index;
-        mapGenerator.DataStruct.Name = EditorGUILayout.TextField("Name", mapGenerator.DataStruct.Name);
-        EditorGUILayout.IntField("Index", mapGenerator.DataStruct.Index);
-        mapGenerator.DataStruct.Position = new TransformPosition(mapGenerator.transform.position);
-        mapGenerator.DataStruct.Type = EditorGUILayout.IntField("Type", mapGenerator.DataStruct.Type);
+        // EditorGUILayout.IntField("MapGenerator ID", mapGenerator.ID);
+        // EditorGUILayout.TextField("Desc", mapGenerator.Desc);
+        mapGenerator.name = mapGenerator.Name + "_" + mapGenerator.Index;
+        mapGenerator.Name = mapGenerator.Name;
+        // EditorGUILayout.IntField("Index", mapGenerator.Index);
+        // mapGenerator.Type = EditorGUILayout.IntField("Type", mapGenerator.Type);
         EditorGUILayout.EndVertical();
     }
 }

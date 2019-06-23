@@ -81,9 +81,9 @@ public class UnitWindow : EditorWindow
             int maxIndex = -1;
             foreach (var unit in Selection.gameObjects[0].GetComponentsInChildren<Unit>())
             {
-                if (unit.DataStruct.Index > maxIndex)
+                if (unit.Index > maxIndex)
                 {
-                    maxIndex = unit.DataStruct.Index;
+                    maxIndex = unit.Index;
                 }
             }
 
@@ -91,18 +91,17 @@ public class UnitWindow : EditorWindow
             Unit unitComponent = newUnit.AddComponent<Unit>();
 
             // 默认数据
-            unitComponent.DataStruct.Index = maxIndex + 1;
-            unitComponent.DataStruct.Name = "MonsterGenerator" + unitComponent.DataStruct.Index;
-            unitComponent.DataStruct.Position = new TransformPosition(newUnit.transform.position);
-            unitComponent.DataStruct.CreateAction = -1;
-            unitComponent.DataStruct.Direction = -1;
-            unitComponent.DataStruct.ID = int.Parse(unitID);
+            unitComponent.Index = maxIndex + 1;
+            unitComponent.Name = "MonsterGenerator" + unitComponent.Index;
+            unitComponent.CreateAction = -1;
+            unitComponent.Direction = -1;
+            unitComponent.ID = int.Parse(unitID);
             
 
             newUnit.transform.parent = Selection.gameObjects[0].transform;
 
             // 添加数据
-            Selection.gameObjects[0].GetComponent<MapGenerator>().DataStruct.Units.Add(unitComponent.DataStruct);
+            // Selection.gameObjects[0].GetComponent<MapGenerator>().Units.Add(unitComponent);
 
             // 暂时写死加载40001
             // Debug.Log(MapEditor.ACTOR_PREFAB_PATH.Substring(MapEditor.ACTOR_PREFAB_PATH.IndexOf("Config")) + "/40001");

@@ -6,21 +6,9 @@ using UnityEditor;
 
 public class MapData : MonoBehaviour
 {
-    private MapDataStruct mapDataStruct = new MapDataStruct();
-
-    public MapDataStruct DataStruct
-    {
-        get { return mapDataStruct; }
-        set { mapDataStruct = value; }
-    }
-}
-
-[Serializable] 
-public class MapDataStruct
-{
-    private int id;
-    private string desc;
-    private List<MapGeneratorDataStruct> mapGenerators = new List<MapGeneratorDataStruct>();
+    [SerializeField]private int id;
+    [SerializeField]private string desc;
+    // private List<MapGenerator> mapGenerators = new List<MapGenerator>();
 
     public int ID
     {
@@ -34,9 +22,9 @@ public class MapDataStruct
         set { desc = value; }
     }
 
-    public List<MapGeneratorDataStruct> MapGenerators
-    {
-        get { return mapGenerators; }
-        set { mapGenerators = value; }
-    }
+    //public List<MapGenerator> MapGenerators
+    //{
+    //    get { return mapGenerators; }
+    //    set { mapGenerators = value; }
+    //}
 }

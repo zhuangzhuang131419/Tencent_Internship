@@ -3,32 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[Serializable]
 public class Unit : MonoBehaviour
 {
-    private UnitStruct unitStruct = new UnitStruct();
-
-    public UnitStruct DataStruct
-    {
-        get { return unitStruct; }
-        set { unitStruct = value; }
-    }
-}
-
-[Serializable]
-public class UnitStruct
-{
-    private int index;
-    private string unitName;
-    private string desc;
-    private TransformPosition transformPosition;
-    private int unitID;
-    private int createAction;
-    private int createFrame;
-    private float createHeight;
-    private int direction;
-    private int delayCreateTime;
-    private int centerToPlayer;
+    [SerializeField] private int index;
+    [SerializeField] private string unitName;
+    [SerializeField] private string desc;
+    [SerializeField] private int unitID;
+    [SerializeField] private int createActionVKey;
+    [SerializeField] private int createFrame;
+    [SerializeField] private float createHeight;
+    [SerializeField] private int direction;
+    [SerializeField] private int delayCreateTime;
+    [SerializeField] private int centerToPlayer;
 
     public int Index
     {
@@ -48,12 +34,6 @@ public class UnitStruct
         set { desc = value; }
     }
 
-    public TransformPosition Position
-    {
-        get { return transformPosition; }
-        set { transformPosition = value; }
-    }
-
     public int ID
     {
         get { return unitID; }
@@ -62,8 +42,8 @@ public class UnitStruct
 
     public int CreateAction
     {
-        get { return createAction; }
-        set { createAction = value; }
+        get { return createActionVKey; }
+        set { createActionVKey = value; }
     }
 
     public int CreateFrame

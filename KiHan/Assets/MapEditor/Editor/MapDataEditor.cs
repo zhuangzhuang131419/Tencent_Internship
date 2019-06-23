@@ -11,16 +11,17 @@ public class MapDataEditor : Editor
     void OnEnable()
     {
         //获取当前编辑自定义Inspector的对象
-        mapData = FindObjectOfType<MapData>();
+        mapData = (MapData)target;
     }
 
     public override void OnInspectorGUI()
     {
-        EditorGUILayout.BeginVertical();
+        base.DrawDefaultInspector();
+        //EditorGUILayout.BeginVertical();
 
-        EditorGUILayout.IntField("Map ID", mapData.DataStruct.ID);
-        mapData.DataStruct.Desc = EditorGUILayout.TextField("Desc", mapData.DataStruct.Desc);
+        //EditorGUILayout.IntField("Map ID", mapData.ID);
+        //mapData.Desc = EditorGUILayout.TextField("Desc", mapData.Desc);
 
-        EditorGUILayout.EndVertical();
+        //EditorGUILayout.EndVertical();
     }
 }
