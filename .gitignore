@@ -89,6 +89,14 @@ KiHan/Assets/Scripts/Plugin/PVPRealTimeUI/*
 KiHan/Assets/Scripts/Plugin/PVPRealTimeUI/*
 !KiHan/Assets/Scripts/Plugin/PVPRealTimeUI/PVPRealTimeMainUIOperation.cs
 
+!KiHan/Assets/Scripts/UI
+KiHan/Assets/Scripts/UI/*
+!KiHan/Assets/Scripts/UI/PVPRealTimeUI
+KiHan/Assets/Scripts/UI/PVPRealTimeUI/*
+
+# 保留UIPVPRealTimeMatchEnemy
+!KiHan/Assets/Scripts/UI/PVPRealTimeUI/UIPVPRealTimeMatchEnemy.cs
+
 # 保留Resources/Scene
 !KiHan/Assets/Resources
 KiHan/Assets/Resources/*
