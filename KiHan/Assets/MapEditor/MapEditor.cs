@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -71,7 +71,6 @@ public class MapEditor : MonoBehaviour
             return;
         }
         MapData mapData = FindObjectOfType<MapData>();
-        Debug.LogWarning(mapData.ID);
 
         // 更新DataStruct
         //mapData.MapGenerators.Clear();
@@ -105,7 +104,7 @@ public class MapEditor : MonoBehaviour
             Directory.CreateDirectory(MAP_ID_PATH + "/" + mapData.ID + "/MapGenerator");
         }
 
-        
+
         // 依次保存每一个Generator
 
         foreach (MapGenerator generator in mapData.GetComponentsInChildren<MapGenerator>())
@@ -197,19 +196,33 @@ public class MapEditor : MonoBehaviour
         MapData mapData = FindObjectOfType<MapData>();
         if (mapData == null) { return true; }
         HashSet<int> tempHashSet = new HashSet<int>();
+        Debug.LogWarning("当前有" + FindObjectsOfType<MapGenerator>().Length + "个MapGenerator");
         foreach (var generator in FindObjectsOfType<MapGenerator>())
         {
             if (!tempHashSet.Add(generator.Index))
             {
                 // index already exist
                 MessageWindow.CreateMessageBox(
-                    generator.Name + "_" + generator.ID + "命名非法",
-                    delegate (EditorWindow window) { window.Close(); },
+                    generator.Name + "_" + generator.ID + "命名非法, 是否一键修复",
+                    delegate (EditorWindow window)
+                    {
+                        // 一键修复index
+                        int i = FindObjectsOfType<MapGenerator>().Length;
+                        foreach (var item in FindObjectsOfType<MapGenerator>())
+                        {
+                            item.Index = --i;
+                        }
+                        save();
+                        window.Close();
+                    },
                     delegate (EditorWindow window) { window.Close(); }
                 );
                 return false;
             }
+        }
 
+        foreach (var generator in FindObjectsOfType<MapGenerator>())
+        {
             tempHashSet.Clear();
             foreach (var unit in generator.GetComponentsInChildren<Unit>())
             {
@@ -217,8 +230,18 @@ public class MapEditor : MonoBehaviour
                 {
                     // index already exist
                     MessageWindow.CreateMessageBox(
-                        unit.Name + "_" + unit.ID + "命名非法",
-                        delegate (EditorWindow window) { window.Close(); },
+                        unit.Name + "_" + unit.ID + "命名非法, 是否一键修复",
+                        delegate (EditorWindow window)
+                        {
+                            // 一键修复index
+                            int i = 0;
+                            foreach (var item in generator.GetComponentsInChildren<Unit>())
+                            {
+                                item.Index = i++;
+                            }
+                            save();
+                            window.Close();
+                        },
                         delegate (EditorWindow window) { window.Close(); }
                     );
                     return false;

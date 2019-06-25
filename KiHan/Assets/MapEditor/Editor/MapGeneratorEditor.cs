@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System;
 
 [CustomEditor(typeof(MapGenerator))]
 public class MapGeneratorEditor : Editor
@@ -12,6 +13,7 @@ public class MapGeneratorEditor : Editor
     {
         //获取当前编辑自定义Inspector的对象
         mapGenerator = (MapGenerator)target;
+        // mapGenerator.Name = "MapGenerator" + mapGenerator.ID;
     }
 
     public override void OnInspectorGUI()
@@ -22,7 +24,8 @@ public class MapGeneratorEditor : Editor
         // EditorGUILayout.IntField("MapGenerator ID", mapGenerator.ID);
         // EditorGUILayout.TextField("Desc", mapGenerator.Desc);
         mapGenerator.name = mapGenerator.Name + "_" + mapGenerator.Index;
-        mapGenerator.Name = mapGenerator.Name;
+        // mapGenerator.Name = mapGenerator.Name;
+        mapGenerator.ID = int.Parse(Convert.ToSingle(FindObjectOfType<MapData>().ID) + "00" + mapGenerator.Index);
         // EditorGUILayout.IntField("Index", mapGenerator.Index);
         // mapGenerator.Type = EditorGUILayout.IntField("Type", mapGenerator.Type);
         EditorGUILayout.EndVertical();
