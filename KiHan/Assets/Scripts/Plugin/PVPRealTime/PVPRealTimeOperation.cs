@@ -229,6 +229,7 @@ namespace KH
         {
             _sysSetting = new SysSetting();
             _watcher = new PVPRTQuitWatcher(_InterruptGuide);
+            Debug.LogWarning("初始化PVPRealTimeOperation");
         }
         
         [Operation(BattleOperation.RequireBattle)]
@@ -307,8 +308,6 @@ namespace KH
 
         private void  _Do_Enter(PVPRTParameter param)
         {
-            Debuger.Log("_Do_Enter");
-            Debug.LogWarning("_Do_Enter 当前处于" + KHGlobalExt.app.CurrentContext.contextName);
 
             if (_isEnter) return;
                 _isEnter = true;
@@ -1556,6 +1555,7 @@ namespace KH
         private void _PVP_1V1_GameOver_Info(object message)
         {
             Debuger.Log("_PVP_1V1_GameOver_Info()");
+            Debug.LogWarning("_PVP_1V1_GameOver_Info 当前场景" + KHGlobalExt.app.CurrentContext.contextName);
             if (_isShowResultWin) return;
             
             if (modelPRT.playMode == PVPRTPlayMode.Normal)
@@ -1778,20 +1778,6 @@ namespace KH
                         {
                             _DelayCallTimer.StopImmediately();
                             _DelayCallTimer = null;
-                        }
-
-                        // Update by Chicheng
-                        MessageManager msgManager = MessageManager.Instance;
-                        if (msgManager.IsSerializeToLocal)
-                        {
-                            // 把战斗结果序列化到本地
-                            Debug.LogWarning("把战斗结果序列化到本地");
-                            msgManager.serializeToLocal(data, MessageManager.BATTLE_RESULT);
-                            BattleFinalResultData temp = msgManager.deserializeFromLocal<BattleFinalResultData>(MessageManager.BATTLE_RESULT);
-                            if (temp == null)
-                            {
-                                Debug.LogWarning("序列化出错");
-                            }
                         }
 
                         _isShowResultWin = true;

@@ -85,9 +85,9 @@ KiHan/Assets/Scripts/Plugin/PVPRealTimeUI/*
 !KiHan/Assets/Scripts/Plugin/PVPRealTimeUI/PVPRealTimeMainUIOperation.cs
 
 # 保留PVPRealTimeOperation
-!KiHan/Assets/Scripts/Plugin/PVPRealTimeUI
-KiHan/Assets/Scripts/Plugin/PVPRealTimeUI/*
-!KiHan/Assets/Scripts/Plugin/PVPRealTimeUI/PVPRealTimeMainUIOperation.cs
+!KiHan/Assets/Scripts/Plugin/PVPRealTime
+KiHan/Assets/Scripts/Plugin/PVPRealTime/*
+!KiHan/Assets/Scripts/Plugin/PVPRealTime/PVPRealTimeOperation.cs
 
 !KiHan/Assets/Scripts/UI
 KiHan/Assets/Scripts/UI/*

@@ -16,7 +16,7 @@ namespace KH
         public static readonly string DEST_PATH = "F:\\Tencent_Internship\\KiHan\\log\\Temp.dat";
         public static readonly string BATTLE_RESULT = "F:\\Tencent_Internship\\KiHan\\log\\Result.dat";
         // 内存中保存的一系列message，方便在给定cmdID的情况下取出 （利用cmdID作key，避免重复）
-        public Dictionary<uint, MessageBody> messagesBodySet = null;
+        public Dictionary<uint, List<MessageBody>> messagesBodySet = null;
 
         private bool isSerializeToLocal = false;
         private bool isDeserializeFromLocal = false;
@@ -366,7 +366,7 @@ namespace KH
 
                             if (tempMessageBody.CmdID == cmdID)
                             {
-                                deleteBuffer(fileStream, beginPosition, endPosition);
+                                // deleteBuffer(fileStream, beginPosition, endPosition);
                                 resultMessageBody = tempMessageBody;
                                 Debug.Log("读取成功");
                                 return resultMessageBody;
@@ -409,18 +409,29 @@ namespace KH
 
         private MessageBody getMessageBodyByCmdIDFromResults(uint cmdID)
         {
-            MessageBody result = null;
-            messagesBodySet.TryGetValue(cmdID, out result);
-            return result;
+            if (messagesBodySet.ContainsKey(cmdID))
+            {
+                MessageBody result = messagesBodySet[cmdID][0];
+                messagesBodySet[cmdID].RemoveAt(0);
+                return result;
+            }
+            else
+            {
+                Debug.LogWarning("不存在对应的cmd");
+            }
+            return null;
         }
 
         private MessageBody getMessageBodyByTimeStampFromResults(ulong timeStamp)
         {
-            foreach (var messageBody in messagesBodySet.Values)
+            foreach (var messageBodyList in messagesBodySet.Values)
             {
-                if (messageBody.TimeStamp == timeStamp)
+                foreach (var item in messageBodyList)
                 {
-                    return messageBody;
+                    if (item.TimeStamp == timeStamp)
+                    {
+                        return item;
+                    }
                 }
             }
             return null;
@@ -432,10 +443,9 @@ namespace KH
         private void loadFromLocalDisk()
         {
             if (messagesBodySet != null) return;
-            messagesBodySet = new Dictionary<uint, MessageBody>();
+            messagesBodySet = new Dictionary<uint, List<MessageBody>>();
             // 将本地文件读进内存
             MessageBody tempMessageBody = null;
-            MessageBody resultMessageBody = null;
             FileStream fileStream = null;
             BinaryFormatter bf = new BinaryFormatter();
             try
@@ -464,7 +474,6 @@ namespace KH
             do
             {
                 // 读取message head来获得message body的长度
-                long beginPosition = fileStream.Position;
                 if (fileStream.Read(messageHeadBuffer, 0, MessageBody.MessageHeadLength) == MessageBody.MessageHeadLength)
                 {
                     messageBodyLength = BitConverter.ToInt32(messageHeadBuffer, 0);
@@ -474,7 +483,6 @@ namespace KH
                     if (fileStream.Read(messageBodyBuffer, 0, messageBodyLength) == messageBodyLength)
                     {
                         // 通过获得的message body长度来获取message body的buffer
-                        long endPosition = fileStream.Position;
                         using (MemoryStream mStream = new MemoryStream())
                         {
                             mStream.Write(messageBodyBuffer, 0, messageBodyLength);
@@ -482,22 +490,12 @@ namespace KH
                             tempMessageBody = (MessageBody)bf.Deserialize(mStream);
                             mStream.Close();
                         }
-
-                        if (messagesBodySet.ContainsKey(tempMessageBody.CmdID))
+                        if (!messagesBodySet.ContainsKey(tempMessageBody.CmdID))
                         {
-                            MessageBody m = null;
-                            messagesBodySet.TryGetValue(tempMessageBody.CmdID, out m);
-                            if (m != null && m.TimeStamp < tempMessageBody.TimeStamp)
-                            {
-                                messagesBodySet.Remove(tempMessageBody.CmdID);
-                                messagesBodySet.Add(tempMessageBody.CmdID, tempMessageBody);
-                            }
+                            messagesBodySet[tempMessageBody.CmdID] = new List<MessageBody>();
+                            
                         }
-                        else
-                        {
-                            messagesBodySet.Add(tempMessageBody.CmdID, tempMessageBody);
-                        }
-                        
+                        messagesBodySet[tempMessageBody.CmdID].Add(tempMessageBody);
                     }
                     else
                     {
