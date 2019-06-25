@@ -386,6 +386,7 @@ namespace KH
             PandoraTest.Instance.InitDebugUI();
 
 			AddDbgGUI("版本工具", OnVerTool);
+            AddDbgGUI("场景检测", OnSceneBugTool);
             AddDbgGUI("运营版本", OnDbgGUI_YunYing, KHDebugerPermission.Log);
 
             //不常用入口(折叠)在这
@@ -445,8 +446,10 @@ namespace KH
             AddDbgGUI("黑鲨手机测试", BlackSharkTest);
 
             AddDbgGUI("设备模拟", OnDeviceSimulation, KHDebugerPermission.Admin);
-
-            AddDbgGUI("内存工具", KHMemoryUtil.OnGUI, KHDebugerPermission.Admin, 111);
+			
+			AddDbgGUI("内存工具V2", KHMemoryUtilV2.OnGUI, KHDebugerPermission.Admin, 150);
+			
+            AddDbgGUI("Zeyuzhang", KHMemoryUtil.OnGUI, KHDebugerPermission.Admin, 111);
 
             AddDbgGUI("开黑房间", RoomInvite, KHDebugerPermission.Admin, 111);
 
@@ -731,7 +734,7 @@ namespace KH
         private static string m_LogUploadCGI = "http://61.151.226.79:11111/save_log.py";//"https://101.227.153.40:8080/replay";
         private static bool m_IsLogUploading = false;
         private static string m_LogReportText = "";
-        private static string m_LogUploadURL = "http://10.225.177.163/logShare/"; // "http://mft.oa.com/logShare/";
+        private static string m_LogUploadURL = "http://10.225.177.163/share/logStore/"; // "http://mft.oa.com/logShare/";
         private static int m_iUploadTime = 0;
         private static int m_uploadFileHeadSize = 500000;
         private static int m_uploadFileSize = 5000000;
@@ -2212,6 +2215,31 @@ namespace KH
         }
 
         #endregion
+
+
+        #region 场景bug检测
+        public static bool switchSceneConnect = false;
+        void OnSceneBugTool()
+        {
+            GUILayout.BeginVertical();
+
+            if (GUILayout.Button("设置连接属性: " + (switchSceneConnect ? "打开":"关闭")))
+            {
+                switchSceneConnect = !switchSceneConnect;
+            }
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+
+            if (GUILayout.Button("进入工会场景"))
+            {
+                KHPluginManager.Instance.SendMessage(GuildPlugin.pluginName, GuildOperation.EnterGuildScene);
+            }
+            GUILayout.EndVertical();
+        }
+        #endregion
+
+
         #region 新小队激斗
         void OnGUITiaoZhanSai()
         {
@@ -3630,7 +3658,8 @@ namespace KH
                     Debuger.LogWarning("new ImgUrl", "get " + texurl + ", err:" + www.error);
                 }
 
-                UIAPI.hideUILoading(UILoadingType.UILOADING_MINI);
+                //UIAPI.hideUILoading(UILoadingType.UILOADING_MINI);
+                KH.Network.LoadingTipStack.Hide();
             }
 
         }
@@ -3720,7 +3749,8 @@ namespace KH
                     Debuger.LogWarning("new mediaurl", "get " + texurl + ", err:" + www.error);
                 }
 
-                UIAPI.hideUILoading(UILoadingType.UILOADING_MINI);
+                //UIAPI.hideUILoading(UILoadingType.UILOADING_MINI);
+                KH.Network.LoadingTipStack.Hide();
             }
 
         }

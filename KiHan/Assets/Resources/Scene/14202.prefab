@@ -5088,6 +5088,10 @@ MonoBehaviour:
     y: 4
     width: 18
     height: 8
+  - x: -9
+    y: 4
+    width: 18
+    height: 8
   ColorRGB: {r: 1, g: 1, b: 1, a: 1}
   bright: 1
   saturation: 1

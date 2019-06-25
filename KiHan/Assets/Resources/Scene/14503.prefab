@@ -686,31 +686,31 @@ MonoBehaviour:
       isWalk: 0
     - indexX: -16
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: -15.5
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: -15
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: -14.5
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: -14
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: -13.5
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: -13
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: -12.5
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: -12
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: -11.5
       indexY: -.5
       isWalk: 0
@@ -800,28 +800,28 @@ MonoBehaviour:
       isWalk: 0
     - indexX: 3
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: 3.5
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: 4
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: 4.5
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: 5
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: 5.5
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: 6
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: 6.5
       indexY: -.5
-      isWalk: 0
+      isWalk: 1
     - indexX: 7
       indexY: -.5
       isWalk: 0
@@ -887,208 +887,208 @@ MonoBehaviour:
       isWalk: 0
     - indexX: -16.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -16
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -15.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -15
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -14.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -14
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -13.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -13
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -12.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -12
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -11.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -11
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -10.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -10
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -9.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -9
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -8.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -8
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -7.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -7
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -6.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -6
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -5.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -4.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -4
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -3.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -3
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -2.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -2
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -1.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -1
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 0
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: .5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 1
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 1.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 2
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 2.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 3
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 3.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 4
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 4.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 5.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 6
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 6.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 7
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 7.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 8
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 8.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 9
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 9.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 10
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 10.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 11
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 11.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 12
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 12.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 13
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 13.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 14
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 14.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 15
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 15.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 16
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 16.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 17
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -16.5
       indexY: -1.5
       isWalk: 1
@@ -1961,7 +1961,7 @@ MonoBehaviour:
       isWalk: 1
     - indexX: 19.5
       indexY: -1.5
-      isWalk: 0
+      isWalk: 1
     - indexX: 19
       indexY: -1.5
       isWalk: 1
@@ -1991,1070 +1991,5438 @@ MonoBehaviour:
       isWalk: 1
     - indexX: 18.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -19
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -18.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -18
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -17.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: -17
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 17.5
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 18
       indexY: -1
-      isWalk: 0
+      isWalk: 1
     - indexX: 19
       indexY: -1
+      isWalk: 1
+    - indexX: -36.5
+      indexY: 1.5
       isWalk: 0
+    - indexX: -37
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -36.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -36
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -35.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -35
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -34.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -34
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -33.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -33
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -32.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -32
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -31.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -31
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -30.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -30
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -29.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -29
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -28.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -28
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -27.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -27
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -26.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -26
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -25.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -25
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -24.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -24
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -23.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -23
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -22.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -22
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -21.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -21
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -20.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -20
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -36.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -36
+      indexY: -2
+      isWalk: 1
+    - indexX: -35.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -35
+      indexY: -2
+      isWalk: 1
+    - indexX: -34.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -34
+      indexY: -2
+      isWalk: 1
+    - indexX: -33.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -33
+      indexY: -2
+      isWalk: 1
+    - indexX: -32.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -32
+      indexY: -2
+      isWalk: 1
+    - indexX: -31.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -31
+      indexY: -2
+      isWalk: 1
+    - indexX: -30.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -30
+      indexY: -2
+      isWalk: 1
+    - indexX: -29.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -29
+      indexY: -2
+      isWalk: 1
+    - indexX: -28.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -28
+      indexY: -2
+      isWalk: 1
+    - indexX: -27.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -27
+      indexY: -2
+      isWalk: 1
+    - indexX: -26.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -26
+      indexY: -2
+      isWalk: 1
+    - indexX: -25.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -25
+      indexY: -2
+      isWalk: 1
+    - indexX: -24.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -24
+      indexY: -2
+      isWalk: 1
+    - indexX: -23.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -23
+      indexY: -2
+      isWalk: 1
+    - indexX: -22.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -22
+      indexY: -2
+      isWalk: 1
+    - indexX: -21.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -21
+      indexY: -2
+      isWalk: 1
+    - indexX: -20.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -20
+      indexY: -2
+      isWalk: 1
+    - indexX: -36.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -36
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -35.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -35
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -34.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -34
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -33.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -33
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -32.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -32
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -31.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -31
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -30.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -30
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -29.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -29
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -28.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -28
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -27.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -27
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -26.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -26
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -25.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -25
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -24.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -24
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -23.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -23
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -22.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -22
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -21.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -21
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -20.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -20
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -19.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -19.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -19.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -42.5
+      indexY: 8
+      isWalk: 0
+    - indexX: -42
+      indexY: 8
+      isWalk: 0
+    - indexX: -41.5
+      indexY: 8
+      isWalk: 0
+    - indexX: -41
+      indexY: 8
+      isWalk: 0
+    - indexX: -40.5
+      indexY: 8
+      isWalk: 0
+    - indexX: -40
+      indexY: 8
+      isWalk: 0
+    - indexX: -39.5
+      indexY: 8
+      isWalk: 0
+    - indexX: -39
+      indexY: 8
+      isWalk: 0
+    - indexX: -38.5
+      indexY: 8
+      isWalk: 0
+    - indexX: -38
+      indexY: 8
+      isWalk: 0
+    - indexX: -37.5
+      indexY: 8
+      isWalk: 0
+    - indexX: -37
+      indexY: 8
+      isWalk: 0
+    - indexX: -36.5
+      indexY: 8
+      isWalk: 0
+    - indexX: -36
+      indexY: 8
+      isWalk: 0
+    - indexX: -35.5
+      indexY: 8
+      isWalk: 0
+    - indexX: -35
+      indexY: 8
+      isWalk: 0
+    - indexX: -34.5
+      indexY: 8
+      isWalk: 0
+    - indexX: -34
+      indexY: 8
+      isWalk: 0
+    - indexX: -33.5
+      indexY: 8
+      isWalk: 0
+    - indexX: -33
+      indexY: 8
+      isWalk: 0
+    - indexX: -32.5
+      indexY: 8
+      isWalk: 0
+    - indexX: -32
+      indexY: 8
+      isWalk: 0
+    - indexX: -31.5
+      indexY: 8
+      isWalk: 0
+    - indexX: -31
+      indexY: 8
+      isWalk: 0
+    - indexX: -30.5
+      indexY: 8
+      isWalk: 0
+    - indexX: -30
+      indexY: 8
+      isWalk: 0
+    - indexX: -42.5
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -42
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -41.5
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -41
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -40.5
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -40
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -39.5
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -39
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -38.5
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -38
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -37.5
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -37
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -36.5
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -36
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -35.5
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -35
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -34.5
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -34
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -33.5
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -33
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -32.5
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -32
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -31.5
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -31
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -30.5
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -30
+      indexY: 7.5
+      isWalk: 0
+    - indexX: -42.5
+      indexY: 7
+      isWalk: 0
+    - indexX: -42
+      indexY: 7
+      isWalk: 0
+    - indexX: -41.5
+      indexY: 7
+      isWalk: 0
+    - indexX: -41
+      indexY: 7
+      isWalk: 0
+    - indexX: -40.5
+      indexY: 7
+      isWalk: 0
+    - indexX: -40
+      indexY: 7
+      isWalk: 0
+    - indexX: -39.5
+      indexY: 7
+      isWalk: 0
+    - indexX: -39
+      indexY: 7
+      isWalk: 0
+    - indexX: -38.5
+      indexY: 7
+      isWalk: 0
+    - indexX: -38
+      indexY: 7
+      isWalk: 0
+    - indexX: -37.5
+      indexY: 7
+      isWalk: 0
+    - indexX: -37
+      indexY: 7
+      isWalk: 0
+    - indexX: -36.5
+      indexY: 7
+      isWalk: 0
+    - indexX: -36
+      indexY: 7
+      isWalk: 0
+    - indexX: -35.5
+      indexY: 7
+      isWalk: 0
+    - indexX: -35
+      indexY: 7
+      isWalk: 0
+    - indexX: -34.5
+      indexY: 7
+      isWalk: 0
+    - indexX: -34
+      indexY: 7
+      isWalk: 0
+    - indexX: -33.5
+      indexY: 7
+      isWalk: 0
+    - indexX: -33
+      indexY: 7
+      isWalk: 0
+    - indexX: -32.5
+      indexY: 7
+      isWalk: 0
+    - indexX: -32
+      indexY: 7
+      isWalk: 0
+    - indexX: -31.5
+      indexY: 7
+      isWalk: 0
+    - indexX: -31
+      indexY: 7
+      isWalk: 0
+    - indexX: -30.5
+      indexY: 7
+      isWalk: 0
+    - indexX: -30
+      indexY: 7
+      isWalk: 0
+    - indexX: -42.5
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -42
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -41.5
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -41
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -40.5
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -40
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -39.5
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -39
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -38.5
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -38
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -37.5
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -37
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -36.5
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -36
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -35.5
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -35
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -34.5
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -34
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -33.5
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -33
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -32.5
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -32
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -31.5
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -31
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -30.5
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -30
+      indexY: 6.5
+      isWalk: 0
+    - indexX: -53
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -52.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -52
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -51.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -51
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -50.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -50
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -49.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -49
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -48.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -48
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -47.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -47
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -46.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -46
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -45.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -45
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -44.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -44
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -43.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -43
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -42.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -42
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -41.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -41
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -40.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -40
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -39.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -39
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -38.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -38
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -37.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: -53
+      indexY: -2
+      isWalk: 1
+    - indexX: -52.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -52
+      indexY: -2
+      isWalk: 1
+    - indexX: -51.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -51
+      indexY: -2
+      isWalk: 1
+    - indexX: -50.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -50
+      indexY: -2
+      isWalk: 1
+    - indexX: -49.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -49
+      indexY: -2
+      isWalk: 1
+    - indexX: -48.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -48
+      indexY: -2
+      isWalk: 1
+    - indexX: -47.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -47
+      indexY: -2
+      isWalk: 1
+    - indexX: -46.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -46
+      indexY: -2
+      isWalk: 1
+    - indexX: -45.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -45
+      indexY: -2
+      isWalk: 1
+    - indexX: -44.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -44
+      indexY: -2
+      isWalk: 1
+    - indexX: -43.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -43
+      indexY: -2
+      isWalk: 1
+    - indexX: -42.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -42
+      indexY: -2
+      isWalk: 1
+    - indexX: -41.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -41
+      indexY: -2
+      isWalk: 1
+    - indexX: -40.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -40
+      indexY: -2
+      isWalk: 1
+    - indexX: -39.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -39
+      indexY: -2
+      isWalk: 1
+    - indexX: -38.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -38
+      indexY: -2
+      isWalk: 1
+    - indexX: -37.5
+      indexY: -2
+      isWalk: 1
+    - indexX: -53
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -52.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -52
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -51.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -51
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -50.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -50
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -49.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -49
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -48.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -48
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -47.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -47
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -46.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -46
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -45.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -45
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -44.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -44
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -43.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -43
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -42.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -42
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -41.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -41
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -40.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -40
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -39.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -39
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -38.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -38
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -37.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: -37
+      indexY: -2
+      isWalk: 1
+    - indexX: -37
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 20
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 20.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 21
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 21.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 22
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 22.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 23
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 23.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 24
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 24.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 25
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 25.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 26
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 26.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 27
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 27.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 28
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 28.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 29
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 29.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 30
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 30.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 31
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 31.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 32
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 32.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 33
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 33.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 34
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 34.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 35
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 35.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 36
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 36.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 37
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 37.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 38
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 38.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 39
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 39.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 40
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 40.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 41
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 41.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 42
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 42.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 43
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 43.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 44
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 44.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 45
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 45.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 46
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 46.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 47
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 47.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 48
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 48.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 49
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 49.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 50
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 50.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 51
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 51.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 52
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 52.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 53
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 53.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 19.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 20
+      indexY: -2
+      isWalk: 1
+    - indexX: 20.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 21
+      indexY: -2
+      isWalk: 1
+    - indexX: 21.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 22
+      indexY: -2
+      isWalk: 1
+    - indexX: 22.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 23
+      indexY: -2
+      isWalk: 1
+    - indexX: 23.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 24
+      indexY: -2
+      isWalk: 1
+    - indexX: 24.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 25
+      indexY: -2
+      isWalk: 1
+    - indexX: 25.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 26
+      indexY: -2
+      isWalk: 1
+    - indexX: 26.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 27
+      indexY: -2
+      isWalk: 1
+    - indexX: 27.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 28
+      indexY: -2
+      isWalk: 1
+    - indexX: 28.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 29
+      indexY: -2
+      isWalk: 1
+    - indexX: 29.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 30
+      indexY: -2
+      isWalk: 1
+    - indexX: 30.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 31
+      indexY: -2
+      isWalk: 1
+    - indexX: 31.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 32
+      indexY: -2
+      isWalk: 1
+    - indexX: 32.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 33
+      indexY: -2
+      isWalk: 1
+    - indexX: 33.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 34
+      indexY: -2
+      isWalk: 1
+    - indexX: 34.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 35
+      indexY: -2
+      isWalk: 1
+    - indexX: 35.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 36
+      indexY: -2
+      isWalk: 1
+    - indexX: 36.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 37
+      indexY: -2
+      isWalk: 1
+    - indexX: 37.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 38
+      indexY: -2
+      isWalk: 1
+    - indexX: 38.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 39
+      indexY: -2
+      isWalk: 1
+    - indexX: 39.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 40
+      indexY: -2
+      isWalk: 1
+    - indexX: 40.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 41
+      indexY: -2
+      isWalk: 1
+    - indexX: 41.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 42
+      indexY: -2
+      isWalk: 1
+    - indexX: 42.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 43
+      indexY: -2
+      isWalk: 1
+    - indexX: 43.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 44
+      indexY: -2
+      isWalk: 1
+    - indexX: 44.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 45
+      indexY: -2
+      isWalk: 1
+    - indexX: 45.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 46
+      indexY: -2
+      isWalk: 1
+    - indexX: 46.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 47
+      indexY: -2
+      isWalk: 1
+    - indexX: 47.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 48
+      indexY: -2
+      isWalk: 1
+    - indexX: 48.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 49
+      indexY: -2
+      isWalk: 1
+    - indexX: 49.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 50
+      indexY: -2
+      isWalk: 1
+    - indexX: 50.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 51
+      indexY: -2
+      isWalk: 1
+    - indexX: 51.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 52
+      indexY: -2
+      isWalk: 1
+    - indexX: 52.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 53
+      indexY: -2
+      isWalk: 1
+    - indexX: 53.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 19.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 20
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 20.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 21
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 21.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 22
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 22.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 23
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 23.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 24
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 24.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 25
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 25.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 26
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 26.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 27
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 27.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 28
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 28.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 29
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 29.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 30
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 30.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 31
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 31.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 32
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 32.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 33
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 33.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 34
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 34.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 35
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 35.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 36
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 36.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 37
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 37.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 38
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 38.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 39
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 39.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 40
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 40.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 41
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 41.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 42
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 42.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 43
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 43.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 44
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 44.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 45
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 45.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 46
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 46.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 47
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 47.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 48
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 48.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 49
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 49.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 50
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 50.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 51
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 51.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 52
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 52.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 53
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 53.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 54
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 54.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 55
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 55.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 56
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 56.5
+      indexY: -1.5
+      isWalk: 1
+    - indexX: 54
+      indexY: -2
+      isWalk: 1
+    - indexX: 54.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 55
+      indexY: -2
+      isWalk: 1
+    - indexX: 55.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 56
+      indexY: -2
+      isWalk: 1
+    - indexX: 56.5
+      indexY: -2
+      isWalk: 1
+    - indexX: 54
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 54.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 55
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 55.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 56
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 56.5
+      indexY: -2.5
+      isWalk: 1
+    - indexX: 51
+      indexY: -1
+      isWalk: 1
+    - indexX: 51.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 52
+      indexY: -1
+      isWalk: 1
+    - indexX: 52.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 53
+      indexY: -1
+      isWalk: 1
+    - indexX: 53.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 54
+      indexY: -1
+      isWalk: 1
+    - indexX: 54.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 55
+      indexY: -1
+      isWalk: 1
+    - indexX: 55.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 56
+      indexY: -1
+      isWalk: 1
+    - indexX: 56.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 43.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 44
+      indexY: -1
+      isWalk: 1
+    - indexX: 44.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 45
+      indexY: -1
+      isWalk: 1
+    - indexX: 45.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 46
+      indexY: -1
+      isWalk: 1
+    - indexX: 46.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 47
+      indexY: -1
+      isWalk: 1
+    - indexX: 47.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 48
+      indexY: -1
+      isWalk: 1
+    - indexX: 48.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 49
+      indexY: -1
+      isWalk: 1
+    - indexX: 49.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 50
+      indexY: -1
+      isWalk: 1
+    - indexX: 50.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 19.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 20
+      indexY: -1
+      isWalk: 1
+    - indexX: 20.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 21
+      indexY: -1
+      isWalk: 1
+    - indexX: 21.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 22
+      indexY: -1
+      isWalk: 1
+    - indexX: 22.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 23
+      indexY: -1
+      isWalk: 1
+    - indexX: 23.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 24
+      indexY: -1
+      isWalk: 1
+    - indexX: 24.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 25
+      indexY: -1
+      isWalk: 1
+    - indexX: 25.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 26
+      indexY: -1
+      isWalk: 1
+    - indexX: 26.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 27
+      indexY: -1
+      isWalk: 1
+    - indexX: 27.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 28
+      indexY: -1
+      isWalk: 1
+    - indexX: 28.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 29
+      indexY: -1
+      isWalk: 1
+    - indexX: 29.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 30
+      indexY: -1
+      isWalk: 1
+    - indexX: 30.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 31
+      indexY: -1
+      isWalk: 1
+    - indexX: 31.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 32
+      indexY: -1
+      isWalk: 1
+    - indexX: 32.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 33
+      indexY: -1
+      isWalk: 1
+    - indexX: 33.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 34
+      indexY: -1
+      isWalk: 1
+    - indexX: 34.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 35
+      indexY: -1
+      isWalk: 1
+    - indexX: 35.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 36
+      indexY: -1
+      isWalk: 1
+    - indexX: 36.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 37
+      indexY: -1
+      isWalk: 1
+    - indexX: 37.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 38
+      indexY: -1
+      isWalk: 1
+    - indexX: 38.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 39
+      indexY: -1
+      isWalk: 1
+    - indexX: 39.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 40
+      indexY: -1
+      isWalk: 1
+    - indexX: 40.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 41
+      indexY: -1
+      isWalk: 1
+    - indexX: 41.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 42
+      indexY: -1
+      isWalk: 1
+    - indexX: 42.5
+      indexY: -1
+      isWalk: 1
+    - indexX: 43
+      indexY: -1
+      isWalk: 1
+    - indexX: -33.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -33
+      indexY: -1
+      isWalk: 1
+    - indexX: -32.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -32
+      indexY: -1
+      isWalk: 1
+    - indexX: -31.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -31
+      indexY: -1
+      isWalk: 1
+    - indexX: -30.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -30
+      indexY: -1
+      isWalk: 1
+    - indexX: -29.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -29
+      indexY: -1
+      isWalk: 1
+    - indexX: -28.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -28
+      indexY: -1
+      isWalk: 1
+    - indexX: -27.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -27
+      indexY: -1
+      isWalk: 1
+    - indexX: -26.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -26
+      indexY: -1
+      isWalk: 1
+    - indexX: -25.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -25
+      indexY: -1
+      isWalk: 1
+    - indexX: -24.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -24
+      indexY: -1
+      isWalk: 1
+    - indexX: -23.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -23
+      indexY: -1
+      isWalk: 1
+    - indexX: -22.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -22
+      indexY: -1
+      isWalk: 1
+    - indexX: -21.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -21
+      indexY: -1
+      isWalk: 1
+    - indexX: -20.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -20
+      indexY: -1
+      isWalk: 1
+    - indexX: -19.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -53
+      indexY: -1
+      isWalk: 1
+    - indexX: -52.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -52
+      indexY: -1
+      isWalk: 1
+    - indexX: -51.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -51
+      indexY: -1
+      isWalk: 1
+    - indexX: -50.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -50
+      indexY: -1
+      isWalk: 1
+    - indexX: -49.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -49
+      indexY: -1
+      isWalk: 1
+    - indexX: -48.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -48
+      indexY: -1
+      isWalk: 1
+    - indexX: -47.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -47
+      indexY: -1
+      isWalk: 1
+    - indexX: -46.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -46
+      indexY: -1
+      isWalk: 1
+    - indexX: -45.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -45
+      indexY: -1
+      isWalk: 1
+    - indexX: -44.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -44
+      indexY: -1
+      isWalk: 1
+    - indexX: -43.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -43
+      indexY: -1
+      isWalk: 1
+    - indexX: -42.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -42
+      indexY: -1
+      isWalk: 1
+    - indexX: -41.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -41
+      indexY: -1
+      isWalk: 1
+    - indexX: -40.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -40
+      indexY: -1
+      isWalk: 1
+    - indexX: -39.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -39
+      indexY: -1
+      isWalk: 1
+    - indexX: -38.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -38
+      indexY: -1
+      isWalk: 1
+    - indexX: -37.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -37
+      indexY: -1
+      isWalk: 1
+    - indexX: -36.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -36
+      indexY: -1
+      isWalk: 1
+    - indexX: -35.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -35
+      indexY: -1
+      isWalk: 1
+    - indexX: -34.5
+      indexY: -1
+      isWalk: 1
+    - indexX: -34
+      indexY: -1
+      isWalk: 1
+    - indexX: -53
+      indexY: -.5
+      isWalk: 1
+    - indexX: -52.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: -52
+      indexY: -.5
+      isWalk: 1
+    - indexX: -51.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: -51
+      indexY: -.5
+      isWalk: 1
+    - indexX: -50.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: -50
+      indexY: -.5
+      isWalk: 1
+    - indexX: -49.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: -49
+      indexY: -.5
+      isWalk: 1
+    - indexX: -35
+      indexY: -.5
+      isWalk: 0
+    - indexX: -34.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: -34
+      indexY: -.5
+      isWalk: 1
+    - indexX: -33.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: -33
+      indexY: -.5
+      isWalk: 1
+    - indexX: -32.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: -32
+      indexY: -.5
+      isWalk: 1
+    - indexX: -31.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: -31
+      indexY: -.5
+      isWalk: 1
+    - indexX: -30.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: -30
+      indexY: -.5
+      isWalk: 0
+    - indexX: 21
+      indexY: -.5
+      isWalk: 0
+    - indexX: 21.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: 22
+      indexY: -.5
+      isWalk: 1
+    - indexX: 22.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: 23
+      indexY: -.5
+      isWalk: 1
+    - indexX: 23.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: 24
+      indexY: -.5
+      isWalk: 1
+    - indexX: 24.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: 25
+      indexY: -.5
+      isWalk: 1
+    - indexX: 25.5
+      indexY: -.5
+      isWalk: 0
+    - indexX: 39.5
+      indexY: -.5
+      isWalk: 0
+    - indexX: 40
+      indexY: -.5
+      isWalk: 1
+    - indexX: 40.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: 41
+      indexY: -.5
+      isWalk: 1
+    - indexX: 41.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: 42
+      indexY: -.5
+      isWalk: 1
+    - indexX: 42.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: 43
+      indexY: -.5
+      isWalk: 1
+    - indexX: 43.5
+      indexY: -.5
+      isWalk: 1
+    - indexX: 44
+      indexY: -.5
+      isWalk: 1
     data1: []
     data2: []
   terrainData:
     data:
     - indexX: -17
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -16.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -16
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -15.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -15
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -14.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -14
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -13.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -13
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -12.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -12
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -11.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -11
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -10.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -10
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -9.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -9
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -8.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -8
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -7.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -7
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -6.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -6
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -5.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -4.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -4
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -3.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -3
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -2.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -2
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -1.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -1
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 0
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: .5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 1
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 1.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 2
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 2.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 3
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 3.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 4
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 4.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 5.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 6
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 6.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 7
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 7.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 8
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 8.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 9
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 9.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 10
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 10.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 11
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 11.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 12
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 12.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 13
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 13.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 14
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 14.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 15
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 15.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 16
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 16.5
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: 17
       indexY: -1
-      type: 1000
+      type: 1006
     - indexX: -17
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -16.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -16
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -15.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -15
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -14.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -14
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -13.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -13
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -12.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -12
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -11.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -11
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -10.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -10
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -9.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -9
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -8.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -8
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -7.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -7
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -6.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -6
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -5.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -4.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -4
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -3.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -3
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -2.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -2
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -1.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -1
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 0
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: .5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 1
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 1.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 2
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 2.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 3
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 3.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 4
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 4.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 5.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 6
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 6.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 7
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 7.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 8
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 8.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 9
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 9.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 10
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 10.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 11
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 11.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 12
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 12.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 13
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 13.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 14
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 14.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 15
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 15.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 16
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 16.5
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: 17
       indexY: -1.5
-      type: 1000
+      type: 1006
     - indexX: -17
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -16.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -16
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -15.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -15
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -14.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -14
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -13.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -13
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -12.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -12
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -11.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -11
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -10.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -10
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -9.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -9
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -8.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -8
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -7.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -7
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -6.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -6
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -5.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -4.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -4
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -3.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -3
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -2.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -2
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -1.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -1
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 0
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: .5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 1
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 1.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 2
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 2.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 3
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 3.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 4
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 4.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 5.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 6
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 6.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 7
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 7.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 8
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 8.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 9
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 9.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 10
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 10.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 11
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 11.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 12
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 12.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 13
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 13.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 14
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 14.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 15
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 15.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 16
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 16.5
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: 17
       indexY: -2
-      type: 1000
+      type: 1006
     - indexX: -17
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -16.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -16
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -15.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -15
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -14.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -14
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -13.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -13
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -12.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -12
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -11.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -11
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -10.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -10
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -9.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -9
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -8.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -8
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -7.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -7
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -6.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -6
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -5.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -4.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -4
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -3.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -3
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -2.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -2
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -1.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -1
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 0
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: .5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 1
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 1.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 2
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 2.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 3
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 3.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 4
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 4.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 5.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 6
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 6.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 7
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 7.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 8
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 8.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 9
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 9.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 10
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 10.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 11
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 11.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 12
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 12.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 13
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 13.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 14
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 14.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 15
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 15.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 16
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 16.5
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: 17
       indexY: -2.5
-      type: 1000
+      type: 1006
     - indexX: -17
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -16.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -16
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -15.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -15
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -14.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -14
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -13.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -13
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -12.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -12
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -11.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -11
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -10.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -10
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -9.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -9
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -8.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -8
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -7.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -7
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -6.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -6
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -5.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -4.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -4
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -3.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -3
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -2.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -2
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -1.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -1
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: -.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 0
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: .5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 1
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 1.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 2
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 2.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 3
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 3.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 4
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 4.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 5.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 6
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 6.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 7
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 7.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 8
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 8.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 9
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 9.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 10
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 10.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 11
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 11.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 12
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 12.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 13
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 13.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 14
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 14.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 15
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 15.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 16
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 16.5
       indexY: -3
-      type: 1000
+      type: 1006
     - indexX: 17
       indexY: -3
-      type: 1000
+      type: 1006
+    - indexX: 17.5
+      indexY: -1
+      type: 1006
+    - indexX: 18
+      indexY: -1
+      type: 1006
+    - indexX: 18.5
+      indexY: -1
+      type: 1006
+    - indexX: 19
+      indexY: -1
+      type: 1006
+    - indexX: 19.5
+      indexY: -1
+      type: 1006
+    - indexX: 20
+      indexY: -1
+      type: 1006
+    - indexX: 20.5
+      indexY: -1
+      type: 1006
+    - indexX: 21
+      indexY: -1
+      type: 1006
+    - indexX: 21.5
+      indexY: -1
+      type: 1006
+    - indexX: 22
+      indexY: -1
+      type: 1006
+    - indexX: 22.5
+      indexY: -1
+      type: 1006
+    - indexX: 23
+      indexY: -1
+      type: 1006
+    - indexX: 23.5
+      indexY: -1
+      type: 1006
+    - indexX: 24
+      indexY: -1
+      type: 1006
+    - indexX: 24.5
+      indexY: -1
+      type: 1006
+    - indexX: 25
+      indexY: -1
+      type: 1006
+    - indexX: 25.5
+      indexY: -1
+      type: 1006
+    - indexX: 26
+      indexY: -1
+      type: 1006
+    - indexX: 26.5
+      indexY: -1
+      type: 1006
+    - indexX: 27
+      indexY: -1
+      type: 1006
+    - indexX: 27.5
+      indexY: -1
+      type: 1006
+    - indexX: 28
+      indexY: -1
+      type: 1006
+    - indexX: 28.5
+      indexY: -1
+      type: 1006
+    - indexX: 29
+      indexY: -1
+      type: 1006
+    - indexX: 29.5
+      indexY: -1
+      type: 1006
+    - indexX: 30
+      indexY: -1
+      type: 1006
+    - indexX: 30.5
+      indexY: -1
+      type: 1006
+    - indexX: 31
+      indexY: -1
+      type: 1006
+    - indexX: 31.5
+      indexY: -1
+      type: 1006
+    - indexX: 32
+      indexY: -1
+      type: 1006
+    - indexX: 32.5
+      indexY: -1
+      type: 1006
+    - indexX: 33
+      indexY: -1
+      type: 1006
+    - indexX: 33.5
+      indexY: -1
+      type: 1006
+    - indexX: 34
+      indexY: -1
+      type: 1006
+    - indexX: 34.5
+      indexY: -1
+      type: 1006
+    - indexX: 35
+      indexY: -1
+      type: 1006
+    - indexX: 35.5
+      indexY: -1
+      type: 1006
+    - indexX: 36
+      indexY: -1
+      type: 1006
+    - indexX: 36.5
+      indexY: -1
+      type: 1006
+    - indexX: 37
+      indexY: -1
+      type: 1006
+    - indexX: 37.5
+      indexY: -1
+      type: 1006
+    - indexX: 38
+      indexY: -1
+      type: 1006
+    - indexX: 38.5
+      indexY: -1
+      type: 1006
+    - indexX: 39
+      indexY: -1
+      type: 1006
+    - indexX: 39.5
+      indexY: -1
+      type: 1006
+    - indexX: 40
+      indexY: -1
+      type: 1006
+    - indexX: 40.5
+      indexY: -1
+      type: 1006
+    - indexX: 41
+      indexY: -1
+      type: 1006
+    - indexX: 41.5
+      indexY: -1
+      type: 1006
+    - indexX: 42
+      indexY: -1
+      type: 1006
+    - indexX: 42.5
+      indexY: -1
+      type: 1006
+    - indexX: 43
+      indexY: -1
+      type: 1006
+    - indexX: 43.5
+      indexY: -1
+      type: 1006
+    - indexX: 44
+      indexY: -1
+      type: 1006
+    - indexX: 44.5
+      indexY: -1
+      type: 1006
+    - indexX: 45
+      indexY: -1
+      type: 1006
+    - indexX: 45.5
+      indexY: -1
+      type: 1006
+    - indexX: 46
+      indexY: -1
+      type: 1006
+    - indexX: 46.5
+      indexY: -1
+      type: 1006
+    - indexX: 47
+      indexY: -1
+      type: 1006
+    - indexX: 47.5
+      indexY: -1
+      type: 1006
+    - indexX: 48
+      indexY: -1
+      type: 1006
+    - indexX: 48.5
+      indexY: -1
+      type: 1006
+    - indexX: 49
+      indexY: -1
+      type: 1006
+    - indexX: 49.5
+      indexY: -1
+      type: 1006
+    - indexX: 50
+      indexY: -1
+      type: 1006
+    - indexX: 50.5
+      indexY: -1
+      type: 1006
+    - indexX: 51
+      indexY: -1
+      type: 1006
+    - indexX: 51.5
+      indexY: -1
+      type: 1006
+    - indexX: 52
+      indexY: -1
+      type: 1006
+    - indexX: 52.5
+      indexY: -1
+      type: 1006
+    - indexX: 53
+      indexY: -1
+      type: 1006
+    - indexX: 53.5
+      indexY: -1
+      type: 1006
+    - indexX: 54
+      indexY: -1
+      type: 1006
+    - indexX: 54.5
+      indexY: -1
+      type: 1006
+    - indexX: 55
+      indexY: -1
+      type: 1006
+    - indexX: 55.5
+      indexY: -1
+      type: 1006
+    - indexX: 56
+      indexY: -1
+      type: 1006
+    - indexX: 17.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 18
+      indexY: -1.5
+      type: 1006
+    - indexX: 18.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 19
+      indexY: -1.5
+      type: 1006
+    - indexX: 19.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 20
+      indexY: -1.5
+      type: 1006
+    - indexX: 20.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 21
+      indexY: -1.5
+      type: 1006
+    - indexX: 21.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 22
+      indexY: -1.5
+      type: 1006
+    - indexX: 22.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 23
+      indexY: -1.5
+      type: 1006
+    - indexX: 23.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 24
+      indexY: -1.5
+      type: 1006
+    - indexX: 24.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 25
+      indexY: -1.5
+      type: 1006
+    - indexX: 25.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 26
+      indexY: -1.5
+      type: 1006
+    - indexX: 26.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 27
+      indexY: -1.5
+      type: 1006
+    - indexX: 27.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 28
+      indexY: -1.5
+      type: 1006
+    - indexX: 28.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 29
+      indexY: -1.5
+      type: 1006
+    - indexX: 29.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 30
+      indexY: -1.5
+      type: 1006
+    - indexX: 30.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 31
+      indexY: -1.5
+      type: 1006
+    - indexX: 31.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 32
+      indexY: -1.5
+      type: 1006
+    - indexX: 32.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 33
+      indexY: -1.5
+      type: 1006
+    - indexX: 33.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 34
+      indexY: -1.5
+      type: 1006
+    - indexX: 34.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 35
+      indexY: -1.5
+      type: 1006
+    - indexX: 35.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 36
+      indexY: -1.5
+      type: 1006
+    - indexX: 36.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 37
+      indexY: -1.5
+      type: 1006
+    - indexX: 37.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 38
+      indexY: -1.5
+      type: 1006
+    - indexX: 38.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 39
+      indexY: -1.5
+      type: 1006
+    - indexX: 39.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 40
+      indexY: -1.5
+      type: 1006
+    - indexX: 40.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 41
+      indexY: -1.5
+      type: 1006
+    - indexX: 41.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 42
+      indexY: -1.5
+      type: 1006
+    - indexX: 42.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 43
+      indexY: -1.5
+      type: 1006
+    - indexX: 43.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 44
+      indexY: -1.5
+      type: 1006
+    - indexX: 44.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 45
+      indexY: -1.5
+      type: 1006
+    - indexX: 45.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 46
+      indexY: -1.5
+      type: 1006
+    - indexX: 46.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 47
+      indexY: -1.5
+      type: 1006
+    - indexX: 47.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 48
+      indexY: -1.5
+      type: 1006
+    - indexX: 48.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 49
+      indexY: -1.5
+      type: 1006
+    - indexX: 49.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 50
+      indexY: -1.5
+      type: 1006
+    - indexX: 50.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 51
+      indexY: -1.5
+      type: 1006
+    - indexX: 51.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 52
+      indexY: -1.5
+      type: 1006
+    - indexX: 52.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 53
+      indexY: -1.5
+      type: 1006
+    - indexX: 53.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 54
+      indexY: -1.5
+      type: 1006
+    - indexX: 54.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 55
+      indexY: -1.5
+      type: 1006
+    - indexX: 55.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 56
+      indexY: -1.5
+      type: 1006
+    - indexX: 17.5
+      indexY: -2
+      type: 1006
+    - indexX: 18
+      indexY: -2
+      type: 1006
+    - indexX: 18.5
+      indexY: -2
+      type: 1006
+    - indexX: 19
+      indexY: -2
+      type: 1006
+    - indexX: 19.5
+      indexY: -2
+      type: 1006
+    - indexX: 20
+      indexY: -2
+      type: 1006
+    - indexX: 20.5
+      indexY: -2
+      type: 1006
+    - indexX: 21
+      indexY: -2
+      type: 1006
+    - indexX: 21.5
+      indexY: -2
+      type: 1006
+    - indexX: 22
+      indexY: -2
+      type: 1006
+    - indexX: 22.5
+      indexY: -2
+      type: 1006
+    - indexX: 23
+      indexY: -2
+      type: 1006
+    - indexX: 23.5
+      indexY: -2
+      type: 1006
+    - indexX: 24
+      indexY: -2
+      type: 1006
+    - indexX: 24.5
+      indexY: -2
+      type: 1006
+    - indexX: 25
+      indexY: -2
+      type: 1006
+    - indexX: 25.5
+      indexY: -2
+      type: 1006
+    - indexX: 26
+      indexY: -2
+      type: 1006
+    - indexX: 26.5
+      indexY: -2
+      type: 1006
+    - indexX: 27
+      indexY: -2
+      type: 1006
+    - indexX: 27.5
+      indexY: -2
+      type: 1006
+    - indexX: 28
+      indexY: -2
+      type: 1006
+    - indexX: 28.5
+      indexY: -2
+      type: 1006
+    - indexX: 29
+      indexY: -2
+      type: 1006
+    - indexX: 29.5
+      indexY: -2
+      type: 1006
+    - indexX: 30
+      indexY: -2
+      type: 1006
+    - indexX: 30.5
+      indexY: -2
+      type: 1006
+    - indexX: 31
+      indexY: -2
+      type: 1006
+    - indexX: 31.5
+      indexY: -2
+      type: 1006
+    - indexX: 32
+      indexY: -2
+      type: 1006
+    - indexX: 32.5
+      indexY: -2
+      type: 1006
+    - indexX: 33
+      indexY: -2
+      type: 1006
+    - indexX: 33.5
+      indexY: -2
+      type: 1006
+    - indexX: 34
+      indexY: -2
+      type: 1006
+    - indexX: 34.5
+      indexY: -2
+      type: 1006
+    - indexX: 35
+      indexY: -2
+      type: 1006
+    - indexX: 35.5
+      indexY: -2
+      type: 1006
+    - indexX: 36
+      indexY: -2
+      type: 1006
+    - indexX: 36.5
+      indexY: -2
+      type: 1006
+    - indexX: 37
+      indexY: -2
+      type: 1006
+    - indexX: 37.5
+      indexY: -2
+      type: 1006
+    - indexX: 38
+      indexY: -2
+      type: 1006
+    - indexX: 38.5
+      indexY: -2
+      type: 1006
+    - indexX: 39
+      indexY: -2
+      type: 1006
+    - indexX: 39.5
+      indexY: -2
+      type: 1006
+    - indexX: 40
+      indexY: -2
+      type: 1006
+    - indexX: 40.5
+      indexY: -2
+      type: 1006
+    - indexX: 41
+      indexY: -2
+      type: 1006
+    - indexX: 41.5
+      indexY: -2
+      type: 1006
+    - indexX: 42
+      indexY: -2
+      type: 1006
+    - indexX: 42.5
+      indexY: -2
+      type: 1006
+    - indexX: 43
+      indexY: -2
+      type: 1006
+    - indexX: 43.5
+      indexY: -2
+      type: 1006
+    - indexX: 44
+      indexY: -2
+      type: 1006
+    - indexX: 44.5
+      indexY: -2
+      type: 1006
+    - indexX: 45
+      indexY: -2
+      type: 1006
+    - indexX: 45.5
+      indexY: -2
+      type: 1006
+    - indexX: 46
+      indexY: -2
+      type: 1006
+    - indexX: 46.5
+      indexY: -2
+      type: 1006
+    - indexX: 47
+      indexY: -2
+      type: 1006
+    - indexX: 47.5
+      indexY: -2
+      type: 1006
+    - indexX: 48
+      indexY: -2
+      type: 1006
+    - indexX: 48.5
+      indexY: -2
+      type: 1006
+    - indexX: 49
+      indexY: -2
+      type: 1006
+    - indexX: 49.5
+      indexY: -2
+      type: 1006
+    - indexX: 50
+      indexY: -2
+      type: 1006
+    - indexX: 50.5
+      indexY: -2
+      type: 1006
+    - indexX: 51
+      indexY: -2
+      type: 1006
+    - indexX: 51.5
+      indexY: -2
+      type: 1006
+    - indexX: 52
+      indexY: -2
+      type: 1006
+    - indexX: 52.5
+      indexY: -2
+      type: 1006
+    - indexX: 53
+      indexY: -2
+      type: 1006
+    - indexX: 53.5
+      indexY: -2
+      type: 1006
+    - indexX: 54
+      indexY: -2
+      type: 1006
+    - indexX: 54.5
+      indexY: -2
+      type: 1006
+    - indexX: 55
+      indexY: -2
+      type: 1006
+    - indexX: 55.5
+      indexY: -2
+      type: 1006
+    - indexX: 56
+      indexY: -2
+      type: 1006
+    - indexX: 17.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 18
+      indexY: -2.5
+      type: 1006
+    - indexX: 18.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 19
+      indexY: -2.5
+      type: 1006
+    - indexX: 19.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 20
+      indexY: -2.5
+      type: 1006
+    - indexX: 20.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 21
+      indexY: -2.5
+      type: 1006
+    - indexX: 21.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 22
+      indexY: -2.5
+      type: 1006
+    - indexX: 22.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 23
+      indexY: -2.5
+      type: 1006
+    - indexX: 23.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 24
+      indexY: -2.5
+      type: 1006
+    - indexX: 24.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 25
+      indexY: -2.5
+      type: 1006
+    - indexX: 25.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 26
+      indexY: -2.5
+      type: 1006
+    - indexX: 26.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 27
+      indexY: -2.5
+      type: 1006
+    - indexX: 27.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 28
+      indexY: -2.5
+      type: 1006
+    - indexX: 28.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 29
+      indexY: -2.5
+      type: 1006
+    - indexX: 29.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 30
+      indexY: -2.5
+      type: 1006
+    - indexX: 30.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 31
+      indexY: -2.5
+      type: 1006
+    - indexX: 31.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 32
+      indexY: -2.5
+      type: 1006
+    - indexX: 32.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 33
+      indexY: -2.5
+      type: 1006
+    - indexX: 33.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 34
+      indexY: -2.5
+      type: 1006
+    - indexX: 34.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 35
+      indexY: -2.5
+      type: 1006
+    - indexX: 35.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 36
+      indexY: -2.5
+      type: 1006
+    - indexX: 36.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 37
+      indexY: -2.5
+      type: 1006
+    - indexX: 37.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 38
+      indexY: -2.5
+      type: 1006
+    - indexX: 38.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 39
+      indexY: -2.5
+      type: 1006
+    - indexX: 39.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 40
+      indexY: -2.5
+      type: 1006
+    - indexX: 40.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 41
+      indexY: -2.5
+      type: 1006
+    - indexX: 41.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 42
+      indexY: -2.5
+      type: 1006
+    - indexX: 42.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 43
+      indexY: -2.5
+      type: 1006
+    - indexX: 43.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 44
+      indexY: -2.5
+      type: 1006
+    - indexX: 44.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 45
+      indexY: -2.5
+      type: 1006
+    - indexX: 45.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 46
+      indexY: -2.5
+      type: 1006
+    - indexX: 46.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 47
+      indexY: -2.5
+      type: 1006
+    - indexX: 47.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 48
+      indexY: -2.5
+      type: 1006
+    - indexX: 48.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 49
+      indexY: -2.5
+      type: 1006
+    - indexX: 49.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 50
+      indexY: -2.5
+      type: 1006
+    - indexX: 50.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 51
+      indexY: -2.5
+      type: 1006
+    - indexX: 51.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 52
+      indexY: -2.5
+      type: 1006
+    - indexX: 52.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 53
+      indexY: -2.5
+      type: 1006
+    - indexX: 53.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 54
+      indexY: -2.5
+      type: 1006
+    - indexX: 54.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 55
+      indexY: -2.5
+      type: 1006
+    - indexX: 55.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 56
+      indexY: -2.5
+      type: 1006
+    - indexX: 31.5
+      indexY: -3
+      type: 1006
+    - indexX: 32
+      indexY: -3
+      type: 1006
+    - indexX: 32.5
+      indexY: -3
+      type: 1006
+    - indexX: 33
+      indexY: -3
+      type: 1006
+    - indexX: 33.5
+      indexY: -3
+      type: 1006
+    - indexX: 34
+      indexY: -3
+      type: 1006
+    - indexX: 34.5
+      indexY: -3
+      type: 1006
+    - indexX: 35
+      indexY: -3
+      type: 1006
+    - indexX: 35.5
+      indexY: -3
+      type: 1006
+    - indexX: 36
+      indexY: -3
+      type: 1006
+    - indexX: 36.5
+      indexY: -3
+      type: 1006
+    - indexX: 37
+      indexY: -3
+      type: 1006
+    - indexX: 37.5
+      indexY: -3
+      type: 1006
+    - indexX: 38
+      indexY: -3
+      type: 1006
+    - indexX: 38.5
+      indexY: -3
+      type: 1006
+    - indexX: 56.5
+      indexY: -1
+      type: 1006
+    - indexX: 56.5
+      indexY: -1.5
+      type: 1006
+    - indexX: 56.5
+      indexY: -2
+      type: 1006
+    - indexX: 56.5
+      indexY: -2.5
+      type: 1006
+    - indexX: 17.5
+      indexY: -3
+      type: 1006
+    - indexX: 18
+      indexY: -3
+      type: 1006
+    - indexX: 18.5
+      indexY: -3
+      type: 1006
+    - indexX: 19
+      indexY: -3
+      type: 1006
+    - indexX: 19.5
+      indexY: -3
+      type: 1006
+    - indexX: 20
+      indexY: -3
+      type: 1006
+    - indexX: 20.5
+      indexY: -3
+      type: 1006
+    - indexX: 21
+      indexY: -3
+      type: 1006
+    - indexX: 21.5
+      indexY: -3
+      type: 1006
+    - indexX: 22
+      indexY: -3
+      type: 1006
+    - indexX: 22.5
+      indexY: -3
+      type: 1006
+    - indexX: 23
+      indexY: -3
+      type: 1006
+    - indexX: 23.5
+      indexY: -3
+      type: 1006
+    - indexX: 24
+      indexY: -3
+      type: 1006
+    - indexX: 24.5
+      indexY: -3
+      type: 1006
+    - indexX: 25
+      indexY: -3
+      type: 1006
+    - indexX: 25.5
+      indexY: -3
+      type: 1006
+    - indexX: 26
+      indexY: -3
+      type: 1006
+    - indexX: 26.5
+      indexY: -3
+      type: 1006
+    - indexX: 27
+      indexY: -3
+      type: 1006
+    - indexX: 27.5
+      indexY: -3
+      type: 1006
+    - indexX: 28
+      indexY: -3
+      type: 1006
+    - indexX: 28.5
+      indexY: -3
+      type: 1006
+    - indexX: 29
+      indexY: -3
+      type: 1006
+    - indexX: 29.5
+      indexY: -3
+      type: 1006
+    - indexX: 30
+      indexY: -3
+      type: 1006
+    - indexX: 30.5
+      indexY: -3
+      type: 1006
+    - indexX: 31
+      indexY: -3
+      type: 1006
+    - indexX: 39
+      indexY: -3
+      type: 1006
+    - indexX: 39.5
+      indexY: -3
+      type: 1006
+    - indexX: 40
+      indexY: -3
+      type: 1006
+    - indexX: 40.5
+      indexY: -3
+      type: 1006
+    - indexX: 41
+      indexY: -3
+      type: 1006
+    - indexX: 41.5
+      indexY: -3
+      type: 1006
+    - indexX: 42
+      indexY: -3
+      type: 1006
+    - indexX: 42.5
+      indexY: -3
+      type: 1006
+    - indexX: 43
+      indexY: -3
+      type: 1006
+    - indexX: 43.5
+      indexY: -3
+      type: 1006
+    - indexX: 44
+      indexY: -3
+      type: 1006
+    - indexX: 44.5
+      indexY: -3
+      type: 1006
+    - indexX: 45
+      indexY: -3
+      type: 1006
+    - indexX: 45.5
+      indexY: -3
+      type: 1006
+    - indexX: 46
+      indexY: -3
+      type: 1006
+    - indexX: 46.5
+      indexY: -3
+      type: 1006
+    - indexX: 47
+      indexY: -3
+      type: 1006
+    - indexX: 47.5
+      indexY: -3
+      type: 1006
+    - indexX: 48
+      indexY: -3
+      type: 1006
+    - indexX: 48.5
+      indexY: -3
+      type: 1006
+    - indexX: 49
+      indexY: -3
+      type: 1006
+    - indexX: 49.5
+      indexY: -3
+      type: 1006
+    - indexX: 50
+      indexY: -3
+      type: 1006
+    - indexX: 50.5
+      indexY: -3
+      type: 1006
+    - indexX: 51
+      indexY: -3
+      type: 1006
+    - indexX: 51.5
+      indexY: -3
+      type: 1006
+    - indexX: 52
+      indexY: -3
+      type: 1006
+    - indexX: 52.5
+      indexY: -3
+      type: 1006
+    - indexX: 53
+      indexY: -3
+      type: 1006
+    - indexX: 53.5
+      indexY: -3
+      type: 1006
+    - indexX: 54
+      indexY: -3
+      type: 1006
+    - indexX: 54.5
+      indexY: -3
+      type: 1006
+    - indexX: 55
+      indexY: -3
+      type: 1006
+    - indexX: 55.5
+      indexY: -3
+      type: 1006
+    - indexX: 56
+      indexY: -3
+      type: 1006
+    - indexX: 56.5
+      indexY: -3
+      type: 1006
+    - indexX: -51.5
+      indexY: -1
+      type: 1006
+    - indexX: -51
+      indexY: -1
+      type: 1006
+    - indexX: -50.5
+      indexY: -1
+      type: 1006
+    - indexX: -50
+      indexY: -1
+      type: 1006
+    - indexX: -49.5
+      indexY: -1
+      type: 1006
+    - indexX: -49
+      indexY: -1
+      type: 1006
+    - indexX: -48.5
+      indexY: -1
+      type: 1006
+    - indexX: -48
+      indexY: -1
+      type: 1006
+    - indexX: -47.5
+      indexY: -1
+      type: 1006
+    - indexX: -47
+      indexY: -1
+      type: 1006
+    - indexX: -46.5
+      indexY: -1
+      type: 1006
+    - indexX: -46
+      indexY: -1
+      type: 1006
+    - indexX: -45.5
+      indexY: -1
+      type: 1006
+    - indexX: -45
+      indexY: -1
+      type: 1006
+    - indexX: -44.5
+      indexY: -1
+      type: 1006
+    - indexX: -44
+      indexY: -1
+      type: 1006
+    - indexX: -43.5
+      indexY: -1
+      type: 1006
+    - indexX: -43
+      indexY: -1
+      type: 1006
+    - indexX: -42.5
+      indexY: -1
+      type: 1006
+    - indexX: -42
+      indexY: -1
+      type: 1006
+    - indexX: -41.5
+      indexY: -1
+      type: 1006
+    - indexX: -41
+      indexY: -1
+      type: 1006
+    - indexX: -40.5
+      indexY: -1
+      type: 1006
+    - indexX: -40
+      indexY: -1
+      type: 1006
+    - indexX: -39.5
+      indexY: -1
+      type: 1006
+    - indexX: -39
+      indexY: -1
+      type: 1006
+    - indexX: -38.5
+      indexY: -1
+      type: 1006
+    - indexX: -38
+      indexY: -1
+      type: 1006
+    - indexX: -37.5
+      indexY: -1
+      type: 1006
+    - indexX: -37
+      indexY: -1
+      type: 1006
+    - indexX: -36.5
+      indexY: -1
+      type: 1006
+    - indexX: -36
+      indexY: -1
+      type: 1006
+    - indexX: -35.5
+      indexY: -1
+      type: 1006
+    - indexX: -35
+      indexY: -1
+      type: 1006
+    - indexX: -34.5
+      indexY: -1
+      type: 1006
+    - indexX: -34
+      indexY: -1
+      type: 1006
+    - indexX: -33.5
+      indexY: -1
+      type: 1006
+    - indexX: -33
+      indexY: -1
+      type: 1006
+    - indexX: -32.5
+      indexY: -1
+      type: 1006
+    - indexX: -32
+      indexY: -1
+      type: 1006
+    - indexX: -31.5
+      indexY: -1
+      type: 1006
+    - indexX: -31
+      indexY: -1
+      type: 1006
+    - indexX: -30.5
+      indexY: -1
+      type: 1006
+    - indexX: -30
+      indexY: -1
+      type: 1006
+    - indexX: -29.5
+      indexY: -1
+      type: 1006
+    - indexX: -29
+      indexY: -1
+      type: 1006
+    - indexX: -28.5
+      indexY: -1
+      type: 1006
+    - indexX: -28
+      indexY: -1
+      type: 1006
+    - indexX: -27.5
+      indexY: -1
+      type: 1006
+    - indexX: -27
+      indexY: -1
+      type: 1006
+    - indexX: -26.5
+      indexY: -1
+      type: 1006
+    - indexX: -26
+      indexY: -1
+      type: 1006
+    - indexX: -25.5
+      indexY: -1
+      type: 1006
+    - indexX: -25
+      indexY: -1
+      type: 1006
+    - indexX: -24.5
+      indexY: -1
+      type: 1006
+    - indexX: -24
+      indexY: -1
+      type: 1006
+    - indexX: -23.5
+      indexY: -1
+      type: 1006
+    - indexX: -23
+      indexY: -1
+      type: 1006
+    - indexX: -22.5
+      indexY: -1
+      type: 1006
+    - indexX: -22
+      indexY: -1
+      type: 1006
+    - indexX: -21.5
+      indexY: -1
+      type: 1006
+    - indexX: -21
+      indexY: -1
+      type: 1006
+    - indexX: -20.5
+      indexY: -1
+      type: 1006
+    - indexX: -20
+      indexY: -1
+      type: 1006
+    - indexX: -19.5
+      indexY: -1
+      type: 1006
+    - indexX: -19
+      indexY: -1
+      type: 1006
+    - indexX: -18.5
+      indexY: -1
+      type: 1006
+    - indexX: -18
+      indexY: -1
+      type: 1006
+    - indexX: -17.5
+      indexY: -1
+      type: 1006
+    - indexX: -51.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -51
+      indexY: -1.5
+      type: 1006
+    - indexX: -50.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -50
+      indexY: -1.5
+      type: 1006
+    - indexX: -49.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -49
+      indexY: -1.5
+      type: 1006
+    - indexX: -48.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -48
+      indexY: -1.5
+      type: 1006
+    - indexX: -47.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -47
+      indexY: -1.5
+      type: 1006
+    - indexX: -46.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -46
+      indexY: -1.5
+      type: 1006
+    - indexX: -45.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -45
+      indexY: -1.5
+      type: 1006
+    - indexX: -44.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -44
+      indexY: -1.5
+      type: 1006
+    - indexX: -43.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -43
+      indexY: -1.5
+      type: 1006
+    - indexX: -42.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -42
+      indexY: -1.5
+      type: 1006
+    - indexX: -41.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -41
+      indexY: -1.5
+      type: 1006
+    - indexX: -40.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -40
+      indexY: -1.5
+      type: 1006
+    - indexX: -39.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -39
+      indexY: -1.5
+      type: 1006
+    - indexX: -38.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -38
+      indexY: -1.5
+      type: 1006
+    - indexX: -37.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -37
+      indexY: -1.5
+      type: 1006
+    - indexX: -36.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -36
+      indexY: -1.5
+      type: 1006
+    - indexX: -35.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -35
+      indexY: -1.5
+      type: 1006
+    - indexX: -34.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -34
+      indexY: -1.5
+      type: 1006
+    - indexX: -33.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -33
+      indexY: -1.5
+      type: 1006
+    - indexX: -32.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -32
+      indexY: -1.5
+      type: 1006
+    - indexX: -31.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -31
+      indexY: -1.5
+      type: 1006
+    - indexX: -30.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -30
+      indexY: -1.5
+      type: 1006
+    - indexX: -29.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -29
+      indexY: -1.5
+      type: 1006
+    - indexX: -28.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -28
+      indexY: -1.5
+      type: 1006
+    - indexX: -27.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -27
+      indexY: -1.5
+      type: 1006
+    - indexX: -26.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -26
+      indexY: -1.5
+      type: 1006
+    - indexX: -25.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -25
+      indexY: -1.5
+      type: 1006
+    - indexX: -24.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -24
+      indexY: -1.5
+      type: 1006
+    - indexX: -23.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -23
+      indexY: -1.5
+      type: 1006
+    - indexX: -22.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -22
+      indexY: -1.5
+      type: 1006
+    - indexX: -21.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -21
+      indexY: -1.5
+      type: 1006
+    - indexX: -20.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -20
+      indexY: -1.5
+      type: 1006
+    - indexX: -19.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -19
+      indexY: -1.5
+      type: 1006
+    - indexX: -18.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -18
+      indexY: -1.5
+      type: 1006
+    - indexX: -17.5
+      indexY: -1.5
+      type: 1006
+    - indexX: -51.5
+      indexY: -2
+      type: 1006
+    - indexX: -51
+      indexY: -2
+      type: 1006
+    - indexX: -50.5
+      indexY: -2
+      type: 1006
+    - indexX: -50
+      indexY: -2
+      type: 1006
+    - indexX: -49.5
+      indexY: -2
+      type: 1006
+    - indexX: -49
+      indexY: -2
+      type: 1006
+    - indexX: -48.5
+      indexY: -2
+      type: 1006
+    - indexX: -48
+      indexY: -2
+      type: 1006
+    - indexX: -47.5
+      indexY: -2
+      type: 1006
+    - indexX: -47
+      indexY: -2
+      type: 1006
+    - indexX: -46.5
+      indexY: -2
+      type: 1006
+    - indexX: -46
+      indexY: -2
+      type: 1006
+    - indexX: -45.5
+      indexY: -2
+      type: 1006
+    - indexX: -45
+      indexY: -2
+      type: 1006
+    - indexX: -44.5
+      indexY: -2
+      type: 1006
+    - indexX: -44
+      indexY: -2
+      type: 1006
+    - indexX: -43.5
+      indexY: -2
+      type: 1006
+    - indexX: -43
+      indexY: -2
+      type: 1006
+    - indexX: -42.5
+      indexY: -2
+      type: 1006
+    - indexX: -42
+      indexY: -2
+      type: 1006
+    - indexX: -41.5
+      indexY: -2
+      type: 1006
+    - indexX: -41
+      indexY: -2
+      type: 1006
+    - indexX: -40.5
+      indexY: -2
+      type: 1006
+    - indexX: -40
+      indexY: -2
+      type: 1006
+    - indexX: -39.5
+      indexY: -2
+      type: 1006
+    - indexX: -39
+      indexY: -2
+      type: 1006
+    - indexX: -38.5
+      indexY: -2
+      type: 1006
+    - indexX: -38
+      indexY: -2
+      type: 1006
+    - indexX: -37.5
+      indexY: -2
+      type: 1006
+    - indexX: -37
+      indexY: -2
+      type: 1006
+    - indexX: -36.5
+      indexY: -2
+      type: 1006
+    - indexX: -36
+      indexY: -2
+      type: 1006
+    - indexX: -35.5
+      indexY: -2
+      type: 1006
+    - indexX: -35
+      indexY: -2
+      type: 1006
+    - indexX: -34.5
+      indexY: -2
+      type: 1006
+    - indexX: -34
+      indexY: -2
+      type: 1006
+    - indexX: -33.5
+      indexY: -2
+      type: 1006
+    - indexX: -33
+      indexY: -2
+      type: 1006
+    - indexX: -32.5
+      indexY: -2
+      type: 1006
+    - indexX: -32
+      indexY: -2
+      type: 1006
+    - indexX: -31.5
+      indexY: -2
+      type: 1006
+    - indexX: -31
+      indexY: -2
+      type: 1006
+    - indexX: -30.5
+      indexY: -2
+      type: 1006
+    - indexX: -30
+      indexY: -2
+      type: 1006
+    - indexX: -29.5
+      indexY: -2
+      type: 1006
+    - indexX: -29
+      indexY: -2
+      type: 1006
+    - indexX: -28.5
+      indexY: -2
+      type: 1006
+    - indexX: -28
+      indexY: -2
+      type: 1006
+    - indexX: -27.5
+      indexY: -2
+      type: 1006
+    - indexX: -27
+      indexY: -2
+      type: 1006
+    - indexX: -26.5
+      indexY: -2
+      type: 1006
+    - indexX: -26
+      indexY: -2
+      type: 1006
+    - indexX: -25.5
+      indexY: -2
+      type: 1006
+    - indexX: -25
+      indexY: -2
+      type: 1006
+    - indexX: -24.5
+      indexY: -2
+      type: 1006
+    - indexX: -24
+      indexY: -2
+      type: 1006
+    - indexX: -23.5
+      indexY: -2
+      type: 1006
+    - indexX: -23
+      indexY: -2
+      type: 1006
+    - indexX: -22.5
+      indexY: -2
+      type: 1006
+    - indexX: -22
+      indexY: -2
+      type: 1006
+    - indexX: -21.5
+      indexY: -2
+      type: 1006
+    - indexX: -21
+      indexY: -2
+      type: 1006
+    - indexX: -20.5
+      indexY: -2
+      type: 1006
+    - indexX: -20
+      indexY: -2
+      type: 1006
+    - indexX: -19.5
+      indexY: -2
+      type: 1006
+    - indexX: -19
+      indexY: -2
+      type: 1006
+    - indexX: -18.5
+      indexY: -2
+      type: 1006
+    - indexX: -18
+      indexY: -2
+      type: 1006
+    - indexX: -17.5
+      indexY: -2
+      type: 1006
+    - indexX: -51.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -51
+      indexY: -2.5
+      type: 1006
+    - indexX: -50.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -50
+      indexY: -2.5
+      type: 1006
+    - indexX: -49.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -49
+      indexY: -2.5
+      type: 1006
+    - indexX: -48.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -48
+      indexY: -2.5
+      type: 1006
+    - indexX: -47.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -47
+      indexY: -2.5
+      type: 1006
+    - indexX: -46.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -46
+      indexY: -2.5
+      type: 1006
+    - indexX: -45.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -45
+      indexY: -2.5
+      type: 1006
+    - indexX: -44.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -44
+      indexY: -2.5
+      type: 1006
+    - indexX: -43.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -43
+      indexY: -2.5
+      type: 1006
+    - indexX: -42.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -42
+      indexY: -2.5
+      type: 1006
+    - indexX: -41.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -41
+      indexY: -2.5
+      type: 1006
+    - indexX: -40.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -40
+      indexY: -2.5
+      type: 1006
+    - indexX: -39.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -39
+      indexY: -2.5
+      type: 1006
+    - indexX: -38.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -38
+      indexY: -2.5
+      type: 1006
+    - indexX: -37.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -37
+      indexY: -2.5
+      type: 1006
+    - indexX: -36.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -36
+      indexY: -2.5
+      type: 1006
+    - indexX: -35.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -35
+      indexY: -2.5
+      type: 1006
+    - indexX: -34.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -34
+      indexY: -2.5
+      type: 1006
+    - indexX: -33.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -33
+      indexY: -2.5
+      type: 1006
+    - indexX: -32.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -32
+      indexY: -2.5
+      type: 1006
+    - indexX: -31.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -31
+      indexY: -2.5
+      type: 1006
+    - indexX: -30.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -30
+      indexY: -2.5
+      type: 1006
+    - indexX: -29.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -29
+      indexY: -2.5
+      type: 1006
+    - indexX: -28.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -28
+      indexY: -2.5
+      type: 1006
+    - indexX: -27.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -27
+      indexY: -2.5
+      type: 1006
+    - indexX: -26.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -26
+      indexY: -2.5
+      type: 1006
+    - indexX: -25.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -25
+      indexY: -2.5
+      type: 1006
+    - indexX: -24.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -24
+      indexY: -2.5
+      type: 1006
+    - indexX: -23.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -23
+      indexY: -2.5
+      type: 1006
+    - indexX: -22.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -22
+      indexY: -2.5
+      type: 1006
+    - indexX: -21.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -21
+      indexY: -2.5
+      type: 1006
+    - indexX: -20.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -20
+      indexY: -2.5
+      type: 1006
+    - indexX: -19.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -19
+      indexY: -2.5
+      type: 1006
+    - indexX: -18.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -18
+      indexY: -2.5
+      type: 1006
+    - indexX: -17.5
+      indexY: -2.5
+      type: 1006
+    - indexX: -51.5
+      indexY: -3
+      type: 1006
+    - indexX: -51
+      indexY: -3
+      type: 1006
+    - indexX: -50.5
+      indexY: -3
+      type: 1006
+    - indexX: -50
+      indexY: -3
+      type: 1006
+    - indexX: -49.5
+      indexY: -3
+      type: 1006
+    - indexX: -49
+      indexY: -3
+      type: 1006
+    - indexX: -48.5
+      indexY: -3
+      type: 1006
+    - indexX: -48
+      indexY: -3
+      type: 1006
+    - indexX: -47.5
+      indexY: -3
+      type: 1006
+    - indexX: -47
+      indexY: -3
+      type: 1006
+    - indexX: -46.5
+      indexY: -3
+      type: 1006
+    - indexX: -46
+      indexY: -3
+      type: 1006
+    - indexX: -45.5
+      indexY: -3
+      type: 1006
+    - indexX: -45
+      indexY: -3
+      type: 1006
+    - indexX: -44.5
+      indexY: -3
+      type: 1006
+    - indexX: -44
+      indexY: -3
+      type: 1006
+    - indexX: -43.5
+      indexY: -3
+      type: 1006
+    - indexX: -43
+      indexY: -3
+      type: 1006
+    - indexX: -42.5
+      indexY: -3
+      type: 1006
+    - indexX: -42
+      indexY: -3
+      type: 1006
+    - indexX: -41.5
+      indexY: -3
+      type: 1006
+    - indexX: -41
+      indexY: -3
+      type: 1006
+    - indexX: -40.5
+      indexY: -3
+      type: 1006
+    - indexX: -40
+      indexY: -3
+      type: 1006
+    - indexX: -39.5
+      indexY: -3
+      type: 1006
+    - indexX: -39
+      indexY: -3
+      type: 1006
+    - indexX: -38.5
+      indexY: -3
+      type: 1006
+    - indexX: -38
+      indexY: -3
+      type: 1006
+    - indexX: -37.5
+      indexY: -3
+      type: 1006
+    - indexX: -37
+      indexY: -3
+      type: 1006
+    - indexX: -36.5
+      indexY: -3
+      type: 1006
+    - indexX: -36
+      indexY: -3
+      type: 1006
+    - indexX: -35.5
+      indexY: -3
+      type: 1006
+    - indexX: -35
+      indexY: -3
+      type: 1006
+    - indexX: -34.5
+      indexY: -3
+      type: 1006
+    - indexX: -34
+      indexY: -3
+      type: 1006
+    - indexX: -33.5
+      indexY: -3
+      type: 1006
+    - indexX: -33
+      indexY: -3
+      type: 1006
+    - indexX: -32.5
+      indexY: -3
+      type: 1006
+    - indexX: -32
+      indexY: -3
+      type: 1006
+    - indexX: -31.5
+      indexY: -3
+      type: 1006
+    - indexX: -31
+      indexY: -3
+      type: 1006
+    - indexX: -30.5
+      indexY: -3
+      type: 1006
+    - indexX: -30
+      indexY: -3
+      type: 1006
+    - indexX: -29.5
+      indexY: -3
+      type: 1006
+    - indexX: -29
+      indexY: -3
+      type: 1006
+    - indexX: -28.5
+      indexY: -3
+      type: 1006
+    - indexX: -28
+      indexY: -3
+      type: 1006
+    - indexX: -27.5
+      indexY: -3
+      type: 1006
+    - indexX: -27
+      indexY: -3
+      type: 1006
+    - indexX: -26.5
+      indexY: -3
+      type: 1006
+    - indexX: -26
+      indexY: -3
+      type: 1006
+    - indexX: -25.5
+      indexY: -3
+      type: 1006
+    - indexX: -25
+      indexY: -3
+      type: 1006
+    - indexX: -24.5
+      indexY: -3
+      type: 1006
+    - indexX: -24
+      indexY: -3
+      type: 1006
+    - indexX: -23.5
+      indexY: -3
+      type: 1006
+    - indexX: -23
+      indexY: -3
+      type: 1006
+    - indexX: -22.5
+      indexY: -3
+      type: 1006
+    - indexX: -22
+      indexY: -3
+      type: 1006
+    - indexX: -21.5
+      indexY: -3
+      type: 1006
+    - indexX: -21
+      indexY: -3
+      type: 1006
+    - indexX: -20.5
+      indexY: -3
+      type: 1006
+    - indexX: -20
+      indexY: -3
+      type: 1006
+    - indexX: -19.5
+      indexY: -3
+      type: 1006
+    - indexX: -19
+      indexY: -3
+      type: 1006
+    - indexX: -18.5
+      indexY: -3
+      type: 1006
+    - indexX: -18
+      indexY: -3
+      type: 1006
+    - indexX: -17.5
+      indexY: -3
+      type: 1006
   hiddenAreaData:
     lstHiddenCellDataItems: []
   triggerAreaData:
@@ -3121,67 +7489,892 @@ MonoBehaviour:
       indexArea: 0
     - indexX: 2.5
       indexY: -1.5
-      indexArea: 0
+      indexArea: 3
     - indexX: 3
       indexY: -1.5
+      indexArea: 3
+    - indexX: 3.5
+      indexY: -1.5
+      indexArea: 3
+    - indexX: 3.5
+      indexY: -2
+      indexArea: 3
+    - indexX: 4
+      indexY: -2
+      indexArea: 3
+    - indexX: 4.5
+      indexY: -2
+      indexArea: 3
+    - indexX: 5
+      indexY: -2
+      indexArea: 3
+    - indexX: 5.5
+      indexY: -2
+      indexArea: 3
+    - indexX: 5.5
+      indexY: -1.5
+      indexArea: 3
+    - indexX: 5
+      indexY: -1.5
+      indexArea: 3
+    - indexX: 4.5
+      indexY: -1.5
+      indexArea: 3
+    - indexX: 4
+      indexY: -1.5
+      indexArea: 3
+    - indexX: -34.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -34.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -34.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -34.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -34
+      indexY: -.5
+      indexArea: 1
+    - indexX: -34
+      indexY: -1
+      indexArea: 1
+    - indexX: -34
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -34
+      indexY: -2
+      indexArea: 1
+    - indexX: -34
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -34.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -33.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -33.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -33.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -33.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -33.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -33
+      indexY: -.5
+      indexArea: 1
+    - indexX: -33
+      indexY: -1
+      indexArea: 1
+    - indexX: -33
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -33
+      indexY: -2
+      indexArea: 1
+    - indexX: -33
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -32.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -32.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -32.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -32.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -32.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -32
+      indexY: -.5
+      indexArea: 1
+    - indexX: -32
+      indexY: -1
+      indexArea: 1
+    - indexX: -32
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -32
+      indexY: -2
+      indexArea: 1
+    - indexX: -32
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -31.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -31.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -31.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -31.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -31.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -31
+      indexY: -.5
+      indexArea: 1
+    - indexX: -31
+      indexY: -1
+      indexArea: 1
+    - indexX: -31
+      indexY: -2
+      indexArea: 1
+    - indexX: -31
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -31
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -30.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -30.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -30.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -30.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -30.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -16
+      indexY: -.5
       indexArea: 0
+    - indexX: -16
+      indexY: -1
+      indexArea: 0
+    - indexX: -16
+      indexY: -1.5
+      indexArea: 0
+    - indexX: -16
+      indexY: -2
+      indexArea: 0
+    - indexX: -16
+      indexY: -2.5
+      indexArea: 0
+    - indexX: -16
+      indexY: -3
+      indexArea: 0
+    - indexX: -15.5
+      indexY: -.5
+      indexArea: 2
+    - indexX: -15
+      indexY: -.5
+      indexArea: 2
+    - indexX: -14.5
+      indexY: -.5
+      indexArea: 2
+    - indexX: -14
+      indexY: -.5
+      indexArea: 2
+    - indexX: -13.5
+      indexY: -.5
+      indexArea: 2
+    - indexX: -13
+      indexY: -.5
+      indexArea: 2
+    - indexX: -12.5
+      indexY: -.5
+      indexArea: 2
+    - indexX: -12
+      indexY: -.5
+      indexArea: 2
+    - indexX: -11.5
+      indexY: -.5
+      indexArea: 2
+    - indexX: -11
+      indexY: -.5
+      indexArea: 0
+    - indexX: -15.5
+      indexY: -1
+      indexArea: 2
+    - indexX: -15
+      indexY: -1
+      indexArea: 2
+    - indexX: -14.5
+      indexY: -1
+      indexArea: 2
+    - indexX: -14
+      indexY: -1
+      indexArea: 2
+    - indexX: -13.5
+      indexY: -1
+      indexArea: 2
+    - indexX: -13
+      indexY: -1
+      indexArea: 2
+    - indexX: -12.5
+      indexY: -1
+      indexArea: 2
+    - indexX: -12
+      indexY: -1
+      indexArea: 2
+    - indexX: -11.5
+      indexY: -1
+      indexArea: 2
+    - indexX: -11
+      indexY: -1
+      indexArea: 0
+    - indexX: -15.5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: -15
+      indexY: -1.5
+      indexArea: 2
+    - indexX: -14.5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: -14
+      indexY: -1.5
+      indexArea: 2
+    - indexX: -13.5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: -13
+      indexY: -1.5
+      indexArea: 2
+    - indexX: -12.5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: -12
+      indexY: -1.5
+      indexArea: 2
+    - indexX: -11.5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: -11
+      indexY: -1.5
+      indexArea: 0
+    - indexX: -15.5
+      indexY: -2
+      indexArea: 2
+    - indexX: -15
+      indexY: -2
+      indexArea: 2
+    - indexX: -14.5
+      indexY: -2
+      indexArea: 2
+    - indexX: -14
+      indexY: -2
+      indexArea: 2
+    - indexX: -13.5
+      indexY: -2
+      indexArea: 2
+    - indexX: -13
+      indexY: -2
+      indexArea: 2
+    - indexX: -12.5
+      indexY: -2
+      indexArea: 2
+    - indexX: -12
+      indexY: -2
+      indexArea: 2
+    - indexX: -11.5
+      indexY: -2
+      indexArea: 2
+    - indexX: -11
+      indexY: -2
+      indexArea: 0
+    - indexX: -15.5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: -15
+      indexY: -2.5
+      indexArea: 2
+    - indexX: -14.5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: -14
+      indexY: -2.5
+      indexArea: 2
+    - indexX: -13.5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: -13
+      indexY: -2.5
+      indexArea: 2
+    - indexX: -12.5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: -12
+      indexY: -2.5
+      indexArea: 2
+    - indexX: -11.5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: -11
+      indexY: -2.5
+      indexArea: 0
+    - indexX: -15.5
+      indexY: -3
+      indexArea: 2
+    - indexX: -15
+      indexY: -3
+      indexArea: 2
+    - indexX: -14.5
+      indexY: -3
+      indexArea: 2
+    - indexX: -14
+      indexY: -3
+      indexArea: 2
+    - indexX: -13.5
+      indexY: -3
+      indexArea: 2
+    - indexX: -13
+      indexY: -3
+      indexArea: 2
+    - indexX: -12.5
+      indexY: -3
+      indexArea: 2
+    - indexX: -12
+      indexY: -3
+      indexArea: 2
+    - indexX: -11.5
+      indexY: -3
+      indexArea: 2
+    - indexX: -11
+      indexY: -3
+      indexArea: 0
+    - indexX: -34.5
+      indexY: -3
+      indexArea: 1
+    - indexX: -34
+      indexY: -3
+      indexArea: 1
+    - indexX: -33.5
+      indexY: -3
+      indexArea: 1
+    - indexX: -33
+      indexY: -3
+      indexArea: 1
+    - indexX: -32.5
+      indexY: -3
+      indexArea: 1
+    - indexX: -32
+      indexY: -3
+      indexArea: 1
+    - indexX: -31.5
+      indexY: -3
+      indexArea: 1
+    - indexX: -31
+      indexY: -3
+      indexArea: 1
+    - indexX: -30.5
+      indexY: -3
+      indexArea: 1
+    - indexX: 2.5
+      indexY: -.5
+      indexArea: 3
+    - indexX: 3
+      indexY: -.5
+      indexArea: 3
     - indexX: 3.5
-      indexY: -1.5
-      indexArea: 4
+      indexY: -.5
+      indexArea: 3
+    - indexX: 4
+      indexY: -.5
+      indexArea: 3
+    - indexX: 4.5
+      indexY: -.5
+      indexArea: 3
+    - indexX: 5
+      indexY: -.5
+      indexArea: 3
+    - indexX: 5.5
+      indexY: -.5
+      indexArea: 3
+    - indexX: 6
+      indexY: -.5
+      indexArea: 3
+    - indexX: 6.5
+      indexY: -.5
+      indexArea: 3
+    - indexX: 7
+      indexY: -.5
+      indexArea: 3
+    - indexX: 7.5
+      indexY: -.5
+      indexArea: 3
+    - indexX: 2.5
+      indexY: -1
+      indexArea: 3
+    - indexX: 3
+      indexY: -1
+      indexArea: 3
     - indexX: 3.5
-      indexY: -2
-      indexArea: 4
+      indexY: -1
+      indexArea: 3
     - indexX: 4
-      indexY: -2
-      indexArea: 4
+      indexY: -1
+      indexArea: 3
     - indexX: 4.5
-      indexY: -2
-      indexArea: 4
+      indexY: -1
+      indexArea: 3
     - indexX: 5
-      indexY: -2
-      indexArea: 4
+      indexY: -1
+      indexArea: 3
     - indexX: 5.5
+      indexY: -1
+      indexArea: 3
+    - indexX: 6
+      indexY: -1
+      indexArea: 3
+    - indexX: 6.5
+      indexY: -1
+      indexArea: 3
+    - indexX: 7
+      indexY: -1
+      indexArea: 3
+    - indexX: 7.5
+      indexY: -1
+      indexArea: 3
+    - indexX: 6
+      indexY: -1.5
+      indexArea: 3
+    - indexX: 6.5
+      indexY: -1.5
+      indexArea: 3
+    - indexX: 7
+      indexY: -1.5
+      indexArea: 3
+    - indexX: 7.5
+      indexY: -1.5
+      indexArea: 3
+    - indexX: 2.5
       indexY: -2
-      indexArea: 4
-    - indexX: 5.5
-      indexY: -1.5
-      indexArea: 4
-    - indexX: 5
-      indexY: -1.5
-      indexArea: 4
-    - indexX: 4.5
-      indexY: -1.5
-      indexArea: 4
+      indexArea: 3
+    - indexX: 3
+      indexY: -2
+      indexArea: 3
+    - indexX: 6
+      indexY: -2
+      indexArea: 3
+    - indexX: 6.5
+      indexY: -2
+      indexArea: 3
+    - indexX: 7
+      indexY: -2
+      indexArea: 3
+    - indexX: 7.5
+      indexY: -2
+      indexArea: 3
+    - indexX: 2.5
+      indexY: -2.5
+      indexArea: 3
+    - indexX: 3
+      indexY: -2.5
+      indexArea: 3
+    - indexX: 3.5
+      indexY: -2.5
+      indexArea: 3
     - indexX: 4
+      indexY: -2.5
+      indexArea: 3
+    - indexX: 4.5
+      indexY: -2.5
+      indexArea: 3
+    - indexX: 5
+      indexY: -2.5
+      indexArea: 3
+    - indexX: 5.5
+      indexY: -2.5
+      indexArea: 3
+    - indexX: 6
+      indexY: -2.5
+      indexArea: 3
+    - indexX: 6.5
+      indexY: -2.5
+      indexArea: 3
+    - indexX: 7
+      indexY: -2.5
+      indexArea: 3
+    - indexX: 7.5
+      indexY: -2.5
+      indexArea: 3
+    - indexX: 2.5
+      indexY: -3
+      indexArea: 3
+    - indexX: 3
+      indexY: -3
+      indexArea: 3
+    - indexX: 3.5
+      indexY: -3
+      indexArea: 3
+    - indexX: 4
+      indexY: -3
+      indexArea: 3
+    - indexX: 4.5
+      indexY: -3
+      indexArea: 3
+    - indexX: 5
+      indexY: -3
+      indexArea: 3
+    - indexX: 5.5
+      indexY: -3
+      indexArea: 3
+    - indexX: 6
+      indexY: -3
+      indexArea: 3
+    - indexX: 6.5
+      indexY: -3
+      indexArea: 3
+    - indexX: 7
+      indexY: -3
+      indexArea: 3
+    - indexX: 7.5
+      indexY: -3
+      indexArea: 3
+    - indexX: 21
+      indexY: -.5
+      indexArea: 4
+    - indexX: 21.5
+      indexY: -.5
+      indexArea: 4
+    - indexX: 22
+      indexY: -.5
+      indexArea: 4
+    - indexX: 22.5
+      indexY: -.5
+      indexArea: 4
+    - indexX: 23
+      indexY: -.5
+      indexArea: 4
+    - indexX: 23.5
+      indexY: -.5
+      indexArea: 4
+    - indexX: 24
+      indexY: -.5
+      indexArea: 4
+    - indexX: 24.5
+      indexY: -.5
+      indexArea: 4
+    - indexX: 25
+      indexY: -.5
+      indexArea: 4
+    - indexX: 25.5
+      indexY: -.5
+      indexArea: 4
+    - indexX: 21
+      indexY: -1
+      indexArea: 4
+    - indexX: 21.5
+      indexY: -1
+      indexArea: 4
+    - indexX: 22
+      indexY: -1
+      indexArea: 4
+    - indexX: 22.5
+      indexY: -1
+      indexArea: 4
+    - indexX: 23
+      indexY: -1
+      indexArea: 4
+    - indexX: 23.5
+      indexY: -1
+      indexArea: 4
+    - indexX: 24
+      indexY: -1
+      indexArea: 4
+    - indexX: 24.5
+      indexY: -1
+      indexArea: 4
+    - indexX: 25
+      indexY: -1
+      indexArea: 4
+    - indexX: 25.5
+      indexY: -1
+      indexArea: 4
+    - indexX: 21
       indexY: -1.5
       indexArea: 4
+    - indexX: 21.5
+      indexY: -1.5
+      indexArea: 4
+    - indexX: 22
+      indexY: -1.5
+      indexArea: 4
+    - indexX: 22.5
+      indexY: -1.5
+      indexArea: 4
+    - indexX: 23
+      indexY: -1.5
+      indexArea: 4
+    - indexX: 23.5
+      indexY: -1.5
+      indexArea: 4
+    - indexX: 24
+      indexY: -1.5
+      indexArea: 4
+    - indexX: 24.5
+      indexY: -1.5
+      indexArea: 4
+    - indexX: 25
+      indexY: -1.5
+      indexArea: 4
+    - indexX: 25.5
+      indexY: -1.5
+      indexArea: 4
+    - indexX: 21
+      indexY: -2
+      indexArea: 4
+    - indexX: 21.5
+      indexY: -2
+      indexArea: 4
+    - indexX: 22
+      indexY: -2
+      indexArea: 4
+    - indexX: 22.5
+      indexY: -2
+      indexArea: 4
+    - indexX: 23
+      indexY: -2
+      indexArea: 4
+    - indexX: 23.5
+      indexY: -2
+      indexArea: 4
+    - indexX: 24
+      indexY: -2
+      indexArea: 4
+    - indexX: 24.5
+      indexY: -2
+      indexArea: 4
+    - indexX: 25
+      indexY: -2
+      indexArea: 4
+    - indexX: 25.5
+      indexY: -2
+      indexArea: 4
+    - indexX: 21
+      indexY: -2.5
+      indexArea: 4
+    - indexX: 21.5
+      indexY: -2.5
+      indexArea: 4
+    - indexX: 22
+      indexY: -2.5
+      indexArea: 4
+    - indexX: 22.5
+      indexY: -2.5
+      indexArea: 4
+    - indexX: 23
+      indexY: -2.5
+      indexArea: 4
+    - indexX: 23.5
+      indexY: -2.5
+      indexArea: 4
+    - indexX: 24
+      indexY: -2.5
+      indexArea: 4
+    - indexX: 24.5
+      indexY: -2.5
+      indexArea: 4
+    - indexX: 25
+      indexY: -2.5
+      indexArea: 4
+    - indexX: 25.5
+      indexY: -2.5
+      indexArea: 4
+    - indexX: 21
+      indexY: -3
+      indexArea: 4
+    - indexX: 21.5
+      indexY: -3
+      indexArea: 4
+    - indexX: 22
+      indexY: -3
+      indexArea: 4
+    - indexX: 22.5
+      indexY: -3
+      indexArea: 4
+    - indexX: 23
+      indexY: -3
+      indexArea: 4
+    - indexX: 23.5
+      indexY: -3
+      indexArea: 4
+    - indexX: 24
+      indexY: -3
+      indexArea: 4
+    - indexX: 24.5
+      indexY: -3
+      indexArea: 4
+    - indexX: 25
+      indexY: -3
+      indexArea: 4
+    - indexX: 25.5
+      indexY: -3
+      indexArea: 4
+    - indexX: 45.5
+      indexY: -1
+      indexArea: 0
+    - indexX: 46
+      indexY: -1
+      indexArea: 5
+    - indexX: 46.5
+      indexY: -1
+      indexArea: 5
+    - indexX: 47
+      indexY: -1
+      indexArea: 5
+    - indexX: 47.5
+      indexY: -1
+      indexArea: 5
+    - indexX: 48
+      indexY: -1
+      indexArea: 5
+    - indexX: 48.5
+      indexY: -1
+      indexArea: 5
+    - indexX: 49
+      indexY: -1
+      indexArea: 5
+    - indexX: 45.5
+      indexY: -1.5
+      indexArea: 0
+    - indexX: 46
+      indexY: -1.5
+      indexArea: 5
+    - indexX: 46.5
+      indexY: -1.5
+      indexArea: 5
+    - indexX: 47
+      indexY: -1.5
+      indexArea: 5
+    - indexX: 47.5
+      indexY: -1.5
+      indexArea: 5
+    - indexX: 48
+      indexY: -1.5
+      indexArea: 5
+    - indexX: 48.5
+      indexY: -1.5
+      indexArea: 5
+    - indexX: 49
+      indexY: -1.5
+      indexArea: 5
+    - indexX: 45.5
+      indexY: -2
+      indexArea: 0
+    - indexX: 46
+      indexY: -2
+      indexArea: 5
+    - indexX: 46.5
+      indexY: -2
+      indexArea: 5
+    - indexX: 47
+      indexY: -2
+      indexArea: 5
+    - indexX: 47.5
+      indexY: -2
+      indexArea: 5
+    - indexX: 48
+      indexY: -2
+      indexArea: 5
+    - indexX: 48.5
+      indexY: -2
+      indexArea: 5
+    - indexX: 49
+      indexY: -2
+      indexArea: 5
+    - indexX: 45.5
+      indexY: -2.5
+      indexArea: 0
+    - indexX: 46
+      indexY: -2.5
+      indexArea: 5
+    - indexX: 46.5
+      indexY: -2.5
+      indexArea: 5
+    - indexX: 47
+      indexY: -2.5
+      indexArea: 5
+    - indexX: 47.5
+      indexY: -2.5
+      indexArea: 5
+    - indexX: 48
+      indexY: -2.5
+      indexArea: 5
+    - indexX: 48.5
+      indexY: -2.5
+      indexArea: 5
+    - indexX: 49
+      indexY: -2.5
+      indexArea: 5
+    - indexX: 45.5
+      indexY: -3
+      indexArea: 0
+    - indexX: 46
+      indexY: -3
+      indexArea: 5
+    - indexX: 46.5
+      indexY: -3
+      indexArea: 5
+    - indexX: 47
+      indexY: -3
+      indexArea: 5
+    - indexX: 47.5
+      indexY: -3
+      indexArea: 5
+    - indexX: 48
+      indexY: -3
+      indexArea: 5
+    - indexX: 48.5
+      indexY: -3
+      indexArea: 5
+    - indexX: 49
+      indexY: -3
+      indexArea: 5
+    - indexX: 59
+      indexY: -4
+      indexArea: 5
   areaData:
-  - x: -17.5
-    y: 3.70000005
-    width: 22
-    height: 6.9000001
-  - x: -5
-    y: 3.70000005
-    width: 22
-    height: 6.9000001
-  - x: -17.5
-    y: 3.70000005
-    width: 17.5
-    height: 6.9000001
-  - x: -17.5
-    y: 3.70000005
-    width: 26
-    height: 6.9000001
-  - x: -8.31999969
-    y: 3.70000005
-    width: 16.3400002
-    height: 6.9000001
+  - x: -49.9300003
+    y: 4.11000013
+    width: 99.6999969
+    height: 8.18000031
+  - x: -29.1000004
+    y: -.5
+    width: 1
+    height: 1
+  - x: 0
+    y: 0
+    width: 0
+    height: 0
+  - x: 0
+    y: 0
+    width: 0
+    height: 0
+  - x: 0
+    y: 0
+    width: 0
+    height: 0
   ColorRGB: {r: 1, g: 1, b: 1, a: 1}
   bright: 1
   saturation: 1
   contrast: 1
-  width: 34.0800018
-  height: 6.4000001
+  width: 99.4100037
+  height: 6.05999994
   superLayers: []
   UseGlow: 0
   glowColor: {r: 0, g: 0, b: 0, a: 1}

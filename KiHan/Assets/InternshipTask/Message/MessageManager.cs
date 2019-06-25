@@ -13,8 +13,8 @@ namespace KH
     public class MessageManager
     {
         static private MessageManager messageManagerInstance = null;
-        public static readonly string DEST_PATH = "F:\\Tencent_Internship\\KiHan\\log\\Temp.dat";
-        public static readonly string BATTLE_RESULT = "F:\\Tencent_Internship\\KiHan\\log\\Result.dat";
+        public static readonly string DEST_PATH = "Assets/InternshipTask/message.dat";
+        // public static readonly string BATTLE_RESULT = "F:\\Tencent_Internship\\KiHan\\log\\Result.dat";
         // 内存中保存的一系列message，方便在给定cmdID的情况下取出 （利用cmdID作key，避免重复）
         public Dictionary<uint, List<MessageBody>> messagesBodySet = null;
 
@@ -411,14 +411,14 @@ namespace KH
         {
             if (messagesBodySet.ContainsKey(cmdID))
             {
-                MessageBody result = messagesBodySet[cmdID][0];
-                messagesBodySet[cmdID].RemoveAt(0);
-                return result;
+                if (messagesBodySet[cmdID].Count > 0)
+                {
+                    MessageBody result = messagesBodySet[cmdID][0];
+                    messagesBodySet[cmdID].RemoveAt(0);
+                    return result;
+                }
             }
-            else
-            {
-                Debug.LogWarning("不存在对应的cmd");
-            }
+            UIAPI.ShowMsgTip("不存在cmd");
             return null;
         }
 

@@ -2042,6 +2042,8 @@ MonoBehaviour:
     - indexX: 14
       indexY: 0
       isWalk: 0
+    data1: []
+    data2: []
   terrainData:
     data:
     - indexX: 46.5
@@ -3241,6 +3243,10 @@ MonoBehaviour:
     - indexX: 17.5
       indexY: -3
       type: 1005
+  hiddenAreaData:
+    lstHiddenCellDataItems: []
+  triggerAreaData:
+    lstTriggerCellDataItems: []
   areaData:
   - x: -17.1000004
     y: 3.79999995
@@ -3250,10 +3256,10 @@ MonoBehaviour:
     y: 3.79999995
     width: 22
     height: 7
-  - x: 0
-    y: 0
-    width: 0
-    height: 0
+  - x: -11
+    y: 3.79999995
+    width: 22
+    height: 7
   - x: 0
     y: 0
     width: 0
@@ -3272,6 +3278,10 @@ MonoBehaviour:
   UseGlow: 0
   glowColor: {r: 0, g: 0, b: 0, a: 1}
   PlayEnvSound: 0
+  sceneType: 0
+  terrainHeight: 0
+  CameraPosOffset: {x: 0, y: 16.7000008, z: -58.4000015}
+  CameraRotOffset: {x: 15, y: 0, z: 0}
 --- !u!114 &11485964
 MonoBehaviour:
   m_ObjectHideFlags: 1

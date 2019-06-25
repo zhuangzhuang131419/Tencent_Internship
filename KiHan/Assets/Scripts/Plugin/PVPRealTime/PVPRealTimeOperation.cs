@@ -165,7 +165,7 @@ namespace KH
     /// <summary>
     /// 实时PVP操作
     /// </summary>
-    [Hotfix]
+    [Kexiu]
     class PVPRealTimeOperation : BattleOperation
     {
         public const string Op_SetUseDefaultRoundBeginPrepare = "SetUseDefaultRoundBeginPrepare";
@@ -2171,7 +2171,7 @@ namespace KH
     /// <summary>
     /// 超时侦听器...
     /// </summary>
-    [Hotfix]
+    [Kexiu]
     class PVPRTQuitWatcher
     {
         /// <summary>

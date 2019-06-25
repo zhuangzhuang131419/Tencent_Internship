@@ -3258,6 +3258,8 @@ MonoBehaviour:
     - indexX: 0
       indexY: 2.5
       isWalk: 0
+    data1: []
+    data2: []
   terrainData:
     data:
     - indexX: -17
@@ -6587,12 +6589,814 @@ MonoBehaviour:
     - indexX: -14
       indexY: -.5
       type: 0
+  hiddenAreaData:
+    lstHiddenCellDataItems: []
+  triggerAreaData:
+    lstTriggerCellDataItems:
+    - indexX: -10
+      indexY: 0
+      indexArea: 1
+    - indexX: -9.5
+      indexY: 0
+      indexArea: 1
+    - indexX: -9
+      indexY: 0
+      indexArea: 1
+    - indexX: -8.5
+      indexY: 0
+      indexArea: 1
+    - indexX: -8
+      indexY: 0
+      indexArea: 1
+    - indexX: -7.5
+      indexY: 0
+      indexArea: 1
+    - indexX: -7
+      indexY: 0
+      indexArea: 1
+    - indexX: -6.5
+      indexY: 0
+      indexArea: 1
+    - indexX: -6
+      indexY: 0
+      indexArea: 1
+    - indexX: -5.5
+      indexY: 0
+      indexArea: 1
+    - indexX: -5
+      indexY: 0
+      indexArea: 1
+    - indexX: -4.5
+      indexY: 0
+      indexArea: 1
+    - indexX: -4
+      indexY: 0
+      indexArea: 1
+    - indexX: -3.5
+      indexY: 0
+      indexArea: 1
+    - indexX: -3
+      indexY: 0
+      indexArea: 1
+    - indexX: -2.5
+      indexY: 0
+      indexArea: 1
+    - indexX: -2
+      indexY: 0
+      indexArea: 1
+    - indexX: -1.5
+      indexY: 0
+      indexArea: 1
+    - indexX: -1
+      indexY: 0
+      indexArea: 1
+    - indexX: -.5
+      indexY: 0
+      indexArea: 1
+    - indexX: -10
+      indexY: -.5
+      indexArea: 1
+    - indexX: -9.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -9
+      indexY: -.5
+      indexArea: 1
+    - indexX: -8.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -8
+      indexY: -.5
+      indexArea: 1
+    - indexX: -7.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -7
+      indexY: -.5
+      indexArea: 1
+    - indexX: -6.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -6
+      indexY: -.5
+      indexArea: 1
+    - indexX: -5.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -4.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -4
+      indexY: -.5
+      indexArea: 1
+    - indexX: -3.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -3
+      indexY: -.5
+      indexArea: 1
+    - indexX: -2.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -2
+      indexY: -.5
+      indexArea: 1
+    - indexX: -1.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -1
+      indexY: -.5
+      indexArea: 1
+    - indexX: -.5
+      indexY: -.5
+      indexArea: 1
+    - indexX: -10
+      indexY: -1
+      indexArea: 1
+    - indexX: -9.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -9
+      indexY: -1
+      indexArea: 1
+    - indexX: -8.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -8
+      indexY: -1
+      indexArea: 1
+    - indexX: -7.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -7
+      indexY: -1
+      indexArea: 1
+    - indexX: -6.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -6
+      indexY: -1
+      indexArea: 1
+    - indexX: -5.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -5
+      indexY: -1
+      indexArea: 1
+    - indexX: -4.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -4
+      indexY: -1
+      indexArea: 1
+    - indexX: -3.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -3
+      indexY: -1
+      indexArea: 1
+    - indexX: -2.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -2
+      indexY: -1
+      indexArea: 1
+    - indexX: -1.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -1
+      indexY: -1
+      indexArea: 1
+    - indexX: -.5
+      indexY: -1
+      indexArea: 1
+    - indexX: -10
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -9.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -9
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -8.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -8
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -7.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -7
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -6.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -6
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -5.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -4.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -4
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -3.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -3
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -2.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -2
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -1.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -1
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -.5
+      indexY: -1.5
+      indexArea: 1
+    - indexX: -10
+      indexY: -2
+      indexArea: 1
+    - indexX: -9.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -9
+      indexY: -2
+      indexArea: 1
+    - indexX: -8.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -8
+      indexY: -2
+      indexArea: 1
+    - indexX: -7.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -7
+      indexY: -2
+      indexArea: 1
+    - indexX: -6.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -6
+      indexY: -2
+      indexArea: 1
+    - indexX: -5.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -5
+      indexY: -2
+      indexArea: 1
+    - indexX: -4.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -4
+      indexY: -2
+      indexArea: 1
+    - indexX: -3.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -3
+      indexY: -2
+      indexArea: 1
+    - indexX: -2.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -2
+      indexY: -2
+      indexArea: 1
+    - indexX: -1.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -1
+      indexY: -2
+      indexArea: 1
+    - indexX: -.5
+      indexY: -2
+      indexArea: 1
+    - indexX: -10
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -9.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -9
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -8.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -8
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -7.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -7
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -6.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -6
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -5.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -4.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -4
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -3.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -3
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -2.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -2
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -1.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -1
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -.5
+      indexY: -2.5
+      indexArea: 1
+    - indexX: -10
+      indexY: -3
+      indexArea: 1
+    - indexX: -9.5
+      indexY: -3
+      indexArea: 1
+    - indexX: -9
+      indexY: -3
+      indexArea: 1
+    - indexX: -8.5
+      indexY: -3
+      indexArea: 1
+    - indexX: -8
+      indexY: -3
+      indexArea: 1
+    - indexX: -7.5
+      indexY: -3
+      indexArea: 1
+    - indexX: -7
+      indexY: -3
+      indexArea: 1
+    - indexX: -6.5
+      indexY: -3
+      indexArea: 1
+    - indexX: -6
+      indexY: -3
+      indexArea: 1
+    - indexX: -5.5
+      indexY: -3
+      indexArea: 1
+    - indexX: -5
+      indexY: -3
+      indexArea: 1
+    - indexX: -4.5
+      indexY: -3
+      indexArea: 1
+    - indexX: -4
+      indexY: -3
+      indexArea: 1
+    - indexX: -3.5
+      indexY: -3
+      indexArea: 1
+    - indexX: -3
+      indexY: -3
+      indexArea: 1
+    - indexX: -2.5
+      indexY: -3
+      indexArea: 1
+    - indexX: -2
+      indexY: -3
+      indexArea: 1
+    - indexX: -1.5
+      indexY: -3
+      indexArea: 1
+    - indexX: -1
+      indexY: -3
+      indexArea: 1
+    - indexX: -.5
+      indexY: -3
+      indexArea: 1
+    - indexX: .5
+      indexY: 0
+      indexArea: 2
+    - indexX: .5
+      indexY: -.5
+      indexArea: 2
+    - indexX: .5
+      indexY: -1
+      indexArea: 2
+    - indexX: .5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: .5
+      indexY: -2
+      indexArea: 2
+    - indexX: .5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: .5
+      indexY: -3
+      indexArea: 2
+    - indexX: 1
+      indexY: 0
+      indexArea: 2
+    - indexX: 1.5
+      indexY: 0
+      indexArea: 2
+    - indexX: 2
+      indexY: 0
+      indexArea: 2
+    - indexX: 2.5
+      indexY: 0
+      indexArea: 2
+    - indexX: 3
+      indexY: 0
+      indexArea: 2
+    - indexX: 3.5
+      indexY: 0
+      indexArea: 2
+    - indexX: 4
+      indexY: 0
+      indexArea: 2
+    - indexX: 4.5
+      indexY: 0
+      indexArea: 2
+    - indexX: 5
+      indexY: 0
+      indexArea: 2
+    - indexX: 5.5
+      indexY: 0
+      indexArea: 2
+    - indexX: 6
+      indexY: 0
+      indexArea: 2
+    - indexX: 6.5
+      indexY: 0
+      indexArea: 2
+    - indexX: 7
+      indexY: 0
+      indexArea: 2
+    - indexX: 7.5
+      indexY: 0
+      indexArea: 2
+    - indexX: 8
+      indexY: 0
+      indexArea: 2
+    - indexX: 8.5
+      indexY: 0
+      indexArea: 2
+    - indexX: 9
+      indexY: 0
+      indexArea: 2
+    - indexX: 1
+      indexY: -.5
+      indexArea: 2
+    - indexX: 1.5
+      indexY: -.5
+      indexArea: 2
+    - indexX: 2
+      indexY: -.5
+      indexArea: 2
+    - indexX: 2.5
+      indexY: -.5
+      indexArea: 2
+    - indexX: 3
+      indexY: -.5
+      indexArea: 2
+    - indexX: 3.5
+      indexY: -.5
+      indexArea: 2
+    - indexX: 4
+      indexY: -.5
+      indexArea: 2
+    - indexX: 4.5
+      indexY: -.5
+      indexArea: 2
+    - indexX: 5
+      indexY: -.5
+      indexArea: 2
+    - indexX: 5.5
+      indexY: -.5
+      indexArea: 2
+    - indexX: 6
+      indexY: -.5
+      indexArea: 2
+    - indexX: 6.5
+      indexY: -.5
+      indexArea: 2
+    - indexX: 7
+      indexY: -.5
+      indexArea: 2
+    - indexX: 7.5
+      indexY: -.5
+      indexArea: 2
+    - indexX: 8
+      indexY: -.5
+      indexArea: 2
+    - indexX: 8.5
+      indexY: -.5
+      indexArea: 2
+    - indexX: 9
+      indexY: -.5
+      indexArea: 2
+    - indexX: 1
+      indexY: -1
+      indexArea: 2
+    - indexX: 1.5
+      indexY: -1
+      indexArea: 2
+    - indexX: 2
+      indexY: -1
+      indexArea: 2
+    - indexX: 2.5
+      indexY: -1
+      indexArea: 2
+    - indexX: 3
+      indexY: -1
+      indexArea: 2
+    - indexX: 3.5
+      indexY: -1
+      indexArea: 2
+    - indexX: 4
+      indexY: -1
+      indexArea: 2
+    - indexX: 4.5
+      indexY: -1
+      indexArea: 2
+    - indexX: 5
+      indexY: -1
+      indexArea: 2
+    - indexX: 5.5
+      indexY: -1
+      indexArea: 2
+    - indexX: 6
+      indexY: -1
+      indexArea: 2
+    - indexX: 6.5
+      indexY: -1
+      indexArea: 2
+    - indexX: 7
+      indexY: -1
+      indexArea: 2
+    - indexX: 7.5
+      indexY: -1
+      indexArea: 2
+    - indexX: 8
+      indexY: -1
+      indexArea: 2
+    - indexX: 8.5
+      indexY: -1
+      indexArea: 2
+    - indexX: 9
+      indexY: -1
+      indexArea: 2
+    - indexX: 1
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 1.5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 2
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 2.5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 3
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 3.5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 4
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 4.5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 5.5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 6
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 6.5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 7
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 7.5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 8
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 8.5
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 9
+      indexY: -1.5
+      indexArea: 2
+    - indexX: 1
+      indexY: -2
+      indexArea: 2
+    - indexX: 1.5
+      indexY: -2
+      indexArea: 2
+    - indexX: 2
+      indexY: -2
+      indexArea: 2
+    - indexX: 2.5
+      indexY: -2
+      indexArea: 2
+    - indexX: 3
+      indexY: -2
+      indexArea: 2
+    - indexX: 3.5
+      indexY: -2
+      indexArea: 2
+    - indexX: 4
+      indexY: -2
+      indexArea: 2
+    - indexX: 4.5
+      indexY: -2
+      indexArea: 2
+    - indexX: 5
+      indexY: -2
+      indexArea: 2
+    - indexX: 5.5
+      indexY: -2
+      indexArea: 2
+    - indexX: 6
+      indexY: -2
+      indexArea: 2
+    - indexX: 6.5
+      indexY: -2
+      indexArea: 2
+    - indexX: 7
+      indexY: -2
+      indexArea: 2
+    - indexX: 7.5
+      indexY: -2
+      indexArea: 2
+    - indexX: 8
+      indexY: -2
+      indexArea: 2
+    - indexX: 8.5
+      indexY: -2
+      indexArea: 2
+    - indexX: 9
+      indexY: -2
+      indexArea: 2
+    - indexX: 1
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 1.5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 2
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 2.5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 3
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 3.5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 4
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 4.5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 5.5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 6
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 6.5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 7
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 7.5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 8
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 8.5
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 9
+      indexY: -2.5
+      indexArea: 2
+    - indexX: 1
+      indexY: -3
+      indexArea: 2
+    - indexX: 1.5
+      indexY: -3
+      indexArea: 2
+    - indexX: 2
+      indexY: -3
+      indexArea: 2
+    - indexX: 2.5
+      indexY: -3
+      indexArea: 2
+    - indexX: 3
+      indexY: -3
+      indexArea: 2
+    - indexX: 3.5
+      indexY: -3
+      indexArea: 2
+    - indexX: 4
+      indexY: -3
+      indexArea: 2
+    - indexX: 4.5
+      indexY: -3
+      indexArea: 2
+    - indexX: 5
+      indexY: -3
+      indexArea: 2
+    - indexX: 5.5
+      indexY: -3
+      indexArea: 2
+    - indexX: 6
+      indexY: -3
+      indexArea: 2
+    - indexX: 6.5
+      indexY: -3
+      indexArea: 2
+    - indexX: 7
+      indexY: -3
+      indexArea: 2
+    - indexX: 7.5
+      indexY: -3
+      indexArea: 2
+    - indexX: 8
+      indexY: -3
+      indexArea: 2
+    - indexX: 8.5
+      indexY: -3
+      indexArea: 2
+    - indexX: 9
+      indexY: -3
+      indexArea: 2
   areaData:
-  - x: -15.8999996
+  - x: -16.2999992
     y: 5.21000004
     width: 32.4000015
     height: 10
-  - x: -9.10000038
+  - x: -9.30000019
     y: 5.21000004
     width: 18.3999996
     height: 10
@@ -6604,7 +7408,7 @@ MonoBehaviour:
     y: 0
     width: 0
     height: 0
-  - x: -16.4699993
+  - x: -16.3099995
     y: 5.21000004
     width: 32.7999992
     height: 10
@@ -6618,6 +7422,10 @@ MonoBehaviour:
   UseGlow: 0
   glowColor: {r: .0784313753, g: 0, b: 0, a: 1}
   PlayEnvSound: 0
+  sceneType: 0
+  terrainHeight: 0
+  CameraPosOffset: {x: 0, y: 16.7000008, z: -58.4000015}
+  CameraRotOffset: {x: 15, y: 0, z: 0}
 --- !u!114 &11462410
 MonoBehaviour:
   m_ObjectHideFlags: 1
