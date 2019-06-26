@@ -1,0 +1,359 @@
+require(plugin_files.Base.LuaOperation)
+require(common_files.LuaUIDef)
+
+local RemoteModel = import_type("KH.RemoteModel")
+local ShowViewArgument = import_type("KH.ShowViewArgument")
+local KHUtilForLua = import_type("KH.KHUtilForLua")
+local UIAPI = import_type("KH.UIAPI")
+local UIDef = import_type("KH.UIDef")
+local GeneralTable = import_type("KH.GeneralTableConfig")
+local ErrorCodeCenter = import_type("KH.ErrorCodeCenter")
+local UICommonRewardView = import_type("KH.UICommonRewardView")
+local UIInvokeLater = import_type("UIInvokeLater")
+local KHAudioManager = import_type("KH.KHAudioManager")
+local KHPluginManager = import_type("KH.KHPluginManager")
+local ShowViewArgument = import_type("KH.ShowViewArgument")
+local KHLibrary = import_type("KH.Lua.Library.KHLibrary")
+local KHUtil = import_type("KH.KHUtil")
+local KHDataManager = import_type("KH.KHDataManager")
+
+
+if Talent == nil then Talent = {} end
+if Talent.TabType == nil then Talent.TabType = {  Normal = 1, Asura = 2} end
+if Talent.MaxTalentUnitNum == nil then Talent.MaxTalentUnitNum = 10  end
+
+
+NewTalentOperation = ClassFactory.Register({Name="NewTalentOperation", Super=LuaOperation})
+
+function NewTalentOperation.__Class()
+    local this,__protected,__private = NewTalentOperation.__Make()
+
+
+    local Ctor_Base = attach(this, this.Ctor)
+    function this:Ctor(plugin)
+        Ctor_Base(plugin)
+    end
+
+    function this:OpenSystem( )        
+
+        __protected.model:init()
+
+        if __protected.model.curTab == Talent.TabType.Normal then            
+            this:OnZoneTalentQueryReq()
+        else
+            this:OnZoneAsuraTalentQueryReq()
+        end
+        
+    end
+
+    function this:showMainView()        
+
+        local argument = ShowViewArgument()
+        argument.title = LuaUIDef.TalentMainView
+        argument.needBg = true
+        argument.data = nil
+        KHPluginManager.Instance:SendMessageForLua("NewTalentPlugin", "ShowView", argument)
+
+    end
+
+    function this:showGetTalentView( _talentType )        
+
+        local argument = ShowViewArgument()
+        argument.title = LuaUIDef.GetTalentView
+        argument.needBg = false
+        argument.data = { talentType = _talentType}
+        KHPluginManager.Instance:SendMessageForLua("NewTalentPlugin", "ShowView", argument)
+
+    end    
+
+    function __private.talentNetTimeout()
+
+        __protected.model.isInNetProcess = false
+        UIAPI.ShowMsgTip("天赋请求超时")
+
+    end
+
+
+    function this:OnZoneTalentQueryReq()
+        
+        if __protected.model.isInNetProcess then
+            return
+        end
+        __protected.model.isInNetProcess = true
+
+        local req = ZoneTalentQueryReq()
+        LuaNetRequire(ZONE_TALENT_QUERY, req, __private.OnZoneTalentQueryResp)
+
+    end   
+
+    function __private.OnZoneTalentQueryResp(cmd, buff, timeout)
+
+        if timeout then
+            __private.talentNetTimeout()
+            return
+        end
+
+        __protected.model.isInNetProcess = false
+
+        local rsp = ZoneTalentQueryResp()
+        rsp:ParseFromString(buff)
+
+        if rsp.ret_info.ret_code == 0 then
+
+
+            __private.setCommonInfo( rsp.info ) 
+            __protected.model:setLastTotalAttr(  __protected.model.commonInfo.totalAddition )
+
+            if __protected.model.isOpenMainView then
+                __protected.model:TriggerCommonUpdate()
+            else
+                this:showMainView()                
+            end
+        else
+            HandleErrorCode(rsp.ret_info.ret_code, rsp.ret_info.ret_msg)
+
+        end
+    end    
+
+    function __private.setCommonInfo( info ) 
+
+        __protected.model.commonInfo.dirty = false
+        __protected.model.commonInfo.totalAddition[1]   = info.total_talent_addition.max_hp
+        __protected.model.commonInfo.totalAddition[2]   = info.total_talent_addition.attack
+        __protected.model.commonInfo.totalAddition[3]  = info.total_talent_addition.defence
+        
+
+        __protected.model.commonInfo.curAddition.max_hp     = info.cur_talent_addition.max_hp
+        __protected.model.commonInfo.curAddition.defence    = info.cur_talent_addition.defence
+        __protected.model.commonInfo.curAddition.attack     = info.cur_talent_addition.attack
+
+        __protected.model.commonInfo.cur_talent_copper      = info.cur_talent_copper
+        __protected.model.commonInfo.cur_talent_point       = info.cur_talent_point
+        __protected.model.commonInfo.cur_talent             = info.cur_talent
+        __protected.model.commonInfo.gain_talent            = info.gain_talent
+        __protected.model.commonInfo.talent_point           = info.talent_point
+
+    end
+
+    function this:OnZoneTalentEnableReq()      
+
+        if __protected.model.commonInfo.cur_talent == 0 then
+            UIAPI.ShowMsgTip("普通天赋已到最高级");
+            return
+        end
+
+        if __protected.model.isInNetProcess then
+            return
+        end
+        __protected.model.isInNetProcess = true
+
+        local req = ZoneTalentEnableReq()
+        LuaNetRequire(ZONE_TALENT_ENABLE, req, __private.OnZoneTalentEnableResp)      
+    end
+
+    function __private.OnZoneTalentEnableResp(cmd, buff, timeout)
+        if timeout then
+            __private.talentNetTimeout()
+            return
+        end        
+
+        __protected.model.isInNetProcess = false
+
+        local rsp = ZoneTalentEnableResp()
+        rsp:ParseFromString(buff)
+
+        if rsp.ret_info.ret_code == 0 then
+
+            __private.calcCommonAnimData(rsp.info)
+            __private.setCommonInfo( rsp.info ) 
+
+            __protected.model:TriggerCommonLevelUp()
+
+        else
+            HandleErrorCode(rsp.ret_info.ret_code, rsp.ret_info.ret_msg)
+
+        end
+    end
+
+    function __private.calcCommonAnimData( respInfo )
+
+        -- reset data
+        __protected.model:resetCommonAnimData()
+
+        local circle = __protected.model.commonAnimData.circle
+
+        circle.lastIndex = __protected.model.commonInfo.cur_talent % 1000
+        circle.curIndex = respInfo.cur_talent % 1000
+
+
+    end    
+
+    -- start asura talent
+
+    function this:OnZoneAsuraTalentQueryReq()
+
+        if __protected.model.isInNetProcess then
+            return
+        end
+        __protected.model.isInNetProcess = true        
+        
+        local req = ZoneAsuraTalentQueryReq()
+        LuaNetRequire(ZONE_ASURA_TALENT_QUERY, req, __private.OnZoneAsuraTalentQueryResp)
+
+    end   
+
+    function __private.OnZoneAsuraTalentQueryResp(cmd, buff, timeout)
+
+        if timeout then
+            __private.talentNetTimeout()
+            return
+        end
+
+        __protected.model.isInNetProcess = false
+
+        local rsp = ZoneAsuraTalentQueryResp()
+        rsp:ParseFromString(buff)
+
+        if rsp.ret_info.ret_code == 0 then
+
+            __private.setAsuraInfo( rsp.info ) 
+            __protected.model:setLastTotalAttr(  __protected.model.asuraInfo.totalAddition )
+
+            if __protected.model.isOpenMainView then
+                __protected.model:TriggerAsuraUpdate()
+            else
+                this:showMainView()                
+            end
+
+        else
+            HandleErrorCode(rsp.ret_info.ret_code, rsp.ret_info.ret_msg)
+
+        end
+    end    
+
+
+    function __private.setAsuraInfo( info ) 
+
+        __protected.model.asuraInfo.dirty = false
+        __protected.model.asuraInfo.totalAddition[1]  = info.total_talent_addition.max_hp
+        __protected.model.asuraInfo.totalAddition[2]   = info.total_talent_addition.attack
+        __protected.model.asuraInfo.totalAddition[3]  = info.total_talent_addition.defence
+        
+
+        __protected.model.asuraInfo.nextAddition.max_hp     = info.next_talent_addition.max_hp
+        __protected.model.asuraInfo.nextAddition.defence    = info.next_talent_addition.defence
+        __protected.model.asuraInfo.nextAddition.attack     = info.next_talent_addition.attack
+
+        __protected.model.asuraInfo.cost_item_list = {}
+        for i=1,#info.cost_item_list do
+            __protected.model.asuraInfo.cost_item_list[ info.cost_item_list[i].id ] = info.cost_item_list[i]
+        end
+
+        __protected.model.asuraInfo.steps_name          = info.steps_name
+        __protected.model.asuraInfo.cur_level           = info.cur_level
+        __protected.model.asuraInfo.asura_talent_point  = info.asura_talent_point
+        __protected.model.asuraInfo.asura_circle        = info.asura_circle
+
+        __protected.model.asuraInfo.circle_list = {}
+        for i=1,#info.circle_list do
+            __protected.model.asuraInfo.circle_list[i] = {}
+
+            __protected.model.asuraInfo.circle_list[i].name = info.circle_list[i].name
+            __protected.model.asuraInfo.circle_list[i].total_cricles = info.circle_list[i].total_cricles
+            __protected.model.asuraInfo.circle_list[i].total_talent_addition = { max_hp = info.circle_list[i].total_talent_addition.max_hp,
+                                                                                 defence = info.circle_list[i].total_talent_addition.defence,
+                                                                                 attack = info.circle_list[i].total_talent_addition.attack }
+        end
+
+        __protected.model.asuraInfo.asura_exp = info.asura_exp
+        __protected.model.asuraInfo.asura_current_level = info.asura_current_level
+        __protected.model.asuraInfo.asura_next_level_exp = info.asura_next_level_exp
+        __protected.model.asuraInfo.max_level = info.max_level        
+        __protected.model.asuraInfo.asura_curent_level_start_exp = info.asura_curent_level_start_exp     
+        __protected.model.asuraInfo.cur_inner_circles = info.cur_inner_circles     
+
+    end    
+
+    function this:OnZoneAsuraTalentEnableReq()
+
+        if  __protected.model.asuraInfo.cur_level >= __protected.model.asuraInfo.max_level  then
+            UIAPI.ShowMsgTip("修罗天赋已到最高级");
+            return
+        end
+
+        if __protected.model.isInNetProcess then
+            return
+        end
+        __protected.model.isInNetProcess = true                
+        
+        local req = ZoneAsuraTalentEnableReq()
+        LuaNetRequire(ZONE_ASURA_TALENT_UPDATE, req, __private.OnZoneAsuraTalentEnableResp)
+
+    end   
+
+    function __private.OnZoneAsuraTalentEnableResp(cmd, buff, timeout)
+
+        if timeout then
+            __private.talentNetTimeout()
+            return
+        end
+
+        __protected.model.isInNetProcess = false
+
+        local rsp = ZoneAsuraTalentEnableResp()
+        rsp:ParseFromString(buff)
+
+        if rsp.ret_info.ret_code == 0 then
+            local  lastCircle = __protected.model.asuraInfo.asura_circle
+            __private.calcAsuraAnimData( rsp.info )
+            __private.setAsuraInfo( rsp.info ) 
+            
+            __protected.model:TriggerAsuraLevelUp()
+       
+        else
+            HandleErrorCode(rsp.ret_info.ret_code, rsp.ret_info.ret_msg)
+
+        end
+    end       
+
+
+    function __private.calcAsuraAnimData( respInfo )
+
+        -- reset data
+        __protected.model:resetAsuraAnimData()
+
+        local anim = __protected.model.asuraAnimData
+
+        local  lastCircle = __protected.model.asuraInfo.asura_circle
+        local  lastInnerCircles = __protected.model.asuraInfo.cur_inner_circles
+        local  lastLevel = __protected.model.asuraInfo.cur_level   
+
+        anim.hasSwitched = false
+
+  
+        if respInfo.asura_circle == lastCircle then
+            anim.circles[1].circleIndex = lastCircle
+            anim.circles[1].startLevel = lastLevel
+            anim.circles[1].endLevel = respInfo.cur_level
+
+        else
+            local curDeltaCurcles = __protected.model.asuraInfo.circle_list[lastCircle].total_cricles - lastInnerCircles
+            anim.circles[1].circleIndex = lastCircle
+            anim.circles[1].startLevel = lastLevel
+            anim.circles[1].endLevel = lastLevel + ( curDeltaCurcles*4 - (lastLevel%4) )
+
+            if  __protected.model.asuraInfo.cur_level >= __protected.model.asuraInfo.max_level  then
+                return
+            end
+
+            anim.circles[2].circleIndex = respInfo.asura_circle 
+            anim.circles[2].startLevel = anim.circles[1].endLevel 
+            anim.circles[2].endLevel = anim.circles[2].startLevel + ( respInfo.cur_inner_circles * 4 + (respInfo.cur_level%4) )
+
+        end
+
+    end
+
+
+    return this,__protected,__private
+end

@@ -97,9 +97,17 @@ KiHan/Assets/Scripts/UI/PVPRealTimeUI/*
 # 保留UIPVPRealTimeMatchEnemy
 !KiHan/Assets/Scripts/UI/PVPRealTimeUI/UIPVPRealTimeMatchEnemy.cs
 
-# 保留Resources/Scene
 !KiHan/Assets/Resources
 KiHan/Assets/Resources/*
+
+# 保留Resources/Scene
 !KiHan/Assets/Resources/Scene
 
-
+# 保留NewTalentOperation.lua.txt
+!KiHan/Assets/Resources/LuaScript
+KiHan/Assets/Resources/LuaScript/*
+!KiHan/Assets/Resources/LuaScript/Plugin
+KiHan/Assets/Resources/LuaScript/Plugin/*
+!KiHan/Assets/Resources/LuaScript/Plugin/NewTalent
+KiHan/Assets/Resources/LuaScript/Plugin/NewTalent/*
+!KiHan/Assets/Resources/LuaScript/Plugin/NewTalent/NewTalentOperation.lua.txt
