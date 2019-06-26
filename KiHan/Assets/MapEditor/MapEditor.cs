@@ -60,36 +60,22 @@ public class MapEditor : MonoBehaviour
     [MenuItem("MapEditor/保存")]
     public static void save()
     {
+
+
         // 保存新的mapData
         if (FindObjectsOfType<MapData>().Length != 1)
         {
             MessageWindow.CreateMessageBox(
-                "mapdata数量异常，无法保存",
-                delegate (EditorWindow window) { window.Close(); },
-                delegate (EditorWindow window) { window.Close(); }
-                );
+              "mapdata数量异常，无法保存",
+              delegate (EditorWindow window) { window.Close(); },
+              delegate (EditorWindow window) { window.Close(); }
+            );
             return;
         }
         MapData mapData = FindObjectOfType<MapData>();
 
-        // 更新DataStruct
-        //mapData.MapGenerators.Clear();
-        //foreach (MapGenerator generator in FindObjectsOfType<MapGenerator>())
-        //{
-        //    generator.Units.Clear();
-        //    foreach (Unit unit in generator.GetComponentsInChildren<Unit>())
-        //    {
-        //        generator.Units.Add(unit);
-        //    }
-        //    Debug.Log("当前Generator有" + generator.Units.Count + "个Unit");
-        //    mapData.MapGenerators.Add(generator);
-        //}
-        //Debug.Log("当前有" + mapData.MapGenerators.Count + "个Generator");
-
-
-
-        // 检查数据
-        if (!checkValidity()) { return; }
+        // 一键修复数据
+        autoFix();
 
         // 清空原来的文件
         if (Directory.Exists(MAP_ID_PATH + "/" + mapData.ID + "/MapGenerator"))
@@ -133,7 +119,6 @@ public class MapEditor : MonoBehaviour
 
         packID.InnerText = Convert.ToString(generator.ID);
         sceneResID.InnerText = Convert.ToString(mapData.ID);
-        //  jumpInNumFrame.InnerText = "jumpInNumFrame?";
 
         xmlFile.AppendChild(root);
         root.AppendChild(packID);
@@ -206,8 +191,8 @@ public class MapEditor : MonoBehaviour
                     generator.Name + "_" + generator.ID + "命名非法, 是否一键修复",
                     delegate (EditorWindow window)
                     {
-                        // 一键修复index
-                        int i = FindObjectsOfType<MapGenerator>().Length;
+                            // 一键修复index
+                            int i = FindObjectsOfType<MapGenerator>().Length;
                         foreach (var item in FindObjectsOfType<MapGenerator>())
                         {
                             item.Index = --i;
@@ -217,6 +202,8 @@ public class MapEditor : MonoBehaviour
                     },
                     delegate (EditorWindow window) { window.Close(); }
                 );
+
+
                 return false;
             }
         }
@@ -228,13 +215,14 @@ public class MapEditor : MonoBehaviour
             {
                 if (!tempHashSet.Add(unit.Index))
                 {
+
                     // index already exist
                     MessageWindow.CreateMessageBox(
                         unit.Name + "_" + unit.ID + "命名非法, 是否一键修复",
                         delegate (EditorWindow window)
                         {
-                            // 一键修复index
-                            int i = 0;
+                                // 一键修复index
+                                int i = 0;
                             foreach (var item in generator.GetComponentsInChildren<Unit>())
                             {
                                 item.Index = i++;
@@ -244,6 +232,7 @@ public class MapEditor : MonoBehaviour
                         },
                         delegate (EditorWindow window) { window.Close(); }
                     );
+
                     return false;
                 }
 
@@ -251,7 +240,44 @@ public class MapEditor : MonoBehaviour
             tempHashSet.Clear();
         }
         return true;
+    }
 
+    public static void autoFix()
+    {
+        MapData mapData = FindObjectOfType<MapData>();
+        if (mapData == null) { return; }
+        HashSet<int> tempHashSet = new HashSet<int>();
+        foreach (var generator in FindObjectsOfType<MapGenerator>())
+        {
+            if (!tempHashSet.Add(generator.Index))
+            {
+                // 一键修复index
+                int i = FindObjectsOfType<MapGenerator>().Length;
+                foreach (var item in FindObjectsOfType<MapGenerator>())
+                {
+                    item.Index = --i;
+                }
+            }
+        }
+
+        foreach (var generator in FindObjectsOfType<MapGenerator>())
+        {
+            tempHashSet.Clear();
+            foreach (var unit in generator.GetComponentsInChildren<Unit>())
+            {
+                if (!tempHashSet.Add(unit.Index))
+                {
+                    // index already exist
+                    // 一键修复index
+                    int i = 0;
+                    foreach (var item in generator.GetComponentsInChildren<Unit>())
+                    {
+                        item.Index = i++;
+                    }
+                }
+            }
+            tempHashSet.Clear();
+        }
     }
 
     [MenuItem("MapEditor/创建生成器")]
@@ -351,7 +377,7 @@ public class MapEditor : MonoBehaviour
             {
                 Debug.Log("不存在要加载的对象");
             }
-            
+
 
 
             // 选中
@@ -377,7 +403,7 @@ public class MapEditor : MonoBehaviour
     public static void loadMap(string targetMapPath, string mapID)
     {
         GameObject mapPrefab = (GameObject)Resources.Load(targetMapPath);
-        Instantiate(mapPrefab);
+        PrefabUtility.InstantiatePrefab(mapPrefab);
         if (Directory.Exists(MAP_ID_PATH + "/" + mapID + "/MapGenerator"))
         {
             // 要根据文件内容来加
@@ -461,7 +487,7 @@ public class MapEditor : MonoBehaviour
                 {
                     Debug.Log("不存在要加载的对象");
                 }
-                
+
             }
         }
     }
@@ -518,27 +544,27 @@ public class MapEditor : MonoBehaviour
         }
     }
 
-  //  [MenuItem("MapEditor/test")]
-  //  public static void test()
-  //  {
-  //      Debug.LogWarning("MapGenerator0,unit0,x:" + FindObjectsOfType<MapGenerator>()[0].GetComponentsInChildren<Unit>()[0].transform.position.x);
+    //  [MenuItem("MapEditor/test")]
+    //  public static void test()
+    //  {
+    //      Debug.LogWarning("MapGenerator0,unit0,x:" + FindObjectsOfType<MapGenerator>()[0].GetComponentsInChildren<Unit>()[0].transform.position.x);
 
-  //      /*
-  //      GameObject mapData = new GameObject("map");
-  //      mapData.AddComponent<MapData>().Desc = "测试";
-  //      mapData.AddComponent<MapGenerator>().transform.position = new Vector3(7, 0, 0);
-  //      PrefabUtility.ReplacePrefab(mapData, PrefabUtility.CreatePrefab("Assets/test.prefab", mapData), ReplacePrefabOptions.ConnectToPrefab);
-  //      // PrefabUtility.SaveAsPrefabAssetAndConnect(mapData, "Assets/test.prefab", InteractionMode.AutomatedAction);
-  //      */
-  //  }
+    //      /*
+    //      GameObject mapData = new GameObject("map");
+    //      mapData.AddComponent<MapData>().Desc = "测试";
+    //      mapData.AddComponent<MapGenerator>().transform.position = new Vector3(7, 0, 0);
+    //      PrefabUtility.ReplacePrefab(mapData, PrefabUtility.CreatePrefab("Assets/test.prefab", mapData), ReplacePrefabOptions.ConnectToPrefab);
+    //      // PrefabUtility.SaveAsPrefabAssetAndConnect(mapData, "Assets/test.prefab", InteractionMode.AutomatedAction);
+    //      */
+    //  }
 
-  //  [MenuItem("MapEditor/test1")]
-  //  public static void test1()
-  //  {
-		//Debug.LogWarning("MapGenerator0,unit0,x:" + FindObjectsOfType<MapGenerator>()[0].GetComponentsInChildren<Unit>()[0].transform.position.x);
-  //      Debug.Log(((GameObject)AssetDatabase.LoadAssetAtPath("Assets/test.prefab", typeof(GameObject))).GetComponent<MapData>().Desc);
-  //      Debug.Log(((GameObject)AssetDatabase.LoadAssetAtPath("Assets/test.prefab", typeof(GameObject))).GetComponent<MapGenerator>().transform.position);
-  //      Debug.Log(FindObjectsOfType<MapGenerator>()[0].GetComponentsInChildren<Unit>()[0].Name);
-  //      FindObjectsOfType<MapGenerator>()[0].GetComponentsInChildren<Unit>()[0].transform.position = new Vector3(3, 0, 0);
-  //  }
+    //  [MenuItem("MapEditor/test1")]
+    //  public static void test1()
+    //  {
+    //Debug.LogWarning("MapGenerator0,unit0,x:" + FindObjectsOfType<MapGenerator>()[0].GetComponentsInChildren<Unit>()[0].transform.position.x);
+    //      Debug.Log(((GameObject)AssetDatabase.LoadAssetAtPath("Assets/test.prefab", typeof(GameObject))).GetComponent<MapData>().Desc);
+    //      Debug.Log(((GameObject)AssetDatabase.LoadAssetAtPath("Assets/test.prefab", typeof(GameObject))).GetComponent<MapGenerator>().transform.position);
+    //      Debug.Log(FindObjectsOfType<MapGenerator>()[0].GetComponentsInChildren<Unit>()[0].Name);
+    //      FindObjectsOfType<MapGenerator>()[0].GetComponentsInChildren<Unit>()[0].transform.position = new Vector3(3, 0, 0);
+    //  }
 }

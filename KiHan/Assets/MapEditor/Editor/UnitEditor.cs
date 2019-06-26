@@ -23,7 +23,7 @@ public class UnitEditor : Editor
         EditorGUILayout.BeginVertical();
         // EditorGUILayout.IntField("Unit Index", unit.Index);
         unit.name = unit.Name + "_" + unit.Index;
-        // unit.Name = unit.Name;
+        //unit.Name = unit.Name;
         //unit.Desc = EditorGUILayout.TextField("Desc", unit.Desc);
         //unit.ID = EditorGUILayout.IntField("Unit ID", unit.ID);
         //unit.CreateAction = EditorGUILayout.IntField("Create Action VKey", unit.CreateAction);
