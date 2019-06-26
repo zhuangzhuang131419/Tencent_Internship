@@ -15,6 +15,7 @@ public class MapEditor : MonoBehaviour
     public static readonly string NINJA_XML_PATH = "Assets/EditorConfig/random_dungeon";
     public static readonly string ACTOR_PREFAB_PATH = "Assets/Resources/Actor";
     public static object mapDataPrefab = null;
+    private static Dictionary<MapGenerator, List<Unit>> cacheMapData = new Dictionary<MapGenerator, List<Unit>>();
 
     // public static Map currentMap;
 
@@ -73,9 +74,12 @@ public class MapEditor : MonoBehaviour
             return;
         }
         MapData mapData = FindObjectOfType<MapData>();
+        
 
         // 一键修复数据
         autoFix();
+
+        Debug.Log("当前有" + cacheMapData.Count + "个Generator");
 
         // 清空原来的文件
         if (Directory.Exists(MAP_ID_PATH + "/" + mapData.ID + "/MapGenerator"))
@@ -91,20 +95,44 @@ public class MapEditor : MonoBehaviour
         }
 
 
-        // 依次保存每一个Generator
 
-        foreach (MapGenerator generator in mapData.GetComponentsInChildren<MapGenerator>())
+
+        foreach (MapGenerator generator in cacheMapData.Keys)
         {
-            // saveWithSerialize(mapData, generator);
             saveWithXML(mapData, generator);
         }
 
         // 旧版本
         PrefabUtility.ReplacePrefab(mapData.gameObject, PrefabUtility.CreatePrefab(MAP_ID_PATH + "/" + mapData.ID + "/" + mapData.ID + ".prefab", mapData.gameObject), ReplacePrefabOptions.ConnectToPrefab);
 
-
+        MessageWindow.CreateMessageBox(
+            "保存成功",
+            delegate (EditorWindow window) { window.Close(); },
+            delegate (EditorWindow window) { window.Close(); }
+        );
         // 新版本使用
         // PrefabUtility.SaveAsPrefabAssetAndConnect(mapData.gameObject, MAP_ID_PATH + "/" + mapData.ID + "/" + mapData.ID + ".prefab", InteractionMode.AutomatedAction);
+    }
+
+    private static void loadToMapDataCache()
+    {
+        // 依次保存每一个Generator
+        cacheMapData.Clear();
+        foreach (MapGenerator generator in Resources.FindObjectsOfTypeAll<MapGenerator>())
+        {
+            if (string.IsNullOrEmpty(AssetDatabase.GetAssetPath(generator)))
+            {
+                cacheMapData.Add(generator, new List<Unit>());
+                foreach (Unit unit in Resources.FindObjectsOfTypeAll<Unit>())
+                {
+                    if (string.IsNullOrEmpty(AssetDatabase.GetAssetPath(unit)) && unit.transform.parent == generator.transform)
+                    {
+                        cacheMapData[generator].Add(unit);
+                    }
+                }
+                cacheMapData[generator].Reverse();
+            }
+        }
     }
 
     private static void saveWithXML(MapData mapData, MapGenerator generator)
@@ -126,7 +154,8 @@ public class MapEditor : MonoBehaviour
         root.AppendChild(jumpInNumFrame);
         root.AppendChild(ary);
 
-        foreach (var unit in generator.GetComponentsInChildren<Unit>())
+        // Debug.Log(generator.name + "有" + cacheMapData[generator].Count + "个Unit");
+        foreach (var unit in cacheMapData[generator])
         {
             XmlNode item = xmlFile.CreateElement("item");
             ary.AppendChild(item);
@@ -174,7 +203,7 @@ public class MapEditor : MonoBehaviour
     }
 
     /// <summary>
-    /// 进行MapGenerator, Unit的index检查
+    /// 进行MapGenerator, Unit的index检查[已弃用]
     /// </summary>
     private static bool checkValidity()
     {
@@ -191,8 +220,8 @@ public class MapEditor : MonoBehaviour
                     generator.Name + "_" + generator.ID + "命名非法, 是否一键修复",
                     delegate (EditorWindow window)
                     {
-                            // 一键修复index
-                            int i = FindObjectsOfType<MapGenerator>().Length;
+                        // 一键修复index
+                        int i = FindObjectsOfType<MapGenerator>().Length;
                         foreach (var item in FindObjectsOfType<MapGenerator>())
                         {
                             item.Index = --i;
@@ -221,8 +250,8 @@ public class MapEditor : MonoBehaviour
                         unit.Name + "_" + unit.ID + "命名非法, 是否一键修复",
                         delegate (EditorWindow window)
                         {
-                                // 一键修复index
-                                int i = 0;
+                            // 一键修复index
+                            int i = 0;
                             foreach (var item in generator.GetComponentsInChildren<Unit>())
                             {
                                 item.Index = i++;
@@ -246,37 +275,39 @@ public class MapEditor : MonoBehaviour
     {
         MapData mapData = FindObjectOfType<MapData>();
         if (mapData == null) { return; }
+        loadToMapDataCache();
         HashSet<int> tempHashSet = new HashSet<int>();
-        foreach (var generator in FindObjectsOfType<MapGenerator>())
+        foreach (var generator in cacheMapData.Keys)
         {
             if (!tempHashSet.Add(generator.Index))
             {
                 // 一键修复index
-                int i = FindObjectsOfType<MapGenerator>().Length;
-                foreach (var item in FindObjectsOfType<MapGenerator>())
+                int i = cacheMapData.Keys.Count;
+                foreach (var item in cacheMapData.Keys)
                 {
                     item.Index = --i;
                 }
+                break;
             }
         }
 
-        foreach (var generator in FindObjectsOfType<MapGenerator>())
+        foreach (var generator in cacheMapData.Keys)
         {
             tempHashSet.Clear();
-            foreach (var unit in generator.GetComponentsInChildren<Unit>())
+            foreach (var unit in cacheMapData[generator])
             {
                 if (!tempHashSet.Add(unit.Index))
                 {
                     // index already exist
                     // 一键修复index
                     int i = 0;
-                    foreach (var item in generator.GetComponentsInChildren<Unit>())
+                    foreach (var item in cacheMapData[generator])
                     {
                         item.Index = i++;
                     }
+                    break;
                 }
             }
-            tempHashSet.Clear();
         }
     }
 
@@ -403,7 +434,8 @@ public class MapEditor : MonoBehaviour
     public static void loadMap(string targetMapPath, string mapID)
     {
         GameObject mapPrefab = (GameObject)Resources.Load(targetMapPath);
-        PrefabUtility.InstantiatePrefab(mapPrefab);
+        PrefabUtility.ReplacePrefab((GameObject)Instantiate(mapPrefab), mapPrefab, ReplacePrefabOptions.ConnectToPrefab);
+        // PrefabUtility.InstantiatePrefab(mapPrefab);
         if (Directory.Exists(MAP_ID_PATH + "/" + mapID + "/MapGenerator"))
         {
             // 要根据文件内容来加
@@ -499,7 +531,6 @@ public class MapEditor : MonoBehaviour
         foreach (MapGenerator generator in FindObjectsOfType<MapGenerator>())
         {
             // 依次加载每一个generator
-            Debug.Log(generator.Name);
             XmlDocument xmlFile = new XmlDocument();
             FileStream fileStream = new FileStream(MAP_ID_PATH + "/" + mapID + "/MapGenerator/" + generator.ID + ".bytes", FileMode.Open, FileAccess.Read);
             try
@@ -523,7 +554,6 @@ public class MapEditor : MonoBehaviour
                     return;
                 }
                 Unit unit = generator.GetComponentsInChildren<Unit>()[index];
-                Debug.Log(unit.Name);
                 unit.ID = int.Parse(item.SelectSingleNode("actorID").InnerText);
                 unit.transform.position = new Vector3(
                     float.Parse(item.SelectSingleNode("map_pos_x").InnerText) / 10000,
