@@ -88,7 +88,7 @@ function NewTalentOperation.__Class()
 
     function __private.OnZoneTalentQueryResp(cmd, buff, timeout)
 
-        if timeout then
+		if timeout then
             __private.talentNetTimeout()
             return
         end

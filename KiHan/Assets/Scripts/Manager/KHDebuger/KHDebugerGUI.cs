@@ -3068,18 +3068,16 @@ namespace KH
         {
             MessageManager msgManager = MessageManager.Instance;
             GUILayout.BeginVertical();
-            GUILayout.Label("从本地反序列化消息:" + msgManager.IsDeserializeFromLocal);
-            GUILayout.Label("从服务器序列化消息:" + msgManager.IsSerializeToLocal);
 
-            string str1 = msgManager.IsDeserializeFromLocal ? "关闭" : "开启";
-            str1 += "本地反序列化读取";
+            string str1 = msgManager.IsActivate ? "关闭" : "开启";
+            str1 += "序列化工具";
             if (GUILayout.Button(str1))
             {
-                msgManager.IsDeserializeFromLocal = !msgManager.IsDeserializeFromLocal;
+                msgManager.IsActivate = !msgManager.IsActivate;
             }
 
-            string str2 = msgManager.IsSerializeToLocal ? "关闭" : "开启";
-            str2 += "服务器序列化储存";
+            string str2 = "当前";
+            str2 += msgManager.IsSerializeToLocal ? "录播" : "重播";
             if (GUILayout.Button(str2))
             {
                 msgManager.IsSerializeToLocal = !msgManager.IsSerializeToLocal;

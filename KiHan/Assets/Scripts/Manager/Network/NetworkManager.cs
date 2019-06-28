@@ -14,7 +14,7 @@ namespace KH
     {
         public SendUnicastRetInfo()
         {
-            
+
         }
 
         public SendUnicastRetInfo(bool _ret, uint _serial)
@@ -38,35 +38,35 @@ namespace KH
         /// <summary>
         /// DIR连接
         /// </summary>
-        public const int DIR_CONNECTION             = 1;
+        public const int DIR_CONNECTION = 1;
         /// <summary>
         /// GAME连接
         /// </summary>
-        public const int GAME_CONNECTION            = 2;
+        public const int GAME_CONNECTION = 2;
 
         /// <summary>
         /// GAME UDP 连接
         /// </summary>
-        public const int GAME_UDP_CONNECTION        = 3;
+        public const int GAME_UDP_CONNECTION = 3;
 
         /// <summary>
         /// TEAMPVE BATTLE 连接
         /// </summary>
-        public const int TEAMPVE_BATTLE_CONNECTION  = 4;
+        public const int TEAMPVE_BATTLE_CONNECTION = 4;
         /// <summary>
         /// Guild Scene连接
         /// </summary>
-        public const int GUILD_SCENE_CONNECTION     = 5;
+        public const int GUILD_SCENE_CONNECTION = 5;
 
         /// <summary>
         /// PVP战斗连接
         /// </summary>
-        public const int GAME_PVP_CONNECTION        = 6;
+        public const int GAME_PVP_CONNECTION = 6;
 
         /// <summary>
         /// 多人OB链接
         /// </summary>
-        public const int OB_CONNECTION              = 7;
+        public const int OB_CONNECTION = 7;
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ namespace KH
         /// <summary>
         /// 阿波罗的连接
         /// </summary>
-        public const int APOLLO_CONNECTION_TYPE     = 0;
+        public const int APOLLO_CONNECTION_TYPE = 0;
 
         /// <summary>
         /// UDP的连接
@@ -94,7 +94,7 @@ namespace KH
         /// </summary>
         public const int KIHAN_CONNECTION_UDP_TYPE2 = 3;
     }
-    
+
     public class DelayTimeoutCallbackData
     {
         public TimerEntity.TimerEntityCallBack timeoutCallback;
@@ -139,7 +139,7 @@ namespace KH
             /// Update by Chicheng
             /// 检测NTF
             MessageManager msgManager = MessageManager.Instance;
-            if (msgManager.IsDeserializeFromLocal)
+            if (msgManager.IsActivate && !msgManager.IsSerializeToLocal)
             {
                 ReadNTFMessageFromLocal();
             }
@@ -156,15 +156,11 @@ namespace KH
             MessageBody NTFMessageBody = msgManager.deserializeFromLocalByTimeStamp(remoteModel.CurrentTime);
             if (NTFMessageBody != null)
             {
-
                 List<object> messagesBody = new List<object>();
                 try
                 {
-                    if (NTFMessageBody.MessagesBodyBuffer.Count != 1)
-                    {
-                        Debug.LogError("序列化错误");
-                    }
-                    messagesBody.Add(PBSerializer.NDeserialize(NTFMessageBody.MessagesBodyBuffer[0], NTFMessageBody.MessageType));
+                    messagesBody.Add(NTFMessageBody.MessagesBodyBuffer[0]);
+                    messagesBody.Add(PBSerializer.NDeserialize(NTFMessageBody.MessagesBodyBuffer[1], NTFMessageBody.MessageType));
                 }
                 catch (Exception e)
                 {
@@ -188,7 +184,7 @@ namespace KH
                 DelayTimeoutCallbackData timeoutData = NetworkManager.timeoutCallbackDataList[i];
                 timeoutData.timeoutCallback(timeoutData.serial);
             }
-            
+
             NetworkManager.timeoutCallbackDataList.Clear();
         }
 
@@ -246,7 +242,7 @@ namespace KH
         /// </summary>
         public IConnection Connection
         {
-            get { return proxy.Connection;}
+            get { return proxy.Connection; }
         }
 
         public int ZoneID
@@ -272,17 +268,17 @@ namespace KH
 
         public uint CurrentSSerial
         {
-            get { return router == null ? 0 : router.CurrentSerial;}
+            get { return router == null ? 0 : router.CurrentSerial; }
         }
 
         public uint CurrentRSerial
         {
-            get { return router == null ? 0 : router.CurrentDispatchSerial;}
+            get { return router == null ? 0 : router.CurrentDispatchSerial; }
         }
 
         public uint NextSSerial
         {
-            get { return router == null ? 0 : router.NextSerial(0);}
+            get { return router == null ? 0 : router.NextSerial(0); }
         }
 
         protected KiHanProxy proxy = null;
@@ -328,9 +324,9 @@ namespace KH
             }
         }
 
-        public IConnection CreateConnection(int connID = -1, string url = "", bool isDefault = true, int classType = ConnectionClassType.APOLLO_CONNECTION_TYPE,bool autoDis = true)
+        public IConnection CreateConnection(int connID = -1, string url = "", bool isDefault = true, int classType = ConnectionClassType.APOLLO_CONNECTION_TYPE, bool autoDis = true)
         {
-            return proxy.CreateConnection(connID,url,isDefault,classType,autoDis);
+            return proxy.CreateConnection(connID, url, isDefault, classType, autoDis);
         }
 
         public void DeleteConnection(int connID)
@@ -343,7 +339,7 @@ namespace KH
             return proxy.GetConnection(connID);
         }
 
-        public IConnection Disconnect(int connID = - 1)
+        public IConnection Disconnect(int connID = -1)
         {
             return proxy.Disconnect(connID);
         }
@@ -354,7 +350,7 @@ namespace KH
             typeProvider_D.RegisterCmdType(cmdId, type); //根据type去找本地序列化好的预设结果
 #endif
         }
-        
+
         /// <summary>
         /// 添加一个CmdId到Type的映射
         /// </summary>
@@ -368,9 +364,9 @@ namespace KH
             return typeProvider.GetTypeFromCmd(cmdId);
         }
 
-        public bool Send<T>(UInt32 cmdId, T message,int connID = -1) where T : IExtensible
+        public bool Send<T>(UInt32 cmdId, T message, int connID = -1) where T : IExtensible
         {
-            return proxy.Write(cmdId, message,0,connID);
+            return proxy.Write(cmdId, message, 0, connID);
         }
 
         /// <summary>
@@ -378,7 +374,7 @@ namespace KH
         /// </summary>
         public bool SendBordcast(UInt32 cmdId, object message, int connID = -1)
         {
-            return proxy.Write(cmdId, message as IExtensible,0,connID);
+            return proxy.Write(cmdId, message as IExtensible, 0, connID);
         }
 
         /// <summary>
@@ -402,7 +398,7 @@ namespace KH
         {
             router.RemoveMessageCallback(cmdId, handle);
         }
-        
+
         public bool SendWithSerial(uint cmdId
             , IExtensible message
             , NetworkMessageHandle callback
@@ -434,7 +430,7 @@ namespace KH
 
             return result;
         }
-        
+
         /// <summary>
         /// 发送协议且侦听回调
         /// </summary>
@@ -494,9 +490,8 @@ namespace KH
             // Update by Chicheng
             MessageManager msgManager = MessageManager.Instance;
             // 模拟服务器，从本地读包
-            if (msgManager.IsDeserializeFromLocal)
+            if (msgManager.IsActivate && !msgManager.IsSerializeToLocal)
             {
-                // Debug.LogWarning("模拟服务器，从本地读包");
                 // 反序列化之后的结果
                 List<object> messagesBody = msgManager.ReadMessageFromLocal(cmdId);
                 try
@@ -505,7 +500,7 @@ namespace KH
                 }
                 catch (NullReferenceException)
                 {
-					return false;
+                    return false;
                 }
             }
             else
@@ -536,7 +531,7 @@ namespace KH
         public void SendFake<T, TRsp>(uint cmdId,
                                 T message, NetworkMessageHandle callback,
                                 TRsp messageRsp
-            ,int connID = -1
+            , int connID = -1
             ) where T : IExtensible
         {
             //Send<T>(cmdId, message, callback, true , _default_timeout_func,10,connID);
@@ -566,12 +561,41 @@ namespace KH
                                 string tag = "None")
         {
             uint serial = router.NextSerial(cmdId, tag);
-            bool result = proxy.Write(cmdId, message, serial,connID);
-            
+            bool result = true;
+
+            // Update by Chicheng
+            MessageManager msgManager = MessageManager.Instance;
+            // 模拟服务器，从本地读包
+            if (msgManager.IsActivate && !msgManager.IsSerializeToLocal)
+            {
+                // Debug.LogWarning("模拟服务器，从本地读包Lua");
+                // Lua反序列化之后的结果
+                try
+                {
+                    List<object> messagesBody = msgManager.ReadMessageFromLocal(cmdId);
+                    if (messagesBody != null)
+                    {
+                        __Proxy.__QueueAddMessage(cmdId, serial, messagesBody);
+                        //__Proxy.AddMessage(cmdId, serial, messagesBody[0]);
+                    }
+                }
+                catch (Exception)
+                {
+                    Debug.LogWarning("Lua这里出错");
+                }
+
+            }
+            else
+            {
+                result = proxy.Write(cmdId, message, serial, connID);
+            }
+
+
+
             if (result)
             {
                 PBTYPE pbtype = PBTYPE.None;
-                if(message is byte[])
+                if (message is byte[])
                     pbtype = PBTYPE.LuaPB;
                 else
                     pbtype = PBTYPE.CSharpPB;

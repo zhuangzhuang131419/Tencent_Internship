@@ -22,7 +22,7 @@ namespace KH.Network
 #endif
         private MessageRouter _router = null;
         private NetworkMessageQueue _messageQueue = null;
-             
+
         /// <summary>
         /// 当前选择的Zone ID
         /// </summary>
@@ -60,7 +60,7 @@ namespace KH.Network
             ///代理..
             __Proxy.__DistributeMessage = _messageQueue.Distribute;
             __Proxy.__QueueAddMessage = _messageQueue.AddMessage;
-            
+
 
             this._defaultConn = null;
             this._send_head.MagicNum = (ushort)MagicNum;
@@ -135,7 +135,7 @@ namespace KH.Network
         {
             get
             {
-                if(_defaultConn==null) _defaultConn = new ApolloConnection();
+                if (_defaultConn == null) _defaultConn = new ApolloConnection();
                 return _defaultConn;
             }
             set
@@ -176,7 +176,7 @@ namespace KH.Network
             _router.defaultConnID = (_defaultConn == null ? -1 : _defaultConn.ID);
         }
 
-        public IConnection CreateConnection(int connID = -1 ,string url = "" , bool isDefault = true ,int classType = ConnectionClassType.APOLLO_CONNECTION_TYPE, bool autoDis = true)
+        public IConnection CreateConnection(int connID = -1, string url = "", bool isDefault = true, int classType = ConnectionClassType.APOLLO_CONNECTION_TYPE, bool autoDis = true)
         {
             IConnection conn = null;
 
@@ -184,7 +184,7 @@ namespace KH.Network
             {
                 conn = GetConnection(connID);
             }
-            
+
             if (conn == null)
             {
                 Type connType = null;
@@ -203,7 +203,7 @@ namespace KH.Network
 
                 _connectionDict.Add(connID, conn);
             }
-            else if(autoDis)
+            else if (autoDis)
             {
                 conn.DisconnectError = 0;
                 Disconnect(conn);
@@ -238,7 +238,7 @@ namespace KH.Network
                 {
                     _connectionsArr.Remove(conn);
                     ///清空回调且不需要调用
-                    _router.ClearUnicastCallbacks(false , connID);
+                    _router.ClearUnicastCallbacks(false, connID);
                 }
 
                 if (_defaultConn == conn)
@@ -257,7 +257,7 @@ namespace KH.Network
             return conn;
         }
 
-        public IConnection Disconnect(int connID = - 1)
+        public IConnection Disconnect(int connID = -1)
         {
             IConnection conn = GetConnection(connID);
             return Disconnect(conn);
@@ -367,7 +367,7 @@ namespace KH.Network
 
                 MessageManager msgManager = MessageManager.Instance;
                 // 模拟服务器，从本地读包
-                if (!msgManager.IsDeserializeFromLocal)
+                if (!msgManager.IsActivate || msgManager.IsSerializeToLocal) 
                 {
                     result = conn.DoSend(_send_head, message, sendMessageBodyStream);
                 }
@@ -412,7 +412,7 @@ namespace KH.Network
         public void OnConnRead(MemoryStream receiveStream)
         {
             List<object> message = new List<object>();
-            while (Read(receiveStream, out message)) 
+            while (Read(receiveStream, out message))
             {
                 // 测试要求加的工具，模拟丢包
                 if (bSimulationLossNetworkMessage)
@@ -427,7 +427,7 @@ namespace KH.Network
 
         protected bool Read(MemoryStream stream, out List<object> message)
         {
-            if(stream.Length > stream.Position)
+            if (stream.Length > stream.Position)
             {
                 _recentHead = ReadHead(stream);
                 message = ReadBody(_recentHead, stream);
@@ -456,7 +456,7 @@ namespace KH.Network
 
             byte[] bodyBuffer = stream.GetBuffer();
 
-            int bodyBufferOffset = (int) stream.Position;
+            int bodyBufferOffset = (int)stream.Position;
 
             int bodyLen = (int)head.BodyLength;
             if (bodyLen < 0) bodyLen = 0;
@@ -470,6 +470,8 @@ namespace KH.Network
                 List<object> msgs = new List<object>();
                 if (head.Format == ClientHeadFormatType.Protobuf)
                 {
+                    bool isLua = false;
+                    bool isCSharp = false;
                     if (__Proxy.__LuaPBProcessor.ContainsKey(head.CmdId) && _router.getPBType(head.Serial) == PBTYPE.LuaPB || _router.getPBType(head.Serial) == PBTYPE.Both)
                     {
                         byte[] buff = new byte[bodyLen];
@@ -479,7 +481,10 @@ namespace KH.Network
                         stream.Position = bodyBufferOffset + bodyLen;
                         msgs.Add(buff);
                         //return buff;
+                        isLua = true;
                     }
+
+
                     if (_typeProvider.ContainsKey(head.CmdId) && _router.getPBType(head.Serial) == PBTYPE.CSharpPB || _router.getPBType(head.Serial) == PBTYPE.Both)
                     {
                         ReceiveMessageStream.Write(bodyBuffer, bodyBufferOffset, bodyLen);
@@ -517,18 +522,41 @@ namespace KH.Network
                             }
 
                             msgs.Add(message);
-                        }
 
-                        // Update by Chicheng
-                        
-                        if (msgManager.IsSerializeToLocal)
+                            isCSharp = true;
+                        }
+                    }
+
+
+                    // Update by Chicheng
+                    if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
+                    {
+
+                        Type messageType;
+                        TypeProvider.TryGetValue(head.CmdId, out messageType);
+
+                        // Debug.LogWarning("把读到的消息包序列化到本地");
+                        RemoteModel remoteModel = RemoteModel.Instance;
+                        ulong timeStamp = remoteModel.CurrentTime;
+                        if (isCSharp && isLua)
                         {
-                            // Debug.LogWarning("把读到的消息包序列化到本地");
-                            RemoteModel remoteModel = RemoteModel.Instance;
-                            ulong timeStamp = remoteModel.CurrentTime;
-                            msgManager.serializeToLocalWithType(msgs, messageType, head.CmdId, timeStamp, head.Serial);
-                            //Debug.Log("message type:" + messageType.ToString());
-                            //Debug.Log("cmdID: " + head.CmdId.ToString());
+                            msgManager.serializeToLocalWithType(msgs, messageType, head.CmdId, timeStamp, head.Serial, MessageSource.CSharpAndLua);
+                        }
+                        else if (isLua)
+                        {
+                            msgManager.serializeToLocalWithType(msgs, null, head.CmdId, timeStamp, head.Serial, MessageSource.Lua);
+                        }
+                        else if (isCSharp)
+                        {
+                            if (messageType != null)
+                            {
+                                msgManager.serializeToLocalWithType(msgs, messageType, head.CmdId, 0, head.Serial, MessageSource.CSharp);
+                            } 
+                            else
+                            {
+                                Debug.LogWarning("丢弃" + head.Serial);
+                            }
+
                         }
                     }
                 }

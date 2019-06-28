@@ -13,13 +13,15 @@ namespace KH
     public class MessageManager
     {
         static private MessageManager messageManagerInstance = null;
-        public static readonly string DEST_PATH = "Assets/InternshipTask/message.dat";
+        private static readonly string DEST_PATH = "Assets/InternshipTask/";
+        public static readonly string DEST_PATH_CSharp = DEST_PATH + "Message.dat";
         // public static readonly string BATTLE_RESULT = "F:\\Tencent_Internship\\KiHan\\log\\Result.dat";
         // 内存中保存的一系列message，方便在给定cmdID的情况下取出 （利用cmdID作key，避免重复）
         public Dictionary<uint, List<MessageBody>> messagesBodySet = null;
 
+        // 录播
         private bool isSerializeToLocal = false;
-        private bool isDeserializeFromLocal = false;
+        private bool isActivate = false;
 
         static public MessageManager Instance
         {
@@ -29,7 +31,6 @@ namespace KH
                 {
                     messageManagerInstance = new MessageManager();
                 }
-
                 return messageManagerInstance;
             }
         }
@@ -40,10 +41,10 @@ namespace KH
             set { isSerializeToLocal = value; }
         }
 
-        public bool IsDeserializeFromLocal
+        public bool IsActivate
         {
-            get { return isDeserializeFromLocal; }
-            set { isDeserializeFromLocal = value; }
+            get { return isActivate; }
+            set { isActivate = value; }
         }
 
         private MessageManager() { }
@@ -53,28 +54,46 @@ namespace KH
         /// </summary>
         /// <param name="msgs"></param>
         /// <param name="messageType"></param>
-        public void serializeToLocalWithType(List<object> msgs, Type messageType, uint cmdID, ulong timeStamp, uint serial)
+        public void serializeToLocalWithType(List<object> msgs, Type messageType, uint cmdID, ulong timeStamp, uint serial, MessageSource source)
         {
-            MessageBody packedMessageBody = new MessageBody(messageType, cmdID, timeStamp, serial);
-            // 如果是NTF包，List<object>会有两项
+            MessageBody packedMessageBody = new MessageBody(messageType, cmdID, timeStamp, serial, source);
             try
             {
-                switch (msgs.Count)
+                switch (source)
                 {
-                    case 1:
-                        // 非NTF包
-                        packedMessageBody.MessagesBodyBuffer.Add(PBSerializer.NSerialize(msgs[0]));
-                        break;
-                    case 2:
-                        // NTF包
+                    case MessageSource.Lua:
 
-                        // 测试是否可以反序列化
-						// Debug.LogWarning("测试是否可以反序列化");
-                        PBSerializer.NDeserialize(PBSerializer.NSerialize(msgs[1]), messageType);
-                        packedMessageBody.MessagesBodyBuffer.Add(PBSerializer.NSerialize(msgs[1]));
+                        if (msgs[0] is byte[])
+                        {
+                            packedMessageBody.MessagesBodyBuffer.Add((byte[])msgs[0]);
+                        }
                         break;
-                    default:
-                        Debug.LogError("出错");
+                    case MessageSource.CSharp:
+                        try
+                        {
+                            PBSerializer.NDeserialize(PBSerializer.NSerialize(msgs[0]), messageType);
+                        }
+                        catch (Exception)
+                        {
+                            Debug.LogWarning(cmdID + "NTF测试未通过");
+                            break;
+                        }
+                        packedMessageBody.MessagesBodyBuffer.Add(PBSerializer.NSerialize(msgs[0]));
+
+                        break;
+                    case MessageSource.CSharpAndLua:
+
+                        foreach (var item in msgs)
+                        {
+                            if (item is byte[])
+                            {
+                                packedMessageBody.MessagesBodyBuffer.Add((byte[])item);
+                            }
+                            else
+                            {
+                                packedMessageBody.MessagesBodyBuffer.Add(PBSerializer.NSerialize(item));
+                            }
+                        }
                         break;
                 }
             }
@@ -83,8 +102,7 @@ namespace KH
                 Debug.LogError("序列化出现问题");
                 Debug.LogError("消息数量：" + msgs.Count + " ；序列号：" + serial);
             }
-            
-            serializeToLocal(packedMessageBody, DEST_PATH);
+            serializeToLocal(packedMessageBody, DEST_PATH_CSharp);
         }
 
         /// <summary>
@@ -161,27 +179,39 @@ namespace KH
             MessageBody packedMessage01 = deserializeFromLocalByCmdIDCache(cmdID);
             if (packedMessage01 != null)
             {
-                Debug.Log("利用cmdID成功读取");
+                // Debug.Log("利用cmdID成功读取");
+                List<object> messageBodyResult = new List<object>();
                 try
                 {
-                    List<object> messageBodyResult = new List<object>();
-                    foreach (byte[] msgBodyBuffer in packedMessage01.MessagesBodyBuffer)
+
+                    switch (packedMessage01.Source)
                     {
-                        messageBodyResult.Add(PBSerializer.NDeserialize(msgBodyBuffer, packedMessage01.MessageType));
+                        case MessageSource.Lua:
+                            messageBodyResult.Add(packedMessage01.MessagesBodyBuffer[0]);
+                            break;
+                        case MessageSource.CSharp:
+                            messageBodyResult.Add(PBSerializer.NDeserialize(packedMessage01.MessagesBodyBuffer[0], packedMessage01.MessageType));
+                            break;
+                        case MessageSource.CSharpAndLua:
+                            messageBodyResult.Add(packedMessage01.MessagesBodyBuffer[0]);
+                            messageBodyResult.Add(PBSerializer.NDeserialize(packedMessage01.MessagesBodyBuffer[1], packedMessage01.MessageType));
+                            break;
                     }
-
-                    // 成功解析出message
-                    return messageBodyResult;
-
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    Debug.LogWarning("ReadMessageFromLocal：NDeserialize 出现了异常");
-                    return null;
+                    Debug.LogWarning("MessageManager" + e.Message);
                 }
+
+                // 成功解析出message
+                return messageBodyResult;
             }
             else
             {
+                if (cmdID != 50397186) // 过滤掉心跳包
+                {
+                    
+                }
                 Debug.LogWarning(cmdID + "没有对应的message");
                 return null;
             }
@@ -280,26 +310,6 @@ namespace KH
             return message;
         }
 
-        private void deleteBuffer(FileStream fileStream, long from, long to)
-        {
-            Debug.Log("删除相对应的包");
-            if (fileStream == null) { return; }
-            byte[] tempBuffer1 = new byte[from];
-            byte[] tempBuffer2 = new byte[fileStream.Length - to];
-            fileStream.Position = 0;
-            if (from != 0 && fileStream.Read(tempBuffer1, 0, tempBuffer1.Length) == tempBuffer1.Length) { }
-
-            fileStream.Position = to;
-            if (to != fileStream.Length && fileStream.Read(tempBuffer2, 0, tempBuffer2.Length) == tempBuffer2.Length) { }
-            fileStream.Close();
-
-            FileStream tempFileStream = new FileStream(DEST_PATH, FileMode.Truncate, FileAccess.ReadWrite);
-            tempFileStream.Write(tempBuffer1, 0, tempBuffer1.Length);
-            tempFileStream.Write(tempBuffer2, 0, tempBuffer2.Length);
-            tempFileStream.Close();
-            Debug.Log("删除成功");
-        }
-
         /// <summary>
         /// 根据提供的cmdID序号获得相对应的包
         /// </summary>
@@ -324,7 +334,7 @@ namespace KH
             BinaryFormatter bf = new BinaryFormatter();
             try
             {
-                fileStream = new FileStream(DEST_PATH, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                fileStream = new FileStream(DEST_PATH_CSharp, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             }
             catch (DirectoryNotFoundException)
             {
@@ -418,7 +428,7 @@ namespace KH
                     return result;
                 }
             }
-            UIAPI.ShowMsgTip("不存在cmd");
+            UIAPI.ShowMsgTip("不存在" + cmdID);
             return null;
         }
 
@@ -428,7 +438,7 @@ namespace KH
             {
                 foreach (var item in messageBodyList)
                 {
-                    if (item.TimeStamp == timeStamp)
+                    if (item.TimeStamp == timeStamp && item.Serial == 0)
                     {
                         return item;
                     }
@@ -450,7 +460,7 @@ namespace KH
             BinaryFormatter bf = new BinaryFormatter();
             try
             {
-                fileStream = new FileStream(DEST_PATH, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                fileStream = new FileStream(DEST_PATH_CSharp, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             }
             catch (DirectoryNotFoundException)
             {
