@@ -172,9 +172,9 @@ public class MapEditor : MonoBehaviour
             XmlNode centerToPlayer = xmlFile.CreateElement("centerToPlayer");
 
             actorID.InnerText = Convert.ToString(unit.ID);
-            map_pos_x.InnerText = ((long)(unit.transform.position.x * 10000)).ToString();
-            map_pos_y.InnerText = ((long)(unit.CreateHeight * 10000)).ToString();
-            map_pos_z.InnerText = ((long)(unit.transform.position.y * 10000)).ToString();
+            map_pos_x.InnerText = Convert.ToDecimal(unit.transform.position.x * 10000).ToString();
+            map_pos_y.InnerText = Convert.ToDecimal(unit.CreateHeight * 10000).ToString();
+            map_pos_z.InnerText = Convert.ToDecimal(unit.transform.position.y * 10000).ToString();
             defaultVKey.InnerText = Convert.ToString(unit.CreateAction);
             direction.InnerText = Convert.ToString(unit.Direction);
             delayCreateTime.InnerText = Convert.ToString(unit.DelayCreateTime);
@@ -276,36 +276,57 @@ public class MapEditor : MonoBehaviour
         MapData mapData = FindObjectOfType<MapData>();
         if (mapData == null) { return; }
         loadToMapDataCache();
-        HashSet<int> tempHashSet = new HashSet<int>();
+        Dictionary<int, MapGenerator> tempGenerators = new Dictionary<int, MapGenerator>();
+
+        int maxGeneratorIndex = 0;
         foreach (var generator in cacheMapData.Keys)
         {
-            if (!tempHashSet.Add(generator.Index))
+            if (generator.Index > maxGeneratorIndex)
             {
-                // 一键修复index
-                int i = cacheMapData.Keys.Count;
-                foreach (var item in cacheMapData.Keys)
-                {
-                    item.Index = --i;
-                }
-                break;
+                maxGeneratorIndex = generator.Index;
             }
         }
 
         foreach (var generator in cacheMapData.Keys)
         {
-            tempHashSet.Clear();
+            if (tempGenerators.ContainsKey(generator.Index))
+            {
+                MapGenerator newGenerator;
+                tempGenerators.TryGetValue(generator.Index, out newGenerator);
+                newGenerator.Index = maxGeneratorIndex + 1;
+                tempGenerators.Add(newGenerator.Index, newGenerator);
+                tempGenerators[generator.Index] = generator;
+                maxGeneratorIndex++;
+            }
+            else
+            {
+                tempGenerators.Add(generator.Index, generator);
+            }
+        }
+
+        foreach (var generator in cacheMapData.Keys)
+        {
+            int maxUnitIndex = 0;
             foreach (var unit in cacheMapData[generator])
             {
-                if (!tempHashSet.Add(unit.Index))
+                if (unit.Index > maxUnitIndex)
                 {
-                    // index already exist
-                    // 一键修复index
-                    int i = 0;
-                    foreach (var item in cacheMapData[generator])
-                    {
-                        item.Index = i++;
-                    }
-                    break;
+                    maxUnitIndex = unit.Index;
+                }
+            }
+
+            Dictionary<int, Unit> tempUnits = new Dictionary<int, Unit>();
+            foreach (var unit in cacheMapData[generator])
+            {
+                if (tempUnits.ContainsKey(unit.Index))
+                {
+                    unit.Index = maxUnitIndex + 1;
+                    tempUnits.Add(unit.Index, unit);
+                    maxUnitIndex++;
+                }
+                else
+                {
+                    tempUnits.Add(unit.Index, unit);
                 }
             }
         }
@@ -321,8 +342,8 @@ public class MapEditor : MonoBehaviour
         if (generatorRoot != null)
         {
             // 自动生成index
-            int maxIndex = -1;
-            int maxID = int.Parse(Convert.ToSingle(FindObjectOfType<MapData>().ID) + "000");
+            int maxIndex = 0;
+            int maxID = FindObjectOfType<MapData>().ID * 1000;
             foreach (var generator in generatorRoot.GetComponentsInChildren<MapGenerator>())
             {
                 if (generator.Index > maxIndex)
@@ -372,7 +393,7 @@ public class MapEditor : MonoBehaviour
             && Selection.gameObjects[0].GetComponents<MapGenerator>().Length > 0)
         {
             // 自动生成index
-            int maxIndex = -1;
+            int maxIndex = 0;
             foreach (var unit in Selection.gameObjects[0].GetComponentsInChildren<Unit>())
             {
                 if (unit.Index > maxIndex)
@@ -434,8 +455,9 @@ public class MapEditor : MonoBehaviour
     public static void loadMap(string targetMapPath, string mapID)
     {
         GameObject mapPrefab = (GameObject)Resources.Load(targetMapPath);
-        PrefabUtility.ReplacePrefab((GameObject)Instantiate(mapPrefab), mapPrefab, ReplacePrefabOptions.ConnectToPrefab);
-        // PrefabUtility.InstantiatePrefab(mapPrefab);
+        // UnityEngine.Object mapPrefab = AssetDatabase.LoadAssetAtPath(targetMapPath + ".prefab", typeof(GameObject));
+        // PrefabUtility.ReplacePrefab((GameObject)Instantiate(mapPrefab), mapPrefab, ReplacePrefabOptions.ConnectToPrefab);
+        PrefabUtility.InstantiatePrefab(mapPrefab);
         if (Directory.Exists(MAP_ID_PATH + "/" + mapID + "/MapGenerator"))
         {
             // 要根据文件内容来加
@@ -519,7 +541,6 @@ public class MapEditor : MonoBehaviour
                 {
                     Debug.Log("不存在要加载的对象");
                 }
-
             }
         }
     }
@@ -557,7 +578,7 @@ public class MapEditor : MonoBehaviour
                 unit.ID = int.Parse(item.SelectSingleNode("actorID").InnerText);
                 unit.transform.position = new Vector3(
                     float.Parse(item.SelectSingleNode("map_pos_x").InnerText) / 10000,
-                    unit.CreateHeight / 10000,
+                    unit.transform.position.y,
                     float.Parse(item.SelectSingleNode("map_pos_y").InnerText) / 10000
                     );
                 unit.CreateAction = int.Parse(item.SelectSingleNode("defaultVKey").InnerText);
@@ -574,19 +595,19 @@ public class MapEditor : MonoBehaviour
         }
     }
 
-    //  [MenuItem("MapEditor/test")]
-    //  public static void test()
-    //  {
-    //      Debug.LogWarning("MapGenerator0,unit0,x:" + FindObjectsOfType<MapGenerator>()[0].GetComponentsInChildren<Unit>()[0].transform.position.x);
+    //[MenuItem("MapEditor/test")]
+    //public static void test()
+    //{
+    //    autoFix();
 
-    //      /*
-    //      GameObject mapData = new GameObject("map");
-    //      mapData.AddComponent<MapData>().Desc = "测试";
-    //      mapData.AddComponent<MapGenerator>().transform.position = new Vector3(7, 0, 0);
-    //      PrefabUtility.ReplacePrefab(mapData, PrefabUtility.CreatePrefab("Assets/test.prefab", mapData), ReplacePrefabOptions.ConnectToPrefab);
-    //      // PrefabUtility.SaveAsPrefabAssetAndConnect(mapData, "Assets/test.prefab", InteractionMode.AutomatedAction);
-    //      */
-    //  }
+    //    /*
+    //    GameObject mapData = new GameObject("map");
+    //    mapData.AddComponent<MapData>().Desc = "测试";
+    //    mapData.AddComponent<MapGenerator>().transform.position = new Vector3(7, 0, 0);
+    //    PrefabUtility.ReplacePrefab(mapData, PrefabUtility.CreatePrefab("Assets/test.prefab", mapData), ReplacePrefabOptions.ConnectToPrefab);
+    //    // PrefabUtility.SaveAsPrefabAssetAndConnect(mapData, "Assets/test.prefab", InteractionMode.AutomatedAction);
+    //    */
+    //}
 
     //  [MenuItem("MapEditor/test1")]
     //  public static void test1()

@@ -23,9 +23,9 @@ public class MapGeneratorEditor : Editor
 
         // EditorGUILayout.IntField("MapGenerator ID", mapGenerator.ID);
         // EditorGUILayout.TextField("Desc", mapGenerator.Desc);
-        mapGenerator.name = mapGenerator.Name + "_" + mapGenerator.Index;
+        mapGenerator.name = mapGenerator.Name;
         // mapGenerator.Name = mapGenerator.Name;
-        mapGenerator.ID = int.Parse(Convert.ToSingle(FindObjectOfType<MapData>().ID) + "00" + mapGenerator.Index);
+        mapGenerator.ID = FindObjectOfType<MapData>().ID * 1000 + mapGenerator.Index;
         // EditorGUILayout.IntField("Index", mapGenerator.Index);
         // mapGenerator.Type = EditorGUILayout.IntField("Type", mapGenerator.Type);
         EditorGUILayout.EndVertical();
