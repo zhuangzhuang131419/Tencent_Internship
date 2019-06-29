@@ -9,7 +9,10 @@ public class Monitor {
 
     static Monitor()
     {
-        var type = Types.GetType("UnityEditor.EditorAssemblies", "UnityEditor.dll");
+        // 新版本
+        var type = Assembly.Load("UnityEditor.dll").GetType("UnityEditor.EditorAssemblies");
+        // 旧版本
+        // var type = Types.GetType("UnityEditor.EditorAssemblies", "UnityEditor.dll");
         var method = type.GetMethod("SubclassesOf", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(Type) }, null);
         var e = method.Invoke(null, new object[] { typeof(Monitor) }) as IEnumerable;
         foreach (Type editorMonoBehaviourClass in e)

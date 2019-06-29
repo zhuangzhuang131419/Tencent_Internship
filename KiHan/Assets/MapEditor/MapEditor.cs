@@ -51,7 +51,52 @@ public class MapEditor : MonoBehaviour
         else
         {
             EditorWindow.GetWindow(typeof(CreateWindow), true, "创建");
+        }
+    }
 
+
+    [MenuItem("MapEditor/导入")]
+    public static void load()
+    {
+        if (FindObjectsOfType<MapData>().Length == 0)
+        {
+            MessageWindow.CreateMessageBox(
+                "请打开Mapdata",
+                delegate (EditorWindow window) { window.Close(); },
+                delegate (EditorWindow window) { window.Close(); }
+            );
+        }
+        else
+        {
+            MapData mapData = FindObjectOfType<MapData>();
+            // 旧版本
+            PrefabUtility.DisconnectPrefabInstance(mapData.gameObject);
+
+            // 新版本
+            // PrefabUtility.UnpackPrefabInstance(mapData.gameObject, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+            foreach (MapGenerator generator in Resources.FindObjectsOfTypeAll<MapGenerator>())
+            {
+                if (string.IsNullOrEmpty(AssetDatabase.GetAssetPath(generator)))
+                {
+                    DestroyImmediate(generator.gameObject);
+                }
+            }
+            Debug.Log("销毁成功");
+            
+
+            // 读取新的数据
+            if (Directory.Exists(MAP_ID_PATH + "/" + mapData.ID + "/MapGenerator"))
+            {
+                refreshFromXML();
+            }
+            else
+            {
+                MessageWindow.CreateMessageBox(
+                    "没有可供导入的数据",
+                    delegate (EditorWindow window) { window.Close(); },
+                    delegate (EditorWindow window) { window.Close(); }
+                );
+            }
         }
     }
 
@@ -61,8 +106,6 @@ public class MapEditor : MonoBehaviour
     [MenuItem("MapEditor/保存")]
     public static void save()
     {
-
-
         // 保存新的mapData
         if (FindObjectsOfType<MapData>().Length != 1)
         {
@@ -74,7 +117,7 @@ public class MapEditor : MonoBehaviour
             return;
         }
         MapData mapData = FindObjectOfType<MapData>();
-        
+
 
         // 一键修复数据
         autoFix();
@@ -114,7 +157,7 @@ public class MapEditor : MonoBehaviour
         // PrefabUtility.SaveAsPrefabAssetAndConnect(mapData.gameObject, MAP_ID_PATH + "/" + mapData.ID + "/" + mapData.ID + ".prefab", InteractionMode.AutomatedAction);
     }
 
-    private static void loadToMapDataCache()
+    private static void loadHierarchyInfoToMapDataCache()
     {
         // 依次保存每一个Generator
         cacheMapData.Clear();
@@ -194,14 +237,6 @@ public class MapEditor : MonoBehaviour
         xmlFile.Save(MAP_ID_PATH + "/" + mapData.ID + "/MapGenerator/" + generator.ID + ".bytes");
     }
 
-    private static void saveWithSerialize(MapData mapData, MapGenerator generator)
-    {
-        FileStream fileStream = new FileStream(MAP_ID_PATH + "/" + mapData.ID + "/MapGenerator/" + generator.ID + ".dat", FileMode.Create, FileAccess.ReadWrite);
-        BinaryFormatter bf = new BinaryFormatter();
-        bf.Serialize(fileStream, generator);
-        fileStream.Close();
-    }
-
     /// <summary>
     /// 进行MapGenerator, Unit的index检查[已弃用]
     /// </summary>
@@ -275,7 +310,7 @@ public class MapEditor : MonoBehaviour
     {
         MapData mapData = FindObjectOfType<MapData>();
         if (mapData == null) { return; }
-        loadToMapDataCache();
+        loadHierarchyInfoToMapDataCache();
         Dictionary<int, MapGenerator> tempGenerators = new Dictionary<int, MapGenerator>();
 
         int maxGeneratorIndex = 0;
@@ -357,22 +392,11 @@ public class MapEditor : MonoBehaviour
                 }
             }
 
-            GameObject newGeneratorObject = new GameObject();
-            newGeneratorObject.transform.parent = generatorRoot.transform;
-            MapGenerator mapGenerator = newGeneratorObject.AddComponent<MapGenerator>();
-
-            // 初始化新建的Generator
-            mapGenerator.Index = maxIndex + 1;
-            mapGenerator.ID = maxID + 1;
-            mapGenerator.Name = "MapGenerator" + mapGenerator.ID;
-            mapGenerator.Type = 1;
-
-            // 添加数据
-            // mapData.MapGenerators.Add(mapGenerator);
+            MapGenerator mapGenerator = InstantializeGenerator(maxIndex + 1, maxID + 1, generatorRoot);
 
             // 选中
-            EditorGUIUtility.PingObject(newGeneratorObject);
-            Selection.activeGameObject = newGeneratorObject;
+            EditorGUIUtility.PingObject(mapGenerator.gameObject);
+            Selection.activeGameObject = mapGenerator.gameObject;
         }
         else
         {
@@ -382,6 +406,21 @@ public class MapEditor : MonoBehaviour
                 delegate (EditorWindow window) { window.Close(); }
             );
         }
+    }
+
+    public static MapGenerator InstantializeGenerator(int index, int id, GameObject parent)
+    {
+        GameObject newGeneratorObject = new GameObject();
+        newGeneratorObject.transform.parent = parent.transform;
+        MapGenerator mapGenerator = newGeneratorObject.AddComponent<MapGenerator>();
+
+        // 初始化新建的Generator
+        mapGenerator.Index = index;
+        mapGenerator.ID = id;
+        mapGenerator.Name = "MapGenerator" + mapGenerator.ID;
+        mapGenerator.Type = 1;
+
+        return mapGenerator;
     }
 
     [MenuItem("MapEditor/创建单位")]
@@ -402,39 +441,11 @@ public class MapEditor : MonoBehaviour
                 }
             }
 
-            GameObject newUnit = new GameObject();
-            Unit unitComponent = newUnit.AddComponent<Unit>();
-
-            // 默认数据
-            unitComponent.Index = maxIndex + 1;
-            unitComponent.Name = "MonsterGenerator" + unitComponent.Index;
-            unitComponent.CreateAction = -1;
-            unitComponent.Direction = -1;
-            unitComponent.ID = 0;
-
-
-            newUnit.transform.parent = Selection.gameObjects[0].transform;
-
-            // 添加数据
-            // Selection.gameObjects[0].GetComponent<MapGenerator>().Units.Add(unitComponent);
-
-            // 暂时写死加载40001
-            // Debug.Log(MapEditor.ACTOR_PREFAB_PATH.Substring(MapEditor.ACTOR_PREFAB_PATH.IndexOf("Config")) + "/40001");
-            try
-            {
-                GameObject actor = Instantiate(Resources.Load("Actor/40001")) as GameObject;
-                actor.transform.parent = newUnit.transform;
-            }
-            catch (ArgumentException)
-            {
-                Debug.Log("不存在要加载的对象");
-            }
-
-
+            Unit unitComponent = InitializeUnit(maxIndex, Selection.gameObjects[0]);
 
             // 选中
-            EditorGUIUtility.PingObject(newUnit);
-            Selection.activeGameObject = newUnit;
+            EditorGUIUtility.PingObject(unitComponent.gameObject);
+            Selection.activeGameObject = unitComponent.gameObject;
         }
         else
         {
@@ -446,6 +457,37 @@ public class MapEditor : MonoBehaviour
         }
     }
 
+    private static Unit InitializeUnit(int index, GameObject parent)
+    {
+        GameObject newUnit = new GameObject();
+        Unit unitComponent = newUnit.AddComponent<Unit>();
+
+        // 默认数据
+        unitComponent.Index = index;
+        unitComponent.Name = "MonsterGenerator" + unitComponent.Index;
+        unitComponent.CreateAction = -1;
+        unitComponent.Direction = -1;
+        unitComponent.ID = 0;
+
+
+        newUnit.transform.parent = parent.transform;
+
+        // 添加数据
+        // Selection.gameObjects[0].GetComponent<MapGenerator>().Units.Add(unitComponent);
+
+        // 暂时写死加载40001
+        // Debug.Log(MapEditor.ACTOR_PREFAB_PATH.Substring(MapEditor.ACTOR_PREFAB_PATH.IndexOf("Config")) + "/40001");
+        try
+        {
+            GameObject actor = Instantiate(Resources.Load("Actor/40001")) as GameObject;
+            actor.transform.parent = newUnit.transform;
+        }
+        catch (ArgumentException)
+        {
+            Debug.Log("不存在要加载的对象");
+        }
+        return unitComponent;
+    }
 
 
     /// <summary>
@@ -472,9 +514,6 @@ public class MapEditor : MonoBehaviour
             // GameObject mapDataObject = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/Config/Map/" + mapID + "/" + mapID + ".prefab");
             mapDataObject.name = "MapData_" + mapID;
             PrefabUtility.ReplacePrefab((GameObject)Instantiate(mapDataObject), mapDataPrefab, ReplacePrefabOptions.ConnectToPrefab);
-            //Debug.LogWarning(FindObjectsOfType<MapGenerator>().Length);
-            //Debug.LogWarning("Unit" + FindObjectsOfType<MapGenerator>()[0].GetComponentsInChildren<Unit>().Length);
-            //Debug.LogWarning("MapGenerator0,unit0,x:" + FindObjectsOfType<MapGenerator>()[0].GetComponentsInChildren<Unit>()[0].transform.position.x);
 
 
 
@@ -545,53 +584,104 @@ public class MapEditor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 用于打开mapData刷新数据
+    /// </summary>
     public static void refreshFromXML()
     {
         // 读取xml读取用户更新的数据
         string mapID = Convert.ToString(FindObjectOfType<MapData>().ID);
-        foreach (MapGenerator generator in FindObjectsOfType<MapGenerator>())
+        loadGeneratorXML(mapID);
+    }
+
+    /// <summary>
+    /// 加载xml里面generator的数据
+    /// </summary>
+    /// <param name="mapID"></param>
+    private static void loadGeneratorXML(string mapID)
+    {
+        Dictionary<int, MapGenerator> generators = new Dictionary<int, MapGenerator>();
+        foreach (MapGenerator generator in Resources.FindObjectsOfTypeAll<MapGenerator>())
         {
-            // 依次加载每一个generator
-            XmlDocument xmlFile = new XmlDocument();
-            FileStream fileStream = new FileStream(MAP_ID_PATH + "/" + mapID + "/MapGenerator/" + generator.ID + ".bytes", FileMode.Open, FileAccess.Read);
-            try
+            if (string.IsNullOrEmpty(AssetDatabase.GetAssetPath(generator)))
             {
-                xmlFile.Load(fileStream);
+                generators.Add(generator.ID, generator);
             }
-            catch (XmlException e)
+        }
+
+        if (Directory.Exists(MAP_ID_PATH + "/" + mapID + "/MapGenerator"))
+        {
+            foreach (var path in Directory.GetFiles(MAP_ID_PATH + "/" + mapID + "/MapGenerator"))
             {
-                Debug.LogWarning("加载出错" + e.Message);
-            }
-            fileStream.Close();
-
-
-            int index = 0;
-            foreach (XmlNode item in xmlFile.SelectSingleNode("MonsterPackConfig").SelectSingleNode("ary").SelectNodes("item"))
-            {
-
-                // 更新数据
-                if (generator.GetComponentsInChildren<Unit>().Length <= index)
+                if (Path.GetExtension(path) == ".bytes")
                 {
-                    return;
+                    // 依次加载每一个generator
+                    XmlDocument xmlFile = new XmlDocument();
+                    FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+                    try
+                    {
+                        xmlFile.Load(fileStream);
+                    }
+                    catch (XmlException e)
+                    {
+                        Debug.LogWarning("加载出错" + e.Message);
+                    }
+                    fileStream.Close();
+
+                    Debug.Log("int.Parse(Path.GetFileNameWithoutExtension(path)):" + int.Parse(Path.GetFileNameWithoutExtension(path)));
+                    if (!generators.ContainsKey(int.Parse(Path.GetFileNameWithoutExtension(path))))
+                    {
+                        MapGenerator mapGenerator = InstantializeGenerator(
+                            generators.Count,
+                            int.Parse(Path.GetFileNameWithoutExtension(path)),
+                            GameObject.Find("MonsterGenerator"));
+                        generators.Add(mapGenerator.ID, mapGenerator);
+                    }
+                    loadUnitToGeneratorXML(xmlFile, generators[int.Parse(Path.GetFileNameWithoutExtension(path))]);
                 }
-                Unit unit = generator.GetComponentsInChildren<Unit>()[index];
-                unit.ID = int.Parse(item.SelectSingleNode("actorID").InnerText);
-                unit.transform.position = new Vector3(
-                    float.Parse(item.SelectSingleNode("map_pos_x").InnerText) / 10000,
-                    unit.transform.position.y,
-                    float.Parse(item.SelectSingleNode("map_pos_y").InnerText) / 10000
-                    );
-                unit.CreateAction = int.Parse(item.SelectSingleNode("defaultVKey").InnerText);
-                unit.Direction = int.Parse(item.SelectSingleNode("direction").InnerText);
-                unit.DelayCreateTime = int.Parse(item.SelectSingleNode("delayCreateTime").InnerText);
-                unit.CenterToPlayer = int.Parse(item.SelectSingleNode("centerToPlayer").InnerText);
-                index++;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 把xml里每个unit的数据加载进mapGenerator
+    /// </summary>
+    /// <param name="xml"></param>
+    /// <param name="mapGenerator"></param>
+    private static void loadUnitToGeneratorXML(XmlDocument xmlFile, MapGenerator generator)
+    {
+        List<Unit> units = new List<Unit>();
+        foreach (Unit unit in Resources.FindObjectsOfTypeAll<Unit>())
+        {
+            if (string.IsNullOrEmpty(AssetDatabase.GetAssetPath(unit)) && unit.transform.parent == generator.transform)
+            {
+                units.Add(unit);
+            }
+        }
+        Debug.Log(generator.Index + "有" + units.Count + "个units");
+        int index = 0;
+        foreach (XmlNode item in xmlFile.SelectSingleNode("MonsterPackConfig").SelectSingleNode("ary").SelectNodes("item"))
+        {
+
+            // 更新数据
+            if (units.Count <= index)
+            {
+                // item数量多于unit, 新建unit
+                Unit newUnit = InitializeUnit(units.Count + 1, generator.gameObject);
+                units.Add(newUnit);
             }
 
-            // PrefabUtility.ReplacePrefab(mapDataObject, PrefabUtility.CreatePrefab(MAP_ID_PATH + "/" + mapID + "/" + mapID + ".prefab", mapDataObject), ReplacePrefabOptions.ConnectToPrefab);
-            // mapDataObject = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Resources/Config/Map/" + mapID + "/" + mapID + ".prefab", typeof(GameObject));
-
-            // mapData.MapGenerators.Add(generator);
+            units[index].ID = int.Parse(item.SelectSingleNode("actorID").InnerText);
+            units[index].transform.position = new Vector3(
+                float.Parse(item.SelectSingleNode("map_pos_x").InnerText) / 10000,
+                units[index].transform.position.y,
+                float.Parse(item.SelectSingleNode("map_pos_y").InnerText) / 10000
+                );
+            units[index].CreateAction = int.Parse(item.SelectSingleNode("defaultVKey").InnerText);
+            units[index].Direction = int.Parse(item.SelectSingleNode("direction").InnerText);
+            units[index].DelayCreateTime = int.Parse(item.SelectSingleNode("delayCreateTime").InnerText);
+            units[index].CenterToPlayer = int.Parse(item.SelectSingleNode("centerToPlayer").InnerText);
+            index++;
         }
     }
 
