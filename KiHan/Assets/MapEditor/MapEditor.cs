@@ -418,6 +418,7 @@ public class MapEditor : MonoBehaviour
         mapGenerator.Index = index;
         mapGenerator.ID = id;
         mapGenerator.Name = "MapGenerator" + mapGenerator.ID;
+        newGeneratorObject.name = mapGenerator.Name;
         mapGenerator.Type = 1;
 
         return mapGenerator;
@@ -465,6 +466,7 @@ public class MapEditor : MonoBehaviour
         // 默认数据
         unitComponent.Index = index;
         unitComponent.Name = "MonsterGenerator" + unitComponent.Index;
+        newUnit.name = unitComponent.Name;
         unitComponent.CreateAction = -1;
         unitComponent.Direction = -1;
         unitComponent.ID = 0;
@@ -514,13 +516,6 @@ public class MapEditor : MonoBehaviour
             // GameObject mapDataObject = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/Config/Map/" + mapID + "/" + mapID + ".prefab");
             mapDataObject.name = "MapData_" + mapID;
             PrefabUtility.ReplacePrefab((GameObject)Instantiate(mapDataObject), mapDataPrefab, ReplacePrefabOptions.ConnectToPrefab);
-
-
-
-
-            // Debug.LogWarning("MapGenerator0,unit0,x:" + FindObjectsOfType<MapGenerator>()[0].GetComponentsInChildren<Unit>()[0].transform.position.x);
-            // FindObjectsOfType<MapGenerator>()[0].GetComponentsInChildren<Unit>()[0].transform.position = new Vector3(9, 0, 0);
-            // setHieraychy(mapData);
         }
         else
         {
