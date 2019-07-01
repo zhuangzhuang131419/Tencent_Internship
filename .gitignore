@@ -98,6 +98,9 @@ KiHan/Assets/Scripts/UI/PVPRealTimeUI/*
 # 保留UIPVPRealTimeMatchEnemy
 !KiHan/Assets/Scripts/UI/PVPRealTimeUI/UIPVPRealTimeMatchEnemy.cs
 
+# 保留PVPRealTimeCurrentFightType
+!KiHan/Assets/Scripts/UI/PVPRealTimeUI/PVPRealTimeCurrentFightType.cs
+
 !KiHan/Assets/Resources
 KiHan/Assets/Resources/*
 
