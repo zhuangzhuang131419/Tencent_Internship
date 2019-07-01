@@ -99,7 +99,7 @@ KiHan/Assets/Scripts/UI/PVPRealTimeUI/*
 !KiHan/Assets/Scripts/UI/PVPRealTimeUI/UIPVPRealTimeMatchEnemy.cs
 
 # 保留PVPRealTimeCurrentFightType
-!KiHan/Assets/Scripts/UI/PVPRealTimeUI/PVPRealTimeCurrentFightType.cs
+!KiHan/Assets/Scripts/UI/PVPRealTimeUI/UIPVPRealTimeMainSelectNinja.cs
 
 !KiHan/Assets/Resources
 KiHan/Assets/Resources/*
