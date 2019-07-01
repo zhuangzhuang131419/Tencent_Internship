@@ -48,6 +48,7 @@ KiHan/Assets/*
 
 !KiHan/Assets/Scripts
 KiHan/Assets/Scripts/*
+
 !KiHan/Assets/Scripts/Manager
 KiHan/Assets/Scripts/Manager/*
 
@@ -111,3 +112,11 @@ KiHan/Assets/Resources/LuaScript/Plugin/*
 !KiHan/Assets/Resources/LuaScript/Plugin/NewTalent
 KiHan/Assets/Resources/LuaScript/Plugin/NewTalent/*
 !KiHan/Assets/Resources/LuaScript/Plugin/NewTalent/NewTalentOperation.lua.txt
+
+!KiHan/Assets/Scripts/LuaStaticScript
+KiHan/Assets/Scripts/LuaStaticScript/*
+!KiHan/Assets/Scripts/LuaStaticScript/UI
+KiHan/Assets/Scripts/LuaStaticScript/UI/*
+!KiHan/Assets/Scripts/LuaStaticScript/UI/PVPRealTimeMain
+KiHan/Assets/Scripts/LuaStaticScript/UI/PVPRealTimeMain/*
+!KiHan/Assets/Scripts/LuaStaticScript/UI/PVPRealTimeMain/PVPRealTimePsyItem.lua.txt

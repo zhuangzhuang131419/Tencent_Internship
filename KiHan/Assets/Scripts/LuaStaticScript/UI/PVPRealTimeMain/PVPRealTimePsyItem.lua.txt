@@ -1,0 +1,190 @@
+﻿local NGUITools = import_type("NGUITools")
+local GeneralTable = import_type("KH.GeneralTableConfig")
+local KHUtilForLua = import_type("KH.KHUtilForLua")
+local KHUIManager = import_type("KH.KHUIManager")
+local RemoteModel = import_type("KH.RemoteModel")
+local KHPluginManager = import_type("KH.KHPluginManager")
+local PsychicModel = import_type("KH.PsychicModel")
+
+---------- 声明一个类 ----------
+if KiHan == nil then
+	KiHan = {}
+end
+
+if KiHan.PVPRealTimeMain == nil then
+	KiHan.PVPRealTimeMain = {}
+end
+
+if KiHan.PVPRealTimeMain.PVPRealTimePsyItem == nil then
+	KiHan.PVPRealTimeMain.PVPRealTimePsyItem = {}
+end
+---------- 结束：声明一个类 ----------
+
+KiHan.PVPRealTimeMain.PVPRealTimePsyItem.Data = nil
+KiHan.PVPRealTimeMain.PVPRealTimePsyItem.IgnoreClick = false
+KiHan.PVPRealTimeMain.PVPRealTimePsyItem.IgnoreSeq = false
+
+KiHan.PVPRealTimeMain.PVPRealTimePsyItem.timePress = 0
+KiHan.PVPRealTimeMain.PVPRealTimePsyItem.isDrag = false
+KiHan.PVPRealTimeMain.PVPRealTimePsyItem.isEquippend = false
+---------- MonoBehaviour 约定函数 ----------
+function KiHan.PVPRealTimeMain.PVPRealTimePsyItem:Awake()
+	if self.gameObject:GetComponent("UIEventListener") == nil then return end
+	self.gameObject:GetComponent("UIEventListener").onClick =  KHUtilForLua.VoidDelegateMaker(self, self.ClickEvent) 
+    self.gameObject:GetComponent("UIEventListener").onPress = KHUtilForLua.BoolDelegateMaker(self, self.PressEvent)
+	self.gameObject:GetComponent("UIEventListener").onDrag = KHUtilForLua.VectorDelegateMaker(self, self.DragEvent)
+end
+
+function KiHan.PVPRealTimeMain.PVPRealTimePsyItem:ClickEvent(obj)
+	if self.timePress > KHUIManager.longTimeThred then 
+            self.timePress = 0;
+    else
+            self:OnItemClick()
+	end
+end
+
+function KiHan.PVPRealTimeMain.PVPRealTimePsyItem:PressEvent(go, state)
+	if state then
+		self.timePress = RemoteModel.Instance.CurrentTime
+		self.isDrag = false
+	else
+		self.timePress = RemoteModel.Instance.CurrentTime - self.timePress
+		if self.isEquippend then return end
+		if self.timePress > KHUIManager.longTimeThred and not self.isDrag then
+			KHPluginManager.Instance:SendMessage("Psychic", "Psychic.OnOpenSkillInfo", self.Data.PsyId)
+		end
+	end
+end
+
+function KiHan.PVPRealTimeMain.PVPRealTimePsyItem:DragEvent(go, delta)
+	self.isDrag = true
+end
+
+
+function KiHan.PVPRealTimeMain.PVPRealTimePsyItem:OnItemClick()
+	if self.IgnoreClick then return end
+
+	if self.ClickCallback ~= nil then
+		self.ClickCallback(self.ClickTarget, self.Data)
+	end
+    ---这里data里面的数据被改过了
+    self:SetData(self.Data)
+end
+---------- 结束：MonoBehaviour 约定函数 ----------
+
+---------- Start:   feature functions ----------
+-- data
+-- PsyId
+-- SelectedIndex
+-- isWeekFree
+-- isLimit
+-- propInfo
+-- HasHired
+--
+
+
+
+function KiHan.PVPRealTimeMain.PVPRealTimePsyItem:SetData(data)
+	self.Data = data
+
+	if data == nil then
+		self.Icon:GetComponent("UISprite").spriteName = "none"
+		self.Name:GetComponent("UILabel").text = "    "
+
+		self.Seq1:SetActive(false)
+		self.Seq2:SetActive(false)
+		self.Seq3:SetActive(false)
+        if(self.IndexSpr)then
+            NGUITools.SetActive(self.IndexSpr.gameObject, false);
+        end
+		return
+	end
+
+	local psyInfo = GeneralTable.getInstance():getPsychicPetInfo(data.PsyId)
+	if psyInfo == nil then return end
+	self.Icon:GetComponent("UISprite").spriteName = psyInfo.resID
+    --self.Name:GetComponent("UILabel").text = psyInfo.petName
+    self.Name:GetComponent("UILabel").text = PsychicModel.GetUpgradePhase(data.PsyId)  --将名字换成阶数
+    if(self.IndexSpr)then
+        if(data.SelectedIndex >= 0)then
+            self.IndexSpr:GetComponent("UISprite").spriteName = "shuzi-shunxu" .. tostring(data.SelectedIndex + 1)
+            NGUITools.SetActive(self.IndexSpr.gameObject, true);
+        else
+            NGUITools.SetActive(self.IndexSpr.gameObject, false);
+        end
+    end
+    
+    local tFreeSignShow = (data.isWeekFree ~= nil) and (data.isWeekFree == true)
+    NGUITools.SetActive(self.FreeSign, tFreeSignShow)
+    
+    self.propInfo = nil
+    if self.Data.isLimit then
+        -- 没过期
+        self.LimitTimeLblCom = self.LimitTimeLbl:GetComponent("UILabel")
+        self.expired = false
+
+        -- 解耦
+        -- self.LimitShopModel = LuaPluginManager.Instance:GetPluginByName("PvpLimitShopPlugin"):GetModel()
+        -- self.propInfo = self.LimitShopModel:GetPsyLimitPropInfo(self.Data.PsyId)
+        self.propInfo = self.Data.propInfo
+        if self.propInfo == nil then
+            print("Error: psy propInfo is nil")
+            import_type("UnityEngine.Debug").LogError("Error: psy propInfo is nil")
+        end
+
+        NGUITools.SetActive(self.LimitIcon, true)
+
+        local nowTime = RemoteModel.Instance.CurrentTime
+        local validTime = self.propInfo.expire_time - nowTime
+        -- 有效期小于72小时
+        if validTime > 0 and validTime < 259200 then
+            NGUITools.SetActive(self.Name, false)
+            NGUITools.SetActive(self.LimitTimeCon, true)
+
+            self.LimitTimeLblCom.text = string.format("%02d:%02d", math.floor(validTime / 3600), math.floor(validTime % 3600 / 60))
+        elseif validTime >= 259200 then
+            NGUITools.SetActive(self.Name, true)
+            NGUITools.SetActive(self.LimitTimeCon, false)
+        else
+            --过期了
+            NGUITools.SetActive(self.Name, false)
+            NGUITools.SetActive(self.LimitTimeCon, true)
+
+            self.LimitTimeLblCom.text = "已过期"
+        end
+    else
+        NGUITools.SetActive(self.Name, true)
+        NGUITools.SetActive(self.LimitTimeCon, false)
+        NGUITools.SetActive(self.LimitIcon, false)
+    end
+end
+
+function KiHan.PVPRealTimeMain.PVPRealTimePsyItem:Update()
+    if (not self) or (not self.propInfo) or self.expired or self.Data.HasHired then
+        return
+    end
+
+    local nowTime = RemoteModel.Instance.CurrentTime
+    local validTime = self.propInfo.expire_time - nowTime
+    -- 有效期小于72小时
+    if validTime > 0 and validTime < 259200 then
+        NGUITools.SetActive(self.Name, false)
+        NGUITools.SetActive(self.LimitTimeCon, true)
+
+        self.LimitTimeLblCom.text = string.format("%02d:%02d", math.floor(validTime / 3600), math.floor(validTime % 3600 / 60))
+    elseif validTime >= 259200 then
+        NGUITools.SetActive(self.Name, true)
+        NGUITools.SetActive(self.LimitTimeCon, false)
+    else
+        --过期了，刷新界面
+        self.expired = true
+        NGUITools.SetActive(self.Name, false)
+        NGUITools.SetActive(self.LimitTimeCon, true)
+
+        self.LimitTimeLblCom.text = "已过期"
+    end
+end
+
+function KiHan.PVPRealTimeMain.PVPRealTimePsyItem:Refresh()
+end
+---------- End:     feature functions ----------
