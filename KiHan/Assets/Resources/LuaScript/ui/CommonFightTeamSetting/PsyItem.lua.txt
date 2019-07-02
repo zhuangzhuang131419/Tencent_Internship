@@ -133,24 +133,8 @@ function PsyItem.__Class()
 	    if psyInfo == nil then return end
 	    __protected.Icon:GetComponent("UISprite").spriteName = psyInfo.resID
 
-		local fightType = UIPVPRealTimeMainSelectNinja.FightType
-		if ( (fightType == PvpFightType.PvpFightType_Arena) or 
-			(fightType == PvpFightType.PvpFightType_Arena2V2) or
-			(fightType == PvpFightType.PvpFightType_Race) or
-			(fightType == PvpFightType.PvpFightType_Act) or
-			(fightType == PvpFightType.PvpFightType_ActPvp2v2) or
-			(fightType == PvpFightType.PvpFightType_OfflineRace) or
-			(fightType == PvpFightType.PvpFightType_ActRace) or
-			(fightType == PvpFightType.PvpFightType_FETTER) or
-			(fightType == PvpFightType.PvpFightType_ActFetter) or
-			(fightType == PvpFightType.PvpFightType_ExtendFetter) or
-			(fightType == PvpFightType.PvpFightType_Pvp3v3) or
-			(fightType == PvpFightType.PvpFightType_Pvp_JDC_BANK_PICK) or
-			(fightType == PvpFightType.PvpFightType_Zombie) or
-			(fightType == PvpFightType.PvpFightType_PvpTeamBanPick) or
-			(fightType == PvpFightType.PvpFightType_AnBuScroll3v3) or
-			(fightType == PvpFightType.PvpFightType_AnBuUndiff1v1) or
-			(fightType == PvpFightType.PvpFightType_Melee) ) then 
+		local isWithFight = UIPVPRealTimeMainSelectNinja.IsWithFight -- 是否带入战力
+		if isWithFight then
 			__protected.Name:GetComponent("UILabel").text = psyInfo.petName
 		else
 			__protected.Name:GetComponent("UILabel").text = PsychicModel.GetUpgradePhase(data.PsyId)  --将名字换成阶数
