@@ -1,0 +1,374 @@
+require(plugin_files.Base.LuaOperation)
+require(common_files.LuaUIDef)
+
+local ShowViewArgument = import_type("KH.ShowViewArgument")
+local KHUtilForLua = import_type("KH.KHUtilForLua")
+local ZoneCmd = import_type("naruto.protocol.ZoneCmd")
+local ZoneCmdLua = import_type("naruto.protocol.ZoneCmdLua")
+local SystemConfigDef = import_type("KH.SystemConfigDef")
+local KHSceneConnectHelper = import_type("KHSceneConnectHelper")
+local ConnectionID = import_type("KH.ConnectionID")
+local KHSceneManager = import_type("KH.KHSceneManager")
+
+CommonTeamSettingOperation = ClassFactory.Register({Name="CommonTeamSettingOperation", Super=LuaOperation})
+
+CommonTeamSettingOperation.Events = {
+    CLEAR_FIGHT_NINJA = "CLEAR_FIGHT_NINJA",
+    NOTIFY_FIGHT_NINJA_CHANGED = "NOTIFY_FIGHT_NINJA_CHANGED",
+    NOTIFY_CLOSE = "NOTIFY_CLOSE"
+}
+
+function CommonTeamSettingOperation.__Class( ... )
+    -- body
+    local this,__protected,__private = CommonTeamSettingOperation.__Make()
+
+    -- // 通用阵容 - 设置的忍者、秘卷、通灵兽
+    -- /*
+    --  * @pbp_create
+    --  */
+    -- message CommonTeamSet
+    -- {
+    --     optional uint32 type = 1;                   // 阵容类型 sys_id
+    --     /*
+    --      * @pbp_len kMaxTeamNinjaCnt
+    --      */
+    --     repeated uint32 fight_ninja = 2;            // 出战忍者   (最多3个)
+    --     /*
+    --      * @pbp_len MAX_SECRET_SCROLL_CNT
+    --      */
+    --     repeated uint32 fight_secret_scroll = 3;    // 出战秘卷   (最多3个)
+    --     /*
+    --      * @pbp_len MAX_FIGHT_BEAST_CNT
+    --      */
+    --     repeated uint32 fight_psychic_beast = 4;    // 出战通灵兽 (最多3个)
+    -- }
+
+    -- // 设置阵容信息
+    -- // ZONE_COMMON_TEAM_SET              = 0x03023151;       //设置通用阵容
+    -- message ZoneCommonTeamSetReq
+    -- {
+    --     optional CommonTeamSet team_set = 1;    // 要设置的阵容
+    -- };
+
+    -- message ZoneCommonTeamSetRsp
+    -- {
+    --     optional RetInfo ret_info = 1;
+    -- };
+
+
+    -- // 查询阵容信息
+    -- // ZONE_COMMON_TEAM_GET              = 0x03023152;       //查询通用阵容
+    -- message ZoneCommonTeamGetReq
+    -- {
+    --     optional uint32 type = 1;               // 阵容类型 对应BattleInfo::BattleType
+    -- };
+
+    -- message ZoneCommonTeamGetRsp
+    -- {
+    --     optional RetInfo ret_info = 1;
+    --     optional CommonTeamSet team_set = 2;    // 已设置的阵容
+    --     optional CommonTeamAll team_all = 3;    // 拥有的忍者 通灵 兽秘卷
+    --     optional ClientTimeLimitPack time_limit = 4; // 限时道具信息
+    -- };
+
+    local Ctor_Base = attach(this, this.Ctor)
+    function this:Ctor(plugin)
+        Ctor_Base(plugin)
+
+        __protected.Log("registed CommonTeamSettingOperation")
+
+        RegisterCmdType(KHUtilForLua.ToUInt(ZoneCmd.ZONE_COMMON_TEAM_SET), nil, nil)
+        RegisterCmdType(KHUtilForLua.ToUInt(ZoneCmd.ZONE_COMMON_TEAM_GET), nil, nil)
+    end
+
+    -- praData
+    -- CommonTeamAll team_all
+    -- CommonTeamSet team_set
+    -- SettingResultCallback settingResultCallback
+    -- ClientTimeLimitPack time_limit
+    -- RecommandType
+    -- RecommandNinjaList
+    -- OnlyNinja -- 0:正常模式 1只显示发忍者列表
+    -- ComponmentValidityFlag
+        -- {
+                -- SkillEquipObj,
+                -- TabPsyObj,
+                -- TabscrObj
+        -- }
+    function this:Open(praData)
+        -- __protected.DoLog(tostring(praData))
+
+        -- CommonTeamAll CommonTeamSet ClientTimeLimitPack -> model
+        local model = __protected.plugin:GetModel()
+
+        local tZoneCommonTeamGetRsp = {}
+        tZoneCommonTeamGetRsp.team_set = praData.team_set
+        tZoneCommonTeamGetRsp.team_all = praData.team_all
+        
+        if praData.time_limit ~= nil then
+            tZoneCommonTeamGetRsp.time_limit = praData.time_limit
+        else
+            tZoneCommonTeamGetRsp.time_limit = nil
+        end
+
+        if praData.sub_id ~= nil then
+            tZoneCommonTeamGetRsp.sub_id = praData.sub_id
+        else
+            tZoneCommonTeamGetRsp.sub_id = 0
+        end
+
+        if praData.team_ban ~= nil then
+            tZoneCommonTeamGetRsp.team_ban = praData.team_ban
+        else
+            tZoneCommonTeamGetRsp.team_ban = nil
+        end
+
+		if praData.team_up ~= nil then
+            tZoneCommonTeamGetRsp.team_up = praData.team_up
+        else
+            tZoneCommonTeamGetRsp.team_up = nil
+        end
+
+        if praData.team_extra ~= nil then
+            tZoneCommonTeamGetRsp.team_extra = praData.team_extra
+        else
+            tZoneCommonTeamGetRsp.team_extra = nil 
+        end
+
+        -- __protected.Log("praData.OnlyNinja"..praData.OnlyNinja)
+        if praData.OnlyNinja == nil then
+            praData.OnlyNinja = 0
+        end
+
+        -- __protected.Log("praData.OnlyNinja"..praData.OnlyNinja)
+
+
+        model:Set_ZoneCommonTeamGetRsp(tZoneCommonTeamGetRsp)
+
+        model:SetRecommandNinjaList(praData.RecommandNinjaList)
+
+        -- SettingResultCallback -> MainUI
+        -- Open
+        local tMainViewUiParam = __protected.plugin:GetModel():Get_Def_MainViewData()
+        tMainViewUiParam.SettingResultCallback = praData.SettingResultCallback
+        tMainViewUiParam.SysID = praData.SysID
+        tMainViewUiParam.OnlyNinja = praData.OnlyNinja
+        tMainViewUiParam.LocalOperation = praData.LocalOperation
+        tMainViewUiParam.ComponmentValidityFlag = praData.ComponmentValidityFlag
+		tMainViewUiParam.SureDontCloseView = praData.SureDontCloseView
+		tMainViewUiParam.OnlyShowScroll = praData.OnlyShowScroll
+		tMainViewUiParam.EndTime = praData.EndTime
+		tMainViewUiParam.AtlasPath = praData.AtlasPath
+		tMainViewUiParam.SpriteName = praData.SpriteName
+		
+		if praData.UseTripple == true then
+			CommonTeamSettingModel.MaxTeamNinjaNum = 3
+			CommonTeamSettingModel.MaxTeamScrNum = 3
+		else
+			CommonTeamSettingModel.MaxTeamNinjaNum = 1
+			CommonTeamSettingModel.MaxTeamScrNum = 1
+		end
+        __protected.plugin:SendMessage("ShowView", 
+            ShowViewArgument(LuaUIDef.CommonTeamSettingMainView, true, tMainViewUiParam))
+    end
+    
+    function this:Close()
+        local event = LuaEvent.New(CommonTeamSettingOperation.Events.NOTIFY_CLOSE)
+        __protected.plugin:DispatchEvent(event)
+    end
+
+    function this:ZoneCommonTeamSetReq( praWrapper )
+        -- body
+
+        local model = __protected.plugin:GetModel()
+        local tReq = model:ComposeZoneCommonTeamSetReq()
+		tReq.scene_id.h32 = KHSceneManager.Instance.SceneIdHEnd
+		tReq.scene_id.l32 = KHSceneManager.Instance.SceneIdLEnd
+        local cmd = KHUtilForLua.ToUInt(model:GetSubmitCmd())
+		local sceneConnection = -1
+
+		if model:IsSendToZone() then
+			sceneConnection = -1
+		else
+			sceneConnection = KHUtilForLua.ToUInt(ConnectionID.GUILD_SCENE_CONNECTION)
+		end
+
+        __protected.DoLog("CommonTeamSettingOperation:ZoneCommonTeamSetReq submitCmd = " .. cmd)
+        LuaNetRequire(cmd, tReq, function (cmd, buff, timeout)
+            -- body
+
+            local tRsp = ZoneCommonTeamSetRsp()
+            if not timeout then
+                tRsp:ParseFromString(buff)
+            end
+
+            local tCallback = praWrapper.Callback
+            if tCallback then
+                tCallback.__proc(tCallback.__this, tRsp, timeout)
+            end
+        end,nil, true, 10,sceneConnection)
+    end
+
+    function this:DoAllClear( ... )
+        __protected.DoLog("CommonTeamSettingOperation.DoAllClear")
+
+        __protected.plugin:GetModel():DoAllClear()
+    end
+
+    function __protected.DoLog( praStr )
+        -- body
+        print(praStr)
+        __protected.Log(praStr)
+    end
+
+    function this:Test( pra )
+        __protected.Log("CommonTeamSettingOperation:Test "..tostring(pra))
+        -- body
+        __protected.plugin:GetModel():Test(pra)
+    end
+
+    --- 拉起通用选忍者界面的接口，供C#发送message调用
+    -- @param commonTeamSettingInfo 参见C#侧CSCommonTeamSettingOperation.CommonTeamSettingInfo
+    function this:HandleCommonTeamGetResponse(commonTeamSettingInfo)
+        __protected.plugin:GetModel():SetCommonTeamSettingInfo(commonTeamSettingInfo)
+        
+        local tCsTeamInfo = commonTeamSettingInfo.rsp
+        RegisterCmdType(KHUtilForLua.ToUInt(commonTeamSettingInfo.submitCmd), nil, nil)
+        
+        if tCsTeamInfo then
+            local tPbTeamInfoRaw = CommonTeamSettingModel.Convert_ZoneCommonTeamGetRsp( tCsTeamInfo )
+            local tPbTeamInfo = ZoneCommonTeamGetRsp()
+            ProtoUtil.CopyTo(tPbTeamInfo, tPbTeamInfoRaw)
+            local tUiParam = 
+            {
+                SysID = tCsTeamInfo.team_set.type,
+
+                team_set = tPbTeamInfo.team_set,
+                team_all = tPbTeamInfo.team_all,
+                time_limit = tPbTeamInfo.time_limit,
+				team_ban = tCsTeamInfo.ban_set,
+				team_up = tCsTeamInfo.pass_set,
+                EndTime = tCsTeamInfo.end_time,
+				UseTripple = commonTeamSettingInfo.UseTripple,
+				OnlyNinja = commonTeamSettingInfo.OnlyNinja,
+				AtlasPath = commonTeamSettingInfo.AtlasPath,
+				SpriteName = commonTeamSettingInfo.SpriteName,
+                SettingResultCallback = function (praHavebeenRereshed, praTeamSet)
+                    if praHavebeenRereshed then
+                        -- __protected.DoLog("设置阵容返回 team_set ret: "..tostring(praTeamSet))
+                        -- UIAPI.ShowMsgTip("设置成功")
+                        this:NotifySubmitSuccess()
+                    end
+                end
+            }
+            
+            this:Open(tUiParam)
+        end
+    end
+    
+    --佩恩入侵的阵容参数设置
+    function this:OpenMtdCommonTeamView(TeamInfo)
+        -- body
+        local mtdTeamInfo = TeamInfo
+        if mtdTeamInfo then
+            local mtdPbTeamInfoRaw = CommonTeamSettingModel.Convert_ZoneCommonTeamGetRsp(mtdTeamInfo)
+            local mtdPbTeamInfo = ZoneCommonTeamGetRsp()
+            ProtoUtil.CopyTo(mtdPbTeamInfo,mtdPbTeamInfoRaw)
+
+            local tUiParam = 
+            {
+                SysID = SystemConfigDef.MTD,
+                OnlyNinja = 1,
+                team_set = mtdPbTeamInfo.team_set,
+                team_all = mtdPbTeamInfo.team_all,
+                time_limit = mtdPbTeamInfo.time_limit,
+                team_ban = mtdTeamInfo.ban_set,
+                team_extra = mtdTeamInfo.pass_set,
+
+                SettingResultCallback = function(praHavebeenRereshed, praTeamSet)
+                    if praHavebeenRereshed then
+                        --开战
+                        --UIAPI.ShowMsgTip("设置成功")
+                        this:StartMtdFight()
+                    end
+                end
+            }
+
+            this:Open(tUiParam)
+
+        end
+    end
+
+    --团队副本通用的阵容参数设置
+    function this:OpenTeamDuplicateCommonTeamView(TeamInfoPlus)
+        -- body
+        local duplicateTeamInfo = TeamInfoPlus.a
+        local sys_id = TeamInfoPlus.b
+        local callback = TeamInfoPlus.c
+
+        if duplicateTeamInfo then
+            local duplicatePbTeamInfoRaw = CommonTeamSettingModel.Convert_ZoneCommonTeamGetRsp(duplicateTeamInfo)
+            local duplicatePbTeamInfo = ZoneCommonTeamGetRsp()
+            ProtoUtil.CopyTo(duplicatePbTeamInfo,duplicatePbTeamInfoRaw)
+
+            local tUiParam = 
+            {
+                SysID = sys_id,
+                OnlyNinja = 1,
+                team_set = duplicatePbTeamInfo.team_set,
+                team_all = duplicatePbTeamInfo.team_all,
+                time_limit = duplicatePbTeamInfo.time_limit,
+                team_ban = duplicateTeamInfo.ban_set,
+                team_extra = duplicateTeamInfo.pass_set,
+
+                SettingResultCallback = function(praHavebeenRereshed, praTeamSet)
+                    if praHavebeenRereshed then
+                        --开战
+                        --UIAPI.ShowMsgTip("设置成功")
+                        if callback ~= nil then
+                            callback:DynamicInvoke()
+                        end
+                    end
+                end
+            }
+
+            this:Open(tUiParam)
+
+        end
+    end
+
+    function this:StartMtdFight()
+        -- body
+        local plugin = KHPluginManager.Instance:GetPluginByName("Mtd")
+        --plugin:SendMessageForLua("EnterMtdTeam",nil)
+		plugin:SendMessageForLua("ShowMtdTeams",nil)
+    end
+    
+    function this:NotifySubmitSuccess()
+        __protected.InvokeCSCallback("submit")
+    end
+    
+    function this:NotifyCancelWindow()
+        __protected.InvokeCSCallback("cancel")
+    end
+    
+    --- 回调C#侧的operation
+    function __protected.InvokeCSCallback(type)
+        local info = __protected.plugin:GetModel():GetCommonTeamSettingInfo()
+        if info ~= nil then
+            local callbackPlugin = info.callbackPlugin
+            local callbackOperation = info[type .. "CallbackOperation"]
+            
+            if callbackPlugin ~= nil and callbackPlugin ~= "" and 
+                callbackOperation ~= nil and callbackOperation ~= "" then
+                local plugin = KHPluginManager.Instance:GetPluginByName(callbackPlugin)
+                if plugin ~= nil then
+                    print(string.format("InvokeCSCallback type: %s operation: %s.%s", type, callbackPlugin, callbackOperation))
+                    plugin:SendMessageForLua(callbackOperation, nil)
+                end
+            end
+        end
+    end
+    
+    return this,__protected,__private
+end

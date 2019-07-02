@@ -111,12 +111,19 @@ KiHan/Assets/Resources/*
 !KiHan/Assets/Resources/LuaScript
 KiHan/Assets/Resources/LuaScript/*
 
-# 天赋
+
 !KiHan/Assets/Resources/LuaScript/Plugin
 KiHan/Assets/Resources/LuaScript/Plugin/*
+
+# 天赋
 !KiHan/Assets/Resources/LuaScript/Plugin/NewTalent
 KiHan/Assets/Resources/LuaScript/Plugin/NewTalent/*
 !KiHan/Assets/Resources/LuaScript/Plugin/NewTalent/NewTalentOperation.lua.txt
+
+# commonSetting
+!KiHan/Assets/Resources/LuaScript/Plugin/CommonTeam
+KiHan/Assets/Resources/LuaScript/Plugin/CommonTeam/*
+!KiHan/Assets/Resources/LuaScript/Plugin/CommonTeam/CommonTeamSettingOperation.lua.txt
 
 # 段位赛的通灵兽
 !KiHan/Assets/Resources/LuaScript/ui
