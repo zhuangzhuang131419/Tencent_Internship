@@ -35,7 +35,7 @@ public class OpenWindow : EditorWindow
 
     void OnGUI()
     {
-        mapPrefabID = EditorGUILayout.TextField("MapPrefab ID:", mapPrefabID);
+        mapPrefabID = EditorGUILayout.TextField("Scene Prefab ID:", mapPrefabID);
         mapID = EditorGUILayout.TextField("地图ID", mapID);
 
         //打开按钮

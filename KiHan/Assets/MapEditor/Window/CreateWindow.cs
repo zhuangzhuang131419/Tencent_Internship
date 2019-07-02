@@ -23,7 +23,7 @@ public class CreateWindow : EditorWindow {
     void OnGUI()
     {
         //在弹出窗口中控制变量
-        MapPrefabID = EditorGUILayout.TextField("MapPrefab ID:", mapPrefabID);
+        MapPrefabID = EditorGUILayout.TextField("Scene Prefab ID:", mapPrefabID);
         mapID = EditorGUILayout.TextField("地图ID", mapID);
 
         //打开按钮
