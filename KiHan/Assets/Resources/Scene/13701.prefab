@@ -3617,6 +3617,8 @@ MonoBehaviour:
     - indexX: 19
       indexY: -2.5
       isWalk: 1
+    data1: []
+    data2: []
   terrainData:
     data:
     - indexX: 17
@@ -4669,6 +4671,10 @@ MonoBehaviour:
     - indexX: -3.5
       indexY: -1
       type: 1004
+  hiddenAreaData:
+    lstHiddenCellDataItems: []
+  triggerAreaData:
+    lstTriggerCellDataItems: []
   areaData:
   - x: -17.1499996
     y: 3.47000003
@@ -4698,9 +4704,13 @@ MonoBehaviour:
   height: 6.4000001
   superLayers:
   - {fileID: 146856}
-  UseGlow: 1
+  UseGlow: 0
   glowColor: {r: .196078435, g: .196078435, b: .196078435, a: 1}
   PlayEnvSound: 0
+  sceneType: 0
+  terrainHeight: 0
+  CameraPosOffset: {x: 0, y: 16.7000008, z: -58.4000015}
+  CameraRotOffset: {x: 15, y: 0, z: 0}
 --- !u!198 &19846740
 ParticleSystem:
   m_ObjectHideFlags: 1

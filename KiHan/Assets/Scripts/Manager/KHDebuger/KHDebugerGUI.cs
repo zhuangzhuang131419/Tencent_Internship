@@ -356,8 +356,10 @@ namespace KH
             AddDbgGUI("战斗", KHBattleCommand.OnGUI, KHDebugerPermission.Log, 500);
             AddDbgGUI("Lua测试", LuaTest.OnGUI, KHDebugerPermission.Admin, 201);
             
+#if USEILRUNTIME
             // ILRuntime测试工具
             ILRuntime.ILRuntimeTest.Instance.InitDebugUI();
+#endif
 
 			// 性能测试工具
 	        KHPerformanceTest.Instance.InitDebugUI();
@@ -473,6 +475,8 @@ namespace KH
 
             AddDbgGUI("弱网模拟", OnWeakNetSimulate);
 
+            AddDbgGUI("LuaProto加载统计", OnLuaProtoStats);
+
             KHCheckUIResEditor.Instance.InitDebugGUI();
 
             m_lastUploadLogTime = DateTime.Now;
@@ -572,14 +576,34 @@ namespace KH
                 //    //RequestEnterRoguelike();
                 //}
 
+                RoguelikeDungonID = KHUtil.GetString("strRoguelikeDungonID");
+                RoguelikeMonsterPlotID = KHUtil.GetString("strRoguelikeMonsterPlotID");
+                RoguelikeBossPlotID = KHUtil.GetString("strRoguelikeBossPlotID");
+
                 GUILayout.Label("dungon plot id");
-                RoguelikeDungonID = GUILayout.TextField(RoguelikeDungonID, 100);
+                string _RoguelikeDungonID = GUILayout.TextField(RoguelikeDungonID, 100);
+                
+                if (RoguelikeDungonID != _RoguelikeDungonID)
+                {
+                    RoguelikeDungonID = _RoguelikeDungonID;
+                    KHUtil.SetString("strRoguelikeDungonID", RoguelikeDungonID);
+                }
 
                 GUILayout.Label("monster plot id");
-                RoguelikeMonsterPlotID = GUILayout.TextField(RoguelikeMonsterPlotID, 100);
+                string _RoguelikeMonsterPlotID = GUILayout.TextField(RoguelikeMonsterPlotID, 100);
+                if (RoguelikeMonsterPlotID != _RoguelikeMonsterPlotID)
+                {
+                    RoguelikeMonsterPlotID = _RoguelikeMonsterPlotID;
+                    KHUtil.SetString("strRoguelikeMonsterPlotID", RoguelikeMonsterPlotID);
+                }
 
                 GUILayout.Label("boss plot id");
-                RoguelikeBossPlotID = GUILayout.TextField(RoguelikeBossPlotID, 100);
+                string _RoguelikeBossPlotID = GUILayout.TextField(RoguelikeBossPlotID, 100);
+                if (RoguelikeBossPlotID != _RoguelikeBossPlotID)
+                {
+                    RoguelikeBossPlotID = _RoguelikeBossPlotID;
+                    KHUtil.SetString("strRoguelikeBossPlotID", RoguelikeBossPlotID);
+                }
 
                 if (SGUILayout.Button("打开幻之试炼"))
                 {
@@ -5229,6 +5253,29 @@ namespace KH
             NetworkManager.WeakNetSimu_IsPackageLoss_Down = GUILayout.Toggle(NetworkManager.WeakNetSimu_IsPackageLoss_Down, "模拟下行丢包");
             GUILayout.Label("模拟下行丢包率(%):" + (int)(NetworkManager.WeakNetSimu_PackageLossRate_Down * 100));
             NetworkManager.WeakNetSimu_PackageLossRate_Down = GUILayout.HorizontalSlider((float)NetworkManager.WeakNetSimu_PackageLossRate_Down, 0, 1);
+        }
+        #endregion
+        #region luaproto加载统计
+        static void OnLuaProtoStats()
+        {
+            int protoNum = -1;
+            List<string> protoList = new List<string>();
+
+            LuaInterface.LuaTable tmpTable = RuntimeLua.VM.GetTable("already_loaded_pb");
+            if (tmpTable != null)
+            {
+                protoNum = tmpTable.Count;
+
+                GUILayout.Label("已加载的LuaProto数量:" + protoNum);
+                foreach (string key in tmpTable.Keys)
+                {
+                    GUILayout.Label(key);
+                }
+            }
+            else
+            {
+                GUILayout.Label("无LuaProto被加载");
+            }
         }
         #endregion
     }

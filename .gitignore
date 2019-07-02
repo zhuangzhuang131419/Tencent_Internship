@@ -110,12 +110,22 @@ KiHan/Assets/Resources/*
 # 保留NewTalentOperation.lua.txt
 !KiHan/Assets/Resources/LuaScript
 KiHan/Assets/Resources/LuaScript/*
+
+# 天赋
 !KiHan/Assets/Resources/LuaScript/Plugin
 KiHan/Assets/Resources/LuaScript/Plugin/*
 !KiHan/Assets/Resources/LuaScript/Plugin/NewTalent
 KiHan/Assets/Resources/LuaScript/Plugin/NewTalent/*
 !KiHan/Assets/Resources/LuaScript/Plugin/NewTalent/NewTalentOperation.lua.txt
 
+# 段位赛的通灵兽
+!KiHan/Assets/Resources/LuaScript/ui
+KiHan/Assets/Resources/LuaScript/ui/*
+!KiHan/Assets/Resources/LuaScript/ui/CommonFightTeamSetting
+KiHan/Assets/Resources/LuaScript/ui/CommonFightTeamSetting/*
+!KiHan/Assets/Resources/LuaScript/ui/CommonFightTeamSetting/PsyItem.lua.txt
+
+# 忍术对决的通灵兽
 !KiHan/Assets/Scripts/LuaStaticScript
 KiHan/Assets/Scripts/LuaStaticScript/*
 !KiHan/Assets/Scripts/LuaStaticScript/UI

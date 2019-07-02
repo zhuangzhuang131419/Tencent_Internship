@@ -1,0 +1,214 @@
+require(common_files.LuaBehaviour)
+
+local NGUITools = import_type("NGUITools")
+local GeneralTable = import_type("KH.GeneralTableConfig")
+local RemoteModel = import_type("KH.RemoteModel")
+local KHUIManager = import_type("KH.KHUIManager")
+local KHPluginManager = import_type("KH.KHPluginManager")
+local UIPVPRealTimeMainSelectNinja = import_type("UIPVPRealTimeMainSelectNinja")
+local PsychicModel = import_type("KH.PsychicModel")
+local PvpFightType = import_type("naruto.protocol.PvpFightType")
+
+
+PsyItem = ClassFactory.Register({Name="PsyItem", Super=LuaBehaviour})
+
+function PsyItem.__Class()
+    local this,__protected,__private = PsyItem.__Make()
+
+    function __protected.RegInspectorArgs()
+        __protected.RegOneArg("Icon", "GameObject")
+        __protected.RegOneArg("Name", "GameObject")
+        __protected.RegOneArg("SelectSign", "GameObject")
+        __protected.RegOneArg("Seq1", "GameObject")
+        __protected.RegOneArg("Seq2", "GameObject")
+        __protected.RegOneArg("Seq3", "GameObject")
+        __protected.RegOneArg("IndexSpr", "GameObject")
+        __protected.RegOneArg("LimitTimeCon", "GameObject")
+        __protected.RegOneArg("LimitTimeLbl", "UILabel")
+        __protected.RegOneArg("WeeklyFree", "GameObject")
+    end
+
+	
+		
+	this.timePress = 0
+	this.isEquippend = false
+	this.isDrag = false
+	---------- MonoBehaviour 约定函数 ----------
+	local Awake_Base = attach(this, this.Awake)
+	function this:Awake(gameObject, args)
+		Awake_Base(gameObject, args)
+		if this.gameObject:GetComponent("UIEventListener") == nil then return end
+		this.gameObject:GetComponent("UIEventListener").onClick =  KHUtilForLua.VoidDelegateMaker(this, this.ClickEvent)
+		this.gameObject:GetComponent("UIEventListener").onPress = KHUtilForLua.BoolDelegateMaker(this, this.PressEvent)
+		this.gameObject:GetComponent("UIEventListener").onDrag = KHUtilForLua.VectorDelegateMaker(this, this.DragEvent)
+	end
+	
+	function this:ClickEvent(obj)
+		if this.timePress > KHUIManager.longTimeThred then 
+				this.timePress = 0;
+		else
+				this.OnLuaClick()
+		end
+	end
+	
+	function this:PressEvent(go, state)
+		if state then
+			this.timePress = RemoteModel.Instance.CurrentTime
+			this.isDrag = false
+		else
+			this.timePress = RemoteModel.Instance.CurrentTime - this.timePress
+			if this.isEquippend then return end
+			if this.timePress > KHUIManager.longTimeThred and not this.isDrag  then
+				KHPluginManager.Instance:SendMessage("Psychic", "Psychic.OnOpenSkillInfo", this.Data.PsyId)
+			end
+		end
+	end
+	
+	function this:DragEvent(go, delta)
+		this.isDrag = true
+	end
+	
+    function this:OnLuaClick()
+	    if this.IgnoreClick then return end
+		
+		if UIPVPRealTimeMainSelectNinja.OnlyWatch then
+			if this.Data ~= nil then
+				KHPluginManager.Instance:SendMessage("Psychic", "Psychic.OnOpenSkillInfo", this.Data.PsyId)
+			end
+			return
+		end
+		
+	    if this.ClickCallback ~= nil then
+		    this.ClickCallback(this.Data)
+	    end
+    end
+
+    function this:SetData(data)
+	    this.Data = data
+
+	    if data == nil then
+            __protected.LimitTimeCon:SetActive(false)
+
+            this.TimeLimiteInfo = nil
+
+		    __protected.Icon:GetComponent("UISprite").spriteName = "none"
+		    __protected.Name:GetComponent("UILabel").text = "    "
+
+            if __protected.WeeklyFree then
+                __protected.WeeklyFree:SetActive(false)
+            end
+
+		    __protected.Seq1:SetActive(false)
+		    __protected.Seq2:SetActive(false)
+		    __protected.Seq3:SetActive(false)
+            if(__protected.IndexSpr)then
+                NGUITools.SetActive(__protected.IndexSpr.gameObject, false)
+            end
+		    return
+	    end
+
+        this.TimeLimiteInfo = data.timeLimite
+        if data.timeLimite ~= nil then      
+            __protected.LimitTimeCon:SetActive(true)
+
+            local remainTime = this.TimeLimiteInfo.ExpireTime - RemoteModel.Instance.CurrentTime
+            if remainTime > 0 then
+                local minute = math.floor(remainTime / 3600)
+                if minute < 0 then minute = 0 end
+                local second = math.floor(remainTime % 3600 / 60)
+                if second < 0 then second = 0 end
+                __protected.LimitTimeLbl.text = string.format("%02d:%02d", minute, second)
+            else
+                __protected.LimitTimeLbl.text = "已过期"
+            end
+        else
+            __protected.LimitTimeCon:SetActive(false)
+        end
+
+        if __protected.WeeklyFree then
+            __protected.WeeklyFree:SetActive(data.isWeeklyFree or false)
+        end
+
+	    local psyInfo = GeneralTable.getInstance():getPsychicPetInfo(data.PsyId)
+	    if psyInfo == nil then return end
+	    __protected.Icon:GetComponent("UISprite").spriteName = psyInfo.resID
+
+		local fightType = UIPVPRealTimeMainSelectNinja.FightType
+		if ( (fightType == PvpFightType.PvpFightType_Arena) or 
+			(fightType == PvpFightType.PvpFightType_Arena2V2) or
+			(fightType == PvpFightType.PvpFightType_Race) or
+			(fightType == PvpFightType.PvpFightType_Act) or
+			(fightType == PvpFightType.PvpFightType_ActPvp2v2) or
+			(fightType == PvpFightType.PvpFightType_OfflineRace) or
+			(fightType == PvpFightType.PvpFightType_ActRace) or
+			(fightType == PvpFightType.PvpFightType_FETTER) or
+			(fightType == PvpFightType.PvpFightType_ActFetter) or
+			(fightType == PvpFightType.PvpFightType_ExtendFetter) or
+			(fightType == PvpFightType.PvpFightType_Pvp3v3) or
+			(fightType == PvpFightType.PvpFightType_Pvp_JDC_BANK_PICK) or
+			(fightType == PvpFightType.PvpFightType_Zombie) or
+			(fightType == PvpFightType.PvpFightType_PvpTeamBanPick) or
+			(fightType == PvpFightType.PvpFightType_AnBuScroll3v3) or
+			(fightType == PvpFightType.PvpFightType_AnBuUndiff1v1) or
+			(fightType == PvpFightType.PvpFightType_Melee) ) then 
+			__protected.Name:GetComponent("UILabel").text = psyInfo.petName
+		else
+			__protected.Name:GetComponent("UILabel").text = PsychicModel.GetUpgradePhase(data.PsyId)  --将名字换成阶数
+		end
+
+        if(__protected.IndexSpr)then
+            if(data.SelectedIndex >= 0)then
+                __protected.IndexSpr:GetComponent("UISprite").spriteName = "shuzi-shunxu" .. tostring(data.SelectedIndex + 1)
+                NGUITools.SetActive(__protected.IndexSpr.gameObject, true);
+            else
+                NGUITools.SetActive(__protected.IndexSpr.gameObject, false);
+            end
+        end
+    end
+
+    function this:Refresh()
+        -- if(__protected.IndexSpr)then
+        --     if(data.SelectedIndex >= 0)then
+        --         __protected.IndexSpr:GetComponent("UISprite").spriteName = "shuzi-shunxu" .. tostring(data.SelectedIndex + 1)
+        --         NGUITools.SetActive(__protected.IndexSpr.gameObject, true);
+        --     else
+        --         NGUITools.SetActive(__protected.IndexSpr.gameObject, false);
+        --     end
+        -- end
+    end
+
+    this.TimeLimiteInfo = nil
+    function __private.UpdateTime()
+        local needUpdate = this.TimeLimiteInfo ~= nil
+        if needUpdate then
+            local remainTime = this.TimeLimiteInfo.ExpireTime - RemoteModel.Instance.CurrentTime
+            if needUpdate and (remainTime > 0) then
+                local minute = math.floor(remainTime / 3600)
+                if minute < 0 then minute = 0 end
+                local second = math.floor(remainTime % 3600 / 60)
+                if second < 0 then second = 0 end
+                __protected.LimitTimeLbl.text = string.format("%02d:%02d", minute, second)
+            elseif remainTime <= 0 then
+                __protected.LimitTimeLbl.text = "已过期"
+            end
+        end
+    end
+
+    local _OnEnable_Base = attach(this, this.OnEnable)
+    function this:OnEnable()
+        _OnEnable_Base()
+
+        LuaGlobal.Instance:AddEventListener("UpdateTimeLimiteNinja", __private.UpdateTime)
+    end
+
+    local _OnDisable_Base = attach(this, this.OnDisable)
+    function this:OnDisable()
+        _OnDisable_Base()
+        
+        LuaGlobal.Instance:RemoveEventListener("UpdateTimeLimiteNinja", __private.UpdateTime)        
+    end
+
+    return this,__protected,__private
+end
+
+return PsyItem.GetFunction

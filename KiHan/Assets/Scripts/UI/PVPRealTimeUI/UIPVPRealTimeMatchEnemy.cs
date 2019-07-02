@@ -65,30 +65,13 @@ public class UIPVPRealTimeMatchEnemy : UIWindow
 
     public override void OnInitData(object _data)
     {
-        Debug.LogWarning("OnInitData 当前场景" + KHGlobalExt.app.CurrentContext.contextName);
         isExiting = false;
         isMatchReturn = false;
         actData = null;
         plugin = KHPluginManager.Instance.GetPluginByName(PVPRealTimeMainUIPlugin.PluginName) as PVPRealTimeMainUIPlugin;
         model = plugin.Model as PVPRealTimeMainUIModel;
         data =  _data as MatchEnemyData;
-
-        //// Update by Chicheng
-        //MessageManager msgManager = MessageManager.Instance;
-        //if (msgManager.IsDeserializeFromLocal)
-        //{
-        //    // KHGlobalExt.app.SwitchScene(KHLevelName.DUPLICATE);
-        //    KHGlobalExt.app.CurrentContext.SendSingal("Switch", new SwitchContextArgument()
-        //    {
-        //        ToContext = "Duplicate"
-        //    });
-
-        //    Debug.LogWarning("切换后场景" + KHGlobalExt.app.CurrentContext.contextName);
-        //    NetworkManager.Instance.AddMessageCallback((uint)ZoneCmd.ZONE_PVP_1V1_GAME_OVER_NTF, _PVP_1V1_GameOver_Info);
-        //    return;
-        //}
-
-
+        
         /// _data可能有三种含义: MatchEnemyData(正常匹配), FightAgainData(与其再战), BriefRoleInfo(好友切磋)
         /// 这里写的太乱了, 有空的时候重构下
         FightAgainData againData = _data as FightAgainData;

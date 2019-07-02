@@ -21,15 +21,14 @@ public class UIPVPRealTimeMainSelectNinja : MonoBehaviour
     {
         get
         {
-            if (KHUIManager.Instance.IsWindowVisible(UIDef.GUILD_PVP_START_VIEW))  // 通灵兽
+            if (KHUIManager.Instance.IsWindowVisible(UIDef.LEVEL_SELECTBG_UI))  // 通灵兽
             {
-                Debug.LogWarning("存在通灵兽，当前处于忍术对决");
                 return PvpFightType.PvpFightType_Arena;
             }
             else
             {
-                Debug.LogWarning("意外");
-                return PvpFightType.PvpFightType_Conquer;
+                Debug.LogWarning("没有对应的");
+                return PvpFightType.PvpFightType_Count;
             }
         }
     }
