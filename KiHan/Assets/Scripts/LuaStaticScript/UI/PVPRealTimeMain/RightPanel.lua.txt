@@ -1,0 +1,1792 @@
+---------- 引入外部类 ----------
+local NGUITools = import_type("NGUITools")
+local KHUtilForLua = import_type("KH.KHUtilForLua")
+local RemoteModel = import_type("KH.RemoteModel")
+local KHUtil = import_type("KH.KHUtil")
+local KHPluginManager = import_type("KH.KHPluginManager")
+local PVPRealTimeMainUIPlugin = import_type("KH.PVPRealTimeMainUIPlugin")
+local KHEvent = import_type("KH.KHEvent")
+local KHGlobal = import_type("KH.KHGlobal")
+local GeneralTable = import_type("KH.GeneralTableConfig")
+local UIDef = import_type("KH.UIDef")
+local ShowViewArgument = import_type("KH.ShowViewArgument")
+local NetworkManager = import_type("KH.NetworkManager")
+local DataManager = import_type("KH.KHDataManager")
+local UIManager = import_type("KH.KHUIManager")
+local AudioManager = import_type("KH.KHAudioManager")
+local UIPVPRealTimeMainSelectNinja = import_type("UIPVPRealTimeMainSelectNinja")
+
+local ZonePsychicBeastSetFightInfoReq = import_type("naruto.protocol.ZonePsychicBeastSetFightInfoReq")
+local ZoneSecretScrollEquipVer2Req = import_type("naruto.protocol.ZoneSecretScrollEquipVer2Req")
+--
+local ZoneCommonTeamSetReq = import_type("naruto.protocol.ZoneCommonTeamSetReq")
+local CommonTeamSet = import_type("naruto.protocol.CommonTeamSet" )
+
+local SecretScrollKeyVer2 = import_type("naruto.protocol.SecretScrollKeyVer2")
+local LockSysHash = import_type("KH.LockSysHash")
+local SystemConfigDef = import_type("KH.SystemConfigDef")
+local ZoneCmd = import_type("naruto.protocol.ZoneCmd")
+local Convert = import_type("System.Convert")
+local UIAPI = import_type("KH.UIAPI")
+local SystemConfigDef = import_type("KH.SystemConfigDef")
+local Vector3 = import_type("UnityEngine.Vector3")
+
+if KiHan == nil then
+	KiHan = {}
+end
+
+if KiHan.PVPRealTimeMain == nil then
+	KiHan.PVPRealTimeMain = {}
+end
+
+if (KiHan.PVPRealTimeMain.RightPanel == nil) then
+	KiHan.PVPRealTimeMain.RightPanel = {}
+end
+
+
+KiHan.PVPRealTimeMain.RightPanel.Inited = false
+KiHan.PVPRealTimeMain.RightPanel.CachePsyList = {}
+KiHan.PVPRealTimeMain.RightPanel.FreeWeekPsyList = {}
+KiHan.PVPRealTimeMain.RightPanel.FreeWeekScrollList = {}
+
+-- 密卷重构
+KiHan.PVPRealTimeMain.RightPanel.CacheScrollList = {}
+
+KiHan.PVPRealTimeMain.RightPanel.CachedSelectScrollId = nil
+KiHan.PVPRealTimeMain.RightPanel.CachedSelectScrollLevel = nil
+KiHan.PVPRealTimeMain.RightPanel.CachedSelectScrollData = nil
+
+KiHan.PVPRealTimeMain.RightPanel.MultipleSecretRoll = true
+
+KiHan.PVPRealTimeMain.RightPanel.NinjaCommonDegressSaveKey = "NinjaCommonDegressSaveKey________"
+KiHan.PVPRealTimeMain.RightPanel.NinjaCommonDegressMaxSize = 8
+
+KiHan.PVPRealTimeMain.RightPanel.PsyCommonDegressSaveKey = "PsyCommonDegressSaveKey"
+KiHan.PVPRealTimeMain.RightPanel.PsyCommonDegressMaxSize = 8
+
+KiHan.PVPRealTimeMain.RightPanel.ScrCommonDegressSaveKey = "ScrCommonDegressSaveKey_"
+KiHan.PVPRealTimeMain.RightPanel.ScrCommonDegressMaxSize = 8
+
+KiHan.PVPRealTimeMain.RightPanel.SPageNum = -1
+KiHan.PVPRealTimeMain.RightPanel.APageNum = -1
+KiHan.PVPRealTimeMain.RightPanel.BPageNum = -1
+KiHan.PVPRealTimeMain.RightPanel.CPageNum = -1
+
+---------- UIWindow 的约定函数 ----------
+function KiHan.PVPRealTimeMain.RightPanel:Init() 
+
+    if not self.Inited then
+        self:InitComponents()
+        self.Inited = true
+    end	
+
+    self:InitNinjaState()
+    if(LockSysHash.CanUnlock(SystemConfigDef.Psychic))then
+        NGUITools.SetActive(self.TabPsy.gameObject, true)
+        self:InitPsyState()
+        self.PsyPanelContainer:GetComponent("LuaBehaviour").luaInstance:UpdateGroup(self.PsyCollection)
+		self.ScrPanelContainer.transform.localPosition = Vector3(240, 75, 0)
+    else
+        NGUITools.SetActive(self.TabPsy.gameObject, false)
+		self.ScrPanelContainer.transform.localPosition = Vector3(240, -25, 0)
+    end
+    
+    if(LockSysHash.CanUnlock(SystemConfigDef.Juanzhou))then
+        NGUITools.SetActive(self.TabScr.gameObject, true)
+        self:InitScrollState()
+        self.ScrPanelContainer:GetComponent("LuaBehaviour").luaInstance:UpdateGroup(self.ScrollCollection)
+    else
+        NGUITools.SetActive(self.TabScr.gameObject, false)
+    end
+
+    self.Tabs:GetComponent("UIGrid"):Reposition()
+
+    self.NinjaPanelContainer:GetComponent("LuaBehaviour").luaInstance:UpdateGroup(self.NinjaCollection)
+
+    self:RefreshCurrentItems()
+
+    if(self.hasInit)then
+        if(NGUITools.GetActive(self.ScrPanelContainer))then
+            self.ScrPanelContainer:GetComponent("LuaBehaviour").luaInstance.Grid:GetComponent("UIWrapContentEx"):UpdateContents(false)
+        end
+
+        if(NGUITools.GetActive(self.NinjaPanelContainer))then
+            self.NinjaPanelContainer:GetComponent("LuaBehaviour").luaInstance.Grid:GetComponent("UIWrapContentEx"):UpdateContents(false)
+        end
+    end
+    self.hasInit = true
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:InitComponents()
+    local instance = self.EquipedPsy1:GetComponent("LuaBehaviour").luaInstance
+    --instance.IgnoreClick = true
+	instance.ClickTarget =self
+    instance.ClickCallback = KiHan.PVPRealTimeMain.RightPanel.OnClickPsy
+    instance.IgnoreSeq = true
+	instance.isEquippend = true
+    instance = self.EquipedPsy2:GetComponent("LuaBehaviour").luaInstance
+    --instance.IgnoreClick = true
+	instance.ClickTarget =self
+    instance.ClickCallback = KiHan.PVPRealTimeMain.RightPanel.OnClickPsy
+    instance.IgnoreSeq = true
+	instance.isEquippend = true
+    instance = self.EquipedPsy3:GetComponent("LuaBehaviour").luaInstance
+    --instance.IgnoreClick = true
+	instance.ClickTarget =self
+    instance.ClickCallback = KiHan.PVPRealTimeMain.RightPanel.OnClickPsy
+    instance.IgnoreSeq = true
+	instance.isEquippend = true
+    instance = self.EquipedScroll:GetComponent("LuaBehaviour").luaInstance
+    instance.IgnoreClick = true
+    instance.IgnoreSeq = true
+	instance.isEquippend = true
+    instance = self.TabNinja:GetComponent("LuaBehaviour").luaInstance
+    instance.View = self
+
+	
+	local instance = self.EquipedScroll_1:GetComponent("LuaBehaviour").luaInstance
+	instance.ClickTarget =self
+    instance.ClickCallback = KiHan.PVPRealTimeMain.RightPanel.OnClickScroll
+    --instance.IgnoreClick = true
+    instance.IgnoreSeq = true
+	instance.isEquippend = true
+
+    instance = self.EquipedScroll_2:GetComponent("LuaBehaviour").luaInstance
+	instance.ClickTarget =self
+    instance.ClickCallback = KiHan.PVPRealTimeMain.RightPanel.OnClickScroll
+    --instance.IgnoreClick = true
+    instance.IgnoreSeq = true
+	instance.isEquippend = true
+
+    instance = self.EquipedScroll_3:GetComponent("LuaBehaviour").luaInstance
+	instance.ClickTarget =self
+    instance.ClickCallback = KiHan.PVPRealTimeMain.RightPanel.OnClickScroll
+    --instance.IgnoreClick = true
+    instance.IgnoreSeq = true
+	instance.isEquippend = true
+	
+	
+    local initComponent = self.NinjaPanelContainer:GetComponent("LuaBehaviour")
+    initComponent:HasLuaFunction("instance")
+    local ninjaConfig = {}
+    ninjaConfig.ClickTarget =self
+    ninjaConfig.ClickCallback = KiHan.PVPRealTimeMain.RightPanel.OnClickNinja
+    ninjaConfig.Prefix = "NinjaItem"
+    ninjaConfig.NumPerPage = 16
+    ninjaConfig.ItemPath = "UI/PVPRealTime/Main/NinjaIcon"
+    initComponent.luaInstance:Initialize(ninjaConfig)
+
+    instance = self.TabPsy:GetComponent("LuaBehaviour").luaInstance
+    instance.View = self
+
+    initComponent = self.PsyPanelContainer:GetComponent("LuaBehaviour")
+    initComponent:HasLuaFunction("instance")
+    local psyConfig = {}
+    psyConfig.ClickTarget =self
+    psyConfig.ClickCallback = KiHan.PVPRealTimeMain.RightPanel.OnClickPsy
+    psyConfig.Prefix = "PsyItem"
+    psyConfig.NumPerPage = 16
+    psyConfig.ItemPath = "UI/PVPRealTime/Main/PsyItem"
+    initComponent.luaInstance:Initialize(psyConfig)
+
+
+    initComponent = self.ScrPanelContainer:GetComponent("LuaBehaviour")
+    initComponent:HasLuaFunction("instance")
+    local scrConfig = {}
+    scrConfig.ClickTarget =self
+    scrConfig.ClickCallback = KiHan.PVPRealTimeMain.RightPanel.OnClickScroll
+    scrConfig.Prefix = "ScrItem"
+    scrConfig.NumPerPage = 16
+    scrConfig.ItemPath = "UI/PVPRealTime/Main/ScrollItem"
+    initComponent.luaInstance:Initialize(scrConfig)
+    instance = self.TabScr:GetComponent("LuaBehaviour").luaInstance
+    instance.View = self
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:ResortNinjaByCommonDegress()
+    -- body
+    -- local tConfID = 32
+
+    local tSubSet1 = {}
+    local tSubSet2 = {}
+
+    --local tKV = KHUtil.GetString(self.NinjaCommonDegressSaveKey, "")
+    local tKV = ""
+    print("Ninja tKV "..tostring(tKV))
+    
+    local model = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+
+    if tKV ~= "" then
+        local tIDStrArr = string.split(tKV, "_")
+
+        for i = 1, #self.NinjaCollection, 1 do
+
+           local tCommmonDegressFirst = false
+
+            for j = 1, #tIDStrArr, 1 do
+
+                -- print("tIDStrArr[j] "..tostring(tIDStrArr[j]))
+
+                local tIDItem = math.ceil(tIDStrArr[j])
+                if self.NinjaCollection[i].NinjaData.id == tIDItem then
+                    tCommmonDegressFirst = true
+                    break
+                end
+            end
+			if model:IsBanNinja(self.NinjaCollection[i].NinjaData.id) == false then
+				if tCommmonDegressFirst then
+	                table.insert(tSubSet1, self.NinjaCollection[i])
+	            else
+	                table.insert(tSubSet2, self.NinjaCollection[i])
+	            end
+			end
+        end
+
+        -- merge.
+        self.NinjaCollection = {}
+        for i = 1, #tIDStrArr, 1 do
+            local tIDItem = math.ceil(tIDStrArr[i])
+            local tFound = nil
+            for j = 1, #tSubSet1, 1 do
+                if tSubSet1[j].NinjaData.id == tIDItem then
+                    tFound = tSubSet1[j]
+                    break
+                end
+            end
+            if tFound then
+                table.insert(self.NinjaCollection, tFound)
+                -- print("first "..tostring(tFound.NinjaData.name))
+            end
+        end
+		KiHan.PVPRealTimeMain.RightPanel.SPageNum = -1;
+		KiHan.PVPRealTimeMain.RightPanel.APageNum = -1;
+		KiHan.PVPRealTimeMain.RightPanel.BPageNum = -1;
+		KiHan.PVPRealTimeMain.RightPanel.CPageNum = -1;
+		
+		UIPVPRealTimeMainSelectNinja.SPageNum = -1;
+		UIPVPRealTimeMainSelectNinja.APageNum = -1;
+		UIPVPRealTimeMainSelectNinja.BPageNum = -1;
+		UIPVPRealTimeMainSelectNinja.CPageNum = -1;
+		
+        for i = 1, #tSubSet2, 1 do
+            table.insert(self.NinjaCollection, tSubSet2[i])
+            if KiHan.PVPRealTimeMain.RightPanel.SPageNum == -1 and tSubSet2[i].NinjaData.aptitude == 5 then
+            	KiHan.PVPRealTimeMain.RightPanel.SPageNum = math.ceil(#self.NinjaCollection/16)
+            	UIPVPRealTimeMainSelectNinja.SPageNum = KiHan.PVPRealTimeMain.RightPanel.SPageNum
+            	print("第一个s忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.SPageNum)
+            end
+            if KiHan.PVPRealTimeMain.RightPanel.APageNum == -1 and tSubSet2[i].NinjaData.aptitude == 3 then
+            	KiHan.PVPRealTimeMain.RightPanel.APageNum = math.ceil(#self.NinjaCollection/16)
+            	UIPVPRealTimeMainSelectNinja.APageNum = KiHan.PVPRealTimeMain.RightPanel.APageNum
+            	print("第一个a忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.APageNum)
+            end
+            if KiHan.PVPRealTimeMain.RightPanel.BPageNum == -1 and tSubSet2[i].NinjaData.aptitude == 2 then
+            	KiHan.PVPRealTimeMain.RightPanel.BPageNum = math.ceil(#self.NinjaCollection/16)
+            	UIPVPRealTimeMainSelectNinja.BPageNum = KiHan.PVPRealTimeMain.RightPanel.BPageNum
+            	print("第一个b忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.BPageNum)
+            end
+            if KiHan.PVPRealTimeMain.RightPanel.CPageNum == -1 and tSubSet2[i].NinjaData.aptitude == 1 then
+            	KiHan.PVPRealTimeMain.RightPanel.CPageNum = math.ceil(#self.NinjaCollection/16)
+            	UIPVPRealTimeMainSelectNinja.CPageNum = KiHan.PVPRealTimeMain.RightPanel.CPageNum
+            	print("第一个c忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.CPageNum)
+            end
+        end
+        
+        -- 修正SABC的页面, 由于这里不考虑已选择的忍者, 修复: 如果选择的仅有的三个C忍, 页签不出现C忍的问题
+        for i = 1, #tSubSet1 do
+            if KiHan.PVPRealTimeMain.RightPanel.SPageNum == -1 and tSubSet1[i].NinjaData.aptitude == 5 then
+            	KiHan.PVPRealTimeMain.RightPanel.SPageNum = 1
+            	UIPVPRealTimeMainSelectNinja.SPageNum = KiHan.PVPRealTimeMain.RightPanel.SPageNum
+            	print("修正第一个s忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.SPageNum)
+            end
+            if KiHan.PVPRealTimeMain.RightPanel.APageNum == -1 and tSubSet1[i].NinjaData.aptitude == 3 then
+            	KiHan.PVPRealTimeMain.RightPanel.APageNum = 1
+            	UIPVPRealTimeMainSelectNinja.APageNum = KiHan.PVPRealTimeMain.RightPanel.APageNum
+            	print("修正第一个a忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.APageNum)
+            end
+            if KiHan.PVPRealTimeMain.RightPanel.BPageNum == -1 and tSubSet1[i].NinjaData.aptitude == 2 then
+            	KiHan.PVPRealTimeMain.RightPanel.BPageNum = 1
+            	UIPVPRealTimeMainSelectNinja.BPageNum = KiHan.PVPRealTimeMain.RightPanel.BPageNum
+            	print("修正第一个b忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.BPageNum)
+            end
+            if KiHan.PVPRealTimeMain.RightPanel.CPageNum == -1 and tSubSet1[i].NinjaData.aptitude == 1 then
+            	KiHan.PVPRealTimeMain.RightPanel.CPageNum = 1
+            	UIPVPRealTimeMainSelectNinja.CPageNum = KiHan.PVPRealTimeMain.RightPanel.CPageNum
+            	print("修正第一个c忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.CPageNum)
+            end
+        end
+    else
+        local tCommmonDegressCache = {}
+        local model = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+
+        for i = 0, model.FightNinjasForPlayer.Count - 1, 1 do
+            if model.FightNinjasForPlayer[i] then
+                table.insert(tCommmonDegressCache, model.FightNinjasForPlayer[i].id)
+            end
+        end
+
+        local tSubSet1 = {}
+        local tSubSet2 = {}
+        for i = 1, #self.NinjaCollection, 1 do
+            local tFound = false
+            for j = 1, #tCommmonDegressCache, 1 do
+                if self.NinjaCollection[i].NinjaData.id == tCommmonDegressCache[j] then
+                    tFound = true
+                    break
+                end 
+            end
+            
+			if model:IsBanNinja(self.NinjaCollection[i].NinjaData.id) == false then
+				if tFound then
+	                table.insert(tSubSet1, self.NinjaCollection[i])   
+	            else
+	                table.insert(tSubSet2, self.NinjaCollection[i])   
+	            end
+			end
+        end
+
+        self.NinjaCollection = {}
+
+        for i = 1, #tCommmonDegressCache, 1 do
+            local tIDItem = tCommmonDegressCache[i]
+            local tFound = nil
+            for j = 1, #tSubSet1, 1 do
+                if tSubSet1[j].NinjaData.id == tIDItem then
+                    tFound = tSubSet1[j]
+                    break
+                end
+            end
+            if tFound then
+                table.insert(self.NinjaCollection, tFound)
+                -- print("first "..tostring(tFound.NinjaData.name))
+            end
+        end
+		
+		KiHan.PVPRealTimeMain.RightPanel.SPageNum = -1;
+		KiHan.PVPRealTimeMain.RightPanel.APageNum = -1;
+		KiHan.PVPRealTimeMain.RightPanel.BPageNum = -1;
+		KiHan.PVPRealTimeMain.RightPanel.CPageNum = -1;
+		
+		UIPVPRealTimeMainSelectNinja.SPageNum = -1;
+		UIPVPRealTimeMainSelectNinja.APageNum = -1;
+		UIPVPRealTimeMainSelectNinja.BPageNum = -1;
+		UIPVPRealTimeMainSelectNinja.CPageNum = -1;
+		
+        for i = 1, #tSubSet2, 1 do
+            table.insert(self.NinjaCollection, tSubSet2[i])
+            if KiHan.PVPRealTimeMain.RightPanel.SPageNum == -1 and tSubSet2[i].NinjaData.aptitude == 5 then
+            	KiHan.PVPRealTimeMain.RightPanel.SPageNum = math.ceil(#self.NinjaCollection/16)
+            	UIPVPRealTimeMainSelectNinja.SPageNum = KiHan.PVPRealTimeMain.RightPanel.SPageNum
+            	print("第一个s忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.SPageNum)
+            end
+            if KiHan.PVPRealTimeMain.RightPanel.APageNum == -1 and tSubSet2[i].NinjaData.aptitude == 3 then
+            	KiHan.PVPRealTimeMain.RightPanel.APageNum = math.ceil(#self.NinjaCollection/16)
+            	UIPVPRealTimeMainSelectNinja.APageNum = KiHan.PVPRealTimeMain.RightPanel.APageNum
+            	print("第一个a忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.APageNum)
+            end
+            if KiHan.PVPRealTimeMain.RightPanel.BPageNum == -1 and tSubSet2[i].NinjaData.aptitude == 2 then
+            	KiHan.PVPRealTimeMain.RightPanel.BPageNum = math.ceil(#self.NinjaCollection/16)
+            	UIPVPRealTimeMainSelectNinja.BPageNum = KiHan.PVPRealTimeMain.RightPanel.BPageNum
+            	print("第一个b忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.BPageNum)
+            end
+            if KiHan.PVPRealTimeMain.RightPanel.CPageNum == -1 and tSubSet2[i].NinjaData.aptitude == 1 then
+            	KiHan.PVPRealTimeMain.RightPanel.CPageNum = math.ceil(#self.NinjaCollection/16)
+            	UIPVPRealTimeMainSelectNinja.CPageNum = KiHan.PVPRealTimeMain.RightPanel.CPageNum
+            	print("第一个c忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.CPageNum)
+            end
+        end
+        
+        -- 修正SABC的页面, 由于这里不考虑已选择的忍者, 修复: 如果选择的仅有的三个C忍, 页签不出现C忍的问题
+        for i = 1, #tSubSet1 do
+            if KiHan.PVPRealTimeMain.RightPanel.SPageNum == -1 and tSubSet1[i].NinjaData.aptitude == 5 then
+            	KiHan.PVPRealTimeMain.RightPanel.SPageNum = 1
+            	UIPVPRealTimeMainSelectNinja.SPageNum = KiHan.PVPRealTimeMain.RightPanel.SPageNum
+            	print("修正第一个s忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.SPageNum)
+            end
+            if KiHan.PVPRealTimeMain.RightPanel.APageNum == -1 and tSubSet1[i].NinjaData.aptitude == 3 then
+            	KiHan.PVPRealTimeMain.RightPanel.APageNum = 1
+            	UIPVPRealTimeMainSelectNinja.APageNum = KiHan.PVPRealTimeMain.RightPanel.APageNum
+            	print("修正第一个a忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.APageNum)
+            end
+            if KiHan.PVPRealTimeMain.RightPanel.BPageNum == -1 and tSubSet1[i].NinjaData.aptitude == 2 then
+            	KiHan.PVPRealTimeMain.RightPanel.BPageNum = 1
+            	UIPVPRealTimeMainSelectNinja.BPageNum = KiHan.PVPRealTimeMain.RightPanel.BPageNum
+            	print("修正第一个b忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.BPageNum)
+            end
+            if KiHan.PVPRealTimeMain.RightPanel.CPageNum == -1 and tSubSet1[i].NinjaData.aptitude == 1 then
+            	KiHan.PVPRealTimeMain.RightPanel.CPageNum = 1
+            	UIPVPRealTimeMainSelectNinja.CPageNum = KiHan.PVPRealTimeMain.RightPanel.CPageNum
+            	print("修正第一个c忍者位置为:"..KiHan.PVPRealTimeMain.RightPanel.CPageNum)
+            end
+        end
+
+        self:SaveDataByCommonDegress(tCommmonDegressCache, self.NinjaCommonDegressSaveKey, self.NinjaCommonDegressMaxSize)
+    end
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:SaveDataByCommonDegress(praSet, praKey, praMaxSize)
+    -- body
+    local tMaxSize = praMaxSize
+
+    local tQue = LuaQueue.New(tMaxSize)
+    local tKV = KHUtil.GetString(praKey, "")
+    if tKV ~= "" then
+        local tIDStrArr = string.split(tKV, "_")
+        for j = #tIDStrArr, 1, -1 do
+            local tIDItem = math.ceil(tIDStrArr[j])
+            local tHavChoosen = false
+            for i = 1, #praSet, 1 do
+                if praSet[i] == tIDItem then
+                    tHavChoosen = true
+                    -- print("1111 "..tostring(tIDItem))
+                    break
+                end
+            end
+            if not tHavChoosen then
+                tQue:Push(tIDItem)
+            end
+       end
+    end
+
+    for i = #praSet, 1, -1 do
+        local tID = praSet[i]
+        if tID ~= 0 then
+            tQue:Push(tID)
+        end
+    end
+
+    -- 重新拼接回去
+    local tRetToSav = ""
+    while (not tQue:Empty())
+    do
+        local tItemNode = tQue:Front()
+        local tIDStr = tostring(tItemNode.Item)
+        -- print("General Ninja Record: "..tIDStr)
+
+        tRetToSav = tIDStr..tRetToSav
+
+        tQue:Pop()
+
+        if not tQue:Empty() then
+            tRetToSav = "_"..tRetToSav
+        end
+    end
+
+    print("Save: "..tRetToSav)
+    KHUtil.SetString(praKey, tRetToSav)
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:ResortPsyByCommonDegress()
+    -- body
+    -- local tConfID = 33
+
+    -- print("~~~~ "..tostring(#self.PsyCollection))
+    -- return;
+
+    local tSubSet1 = {}
+    local tSubSet2 = {}
+
+    local tKV = KHUtil.GetString(self.PsyCommonDegressSaveKey, "")
+    print("Psy tKV "..tostring(tKV))
+
+    if tKV ~= "" then
+        local tIDStrArr = string.split(tKV, "_")
+
+        -- print("~~~~ "..tostring(#self.PsyCollection))
+
+        for i = 1, #self.PsyCollection, 1 do
+
+            -- print("???? "..tostring(self.PsyCollection[i].PsyId))
+
+           local tCommmonDegressFirst = false
+
+            for j = 1, #tIDStrArr, 1 do
+                local tIDItem = math.ceil(tIDStrArr[j])
+                if self.PsyCollection[i].PsyId == tIDItem then
+                    tCommmonDegressFirst = true
+                    break
+                end
+            end
+
+            if tCommmonDegressFirst then
+                table.insert(tSubSet1, self.PsyCollection[i])
+            else
+                table.insert(tSubSet2, self.PsyCollection[i])
+            end
+        end
+
+        -- merge.
+        self.PsyCollection = {}
+        for i = 1, #tIDStrArr, 1 do
+            local tIDItem = math.ceil(tIDStrArr[i])
+            local tFound = nil
+            for j = 1, #tSubSet1, 1 do
+                if tSubSet1[j].PsyId == tIDItem then
+                    tFound = tSubSet1[j]
+                    break
+                end
+            end
+            if tFound then
+                table.insert(self.PsyCollection, tFound)
+                -- print("first "..tostring(tFound.PsyId))
+            end
+        end
+
+        for i = 1, #tSubSet2, 1 do
+            table.insert(self.PsyCollection, tSubSet2[i])
+        end
+    else
+        local tCommmonDegressCache = {}
+
+        for i = 1, #self.CachePsyList, 1 do
+            local tActivePsyItem = self.CachePsyList[i]
+
+            -- print("???? "..tostring(tActivePsyItem))
+
+            if tActivePsyItem ~= nil and tActivePsyItem ~= 0 then
+                table.insert(tCommmonDegressCache, tActivePsyItem)
+
+                -- print("table.insert(tCommmonDegressCache, tActivePsyItem) "..tostring(tActivePsyItem))
+            end
+        end
+
+        local tSubSet1 = {}
+        local tSubSet2 = {}
+        for i = 1, #self.PsyCollection, 1 do
+            local tFound = false
+            for j = 1, #tCommmonDegressCache, 1 do
+                if self.PsyCollection[i].PsyId == tCommmonDegressCache[j] then
+                    tFound = true
+                    break
+                end 
+            end
+
+            if tFound then
+                table.insert(tSubSet1, self.PsyCollection[i])   
+                -- print("table.insert(tSubSet1, self.PsyCollection[i]) "..tostring(self.PsyCollection[i].PsyId))
+
+            else
+                table.insert(tSubSet2, self.PsyCollection[i])   
+
+                -- print("table.insert(tSubSet2, self.PsyCollection[i]) "..tostring(self.PsyCollection[i].PsyId))
+            end
+        end
+
+        self.PsyCollection = {}
+
+        for i = 1, #tCommmonDegressCache, 1 do
+            local tIDItem = tCommmonDegressCache[i]
+            local tFound = nil
+            for j = 1, #tSubSet1, 1 do
+                if tSubSet1[j].PsyId == tIDItem then
+                    tFound = tSubSet1[j]
+                    break
+                end
+            end
+            if tFound then
+                table.insert(self.PsyCollection, tFound)
+                -- print("first "..tostring(tFound.PsyId))
+            end
+        end
+
+        for i = 1, #tSubSet2, 1 do
+            table.insert(self.PsyCollection, tSubSet2[i])
+        end
+
+        self:SaveDataByCommonDegress(tCommmonDegressCache, self.PsyCommonDegressSaveKey, self.PsyCommonDegressMaxSize)
+    end
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:ResortScrByCommonDegress()
+    -- body
+
+    local tSubSet1 = {}
+    local tSubSet2 = {}
+
+    local tKV = KHUtil.GetString(self.ScrCommonDegressSaveKey, "")
+    print("Scr tKV "..tostring(tKV))
+
+    if tKV ~= "" then
+        local tIDStrArr = string.split(tKV, "_")
+
+        -- print("~~~~ "..tostring(#self.PsyCollection))
+
+        for i = 1, #self.ScrollCollection, 1 do
+
+            -- print("???? "..tostring(self.PsyCollection[i].PsyId))
+
+           local tCommmonDegressFirst = false
+
+            for j = 1, #tIDStrArr, 1 do
+                local tIDItem = math.ceil(tIDStrArr[j])
+                if self.ScrollCollection[i].ScrollID == tIDItem then
+                    tCommmonDegressFirst = true
+                    break
+                end
+            end
+
+            if tCommmonDegressFirst then
+                table.insert(tSubSet1, self.ScrollCollection[i])
+            else
+                table.insert(tSubSet2, self.ScrollCollection[i])
+            end
+        end
+
+        -- merge.
+        self.ScrollCollection = {}
+        for i = 1, #tIDStrArr, 1 do
+            local tIDItem = math.ceil(tIDStrArr[i])
+            local tFound = nil
+            for j = 1, #tSubSet1, 1 do
+                if tSubSet1[j].ScrollID == tIDItem then
+                    tFound = tSubSet1[j]
+                    break
+                end
+            end
+            if tFound then
+                table.insert(self.ScrollCollection, tFound)
+                -- print("first "..tostring(tFound.PsyId))
+            end
+        end
+
+        for i = 1, #tSubSet2, 1 do
+            table.insert(self.ScrollCollection, tSubSet2[i])
+        end
+    else
+        local tCommmonDegressCache = {}
+
+        for i = 1, #self.CacheScrollList, 1 do
+            local tActiveScrItem = self.CacheScrollList[i]
+
+            -- print("???? "..tostring(tActiveScrItem))
+
+            if tActiveScrItem ~= nil and tActiveScrItem.ScrollID ~= 0 then
+                table.insert(tCommmonDegressCache, tActiveScrItem.ScrollID)
+
+                -- print("table.insert(tCommmonDegressCache, tActiveScrItem) "..tostring(tActiveScrItem))
+            end
+        end
+
+        local tSubSet1 = {}
+        local tSubSet2 = {}
+        for i = 1, #self.ScrollCollection, 1 do
+            local tFound = false
+            for j = 1, #tCommmonDegressCache, 1 do
+                if self.ScrollCollection[i].ScrollID == tCommmonDegressCache[j] then
+                    tFound = true
+                    break
+                end 
+            end
+
+            if tFound then
+                table.insert(tSubSet1, self.ScrollCollection[i])   
+                -- print("table.insert(tSubSet1, self.PsyCollection[i]) "..tostring(self.PsyCollection[i].PsyId))
+
+            else
+                table.insert(tSubSet2, self.ScrollCollection[i])   
+
+                -- print("table.insert(tSubSet2, self.PsyCollection[i]) "..tostring(self.PsyCollection[i].PsyId))
+            end
+        end
+
+        self.ScrollCollection = {}
+
+        for i = 1, #tCommmonDegressCache, 1 do
+            local tIDItem = tCommmonDegressCache[i]
+            local tFound = nil
+            for j = 1, #tSubSet1, 1 do
+                if tSubSet1[j].ScrollID == tIDItem then
+                    tFound = tSubSet1[j]
+                    break
+                end
+            end
+            if tFound then
+                table.insert(self.ScrollCollection, tFound)
+                -- print("first "..tostring(tFound.PsyId))
+            end
+        end
+
+        for i = 1, #tSubSet2, 1 do
+            table.insert(self.ScrollCollection, tSubSet2[i])
+        end
+
+        self:SaveDataByCommonDegress(tCommmonDegressCache, self.ScrCommonDegressSaveKey, self.ScrCommonDegressMaxSize)
+    end
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:InitNinjaState()	
+	local model = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+    local rawData = model.CandidateNinjasForPlayer
+    local freeNinjaData = model.FreeWeekNinjaList
+
+    self.NinjaCollection = {}
+    self:AddFreeDataToCandidate(freeNinjaData,rawData,1)
+    self:AddLimitNinjaData()	
+
+	local is_sys_limit_free = NinjaDataUtil.IsLimitFreeBySys(SystemConfigDef.PVP_REALTIME)
+	if is_sys_limit_free then
+		self:AddLimitFreeNinjaData()		
+		table.sort(self.NinjaCollection, NinjaDataUtil.NinjaDataScoreTableSortCompare)
+	else
+		self:AddLimitFreeWhiteNinjaData()
+		table.sort(self.NinjaCollection, KiHan.PVPRealTimeMain.RightPanel.NinjaSort)
+	end
+
+    self:ResortNinjaByCommonDegress()
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:InitPsyState()
+    local model = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+    local rawData =  model.BeastList.beast_info
+    local freePsyData = model.FreeWeekPsyList
+    self.CachePsyList = {}
+    self.PsyCollection = {}
+    self:AddFreeDataToCandidate(freePsyData,rawData,2)
+    self:AddLimitPsyData()
+    for i = 0, model.FightBeast.Count - 1, 1 do
+        -- print("++++++++model.FightBeast[i] "..tostring(model.FightBeast[i]))
+        if model.FightBeast[i] ~= 0 then
+            self.CachePsyList[i + 1] = model.FightBeast[i]
+            -- table.insert(self.CachePsyList, model.FightBeast[i])
+            -- print("++++++++++CachePsyList "..tostring(self.CachePsyList[i + 1]))
+        else
+            self.CachePsyList[i + 1] = nil
+            -- table.insert(self.CachePsyList, nil)
+            -- print("++++++++++CachePsyList "..tostring(self.CachePsyList[i + 1]))
+        end
+
+        --玩家已装备阵容，默认都为非免费忍者
+        table.insert(self.FreeWeekPsyList,false)
+    end
+
+    -- for i=1,3 do
+    --     print("+++++CachePsyList "..tostring(self.CachePsyList[i]))
+    -- end
+
+    for i = 1, #self.PsyCollection do
+        self.PsyCollection[i].SelectedIndex = -1
+        for j = 1,3 do 
+            if self.CachePsyList[j] == self.PsyCollection[i].PsyId  then
+                self.PsyCollection[i].SelectedIndex = j - 1
+                break
+            end
+        end
+    end
+
+    self:ResortPsyByCommonDegress()
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:InitScrollState()
+
+    -- 密卷重构
+    local model = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+
+    if not KiHan.PVPRealTimeMain.RightPanel.MultipleSecretRoll then
+        -- local rawData =  model.SecretScrollList.secret_scroll
+        -- if(model.CurrentScroll.id ~= 0)then
+        --     self.CachedSelectScrollId = model.CurrentScroll.id
+        --     self.CachedSelectScrollLevel = model.CurrentScroll.level
+        -- else
+        --     self.CachedSelectScrollId = nil
+        --     self.CachedSelectScrollLevel = nil
+        -- end
+
+        -- self.ScrollCollection = {}
+        -- print("InitScrollState  "..tostring(self.CachedSelectScrollId))
+        -- for i = 0, rawData.Count-1 do
+        --     local data = {}
+        --     data.ScrollID = rawData[i].gid.id
+        --     data.level = rawData[i].level
+        --     data.IsSelected = false
+        --     data.SelectedIndex = 0
+        --     if(rawData[i].gid.id == self.CachedSelectScrollId )then
+        --         data.IsSelected = true
+        --         self.CachedSelectScrollData = data
+        --     end
+        --     table.insert(self.ScrollCollection, data)
+        -- end        
+    else
+        -- 从model里面读出服务器数据
+        -- message SecretScrollKeyVer2
+        -- {
+        --     required uint32 id = 1;  //
+        --     required uint32 level = 2; //秘卷等级
+        -- }
+        local tActiveScrollList = model.CurrentScrollList
+
+        -- 刷新到已选择列表 
+        self.CacheScrollList = {}
+        for i = 0, tActiveScrollList.Count - 1, 1 do
+            local tID = tActiveScrollList[i].id
+            if tID ~= 0 then
+                local tToCacheListData = {}
+                tToCacheListData.ScrollID = tActiveScrollList[i].id
+                tToCacheListData.level = tActiveScrollList[i].level
+                tToCacheListData.DisplayName = false
+                tToCacheListData.SelectedIndex = 0
+
+                --print("--- "..tostring(tToCacheListData.ScrollID).." "..tostring(tToCacheListData.level))
+
+                -- 默认服务器数据是增序
+                -- table.insert(self.CacheScrollList, tToCacheListData)
+                self.CacheScrollList[i + 1] = tToCacheListData
+            else
+                -- table.insert(self.CacheScrollList, nil)
+                self.CacheScrollList[i + 1] = nil
+            end
+            table.insert(self.FreeWeekScrollList,false)
+        end
+
+        -- 刷新可选列表上的状态UI
+        local tRawData = model.SecretScrollList.secret_scroll
+        local freeScrollData = model.FreeWeekScrollList
+        self.ScrollCollection = {}
+
+        --先注释掉，等天游调通合进去免费秘劵
+        self:AddFreeDataToCandidate(freeScrollData,tRawData,3)
+        self:AddLimitScrollData()      
+        for i = 1,#self.ScrollCollection do
+            for j =1, 3 do
+                if(self.CacheScrollList[j]) and (self.CacheScrollList[j].ScrollID == self.ScrollCollection[i].ScrollID) then
+                    self.ScrollCollection[i].SelectedIndex = j
+                    break
+                else
+                    self.ScrollCollection[i].SelectedIndex = 0
+                end
+            end
+        end
+    
+        --[[for i = 0, tRawData.Count - 1, 1 do
+            local tRawDataCell = tRawData[i]
+            local tChooseListData = {}
+            tChooseListData.ScrollID = tRawDataCell.gid.id
+            tChooseListData.level = tRawDataCell.level
+            -- tChooseListData.isWeekFree = true
+            for j = 1, 3 do
+                if (self.CacheScrollList[j]) and (self.CacheScrollList[j].ScrollID == tRawDataCell.gid.id) then
+                    tChooseListData.SelectedIndex = j
+                    break
+                else
+                    tChooseListData.SelectedIndex = 0
+                end
+            end
+            table.insert(self.ScrollCollection, tChooseListData)
+        end--]]
+    end
+
+    self:ResortScrByCommonDegress()
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:OnClickPsy(data)
+    if(data == nil)then
+        return
+    end
+    
+    if UIPVPRealTimeMainSelectNinja.OnlyWatch == true then
+    	KHPluginManager.Instance:SendMessage("Psychic", "Psychic.OnOpenSkillInfo", data.PsyId)
+    	return
+    end
+    
+    local addSelect = false
+    local selected = false
+    
+    for i = 1, 3 do
+        if(self.CachePsyList[i] == data.PsyId)then
+            self.CachePsyList[i] = nil
+            self.FreeWeekPsyList[i] = false
+            data.SelectedIndex = -1
+            selected = true
+            addSelect = true
+        end
+    end
+    
+    
+    if(not selected)then
+        for i = 1, 3 do
+            print("OnClickPsy CachePsyList[i]"..tostring(self.CachePsyList[i]))
+            if(self.CachePsyList[i] == nil) then
+                self.CachePsyList[i] = data.PsyId
+                self.FreeWeekPsyList[i] = data.isWeekFree
+                data.SelectedIndex = i - 1
+                addSelect = true
+                break
+            end
+        end
+    end
+    
+    if(addSelect == false)then
+    	UIAPI.ShowMsgTip("通灵兽上阵已满")
+    end
+
+    self:RefreshCurrentItems()
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:OnClickScroll(data)
+
+    -- 密卷重构.
+    -- 如果点击密卷已装备 则卸下密卷
+    -- 否则装备密卷
+    if(data == nil)then
+        return
+    end
+    
+    if UIPVPRealTimeMainSelectNinja.OnlyWatch == true then
+    	KHPluginManager.Instance:SendMessage("SecretScroll", "OpenInfo", data.ScrollID)
+    	return
+    end
+    
+    if not KiHan.PVPRealTimeMain.RightPanel.MultipleSecretRoll then
+        -- if(data.ScrollID == self.CachedSelectScrollId )then
+        
+        -- else
+        --     self.CachedSelectScrollId = data.ScrollID
+        --     self.CachedSelectScrollLevel = data.level
+        --     data.IsSelected = true
+
+        --     if(self.CachedSelectScrollData ~=nil and self.CachedSelectScrollData.cell)then
+        --         self.CachedSelectScrollData.cell.Data.IsSelected = false
+        --         self.CachedSelectScrollData.cell:SetData(self.CachedSelectScrollData.cell.Data)
+        --     end
+        --     self.CachedSelectScrollData = data
+        -- end
+        
+        -- self:RefreshCurrentItems()
+    else
+        if data == nil then
+            return
+        end
+        local tFirstEmptyIdx = 0
+        local tHitIdx = 0
+        for i = 1, 3 do
+            if self.CacheScrollList[i] == nil then
+                if tFirstEmptyIdx == 0 then
+                    tFirstEmptyIdx = i
+                end
+            else
+                if data.ScrollID == self.CacheScrollList[i].ScrollID then
+                    tHitIdx = i
+                    break
+                end                
+            end
+        end
+        if tHitIdx ~= 0 then
+            -- unload
+            self.CacheScrollList[tHitIdx] = nil
+            self.FreeWeekScrollList[tHitIdx] = false
+            data.SelectedIndex = 0
+            data.cell:SetData(data)
+        else
+            -- new one
+            -- 必须产生空位才会放入
+            if tFirstEmptyIdx ~= 0 then
+                local tToCacheListData = {}
+                tToCacheListData.ScrollID = data.ScrollID
+                tToCacheListData.level = data.level
+                tToCacheListData.SelectedIndex = data.SelectedIndex
+                tToCacheListData.DisplayName = false
+                self.CacheScrollList[tFirstEmptyIdx] = tToCacheListData
+                self.FreeWeekScrollList[tFirstEmptyIdx] = data.isWeekFree
+                data.SelectedIndex = tFirstEmptyIdx
+                data.cell:SetData(data)
+            else
+            	UIAPI.ShowMsgTip("秘卷携带数已满")
+            end
+        end
+		
+        self:RefreshCurrentItems()
+    end
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:Submit()
+    -- 密卷重构
+    if not KiHan.PVPRealTimeMain.RightPanel.MultipleSecretRoll then
+        -- local model = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+        -- if(LockSysHash.CanUnlock(SystemConfigDef.Psychic))then
+        --     local submitPsy = false
+        --     if(model.FightBeast.Count ~= table.getn(self.CachePsyList))then
+        --         submitPsy = true
+        --     end
+        --     for i = 0, model.FightBeast.Count -1 do
+        --         if(model.FightBeast[i] ~= self.CachePsyList[i + 1])then
+        --             submitPsy = true
+        --             break
+        --         end
+        --     end
+        --     print("submtitPsy "..tostring(submitPsy))
+        --     if(submitPsy)then
+        --         self:ConfirmPsy()
+        --     end
+        -- end
+
+        -- if(LockSysHash.CanUnlock(SystemConfigDef.Juanzhou))then
+        --     local submitScroll = false
+        --     if(self.CachedSelectScrollId == nil or self.CachedSelectScrollId == 0)then
+        --         return
+        --     end
+        --     if(self.CachedSelectScrollId ~= model.CurrentScroll.id)then
+        --         submitScroll = true
+        --     end
+        --     print("submitScroll "..tostring(submitScroll))
+        --     if(submitScroll)then
+        --         self:ConfirmScroll()
+        --     end
+        -- end
+    else
+        self:ConfirmTeam()
+    end
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:ConfirmPsy()
+    local request = ZonePsychicBeastSetFightInfoReq()
+    for i = 1, 3 do
+        if(self.CachePsyList[i])then
+            LuaCollectionUtil.List_Add(request.beast_info, self.CachePsyList[i])
+        end
+    end
+    NetworkManager.Instance:SendUnicast(Convert.ToUInt32(ZoneCmd.ZONE_PSYCHIC_BEAST_SET_FIGHT_INFO), 
+        request, 
+        KHUtilForLua.NetworkCallbackMaker(self, self.OnPsySendCSCallback), 
+        true, 
+        KHUtilForLua.TimeoutCallbackMaker(self, self.OnPsySendCSTimeout) , 
+        10.0, 
+        -1)
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:ConfirmTeam()
+    -- // 设置阵容信息
+    -- // ZONE_COMMON_TEAM_SET              = 0x03023151;       //设置通用阵容
+    -- message ZoneCommonTeamSetReq
+    -- {
+    --     optional CommonTeamSet team_set = 1;    // 要设置的阵容
+    -- };
+
+    -- // 通用阵容 - 设置的忍者、秘卷、通灵兽
+    -- /*
+    --  * @pbp_create
+    --  */
+    -- message CommonTeamSet
+    -- {
+    --     optional uint32 type = 1;                   // 阵容类型 对应BattleInfo::BattleType
+    --     /*
+    --      * @pbp_len kMaxTeamNinjaCnt
+    --      */
+    --     repeated uint32 fight_ninja = 2;            // 出战忍者   (最多3个)
+    --     /*
+    --      * @pbp_len MAX_SECRET_SCROLL_CNT
+    --      */
+    --     repeated uint32 fight_secret_scroll = 3;    // 出战秘卷   (最多3个)
+    --     /*
+    --      * @pbp_len MAX_FIGHT_BEAST_CNT
+    --      */
+    --     repeated uint32 fight_psychic_beast = 4;    // 出战通灵兽 (最多3个)
+    -- }
+
+
+    local tReq = ZoneCommonTeamSetReq()
+    tReq.team_set = CommonTeamSet()
+    tReq.team_set.type = 57 -- 应后台要求使用系统ID 决斗场57
+
+    local tCommmonNinjaDegressCache = {}
+    local model = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+
+    -- assign ninja
+    for i = 0, model.FightNinjasForPlayer.Count - 1, 1 do
+        if model.FightNinjasForPlayer[i] then
+            -- local tPvpFightNinja = PvpFightNinja()
+            -- tPvpFightNinja.ninja_id = model.FightNinjasForPlayer[i].id
+            -- tPvpFightNinja.ninja_star = model.FightNinjasForPlayer[i].starLevel
+            local tReqNinjaID = model.FightNinjasForPlayer[i].id
+            LuaCollectionUtil.List_Add(tReq.team_set.fight_ninja, tReqNinjaID)
+
+            table.insert(tCommmonNinjaDegressCache, tReqNinjaID)
+        else
+            LuaCollectionUtil.List_Add(tReq.team_set.fight_ninja, 0)
+
+            table.insert(tCommmonNinjaDegressCache, 0)
+        end
+    end
+    self:SaveDataByCommonDegress(tCommmonNinjaDegressCache, self.NinjaCommonDegressSaveKey, self.NinjaCommonDegressMaxSize)
+
+    -- assign psy
+    local tCommmonPsyDegressCache = {}
+    for i = 1, 3 do
+        if(self.CachePsyList[i])then
+            LuaCollectionUtil.List_Add(tReq.team_set.fight_psychic_beast, self.CachePsyList[i])
+        else
+            -- 应策划要求 通灵兽向前填充不留空隙
+            -- LuaCollectionUtil.List_Add(tReq.team_set.fight_psychic_beast, 0)        
+        end
+
+        if self.CachePsyList[i] ~= nil and self.CachePsyList[i] ~= 0 then
+            table.insert(tCommmonPsyDegressCache, self.CachePsyList[i])
+        end
+    end    
+    self:SaveDataByCommonDegress(tCommmonPsyDegressCache, self.PsyCommonDegressSaveKey, self.PsyCommonDegressMaxSize)
+
+    -- assign scroll
+    local tCommmonScrDegressCache = {}
+    for i = 1, 3 do
+        if self.CacheScrollList[i] then
+            local tCacheScrollData = self.CacheScrollList[i]
+            -- local tSecretScrollKeyVer2 = SecretScrollKeyVer2()
+            -- tSecretScrollKeyVer2.id = tCacheScrollData.ScrollID
+            -- tSecretScrollKeyVer2.level = tCacheScrollData.level
+            local tSSId = tCacheScrollData.ScrollID
+            LuaCollectionUtil.List_Add(tReq.team_set.fight_secret_scroll, tSSId)
+        else
+            LuaCollectionUtil.List_Add(tReq.team_set.fight_secret_scroll, 0)
+        end 
+
+        if self.CacheScrollList[i] ~= nil and self.CacheScrollList[i].ScrollID ~= 0 then
+            table.insert(tCommmonScrDegressCache, self.CacheScrollList[i].ScrollID)
+        end
+    end
+    self:SaveDataByCommonDegress(tCommmonScrDegressCache, self.ScrCommonDegressSaveKey, self.ScrCommonDegressMaxSize)
+
+    -- print("++++ "..tostring(tReq.team_set.fight_ninja.Count).." "..tostring(tReq.team_set.fight_psychic_beast.Count).." "..tostring(tReq.team_set.fight_secret_scroll.Count))
+
+    -- send
+    NetworkManager.Instance:SendUnicast(Convert.ToUInt32(ZoneCmd.ZONE_COMMON_TEAM_SET_OLD), 
+        tReq, 
+        KHUtilForLua.NetworkCallbackMaker(self, self.OnConfirmTeamCallback), 
+        true, 
+        KHUtilForLua.TimeoutCallbackMaker(self, self.OnConfirmTeamTimeout) , 
+        10.0, 
+        -1)
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:OnConfirmTeamCallback(message)
+    if message.ret_info.ret_code == 0 then
+        UIAPI.ShowMsgTip("设置成功")
+        local model = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+
+        -- refresh ninja
+        -- nothing for now
+
+        -- refresh psy
+        LuaCollectionUtil.List_Clear(model.FightBeast)
+        for i = 1, 3 do
+            if(self.CachePsyList[i]) then
+                LuaCollectionUtil.List_Add(model.FightBeast, self.CachePsyList[i])
+                -- print("+++++self.CachePsyList[i] ->  FightBeast "..tostring(self.CachePsyList[i]))
+            else
+                -- 应策划要求 通灵兽向前填充不留空隙
+                -- LuaCollectionUtil.List_Add(model.FightBeast, 0)
+                -- print("+++++self.CachePsyList[i] ->  FightBeast"..tostring(self.CachePsyList[i]))
+            end
+        end
+
+        -- refresh scroll
+        LuaCollectionUtil.List_Clear(model.CurrentScrollList)
+        for i = 1, 3 do
+            local tCacheScrollData = self.CacheScrollList[i]
+            local tSecretScrollKeyVer2 = SecretScrollKeyVer2()
+            if (self.CacheScrollList[i]) then
+                tSecretScrollKeyVer2.id = tCacheScrollData.ScrollID
+                tSecretScrollKeyVer2.level = tCacheScrollData.level
+            else
+                tSecretScrollKeyVer2.id = 0
+                tSecretScrollKeyVer2.level = 1
+            end
+            LuaCollectionUtil.List_Add(model.CurrentScrollList, tSecretScrollKeyVer2)
+        end
+
+        self:SetMainViewMode_Detail()
+
+    else
+        HandleErrorCode(message.ret_info.ret_code, message.ret_info.ret_msg)
+    end
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:SetMainViewMode_Detail()
+    local model = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+    model:SetMainViewMode_Detail()
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:OnConfirmTeamTimeout()
+    UIAPI.ShowMsgTip("设置超时")
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:OnPsySendCSCallback(message)
+	if message.ret_info.ret_code == 0 then
+        local model = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+		UIAPI.ShowMsgTip("设置成功")
+        LuaCollectionUtil.List_Clear(model.FightBeast)
+        for i = 1, 3 do
+            if(self.CachePsyList[i])then
+                LuaCollectionUtil.List_Add(model.FightBeast, self.CachePsyList[i])
+            end
+        end
+    else
+        HandleErrorCode(message.ret_info.ret_code, message.ret_info.ret_msg)
+	end
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:OnPsySendCSTimeout()
+	UIAPI.ShowMsgTip("设置超时")
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:ConfirmScroll()
+    -- 密卷重构
+    local request = ZoneSecretScrollEquipVer2Req()
+    local keyv2 = SecretScrollKeyVer2()
+    keyv2.id = self.CachedSelectScrollId
+    keyv2.level = self.CachedSelectScrollLevel
+    request.gid = keyv2
+    NetworkManager.Instance:SendUnicast(Convert.ToUInt32(ZoneCmd.ZONE_SECRET_SCROLL_EQUIP), request, KHUtilForLua.NetworkCallbackMaker(self, self.OnScrollSendCSCallback), true, KHUtilForLua.TimeoutCallbackMaker(self, self.OnScrollSendCSTimeout) , 10.0, -1)
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:OnScrollSendCSCallback(message)
+    local model = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+	if message.ret_info.ret_code == 0 then
+		UIAPI.ShowMsgTip("设置成功")
+        if(self.CachedSelectScrollId)then
+            local keyv2 = SecretScrollKeyVer2()
+            keyv2.id = self.CachedSelectScrollId
+            keyv2.level = self.CachedSelectScrollLevel
+            model.CurrentScroll = keyv2
+        end
+    else
+        HandleErrorCode(message.ret_info.ret_code, message.ret_info.ret_msg)
+	end
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:OnScrollSendCSTimeout()
+	UIAPI.ShowMsgTip("设置超时")
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:RefreshCurrentItems()
+    for i = 1, 3 do
+        local data = {}
+        if(self.CachePsyList[i])then
+            data.PsyId = self.CachePsyList[i]
+            self["EquipedPsy"..i]:GetComponent("LuaBehaviour").luaInstance:SetData(data)
+        else
+            self["EquipedPsy"..i]:GetComponent("LuaBehaviour").luaInstance:SetData(nil)
+        end
+    end
+	
+	if self.PsyCollection ~= nil then
+		for i = 1, #self.PsyCollection do
+			self.PsyCollection[i].SelectedIndex = -1
+			for j = 1,3 do 
+				if self.CachePsyList[j] == self.PsyCollection[i].PsyId  then
+					self.PsyCollection[i].SelectedIndex = j - 1
+					break
+				end
+			end
+		end
+		
+		self.PsyPanelContainer:GetComponent("LuaBehaviour").luaInstance:UpdateGroup(self.PsyCollection)
+	end
+	
+    -- 密卷重构.
+    if not KiHan.PVPRealTimeMain.RightPanel.MultipleSecretRoll then
+        -- local data = {}
+        -- if(self.CachedSelectScrollId ~= nil)then
+        --     data.ScrollID = self.CachedSelectScrollId
+        --     data.level = self.CachedSelectScrollLevel
+        --     data.DisplayName = true
+        -- else
+        --     data = nil
+        -- end
+        -- self.EquipedScroll:GetComponent("LuaBehaviour").luaInstance:SetData(data)
+    else
+        for i = 1, 3 do
+            local tCacheUiCell = self["EquipedScroll_"..i]
+            if tCacheUiCell then
+                tCacheUiCell:GetComponent("LuaBehaviour").luaInstance:SetData(self.CacheScrollList[i])
+            end
+        end
+    end
+	
+	if self.ScrollCollection ~= nil then
+		for i = 1,#self.ScrollCollection do
+			for j =1, 3 do
+				if(self.CacheScrollList[j]) and (self.CacheScrollList[j].ScrollID == self.ScrollCollection[i].ScrollID) then
+					self.ScrollCollection[i].SelectedIndex = j
+					break
+				else
+					self.ScrollCollection[i].SelectedIndex = 0
+				end
+			end
+		end
+		
+		self.ScrPanelContainer:GetComponent("LuaBehaviour").luaInstance:UpdateGroup(self.ScrollCollection)
+	end
+end
+
+--为了兼容旧的忍者逻辑，这段的调用写在c#里了，以后有空再优化
+function KiHan.PVPRealTimeMain.RightPanel:UpdateSelectedNinjaTeam()
+    if(not self.NinjaCollection)then
+        return
+    end
+
+    if(NGUITools.GetActive(self.NinjaPanelContainer))then
+        for i = 1, 3 do
+            local page = self.NinjaPanelContainer:GetComponent("LuaBehaviour").luaInstance["Page"..i]
+            if(page and NGUITools.GetActive(page.gameObject))then
+                page:GetComponent("LuaBehaviour"):CallLuaFunctionForLua("RefreshPage", nil)
+            end
+        end
+    end
+
+--    local model = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+
+--    for i = 1, #self.NinjaCollection do
+--        local ninjaCellData = self.NinjaCollection[i]
+--        if(ninjaCellData and ninjaCellData.cell)then
+--            local flag = false
+--            for j = 0, model.FightNinjasForPlayer.Count - 1 do
+--                if(model.FightNinjasForPlayer[j] and model.FightNinjasForPlayer[j].id == ninjaCellData.NinjaData.id)then
+--                    ninjaCellData.cell.SelectedIndex = j
+--                    flag = true
+--                    break
+--                end
+--            end
+--            if(not flag)then
+--                ninjaCellData.cell.SelectedIndex = -1
+--            end
+--        end
+--    end
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:ClearTabState()
+    self.TabNinja:GetComponent("LuaBehaviour").luaInstance:SetSelected(false)
+    if(self.TabPsy:GetComponent("LuaBehaviour") and self.TabPsy:GetComponent("LuaBehaviour").luaInstance)then
+        self.TabPsy:GetComponent("LuaBehaviour").luaInstance:SetSelected(false)
+    end
+    if(self.TabScr:GetComponent("LuaBehaviour") and self.TabScr:GetComponent("LuaBehaviour").luaInstance)then
+        self.TabScr:GetComponent("LuaBehaviour").luaInstance:SetSelected(false)
+    end
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:AddFreeDataToCandidate(freeData,candidateData,type)
+    -- body
+    local tModel = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+
+    local freeDataCount = freeData.Count
+    local candidateDataCount = candidateData.Count
+
+    if type == 3  then 
+        for i=0,candidateDataCount-1 do
+            local data = {}
+            data.model = tModel
+            for j =0,freeDataCount-1 do
+                if candidateData[i].gid.id == freeData[j].gid.id then
+                    if candidateData[i].level >= freeData[j].level then
+                        data.isWeekFree = false
+                        data.ScrollID = candidateData[i].gid.id
+                        data.level = candidateData[i].level
+                        data.sortScore = data.ScrollID - 10000000
+                    else
+                        data.isWeekFree = true
+                        data.ScrollID = freeData[j].gid.id
+                        data.level = freeData[j].level
+                        data.sortScore = data.ScrollID - 30000000
+                    end
+                    
+                    data.HasHired = true
+                    table.insert(self.ScrollCollection, data)
+                    break
+                end
+            end
+            if (data.isWeekFree == nil) then 
+                data.isWeekFree = false
+                data.ScrollID =  candidateData[i].gid.id
+                data.level = candidateData[i].level
+                data.sortScore = data.ScrollID - 10000000
+                data.HasHired = true
+                table.insert(self.ScrollCollection, data)
+            end
+        end
+
+        for i=0,freeDataCount-1 do
+            local data = {}
+            data.model = tModel
+            for j=0,candidateDataCount-1 do
+                if candidateData[j].gid.id == freeData[i].gid.id then
+                    data.isWeekFree = false
+                    break
+                end
+            end
+            if data.isWeekFree == nil then
+                data.isWeekFree = true 
+                data.ScrollID =  freeData[i].gid.id
+                data.level = freeData[i].level
+                data.sortScore = data.ScrollID - 30000000
+                data.HasHired = false
+                table.insert(self.ScrollCollection, data)
+            end
+        end
+        return
+    end
+
+    local tModel = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+    for i=0,candidateDataCount-1 do
+        local data = {}
+        data.model = tModel
+        for j =0,freeDataCount-1 do
+            if candidateData[i].id == freeData[j].id then
+                data.isWeekFree = false
+                if type == 1 then 
+                    data.NinjaData = candidateData[i]
+                    data.sortScore = data.NinjaData:GetSortScore()
+                    -- data.sortScore = data.sortScore - 10000000
+                    data.HasHired = true
+                    table.insert(self.NinjaCollection, data)
+                elseif type == 2 then
+                    data.PsyId = candidateData[i].id
+                    data.sortScore = data.PsyId - 10000000
+                    data.HasHired = true
+                    table.insert(self.PsyCollection, data)
+                end
+                break
+            end
+        end
+        if (data.isWeekFree == nil) then 
+            data.isWeekFree = false 
+            if type == 1 then 
+                data.NinjaData = candidateData[i]
+                data.sortScore = data.NinjaData:GetSortScore()
+                -- data.sortScore = data.sortScore - 10000000
+                data.HasHired = true
+                table.insert(self.NinjaCollection, data)
+            elseif type == 2 then
+                data.PsyId = candidateData[i].id
+                data.sortScore = data.PsyId - 10000000
+                data.HasHired = true
+                table.insert(self.PsyCollection, data)
+            end
+        end
+    end
+
+    for i=0,freeDataCount-1 do
+        local data = {}
+        data.model = tModel
+        for j=0,candidateDataCount-1 do
+            if candidateData[j].id == freeData[i].id then
+                data.isWeekFree = false
+                break
+            end
+        end
+        if data.isWeekFree == nil then 
+            data.isWeekFree = true
+            if type == 1 then
+                data.NinjaData = freeData[i]
+                data.sortScore = data.NinjaData:GetSortScore() - 100000
+                -- leozz
+                -- data.sortScore = data.sortScore - 30000000
+                data.HasHired = false
+                table.insert(self.NinjaCollection, data)
+            elseif type ==2 then
+                data.PsyId = freeData[i].id
+                data.sortScore = data.PsyId - 30000000
+                data.HasHired = false
+                table.insert(self.PsyCollection, data)
+            end
+        end
+    end
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:AddLimitNinjaData()
+    -- 添加限时忍者
+    local tModel = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+    local tLimitModel = LuaPluginManager.Instance:GetPluginByName("PvpLimitShopPlugin"):GetModel()
+    local limitNinjaLst = tLimitModel.pvpPack.ninja_list
+    for i=1, #limitNinjaLst do
+        local data = {}
+        data.model = tModel
+        local tmpNinjadata = RemoteModel.Instance.NinjaCollection:GetNinjaData(limitNinjaLst[i].id,false)
+        for j=1, #self.NinjaCollection do
+            -- 周免忍者，被限时替换
+            if self.NinjaCollection[j].NinjaData.id == limitNinjaLst[i].id and self.NinjaCollection[j].isWeekFree then
+                local tmp = tmpNinjadata:Clone()
+                tmp.starLevel = tmp.startupStarLevel
+                data.NinjaData = tmp
+                data.isWeekFree = false
+                data.isLimit = true
+                data.sortScore = tmp:GetSortScore() + 0
+                --leozz
+                data.HasHired = false
+                data.propInfo = tLimitModel:GetLimitPropInfo(data.NinjaData.id)
+
+                self.NinjaCollection[j] = data
+
+                Log("ReplaceLimitNinja: id = "..data.NinjaData.id)
+                break
+            end
+        end
+
+        -- 没替换周免，也没永久拥有
+        if data.NinjaData == nil and not tmpNinjadata.HasHired then
+            local tmp = tmpNinjadata:Clone()
+            tmp.starLevel = tmp.startupStarLevel
+            data.NinjaData = tmp
+            data.isWeekFree = false
+            data.isLimit = true
+            data.sortScore = tmp:GetSortScore() - 200000
+            --leozz
+            data.HasHired = false
+            data.propInfo = tLimitModel:GetLimitPropInfo(data.NinjaData.id)
+
+            table.insert(self.NinjaCollection, data)
+            Log("AddLimitNinja: id: = "..data.NinjaData.id)
+        end
+    end    
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:AddLimitFreeNinjaData()
+	
+	--为了排序 先计算sort_score
+	for i = 1, #self.NinjaCollection do
+		local data = self.NinjaCollection[i]
+		data.sort_score = data.NinjaData:GetSortScore() 
+	end
+
+	local tModel = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+	
+	local limit_free_ninja_list = NinjaDataUtil.GetLimitFreeReleasedNinjas()
+	local limit_free_ninja_list_length = NinjaDataUtil.GetLimitFreeReleasedNinjasCount()
+	local colection_length = #self.NinjaCollection
+	if limit_free_ninja_list_length > 0 then
+		for i = 1, limit_free_ninja_list_length do		
+			local add_limit_free = true
+			local limit_free_ninja_data = limit_free_ninja_list[i]		
+			for j = 1, colection_length do
+				if self.NinjaCollection[j].NinjaData.id == limit_free_ninja_data.id then
+					add_limit_free = false
+					break;
+				end
+			end			
+			if add_limit_free then
+				local data = {}
+				data.model = tModel						
+				data.NinjaData = limit_free_ninja_data
+				data.isWeekFree = false
+				data.isLimit = false
+				data.isLimitFree = true				
+				data.sort_score = limit_free_ninja_data:GetSortScore() - 200000
+				--leozz
+				data.HasHired = false				
+				table.insert(self.NinjaCollection,data)										
+			end
+		end		
+	end	
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:AddLimitFreeWhiteNinjaData()
+	local tModel = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+	local limit_free_ninja_list = NinjaDataUtil.GetLimitFreeWhiteListNinjaDataTable()
+	local limit_free_ninja_list_length = NinjaDataUtil.GetLimitFreeWhiteListNinjaDataTableLength()
+	if limit_free_ninja_list_length > 0 then
+		for i = 1, limit_free_ninja_list_length do		
+			local add_limit_free = true
+			local limit_free_ninja_data = limit_free_ninja_list[i]		
+			for j = 1, #self.NinjaCollection do
+				if self.NinjaCollection[j].NinjaData.id == limit_free_ninja_data.id then
+					add_limit_free = false
+					break;
+				end
+			end			
+			if add_limit_free then
+				local data = {}
+				data.model = tModel					
+				data.NinjaData = limit_free_ninja_data
+				data.isWeekFree = false
+				data.isLimit = false
+				data.isLimitFree = true
+                data.sortScore = limit_free_ninja_data:GetSortScore() - 200000
+                --leozz
+				data.HasHired = false				
+				table.insert(self.NinjaCollection,data)										
+			end
+		end	
+	end	
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:AddLimitPsyData()
+    -- 添加限时通灵
+    local tModel = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+    local tLimitModel = LuaPluginManager.Instance:GetPluginByName("PvpLimitShopPlugin"):GetModel()
+    local limitPsyLst = tLimitModel.pvpPack.psychic_list
+
+    for i=1, #limitPsyLst do
+        local data = {}
+        data.model = tModel
+        for j=1, #self.PsyCollection do
+            -- 周免，被限时替换
+            if self.PsyCollection[j].PsyId == limitPsyLst[i].id and self.PsyCollection[j].isWeekFree then
+                data.PsyId = limitPsyLst[i].id
+                data.isWeekFree = false
+                data.isLimit = true
+                data.sortScore = data.PsyId - 20000000
+                data.HasHired = false
+                data.propInfo = tLimitModel:GetPsyLimitPropInfo(data.PsyId)
+                
+                self.PsyCollection[j] = data
+
+                Log("ReplaceLimitPsy: id = "..data.PsyId)
+                break
+            end
+        end
+
+        -- 没替换周免，也没永久拥有
+        if data.PsyId == nil and not tLimitModel:HasPsy(limitPsyLst[i].id) then
+            data.PsyId = limitPsyLst[i].id
+            data.isWeekFree = false
+            data.isLimit = true
+            data.sortScore = data.PsyId - 20000000
+            data.HasHired = false
+            data.propInfo = tLimitModel:GetPsyLimitPropInfo(data.PsyId)
+
+            table.insert(self.PsyCollection, data)
+            Log("AddLimitPsy: id = "..data.PsyId)
+        end
+    end
+
+    table.sort(self.PsyCollection, KiHan.PVPRealTimeMain.RightPanel.PsySort)
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:AddLimitScrollData()
+    -- 添加限时通灵
+    local tModel = KHPluginManager.Instance:GetModel(PVPRealTimeMainUIPlugin.PluginName)
+    local tLimitModel = LuaPluginManager.Instance:GetPluginByName("PvpLimitShopPlugin"):GetModel()
+    local limitScrollLst = tLimitModel.pvpPack.scroll_list
+
+    for i=1, #limitScrollLst do
+        local data = {}
+        data.model = tModel
+        for j=1, #self.ScrollCollection do
+            -- 周免，被限时替换
+            if self.ScrollCollection[j].ScrollID == limitScrollLst[i].id and self.ScrollCollection[j].isWeekFree then
+                data.ScrollID = limitScrollLst[i].id
+                data.level = limitScrollLst[i].star
+                data.SelectedIndex = 0
+                data.isWeekFree = false
+                data.isLimit = true
+                data.sortScore = data.ScrollID - 20000000
+                data.HasHired = false
+                data.propInfo = tLimitModel:GetScrollLimitPropInfo(data.ScrollID)
+
+                self.ScrollCollection[j] = data
+
+                Log("ReplaceLimitScroll: id = "..data.ScrollID)
+                break
+            end
+        end
+
+        -- 没替换周免，也没永久拥有
+        if data.ScrollID == nil and not tLimitModel:HasScroll(limitScrollLst[i].id) then
+            data.ScrollID = limitScrollLst[i].id
+            data.level = limitScrollLst[i].star
+            data.SelectedIndex = 0
+            data.isWeekFree = false
+            data.isLimit = true
+            data.sortScore = data.ScrollID - 20000000
+            data.HasHired = false
+            data.propInfo = tLimitModel:GetScrollLimitPropInfo(data.ScrollID)
+
+            table.insert(self.ScrollCollection, data)
+            Log("AddLimitScroll: id = "..data.ScrollID)
+        end
+    end
+
+    table.sort(self.ScrollCollection, KiHan.PVPRealTimeMain.RightPanel.ScrollSort)
+end
+
+function KiHan.PVPRealTimeMain.RightPanel.NinjaLimitFreeSort(a,b)
+	return a.sortScore < b.sortScore
+end
+
+function KiHan.PVPRealTimeMain.RightPanel.NinjaSort(a,b)
+    return a.sortScore < b.sortScore
+    --[[
+    local scoreA = 0
+    local scoreB = 0
+
+    if a.NinjaData.HasHired then
+        scoreA = scoreA - 30000000
+    elseif a.isWeekFree then
+        scoreA = scoreA - 20000000
+    else 
+        scoreA = scoreA - 10000000
+    end
+
+    if b.NinjaData.HasHired then
+        scoreB = scoreB - 30000000
+    elseif b.isWeekFree then
+        scoreB = scoreB - 20000000
+    else 
+        scoreB = scoreB - 10000000
+    end
+
+    scoreA = scoreA - a.NinjaData.aptitude * 1000000
+    scoreB = scoreB - b.NinjaData.aptitude * 1000000
+    scoreA = scoreA - a.NinjaData.starLevel * 10000
+    scoreB = scoreB - b.NinjaData.starLevel * 10000
+    scoreA = scoreA + a.NinjaData.sort
+    scoreB = scoreB + b.NinjaData.sort
+
+    return scoreA < scoreB
+    --]]
+end
+
+function KiHan.PVPRealTimeMain.RightPanel.PsySort(a,b)
+    return a.sortScore < b.sortScore
+    --[[
+    local scoreA = 0
+    local scoreB = 0
+
+    if limitShopModel:HasPsy(a.PsyId) then
+        scoreA = scoreA - 10000000
+    elseif a.isWeekFree then
+        scoreA = scoreA - 30000000
+    else 
+        scoreA = scoreA - 20000000
+    end
+
+    if limitShopModel:HasPsy(b.PsyId) then
+        scoreB = scoreB - 10000000
+    elseif b.isWeekFree then
+        scoreB = scoreB - 30000000
+    else 
+        scoreB = scoreB - 20000000
+    end
+    scoreA = scoreA + a.PsyId
+    scoreB = scoreB + b.PsyId
+
+    return scoreA < scoreB
+    --]]
+end
+
+function KiHan.PVPRealTimeMain.RightPanel.ScrollSort(a,b) 
+    return a.sortScore < b.sortScore
+    --[[
+    local scoreA = 0
+    local scoreB = 0
+
+    if limitShopModel:HasScroll(a.ScrollID) then
+        scoreA = scoreA - 10000000
+    elseif a.isWeekFree then
+        scoreA = scoreA - 30000000
+    else 
+        scoreA = scoreA - 20000000
+    end
+
+    if limitShopModel:HasScroll(b.ScrollID) then
+        scoreB = scoreB - 10000000
+    elseif b.isWeekFree then
+        scoreB = scoreB - 30000000
+    else 
+        scoreB = scoreB - 20000000
+    end
+    scoreA = scoreA + a.ScrollID
+    scoreB = scoreB + b.ScrollID
+
+    return scoreA < scoreB
+    --]]
+end
+
+function KiHan.PVPRealTimeMain.RightPanel:OnDisable()
+end

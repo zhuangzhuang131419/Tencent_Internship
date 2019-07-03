@@ -139,4 +139,6 @@ KiHan/Assets/Scripts/LuaStaticScript/*
 KiHan/Assets/Scripts/LuaStaticScript/UI/*
 !KiHan/Assets/Scripts/LuaStaticScript/UI/PVPRealTimeMain
 KiHan/Assets/Scripts/LuaStaticScript/UI/PVPRealTimeMain/*
+
 !KiHan/Assets/Scripts/LuaStaticScript/UI/PVPRealTimeMain/PVPRealTimePsyItem.lua.txt
+!KiHan/Assets/Scripts/LuaStaticScript/UI/PVPRealTimeMain/RightPanel.lua.txt
