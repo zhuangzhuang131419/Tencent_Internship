@@ -15,7 +15,7 @@ public class UIPVPRealTimeMainSelectNinja : MonoBehaviour
 
     // 名字修改
     private static PvpFightType currentFightType;
-    private static int currentSystemID;
+    private static int currentSystemID = -1;
 
     // 不同UI界面是否带有战力
     private static Dictionary<string, bool> UIWindows = new Dictionary<string, bool>();
@@ -40,7 +40,7 @@ public class UIPVPRealTimeMainSelectNinja : MonoBehaviour
         set
         {
             currentSystemID = value;
-            Debug.LogWarning("当前systemID");
+            Debug.LogWarning("当前systemID" + currentSystemID);
         }
     }
 
@@ -48,9 +48,9 @@ public class UIPVPRealTimeMainSelectNinja : MonoBehaviour
     {
         get
         {
-
-            AddUIWindow(UIDef.PVP_REALTIME_MAIN, true);         // 忍术对决
-            AddUIWindow("UILua/Arena/ArenaNinjaSelect", true);  // 段位赛
+            AddUIWindow(UIDef.PVP_REALTIME_MAIN, false);         // 忍术对决
+            AddUIWindow("UILua/Arena/ArenaNinjaSelect", false);  // 段位赛
+            // AddUIWindow(UIDef.CommonTeamSettingMainView, true); // 修行之路
 
 
             foreach (string title in UIWindows.Keys)
@@ -69,15 +69,16 @@ public class UIPVPRealTimeMainSelectNinja : MonoBehaviour
                 || currentSystemID == SystemConfigDef.Psychic_1 // 51
                 || currentSystemID == 128
                 || currentSystemID == 255
-                || currentSystemID == 307)
+                || currentSystemID == 307
+                || currentSystemID == SystemConfigDef.PractiseMode) // 101
             {
                 Debug.LogWarning("带有通灵兽");
-                return true;
+                return false;
             }
 
 
-            Debug.LogWarning("false");
-            return false;
+            Debug.LogWarning(currentSystemID);
+            return true;
         }
     }
 

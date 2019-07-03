@@ -73,7 +73,11 @@ function PsyItem.__Class()
 		
 		if UIPVPRealTimeMainSelectNinja.OnlyWatch then
 			if this.Data ~= nil then
-				KHPluginManager.Instance:SendMessage("Psychic", "Psychic.OnOpenSkillInfo", this.Data.PsyId)
+				if UIPVPRealTimeMainSelectNinja.IsWithFight then -- 是否带入战力
+					KHPluginManager.Instance:SendMessage("Psychic", "Psychic.OnOpenSkillInfo", this.Data.PsyId)
+				else
+					KHPluginManager.Instance:SendMessage("Psychic", "OpenRawSkillInfo", this.Data.PsyId)
+				end
 			end
 			return
 		end
@@ -134,7 +138,7 @@ function PsyItem.__Class()
 	    __protected.Icon:GetComponent("UISprite").spriteName = psyInfo.resID
 
 		local isWithFight = UIPVPRealTimeMainSelectNinja.IsWithFight -- 是否带入战力
-		if isWithFight then
+		if (not isWithFight) then
 			__protected.Name:GetComponent("UILabel").text = psyInfo.petName
 		else
 			__protected.Name:GetComponent("UILabel").text = PsychicModel.GetUpgradePhase(data.PsyId)  --将名字换成阶数

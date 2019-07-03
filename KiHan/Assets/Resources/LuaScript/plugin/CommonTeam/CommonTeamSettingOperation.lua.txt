@@ -153,6 +153,8 @@ function CommonTeamSettingOperation.__Class( ... )
         local tMainViewUiParam = __protected.plugin:GetModel():Get_Def_MainViewData()
         tMainViewUiParam.SettingResultCallback = praData.SettingResultCallback
         tMainViewUiParam.SysID = praData.SysID
+		-- 获取当前的systemID
+		UIPVPRealTimeMainSelectNinja.CurrentSysID = praData.SysID
         tMainViewUiParam.OnlyNinja = praData.OnlyNinja
         tMainViewUiParam.LocalOperation = praData.LocalOperation
         tMainViewUiParam.ComponmentValidityFlag = praData.ComponmentValidityFlag
@@ -245,7 +247,7 @@ require_pb_list({proto_files.common_data_lua_common_pb,proto_files.common_data_l
             local tPbTeamInfo = ZoneCommonTeamGetRsp()
             ProtoUtil.CopyTo(tPbTeamInfo, tPbTeamInfoRaw)
 			-- 获取当前的systemID
-			UIPVPRealTimeMainSelectNinja.CurrentSysID = SysID
+			UIPVPRealTimeMainSelectNinja.CurrentSysID = tCsTeamInfo.team_set.type
             local tUiParam = 
             {
                 SysID = tCsTeamInfo.team_set.type,

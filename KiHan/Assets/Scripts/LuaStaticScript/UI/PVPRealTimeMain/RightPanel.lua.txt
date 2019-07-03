@@ -883,7 +883,11 @@ function KiHan.PVPRealTimeMain.RightPanel:OnClickPsy(data)
     end
     
     if UIPVPRealTimeMainSelectNinja.OnlyWatch == true then
-    	KHPluginManager.Instance:SendMessage("Psychic", "Psychic.OnOpenSkillInfo", data.PsyId)
+		if UIPVPRealTimeMainSelectNinja.IsWithFight then -- 是否带入战力
+			KHPluginManager.Instance:SendMessage("Psychic", "Psychic.OnOpenSkillInfo", data.PsyId)
+		else
+			KHPluginManager.Instance:SendMessage("Psychic", "OpenRawSkillInfo", data.PsyId)
+		end
     	return
     end
     
@@ -1790,3 +1794,4 @@ end
 
 function KiHan.PVPRealTimeMain.RightPanel:OnDisable()
 end
+

@@ -107,7 +107,7 @@ function KiHan.PVPRealTimeMain.PVPRealTimePsyItem:SetData(data)
 	self.Icon:GetComponent("UISprite").spriteName = psyInfo.resID
 
 	local isWithFight = UIPVPRealTimeMainSelectNinja.IsWithFight -- 是否带入战力
-	if isWithFight then
+	if (not isWithFight) then
 		self.Name:GetComponent("UILabel").text = psyInfo.petName
 	else
 		self.Name:GetComponent("UILabel").text = PsychicModel.GetUpgradePhase(data.PsyId)  --将名字换成阶数
