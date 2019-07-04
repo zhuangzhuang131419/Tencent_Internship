@@ -41,6 +41,8 @@ KiHan/*
 KiHan/Assets/*
 
 # 保留MapEditor
+!KiHan/Assets/MapEditor
+
 !KiHan/Assets/Editor
 KiHan/Assets/Editor/*
 !KiHan/Assets/Editor/MapEditor

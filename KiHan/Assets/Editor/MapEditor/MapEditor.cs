@@ -442,7 +442,7 @@ public class MapEditor : MonoBehaviour
                 }
             }
 
-            Unit unitComponent = InitializeUnit(maxIndex, Selection.gameObjects[0]);
+            Unit unitComponent = InitializeUnit(maxIndex + 1, Selection.gameObjects[0]);
 
             // 选中
             EditorGUIUtility.PingObject(unitComponent.gameObject);
@@ -669,10 +669,11 @@ public class MapEditor : MonoBehaviour
             units[index].ID = int.Parse(item.SelectSingleNode("actorID").InnerText);
             units[index].transform.position = new Vector3(
                 float.Parse(item.SelectSingleNode("map_pos_x").InnerText) / 10000,
-                units[index].transform.position.y,
-                float.Parse(item.SelectSingleNode("map_pos_y").InnerText) / 10000
+                float.Parse(item.SelectSingleNode("map_pos_z").InnerText) / 10000,
+                units[index].transform.position.z
                 );
             units[index].CreateAction = int.Parse(item.SelectSingleNode("defaultVKey").InnerText);
+            units[index].CreateHeight = float.Parse(item.SelectSingleNode("map_pos_y").InnerText) / 10000;
             units[index].Direction = int.Parse(item.SelectSingleNode("direction").InnerText);
             units[index].DelayCreateTime = int.Parse(item.SelectSingleNode("delayCreateTime").InnerText);
             units[index].CenterToPlayer = int.Parse(item.SelectSingleNode("centerToPlayer").InnerText);
