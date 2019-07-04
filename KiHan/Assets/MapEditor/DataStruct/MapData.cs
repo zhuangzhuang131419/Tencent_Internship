@@ -21,10 +21,4 @@ public class MapData : MonoBehaviour
         get { return desc; }
         set { desc = value; }
     }
-
-    //public List<MapGenerator> MapGenerators
-    //{
-    //    get { return mapGenerators; }
-    //    set { mapGenerators = value; }
-    //}
 }

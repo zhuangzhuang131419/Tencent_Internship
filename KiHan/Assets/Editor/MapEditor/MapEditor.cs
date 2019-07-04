@@ -69,21 +69,7 @@ public class MapEditor : MonoBehaviour
         else
         {
             MapData mapData = FindObjectOfType<MapData>();
-            // 旧版本
-            PrefabUtility.DisconnectPrefabInstance(mapData.gameObject);
-
-            // 新版本
-            // PrefabUtility.UnpackPrefabInstance(mapData.gameObject, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
-            foreach (MapGenerator generator in Resources.FindObjectsOfTypeAll<MapGenerator>())
-            {
-                if (string.IsNullOrEmpty(AssetDatabase.GetAssetPath(generator)))
-                {
-                    DestroyImmediate(generator.gameObject);
-                }
-            }
-            Debug.Log("销毁成功");
             
-
             // 读取新的数据
             if (Directory.Exists(MAP_ID_PATH + "/" + mapData.ID + "/MapGenerator"))
             {
@@ -653,6 +639,7 @@ public class MapEditor : MonoBehaviour
                 units.Add(unit);
             }
         }
+        units.Reverse();
         Debug.Log(generator.Index + "有" + units.Count + "个units");
         int index = 0;
         foreach (XmlNode item in xmlFile.SelectSingleNode("MonsterPackConfig").SelectSingleNode("ary").SelectNodes("item"))
