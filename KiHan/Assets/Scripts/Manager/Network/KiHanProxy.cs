@@ -540,17 +540,17 @@ namespace KH.Network
                         ulong timeStamp = remoteModel.CurrentTime;
                         if (isCSharp && isLua)
                         {
-                            msgManager.serializeToLocalWithType(msgs, messageType, head.CmdId, timeStamp, head.Serial, MessageSource.CSharpAndLua);
+                            serializeToLocalWithType(msgs, messageType, head.CmdId, timeStamp, head.Serial, MessageSource.CSharpAndLua);
                         }
                         else if (isLua)
                         {
-                            msgManager.serializeToLocalWithType(msgs, null, head.CmdId, timeStamp, head.Serial, MessageSource.Lua);
+                            serializeToLocalWithType(msgs, null, head.CmdId, timeStamp, head.Serial, MessageSource.Lua);
                         }
                         else if (isCSharp)
                         {
                             if (messageType != null)
                             {
-                                msgManager.serializeToLocalWithType(msgs, messageType, head.CmdId, 0, head.Serial, MessageSource.CSharp);
+                                serializeToLocalWithType(msgs, messageType, head.CmdId, 0, head.Serial, MessageSource.CSharp);
                             } 
                             else
                             {
@@ -562,6 +562,57 @@ namespace KH.Network
                 }
                 return msgs;
             }
+        }
+
+        public void serializeToLocalWithType(List<object> msgs, Type messageType, uint cmdID, ulong timeStamp, uint serial, MessageSource source)
+        {
+            MessageBody packedMessageBody = new MessageBody(messageType, cmdID, timeStamp, serial, source);
+            try
+            {
+                switch (source)
+                {
+                    case MessageSource.Lua:
+
+                        if (msgs[0] is byte[])
+                        {
+                            packedMessageBody.MessagesBodyBuffer.Add((byte[])msgs[0]);
+                        }
+                        break;
+                    case MessageSource.CSharp:
+                        try
+                        {
+                            PBSerializer.NDeserialize(PBSerializer.NSerialize(msgs[0]), messageType);
+                        }
+                        catch (Exception)
+                        {
+                            Debug.LogWarning(cmdID + "NTF测试未通过");
+                            break;
+                        }
+                        packedMessageBody.MessagesBodyBuffer.Add(PBSerializer.NSerialize(msgs[0]));
+
+                        break;
+                    case MessageSource.CSharpAndLua:
+
+                        foreach (var item in msgs)
+                        {
+                            if (item is byte[])
+                            {
+                                packedMessageBody.MessagesBodyBuffer.Add((byte[])item);
+                            }
+                            else
+                            {
+                                packedMessageBody.MessagesBodyBuffer.Add(PBSerializer.NSerialize(item));
+                            }
+                        }
+                        break;
+                }
+            }
+            catch
+            {
+                Debug.LogError("序列化出现问题");
+                Debug.LogError("消息数量：" + msgs.Count + " ；序列号：" + serial);
+            }
+            MessageManager.Instance.serializeToLocal(packedMessageBody, MessageManager.DEST_PATH_CSharp);
         }
 
         public void Dispose()

@@ -13,6 +13,7 @@ using naruto.protocol;
 using QCloud.CosApi.Api;
 using QCloud.CosApi.Common;
 using KH.NNClient;
+using System.Threading;
 
 namespace KH
 {
@@ -3106,6 +3107,29 @@ namespace KH
             {
                 msgManager.IsSerializeToLocal = !msgManager.IsSerializeToLocal;
             }
+
+            if (GUILayout.Button("鼠标自动化测试"))
+            {
+                MouseAction mouseevent = msgManager.deserializeFromLocal<MouseAction>(MessageManager.DEST_PATH_MOUSE_EVENT, 0);
+                mouseevent.execute();
+            }
+
+            if (GUILayout.Button("鼠标监控"))
+            {
+                if (GameObject.Find("MouseMonitor") == null)
+                {
+                    GameObject mouseMonitor = new GameObject("MouseMonitor");
+                    mouseMonitor.AddComponent<MouseMonitor>();
+                }
+            }
+
+            if (GUILayout.Button("test"))
+            {
+                MouseSimulator.MoveTo(0.88, 1.12);
+            }
+
+
+
             GUILayout.EndVertical();
 
         }

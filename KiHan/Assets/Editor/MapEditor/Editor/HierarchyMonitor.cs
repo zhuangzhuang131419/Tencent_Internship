@@ -1,11 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEditor;
-using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Collections.Generic;
-using System.Xml;
 
 public class HierarchyMonitor : Monitor {
 

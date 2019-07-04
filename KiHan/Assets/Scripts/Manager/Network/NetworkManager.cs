@@ -493,7 +493,7 @@ namespace KH
             if (msgManager.IsActivate && !msgManager.IsSerializeToLocal)
             {
                 // 反序列化之后的结果
-                List<object> messagesBody = msgManager.ReadMessageFromLocal(cmdId);
+                List<object> messagesBody = msgManager.deserializeFromLocal(cmdId);
                 try
                 {
                     __Proxy.__QueueAddMessage(cmdId, serial, messagesBody);
@@ -572,7 +572,7 @@ namespace KH
                 // Lua反序列化之后的结果
                 try
                 {
-                    List<object> messagesBody = msgManager.ReadMessageFromLocal(cmdId);
+                    List<object> messagesBody = msgManager.deserializeFromLocal(cmdId);
                     if (messagesBody != null)
                     {
                         __Proxy.__QueueAddMessage(cmdId, serial, messagesBody);
