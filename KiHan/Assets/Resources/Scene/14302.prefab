@@ -13748,6 +13748,8 @@ MonoBehaviour:
     - indexX: 19
       indexY: -1
       isWalk: 1
+    data1: []
+    data2: []
   terrainData:
     data:
     - indexX: 12
@@ -15007,10 +15009,18 @@ MonoBehaviour:
     - indexX: -17.5
       indexY: -3
       type: 0
+  hiddenAreaData:
+    lstHiddenCellDataItems: []
+  triggerAreaData:
+    lstTriggerCellDataItems: []
   areaData:
   - x: -18.8999996
     y: 8.19999981
     width: 38
+    height: 11
+  - x: -8.72000027
+    y: 8.19999981
+    width: 21.5
     height: 11
   ColorRGB: {r: 1, g: 1, b: 1, a: 1}
   bright: 1
@@ -15022,6 +15032,10 @@ MonoBehaviour:
   UseGlow: 0
   glowColor: {r: 0, g: 0, b: 0, a: 1}
   PlayEnvSound: 0
+  sceneType: 0
+  terrainHeight: 0
+  CameraPosOffset: {x: 0, y: 16.7000008, z: -58.4000015}
+  CameraRotOffset: {x: 15, y: 0, z: 0}
 --- !u!114 &11404814
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19646,6 +19660,8 @@ MonoBehaviour:
     - indexX: -11.5
       indexY: -1.5
       isWalk: 1
+    data1: []
+    data2: []
   terrainData:
     data:
     - indexX: -12
@@ -20512,6 +20528,10 @@ MonoBehaviour:
     - indexX: 11.5
       indexY: -3
       type: 1001
+  hiddenAreaData:
+    lstHiddenCellDataItems: []
+  triggerAreaData:
+    lstTriggerCellDataItems: []
   areaData: []
   ColorRGB: {r: 1, g: 1, b: 1, a: 1}
   bright: 1
@@ -20523,6 +20543,10 @@ MonoBehaviour:
   UseGlow: 0
   glowColor: {r: 0, g: 0, b: .0784313753, a: 1}
   PlayEnvSound: 0
+  sceneType: 0
+  terrainHeight: 0
+  CameraPosOffset: {x: 0, y: 16.7000008, z: -58.4000015}
+  CameraRotOffset: {x: 15, y: 0, z: 0}
 --- !u!114 &11416334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -23789,6 +23813,8 @@ MonoBehaviour:
     - indexX: -11.5
       indexY: -1.5
       isWalk: 1
+    data1: []
+    data2: []
   terrainData:
     data:
     - indexX: -12
@@ -24655,6 +24681,10 @@ MonoBehaviour:
     - indexX: 11.5
       indexY: -3
       type: 1001
+  hiddenAreaData:
+    lstHiddenCellDataItems: []
+  triggerAreaData:
+    lstTriggerCellDataItems: []
   areaData: []
   ColorRGB: {r: 1, g: 1, b: 1, a: 1}
   bright: 1
@@ -24666,6 +24696,10 @@ MonoBehaviour:
   UseGlow: 0
   glowColor: {r: 0, g: 0, b: .0784313753, a: 1}
   PlayEnvSound: 0
+  sceneType: 0
+  terrainHeight: 0
+  CameraPosOffset: {x: 0, y: 16.7000008, z: -58.4000015}
+  CameraRotOffset: {x: 15, y: 0, z: 0}
 --- !u!114 &11466282
 MonoBehaviour:
   m_ObjectHideFlags: 1

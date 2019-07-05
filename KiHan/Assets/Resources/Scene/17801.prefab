@@ -13917,6 +13917,176 @@ MonoBehaviour:
     - indexX: -27
       indexY: -1
       isWalk: 1
+    data1:
+    - indexX: -8
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -8
+      indexY: -6
+      isWalk: 1
+    - indexX: -7.5
+      indexY: -6
+      isWalk: 1
+    - indexX: -7
+      indexY: -6
+      isWalk: 1
+    - indexX: -6.5
+      indexY: -6
+      isWalk: 1
+    - indexX: -6
+      indexY: -6
+      isWalk: 1
+    - indexX: -5.5
+      indexY: -6
+      isWalk: 1
+    - indexX: -5
+      indexY: -6
+      isWalk: 1
+    - indexX: -4.5
+      indexY: -6
+      isWalk: 1
+    - indexX: -4
+      indexY: -6
+      isWalk: 1
+    - indexX: -3.5
+      indexY: -6
+      isWalk: 1
+    - indexX: -3
+      indexY: -6
+      isWalk: 1
+    - indexX: -2.5
+      indexY: -6
+      isWalk: 1
+    - indexX: -2
+      indexY: -6
+      isWalk: 1
+    - indexX: -1.5
+      indexY: -6
+      isWalk: 1
+    - indexX: -1
+      indexY: -6
+      isWalk: 1
+    - indexX: -.5
+      indexY: -6
+      isWalk: 1
+    - indexX: 0
+      indexY: -6
+      isWalk: 1
+    - indexX: .5
+      indexY: -6
+      isWalk: 1
+    - indexX: 1
+      indexY: -6
+      isWalk: 1
+    - indexX: 1.5
+      indexY: -6
+      isWalk: 1
+    - indexX: 2
+      indexY: -6
+      isWalk: 1
+    - indexX: 2.5
+      indexY: -6
+      isWalk: 1
+    - indexX: 3
+      indexY: -6
+      isWalk: 1
+    - indexX: 3.5
+      indexY: -6
+      isWalk: 1
+    - indexX: 4
+      indexY: -6
+      isWalk: 1
+    - indexX: 4.5
+      indexY: -6
+      isWalk: 1
+    - indexX: 5
+      indexY: -6
+      isWalk: 1
+    - indexX: 5.5
+      indexY: -6
+      isWalk: 1
+    - indexX: -7.5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -7
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -6.5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -6
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -5.5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -4.5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -4
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -3.5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -3
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -2.5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -2
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -1.5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -1
+      indexY: -6.5
+      isWalk: 1
+    - indexX: -.5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: 0
+      indexY: -6.5
+      isWalk: 1
+    - indexX: .5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: 1
+      indexY: -6.5
+      isWalk: 1
+    - indexX: 1.5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: 2
+      indexY: -6.5
+      isWalk: 1
+    - indexX: 2.5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: 3
+      indexY: -6.5
+      isWalk: 1
+    - indexX: 3.5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: 4
+      indexY: -6.5
+      isWalk: 1
+    - indexX: 4.5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: 5
+      indexY: -6.5
+      isWalk: 1
+    - indexX: 5.5
+      indexY: -6.5
+      isWalk: 1
+    data2: []
   terrainData:
     data:
     - indexX: 46.5
@@ -15443,6 +15613,10 @@ MonoBehaviour:
     - indexX: 15.5
       indexY: -7
       type: 1001
+  hiddenAreaData:
+    lstHiddenCellDataItems: []
+  triggerAreaData:
+    lstTriggerCellDataItems: []
   areaData:
   - x: -13.1199999
     y: 6.80000019
@@ -15466,6 +15640,10 @@ MonoBehaviour:
   UseGlow: 0
   glowColor: {r: 0, g: 0, b: 0, a: 1}
   PlayEnvSound: 0
+  sceneType: 0
+  terrainHeight: 0
+  CameraPosOffset: {x: 0, y: 16.7000008, z: -58.4000015}
+  CameraRotOffset: {x: 15, y: 0, z: 0}
 --- !u!114 &11437330
 MonoBehaviour:
   m_ObjectHideFlags: 1

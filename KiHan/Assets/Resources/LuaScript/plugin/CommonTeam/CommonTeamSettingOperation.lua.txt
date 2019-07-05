@@ -200,7 +200,7 @@ function CommonTeamSettingOperation.__Class( ... )
         LuaNetRequire(cmd, tReq, function (cmd, buff, timeout)
             -- body
 
-require_pb_list({proto_files.common_data_lua_common_pb,proto_files.common_data_lua_limit_prop_pb,proto_files.common_data_lua_client_pvp_unit_pack_pb,proto_files.zone_kernel_lua_commmon_team_set_pb})
+require_pb_r("zone_kernel_lua_commmon_team_set_pb")
 
             local tRsp = ZoneCommonTeamSetRsp()
             if not timeout then
@@ -242,7 +242,7 @@ require_pb_list({proto_files.common_data_lua_common_pb,proto_files.common_data_l
         
         if tCsTeamInfo then
             local tPbTeamInfoRaw = CommonTeamSettingModel.Convert_ZoneCommonTeamGetRsp( tCsTeamInfo )
-require_pb_list({proto_files.common_data_lua_common_pb,proto_files.common_data_lua_limit_prop_pb,proto_files.common_data_lua_client_pvp_unit_pack_pb,proto_files.zone_kernel_lua_commmon_team_set_pb})
+require_pb_r("zone_kernel_lua_commmon_team_set_pb")
 
             local tPbTeamInfo = ZoneCommonTeamGetRsp()
             ProtoUtil.CopyTo(tPbTeamInfo, tPbTeamInfoRaw)
@@ -281,7 +281,7 @@ require_pb_list({proto_files.common_data_lua_common_pb,proto_files.common_data_l
         local mtdTeamInfo = TeamInfo
         if mtdTeamInfo then
             local mtdPbTeamInfoRaw = CommonTeamSettingModel.Convert_ZoneCommonTeamGetRsp(mtdTeamInfo)
-require_pb_list({proto_files.common_data_lua_common_pb,proto_files.common_data_lua_limit_prop_pb,proto_files.common_data_lua_client_pvp_unit_pack_pb,proto_files.zone_kernel_lua_commmon_team_set_pb})
+require_pb_r("zone_kernel_lua_commmon_team_set_pb")
 
             local mtdPbTeamInfo = ZoneCommonTeamGetRsp()
             ProtoUtil.CopyTo(mtdPbTeamInfo,mtdPbTeamInfoRaw)
@@ -319,7 +319,7 @@ require_pb_list({proto_files.common_data_lua_common_pb,proto_files.common_data_l
 
         if duplicateTeamInfo then
             local duplicatePbTeamInfoRaw = CommonTeamSettingModel.Convert_ZoneCommonTeamGetRsp(duplicateTeamInfo)
-require_pb_list({proto_files.common_data_lua_common_pb,proto_files.common_data_lua_limit_prop_pb,proto_files.common_data_lua_client_pvp_unit_pack_pb,proto_files.zone_kernel_lua_commmon_team_set_pb})
+require_pb_r("zone_kernel_lua_commmon_team_set_pb")
 
             local duplicatePbTeamInfo = ZoneCommonTeamGetRsp()
             ProtoUtil.CopyTo(duplicatePbTeamInfo,duplicatePbTeamInfoRaw)
@@ -385,5 +385,6 @@ require_pb_list({proto_files.common_data_lua_common_pb,proto_files.common_data_l
     
     return this,__protected,__private
 end
+
 
 

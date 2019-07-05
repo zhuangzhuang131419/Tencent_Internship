@@ -69,6 +69,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 435496}
+  - 114: {fileID: 11422556}
   m_Layer: 0
   m_Name: wind_stone
   m_TagString: Untagged
@@ -120,6 +121,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 435498}
+  - 114: {fileID: 11422554}
   m_Layer: 0
   m_Name: lightning_cloud_white
   m_TagString: Untagged
@@ -154,6 +156,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 435506}
+  - 114: {fileID: 11422552}
   m_Layer: 0
   m_Name: lightning_003
   m_TagString: Untagged
@@ -395,6 +398,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 435522}
+  - 114: {fileID: 11422550}
   m_Layer: 0
   m_Name: lightning_glow_002
   m_TagString: Untagged
@@ -8358,6 +8362,54 @@ MonoBehaviour:
   terrainHeight: 0
   CameraPosOffset: {x: 0, y: 16.7000008, z: -58.4000015}
   CameraRotOffset: {x: 15, y: 0, z: 0}
+--- !u!114 &11422550
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3ef10486a449747943a1ed68e346a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lstTags: 01000000
+--- !u!114 &11422552
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3ef10486a449747943a1ed68e346a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lstTags: 01000000
+--- !u!114 &11422554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3ef10486a449747943a1ed68e346a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lstTags: 01000000
+--- !u!114 &11422556
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3ef10486a449747943a1ed68e346a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lstTags: 01000000
 --- !u!114 &11433604
 MonoBehaviour:
   m_ObjectHideFlags: 1

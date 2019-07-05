@@ -60,6 +60,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 421808}
+  - 114: {fileID: 11486534}
   m_Layer: 0
   m_Name: fengBOSS_1
   m_TagString: Untagged
@@ -130,6 +131,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 421810}
+  - 114: {fileID: 11486532}
   m_Layer: 0
   m_Name: fengBOSS_2
   m_TagString: Untagged
@@ -184,6 +186,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 421812}
+  - 114: {fileID: 11486530}
   m_Layer: 0
   m_Name: fengBOSS_3
   m_TagString: Untagged
@@ -3766,6 +3769,8 @@ MonoBehaviour:
     - indexX: 17
       indexY: -4
       isWalk: 1
+    data1: []
+    data2: []
   terrainData:
     data:
     - indexX: 46.5
@@ -6402,6 +6407,10 @@ MonoBehaviour:
     - indexX: 17
       indexY: -5
       type: 1000
+  hiddenAreaData:
+    lstHiddenCellDataItems: []
+  triggerAreaData:
+    lstTriggerCellDataItems: []
   areaData:
   - x: -17.1000004
     y: 3.79999995
@@ -6433,6 +6442,10 @@ MonoBehaviour:
   UseGlow: 0
   glowColor: {r: 0, g: 0, b: 0, a: 1}
   PlayEnvSound: 0
+  sceneType: 0
+  terrainHeight: 0
+  CameraPosOffset: {x: 0, y: 16.7000008, z: -58.4000015}
+  CameraRotOffset: {x: 15, y: 0, z: 0}
 --- !u!114 &11440346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6518,6 +6531,42 @@ MonoBehaviour:
   endX: 0
   beginY: 0
   endY: 0
+--- !u!114 &11486530
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3ef10486a449747943a1ed68e346a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lstTags: 01000000
+--- !u!114 &11486532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3ef10486a449747943a1ed68e346a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lstTags: 01000000
+--- !u!114 &11486534
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3ef10486a449747943a1ed68e346a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lstTags: 01000000
 --- !u!198 &19821832
 ParticleSystem:
   m_ObjectHideFlags: 1

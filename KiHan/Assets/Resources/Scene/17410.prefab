@@ -158,6 +158,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 493480}
+  - 114: {fileID: 11400772}
   m_Layer: 0
   m_Name: tree
   m_TagString: Untagged
@@ -3097,6 +3098,8 @@ MonoBehaviour:
     - indexX: -12.5
       indexY: .5
       isWalk: 0
+    data1: []
+    data2: []
   terrainData:
     data:
     - indexX: -17
@@ -6426,6 +6429,10 @@ MonoBehaviour:
     - indexX: -14
       indexY: -.5
       type: 1000
+  hiddenAreaData:
+    lstHiddenCellDataItems: []
+  triggerAreaData:
+    lstTriggerCellDataItems: []
   areaData:
   - x: -8
     y: 5
@@ -6457,6 +6464,22 @@ MonoBehaviour:
   UseGlow: 0
   glowColor: {r: .0784313753, g: 0, b: 0, a: 1}
   PlayEnvSound: 0
+  sceneType: 0
+  terrainHeight: 0
+  CameraPosOffset: {x: 0, y: 16.7000008, z: -58.4000015}
+  CameraRotOffset: {x: 15, y: 0, z: 0}
+--- !u!114 &11400772
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3ef10486a449747943a1ed68e346a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lstTags: 01000000
 --- !u!114 &11451296
 MonoBehaviour:
   m_ObjectHideFlags: 1

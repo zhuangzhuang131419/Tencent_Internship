@@ -3062,6 +3062,10 @@ MonoBehaviour:
     y: 3.70000005
     width: 16.3400002
     height: 6.9000001
+  - x: -13
+    y: 3.70000005
+    width: 26
+    height: 6.9000001
   ColorRGB: {r: 1, g: 1, b: 1, a: 1}
   bright: 1
   saturation: 1
@@ -3072,6 +3076,10 @@ MonoBehaviour:
   UseGlow: 0
   glowColor: {r: 0, g: 0, b: 0, a: 1}
   PlayEnvSound: 0
+  sceneType: 0
+  terrainHeight: 0
+  CameraPosOffset: {x: 0, y: 16.7000008, z: -58.4000015}
+  CameraRotOffset: {x: 15, y: 0, z: 0}
 --- !u!114 &11498998
 MonoBehaviour:
   m_ObjectHideFlags: 1

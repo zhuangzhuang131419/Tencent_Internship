@@ -80,6 +80,8 @@ function NewTalentOperation.__Class()
             return
         end
         __protected.model.isInNetProcess = true
+
+require_pb_r("common_data_lua_talent_pb")
 
         local req = ZoneTalentQueryReq()
         LuaNetRequire(ZONE_TALENT_QUERY, req, __private.OnZoneTalentQueryResp)
@@ -94,6 +96,8 @@ function NewTalentOperation.__Class()
         end
 
         __protected.model.isInNetProcess = false
+
+require_pb_r("common_data_lua_talent_pb")
 
         local rsp = ZoneTalentQueryResp()
         rsp:ParseFromString(buff)
@@ -146,6 +150,8 @@ function NewTalentOperation.__Class()
             return
         end
         __protected.model.isInNetProcess = true
+
+require_pb_r("common_data_lua_talent_pb")
 
         local req = ZoneTalentEnableReq()
         LuaNetRequire(ZONE_TALENT_ENABLE, req, __private.OnZoneTalentEnableResp)      
@@ -158,6 +164,8 @@ function NewTalentOperation.__Class()
         end        
 
         __protected.model.isInNetProcess = false
+
+require_pb_r("common_data_lua_talent_pb")
 
         local rsp = ZoneTalentEnableResp()
         rsp:ParseFromString(buff)
@@ -196,7 +204,9 @@ function NewTalentOperation.__Class()
             return
         end
         __protected.model.isInNetProcess = true        
-        
+        
+require_pb_r("common_data_lua_talent_pb")
+
         local req = ZoneAsuraTalentQueryReq()
         LuaNetRequire(ZONE_ASURA_TALENT_QUERY, req, __private.OnZoneAsuraTalentQueryResp)
 
@@ -210,6 +220,8 @@ function NewTalentOperation.__Class()
         end
 
         __protected.model.isInNetProcess = false
+
+require_pb_r("common_data_lua_talent_pb")
 
         local rsp = ZoneAsuraTalentQueryResp()
         rsp:ParseFromString(buff)
@@ -285,7 +297,9 @@ function NewTalentOperation.__Class()
             return
         end
         __protected.model.isInNetProcess = true                
-        
+        
+require_pb_r("common_data_lua_talent_pb")
+
         local req = ZoneAsuraTalentEnableReq()
         LuaNetRequire(ZONE_ASURA_TALENT_UPDATE, req, __private.OnZoneAsuraTalentEnableResp)
 
@@ -299,6 +313,8 @@ function NewTalentOperation.__Class()
         end
 
         __protected.model.isInNetProcess = false
+
+require_pb_r("common_data_lua_talent_pb")
 
         local rsp = ZoneAsuraTalentEnableResp()
         rsp:ParseFromString(buff)
@@ -357,3 +373,11 @@ function NewTalentOperation.__Class()
 
     return this,__protected,__private
 end
+
+
+
+
+
+
+
+

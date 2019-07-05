@@ -108,6 +108,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 442812}
   - 114: {fileID: 11442810}
+  - 114: {fileID: 11498056}
   m_Layer: 0
   m_Name: kauubi_Scene_a
   m_TagString: Untagged
@@ -314,6 +315,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 442858}
+  - 114: {fileID: 11498048}
   m_Layer: 0
   m_Name: fire_002
   m_TagString: Untagged
@@ -404,6 +406,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 442860}
   - 114: {fileID: 11442844}
+  - 114: {fileID: 11498054}
   m_Layer: 0
   m_Name: fire_001
   m_TagString: Untagged
@@ -494,6 +497,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 442862}
   - 114: {fileID: 11442858}
+  - 114: {fileID: 11498052}
   m_Layer: 0
   m_Name: fire_001
   m_TagString: Untagged
@@ -584,6 +588,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 442864}
   - 114: {fileID: 11442872}
+  - 114: {fileID: 11498050}
   m_Layer: 0
   m_Name: fire_001
   m_TagString: Untagged
@@ -4218,6 +4223,8 @@ MonoBehaviour:
     - indexX: 12.5
       indexY: 0
       isWalk: 0
+    data1: []
+    data2: []
   terrainData:
     data:
     - indexX: -17
@@ -7547,6 +7554,10 @@ MonoBehaviour:
     - indexX: -14
       indexY: -.5
       type: 1000
+  hiddenAreaData:
+    lstHiddenCellDataItems: []
+  triggerAreaData:
+    lstTriggerCellDataItems: []
   areaData:
   - x: -8
     y: 5
@@ -7578,6 +7589,10 @@ MonoBehaviour:
   UseGlow: 0
   glowColor: {r: .0784313753, g: 0, b: 0, a: 1}
   PlayEnvSound: 0
+  sceneType: 0
+  terrainHeight: 0
+  CameraPosOffset: {x: 0, y: 16.7000008, z: -58.4000015}
+  CameraRotOffset: {x: 15, y: 0, z: 0}
 --- !u!114 &11425392
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9076,6 +9091,66 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectName: fire2
   visible: 1
+--- !u!114 &11498048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3ef10486a449747943a1ed68e346a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lstTags: 01000000
+--- !u!114 &11498050
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3ef10486a449747943a1ed68e346a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lstTags: 01000000
+--- !u!114 &11498052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3ef10486a449747943a1ed68e346a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lstTags: 01000000
+--- !u!114 &11498054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3ef10486a449747943a1ed68e346a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lstTags: 01000000
+--- !u!114 &11498056
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3ef10486a449747943a1ed68e346a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lstTags: 01000000
 --- !u!198 &19842802
 ParticleSystem:
   m_ObjectHideFlags: 1
