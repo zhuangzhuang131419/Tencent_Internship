@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEditor;
 using System.IO;
 using System;
-
 public class OpenWindow : EditorWindow
 {
 

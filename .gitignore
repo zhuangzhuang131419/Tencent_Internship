@@ -40,18 +40,20 @@ KiHan/*
 !KiHan/Assets
 KiHan/Assets/*
 
-# 保留MapEditor
-!KiHan/Assets/MapEditor
-
-!KiHan/Assets/Editor
-KiHan/Assets/Editor/*
-!KiHan/Assets/Editor/MapEditor
 
 # 保留InternshipTask
 !KiHan/Assets/InternshipTask
 
 !KiHan/Assets/Scripts
 KiHan/Assets/Scripts/*
+
+
+# 保留MapEditor
+!KiHan/Assets/Editor
+KiHan/Assets/Editor/*
+!KiHan/Assets/Editor/MapEditor
+!KiHan/Assets/Scripts/MapEditor
+
 
 !KiHan/Assets/Scripts/Manager
 KiHan/Assets/Scripts/Manager/*

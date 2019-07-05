@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System;
 using System.Xml;
 
-public class MapEditor : MonoBehaviour
+public class MapEditor
 {
 
     public static readonly string MAP_PREFAB_ID_PATH = "Assets/Resources/Scene";
@@ -19,10 +19,11 @@ public class MapEditor : MonoBehaviour
 
     // public static Map currentMap;
 
+
     [MenuItem("MapEditor/打开")]
     public static void open()
     {
-        if (FindObjectsOfType<MapData>().Length > 0)
+        if (UnityEngine.Object.FindObjectsOfType<MapData>().Length > 0)
         {
             MessageWindow.CreateMessageBox(
                 "Mapdata已打开",
@@ -40,7 +41,7 @@ public class MapEditor : MonoBehaviour
     [MenuItem("MapEditor/创建")]
     public static void create()
     {
-        if (FindObjectsOfType<MapData>().Length > 0)
+        if (UnityEngine.Object.FindObjectsOfType<MapData>().Length > 0)
         {
             MessageWindow.CreateMessageBox(
                 "Mapdata已打开",
@@ -58,7 +59,7 @@ public class MapEditor : MonoBehaviour
     [MenuItem("MapEditor/导入")]
     public static void load()
     {
-        if (FindObjectsOfType<MapData>().Length == 0)
+        if (UnityEngine.Object.FindObjectsOfType<MapData>().Length == 0)
         {
             MessageWindow.CreateMessageBox(
                 "请打开Mapdata",
@@ -68,8 +69,8 @@ public class MapEditor : MonoBehaviour
         }
         else
         {
-            MapData mapData = FindObjectOfType<MapData>();
-            
+            MapData mapData = UnityEngine.Object.FindObjectOfType<MapData>();
+
             // 读取新的数据
             if (Directory.Exists(MAP_ID_PATH + "/" + mapData.ID + "/MapGenerator"))
             {
@@ -93,7 +94,7 @@ public class MapEditor : MonoBehaviour
     public static void save()
     {
         // 保存新的mapData
-        if (FindObjectsOfType<MapData>().Length != 1)
+        if (UnityEngine.Object.FindObjectsOfType<MapData>().Length != 1)
         {
             MessageWindow.CreateMessageBox(
               "mapdata数量异常，无法保存",
@@ -102,7 +103,7 @@ public class MapEditor : MonoBehaviour
             );
             return;
         }
-        MapData mapData = FindObjectOfType<MapData>();
+        MapData mapData = UnityEngine.Object.FindObjectOfType<MapData>();
 
 
         // 一键修复数据
@@ -142,6 +143,83 @@ public class MapEditor : MonoBehaviour
         // 新版本使用
         // PrefabUtility.SaveAsPrefabAssetAndConnect(mapData.gameObject, MAP_ID_PATH + "/" + mapData.ID + "/" + mapData.ID + ".prefab", InteractionMode.AutomatedAction);
     }
+
+    [MenuItem("MapEditor/创建生成器")]
+    public static void createGenerator()
+    {
+        Debug.Log("创建生成器");
+
+        GameObject generatorRoot = GameObject.Find("MonsterGenerator");
+        MapData mapData = UnityEngine.Object.FindObjectOfType<MapData>();
+        if (generatorRoot != null)
+        {
+            // 自动生成index
+            int maxIndex = 0;
+            int maxID = UnityEngine.Object.FindObjectOfType<MapData>().ID * 1000;
+            foreach (var generator in generatorRoot.GetComponentsInChildren<MapGenerator>())
+            {
+                if (generator.Index > maxIndex)
+                {
+                    maxIndex = generator.Index;
+                }
+
+                if (generator.ID > maxID)
+                {
+                    maxID = generator.ID;
+                }
+            }
+
+            MapGenerator mapGenerator = InstantializeGenerator(maxIndex + 1, maxID + 1, generatorRoot);
+
+            // 选中
+            EditorGUIUtility.PingObject(mapGenerator.gameObject);
+            Selection.activeGameObject = mapGenerator.gameObject;
+        }
+        else
+        {
+            MessageWindow.CreateMessageBox(
+                "请打开Map",
+                delegate (EditorWindow window) { window.Close(); },
+                delegate (EditorWindow window) { window.Close(); }
+            );
+        }
+    }
+
+
+    [MenuItem("MapEditor/创建单位")]
+    public static void createUnit()
+    {
+        Debug.Log("创建单位");
+        if (Selection.gameObjects.Length > 0
+            && Selection.gameObjects[0].GetComponents<MapGenerator>() != null
+            && Selection.gameObjects[0].GetComponents<MapGenerator>().Length > 0)
+        {
+            // 自动生成index
+            int maxIndex = 0;
+            foreach (var unit in Selection.gameObjects[0].GetComponentsInChildren<Unit>())
+            {
+                if (unit.Index > maxIndex)
+                {
+                    maxIndex = unit.Index;
+                }
+            }
+
+            Unit unitComponent = InitializeUnit(maxIndex + 1, Selection.gameObjects[0]);
+
+            // 选中
+            EditorGUIUtility.PingObject(unitComponent.gameObject);
+            Selection.activeGameObject = unitComponent.gameObject;
+        }
+        else
+        {
+            MessageWindow.CreateMessageBox(
+                "请选择Generator",
+                delegate (EditorWindow window) { window.Close(); },
+                delegate (EditorWindow window) { window.Close(); }
+            );
+        }
+    }
+
 
     private static void loadHierarchyInfoToMapDataCache()
     {
@@ -228,11 +306,11 @@ public class MapEditor : MonoBehaviour
     /// </summary>
     private static bool checkValidity()
     {
-        MapData mapData = FindObjectOfType<MapData>();
+        MapData mapData = UnityEngine.Object.FindObjectOfType<MapData>();
         if (mapData == null) { return true; }
         HashSet<int> tempHashSet = new HashSet<int>();
-        Debug.LogWarning("当前有" + FindObjectsOfType<MapGenerator>().Length + "个MapGenerator");
-        foreach (var generator in FindObjectsOfType<MapGenerator>())
+        Debug.LogWarning("当前有" + UnityEngine.Object.FindObjectsOfType<MapGenerator>().Length + "个MapGenerator");
+        foreach (var generator in UnityEngine.Object.FindObjectsOfType<MapGenerator>())
         {
             if (!tempHashSet.Add(generator.Index))
             {
@@ -242,8 +320,8 @@ public class MapEditor : MonoBehaviour
                     delegate (EditorWindow window)
                     {
                         // 一键修复index
-                        int i = FindObjectsOfType<MapGenerator>().Length;
-                        foreach (var item in FindObjectsOfType<MapGenerator>())
+                        int i = UnityEngine.Object.FindObjectsOfType<MapGenerator>().Length;
+                        foreach (var item in UnityEngine.Object.FindObjectsOfType<MapGenerator>())
                         {
                             item.Index = --i;
                         }
@@ -258,7 +336,7 @@ public class MapEditor : MonoBehaviour
             }
         }
 
-        foreach (var generator in FindObjectsOfType<MapGenerator>())
+        foreach (var generator in UnityEngine.Object.FindObjectsOfType<MapGenerator>())
         {
             tempHashSet.Clear();
             foreach (var unit in generator.GetComponentsInChildren<Unit>())
@@ -294,7 +372,7 @@ public class MapEditor : MonoBehaviour
 
     public static void autoFix()
     {
-        MapData mapData = FindObjectOfType<MapData>();
+        MapData mapData = UnityEngine.Object.FindObjectOfType<MapData>();
         if (mapData == null) { return; }
         loadHierarchyInfoToMapDataCache();
         Dictionary<int, MapGenerator> tempGenerators = new Dictionary<int, MapGenerator>();
@@ -353,46 +431,7 @@ public class MapEditor : MonoBehaviour
         }
     }
 
-    [MenuItem("MapEditor/创建生成器")]
-    public static void createGenerator()
-    {
-        Debug.Log("创建生成器");
-
-        GameObject generatorRoot = GameObject.Find("MonsterGenerator");
-        MapData mapData = FindObjectOfType<MapData>();
-        if (generatorRoot != null)
-        {
-            // 自动生成index
-            int maxIndex = 0;
-            int maxID = FindObjectOfType<MapData>().ID * 1000;
-            foreach (var generator in generatorRoot.GetComponentsInChildren<MapGenerator>())
-            {
-                if (generator.Index > maxIndex)
-                {
-                    maxIndex = generator.Index;
-                }
-
-                if (generator.ID > maxID)
-                {
-                    maxID = generator.ID;
-                }
-            }
-
-            MapGenerator mapGenerator = InstantializeGenerator(maxIndex + 1, maxID + 1, generatorRoot);
-
-            // 选中
-            EditorGUIUtility.PingObject(mapGenerator.gameObject);
-            Selection.activeGameObject = mapGenerator.gameObject;
-        }
-        else
-        {
-            MessageWindow.CreateMessageBox(
-                "请打开Map",
-                delegate (EditorWindow window) { window.Close(); },
-                delegate (EditorWindow window) { window.Close(); }
-            );
-        }
-    }
+    
 
     public static MapGenerator InstantializeGenerator(int index, int id, GameObject parent)
     {
@@ -410,39 +449,6 @@ public class MapEditor : MonoBehaviour
         return mapGenerator;
     }
 
-    [MenuItem("MapEditor/创建单位")]
-    public static void createUnit()
-    {
-        Debug.Log("创建单位");
-        if (Selection.gameObjects.Length > 0
-            && Selection.gameObjects[0].GetComponents<MapGenerator>() != null
-            && Selection.gameObjects[0].GetComponents<MapGenerator>().Length > 0)
-        {
-            // 自动生成index
-            int maxIndex = 0;
-            foreach (var unit in Selection.gameObjects[0].GetComponentsInChildren<Unit>())
-            {
-                if (unit.Index > maxIndex)
-                {
-                    maxIndex = unit.Index;
-                }
-            }
-
-            Unit unitComponent = InitializeUnit(maxIndex + 1, Selection.gameObjects[0]);
-
-            // 选中
-            EditorGUIUtility.PingObject(unitComponent.gameObject);
-            Selection.activeGameObject = unitComponent.gameObject;
-        }
-        else
-        {
-            MessageWindow.CreateMessageBox(
-                "请选择Generator",
-                delegate (EditorWindow window) { window.Close(); },
-                delegate (EditorWindow window) { window.Close(); }
-            );
-        }
-    }
 
     private static Unit InitializeUnit(int index, GameObject parent)
     {
@@ -467,7 +473,7 @@ public class MapEditor : MonoBehaviour
         // Debug.Log(MapEditor.ACTOR_PREFAB_PATH.Substring(MapEditor.ACTOR_PREFAB_PATH.IndexOf("Config")) + "/40001");
         try
         {
-            GameObject actor = Instantiate(Resources.Load("Actor/40001")) as GameObject;
+            GameObject actor = UnityEngine.Object.Instantiate(Resources.Load("Actor/40001")) as GameObject;
             actor.transform.parent = newUnit.transform;
         }
         catch (ArgumentException)
@@ -501,7 +507,7 @@ public class MapEditor : MonoBehaviour
             // 新版本
             // GameObject mapDataObject = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/Config/Map/" + mapID + "/" + mapID + ".prefab");
             mapDataObject.name = "MapData_" + mapID;
-            PrefabUtility.ReplacePrefab((GameObject)Instantiate(mapDataObject), mapDataPrefab, ReplacePrefabOptions.ConnectToPrefab);
+            PrefabUtility.ReplacePrefab((GameObject)UnityEngine.Object.Instantiate(mapDataObject), mapDataPrefab, ReplacePrefabOptions.ConnectToPrefab);
         }
         else
         {
@@ -546,14 +552,14 @@ public class MapEditor : MonoBehaviour
 
     private static void loadActor()
     {
-        foreach (var generator in FindObjectsOfType<MapGenerator>())
+        foreach (var generator in UnityEngine.Object.FindObjectsOfType<MapGenerator>())
         {
             foreach (var unit in generator.GetComponentsInChildren<Unit>())
             {
                 // 暂时写死加载40001
                 try
                 {
-                    GameObject actor = Instantiate(Resources.Load("Actor/40001")) as GameObject;
+                    GameObject actor = UnityEngine.Object.Instantiate(Resources.Load("Actor/40001")) as GameObject;
                     actor.transform.parent = unit.transform;
                     actor.transform.position = unit.transform.position;
                 }
@@ -571,7 +577,7 @@ public class MapEditor : MonoBehaviour
     public static void refreshFromXML()
     {
         // 读取xml读取用户更新的数据
-        string mapID = Convert.ToString(FindObjectOfType<MapData>().ID);
+        string mapID = Convert.ToString(UnityEngine.Object.FindObjectOfType<MapData>().ID);
         loadGeneratorXML(mapID);
     }
 
