@@ -21,17 +21,19 @@ public class MouseMonitor : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 v = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-            leftMouseDown = new MouseEvent(v.x, v.y, MouseType.Left);
+            ulong timeStamp = RemoteModel.Instance.CurrentTime;
+            leftMouseDown = new MouseEvent(v.x, v.y, MouseType.Left, timeStamp);
 
-            Debug.Log("序列化鼠标左键按下操作成功" + v.x + ", " + v.y);
+            Debug.Log("序列化鼠标左键按下操作成功" + v.x + ", " + v.y + "RemoteModel" + timeStamp);
         }
 
         if (Input.GetMouseButtonDown(1))
         {
             Vector2 v = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-            rightMouseDown = new MouseEvent(v.x, v.y, MouseType.Right);
+            ulong timeStamp = RemoteModel.Instance.CurrentTime;
+            rightMouseDown = new MouseEvent(v.x, v.y, MouseType.Right, timeStamp);
 
-            Debug.Log("序列化鼠标右键按下操作成功" + v.x + ", " + v.y);
+            Debug.Log("序列化鼠标右键按下操作成功" + v.x + ", " + v.y + "RemoteModel" + timeStamp);
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -41,7 +43,7 @@ public class MouseMonitor : MonoBehaviour {
             {
                 Vector2 v = Camera.main.ScreenToViewportPoint(Input.mousePosition);
                 Debug.Log("序列化鼠标左键抬起操作成功" + v.x + ", " + v.y);
-                leftMouseUp = new MouseEvent(v.x, v.y, MouseType.Left);
+                leftMouseUp = new MouseEvent(v.x, v.y, MouseType.Left, RemoteModel.Instance.CurrentTime);
                 MouseAction mouseAction = new MouseAction(leftMouseDown, leftMouseUp);
                 msgManager.serializeToLocal(mouseAction, MessageManager.DEST_PATH_MOUSE_EVENT);
             }
@@ -58,7 +60,7 @@ public class MouseMonitor : MonoBehaviour {
         if (Input.GetMouseButtonUp(1))
         {
             Vector2 v = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-            rightMouseUp = new MouseEvent(v.x, v.y, MouseType.Right);
+            rightMouseUp = new MouseEvent(v.x, v.y, MouseType.Right, RemoteModel.Instance.CurrentTime);
             Debug.Log("序列化鼠标左键抬起操作成功" + Camera.main.ScreenToViewportPoint(Input.mousePosition));
             if (rightMouseDown != null)
             {

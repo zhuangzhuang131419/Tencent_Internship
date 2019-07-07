@@ -25,16 +25,17 @@ namespace KH
         public const string LanPVP = "LanPVP";
     }
 
-	public class CommonDropParam
-	{
-		public int itmeID;
-		public Action jumpCallback;
-	}
-        
-	public class DataTestForCp{
-		public SceneID scene_id;
-		public int scene_busid;
-	}
+    public class CommonDropParam
+    {
+        public int itmeID;
+        public Action jumpCallback;
+    }
+
+    public class DataTestForCp
+    {
+        public SceneID scene_id;
+        public int scene_busid;
+    }
 
     public class OpenURLDebugInfo
     {
@@ -79,7 +80,7 @@ namespace KH
                 (ms_Instance as KHDebugerGUIBase).Show(permission);
             }
         }
-        
+
         public static void Show(string openId, string permission)
         {
             if (KHResource.GetPropertyAsBool("CloseKHDebugerGUI")) return;
@@ -245,7 +246,7 @@ namespace KH
             "ozwwNj3hYrjqN9mx7Yskg3UoGj1U",
         };
 
-        private static Dictionary<string, string[]> MapWhiteList; 
+        private static Dictionary<string, string[]> MapWhiteList;
 
         private static string ValidPermissionInWhiteList(string permission, string openId)
         {
@@ -310,7 +311,7 @@ namespace KH
         private static string _PROTECT_FLOW_TIME = "10";
 
 
-#region cos相关
+        #region cos相关
 
         public static int APP_ID = 10045907;
         public static string SECRET_ID = "AKIDtNxPa389JUkckbPDpMZbMntCtDwWsYSU";
@@ -320,7 +321,7 @@ namespace KH
         //static string localPath = @"D:\cos-dotnet-sdk\cos_dotnet_sdk\bin\IMG_2260.JPG";
         static string remotePathPrefix = "pvp1v1/2017/";
 
-#endregion
+        #endregion
 
         //=========================================================================================
         private GUIStyle m_lowerLeftFontStyle;
@@ -336,7 +337,7 @@ namespace KH
             base.Awake();
 
             ms_Instance = this;
-            
+
             m_lowerLeftFontStyle = new GUIStyle();
             m_lowerLeftFontStyle.clipping = TextClipping.Clip;
             m_lowerLeftFontStyle.border = new RectOffset(0, 0, 0, 0);
@@ -356,14 +357,14 @@ namespace KH
             AddDbgGUI("日志", OnGUI_LogToggle, KHDebugerPermission.Log, 998);
             AddDbgGUI("战斗", KHBattleCommand.OnGUI, KHDebugerPermission.Log, 500);
             AddDbgGUI("Lua测试", LuaTest.OnGUI, KHDebugerPermission.Admin, 201);
-            
+
 #if USEILRUNTIME
             // ILRuntime测试工具
             ILRuntime.ILRuntimeTest.Instance.InitDebugUI();
 #endif
 
-			// 性能测试工具
-	        KHPerformanceTest.Instance.InitDebugUI();
+            // 性能测试工具
+            KHPerformanceTest.Instance.InitDebugUI();
 
             // 练习场测试工具
             KHTrainingSceneToolsTest.Instance.InitDebugUI();
@@ -371,24 +372,24 @@ namespace KH
             // Wetest测试工具
             KH.WeTestDebuger.Instance.InitDebugUI();
 
-	        // GSDK测试工具
-	        GSDKTestManager.Instance.InitDebugUI();
+            // GSDK测试工具
+            GSDKTestManager.Instance.InitDebugUI();
 
-	        // 资源记录上报工具
-	        KHResourceRecorderTest.Instance.InitDebugUI();
+            // 资源记录上报工具
+            KHResourceRecorderTest.Instance.InitDebugUI();
 
-			// 内存记录上报工具
-			KHMemoryRecorderTest.Instance.InitDebugUI();
+            // 内存记录上报工具
+            KHMemoryRecorderTest.Instance.InitDebugUI();
 
             // jerryqin测试工具
             //JerryTest.Instance.InitDebugUI();
             // SolZhang测试工具
             //SolTest.Instance.InitDebugUI();
 
-			// 潘多拉测试工具
+            // 潘多拉测试工具
             PandoraTest.Instance.InitDebugUI();
 
-			AddDbgGUI("版本工具", OnVerTool);
+            AddDbgGUI("版本工具", OnVerTool);
             AddDbgGUI("场景检测", OnSceneBugTool);
             AddDbgGUI("运营版本", OnDbgGUI_YunYing, KHDebugerPermission.Log);
 
@@ -412,14 +413,14 @@ namespace KH
             //AddDbgGUI("战斗内一些开关", OnBattleNinjaTest);
             AddDbgGUI("剧情测试", _InitDebugerGUI);
             AddDbgGUI("扩展包版本号", OnShowSvrExpkgVer);
-   //         AddDbgGUI("电视台测试", OnTVTest);
-			//AddDbgGUI("组织拍卖测试",OnGuildAuctionTest);
-			//AddDbgGUI("锦标赛入口", OnChampionshipTest);
-			AddDbgGUI("leozzzhangTest", OnLeozzzhangTest);
+            //         AddDbgGUI("电视台测试", OnTVTest);
+            //AddDbgGUI("组织拍卖测试",OnGuildAuctionTest);
+            //AddDbgGUI("锦标赛入口", OnChampionshipTest);
+            AddDbgGUI("leozzzhangTest", OnLeozzzhangTest);
 
             AddDbgGUI("bobcczhengTest", OnBobcczhengTest);
 
-			//AddDbgGUI("3v3擂台赛", OnChallengeTest);
+            //AddDbgGUI("3v3擂台赛", OnChallengeTest);
             AddDbgGUI("BundleLoadTest", OnBundleLoadTest);
             AddDbgGUI("ResLoadTest", OnResLoadTest);
             //AddDbgGUI("旧羁绊对战入口", OnGUIOldKizunaContestEntry);
@@ -432,10 +433,10 @@ namespace KH
 
             //AddDbgGUI("LBS 测试", OnLBSTest);
             AddDbgGUI("Game.txt配置", OnGameTxt);
-			AddDbgGUI("ResLeakPrinter", OnResLeakPrinter);
-   //         AddDbgGUI("跨服要塞战", OnCrossGuildWar);
-   //         AddDbgGUI("新叛忍来袭", OnDebugBadNinja);
-			//AddDbgGUI("暗部无差别",OnAnBuPVP);
+            AddDbgGUI("ResLeakPrinter", OnResLeakPrinter);
+            //         AddDbgGUI("跨服要塞战", OnCrossGuildWar);
+            //         AddDbgGUI("新叛忍来袭", OnDebugBadNinja);
+            //AddDbgGUI("暗部无差别",OnAnBuPVP);
 
             AddDbgGUI("Cube", OnCube);
             //AddDbgGUI("LoadImgTest", OnLoadImgTest);
@@ -449,9 +450,9 @@ namespace KH
             AddDbgGUI("黑鲨手机测试", BlackSharkTest);
 
             AddDbgGUI("设备模拟", OnDeviceSimulation, KHDebugerPermission.Admin);
-			
-			AddDbgGUI("内存工具V2", KHMemoryUtilV2.OnGUI, KHDebugerPermission.Admin, 150);
-			
+
+            AddDbgGUI("内存工具V2", KHMemoryUtilV2.OnGUI, KHDebugerPermission.Admin, 150);
+
             AddDbgGUI("Zeyuzhang", KHMemoryUtil.OnGUI, KHDebugerPermission.Admin, 111);
 
             AddDbgGUI("开黑房间", RoomInvite, KHDebugerPermission.Admin, 111);
@@ -462,15 +463,15 @@ namespace KH
 
             //AddDbgGUI("AI和GameCore测试", OnJerryTest, KHDebugerPermission.Admin, 500);
 
-			AddDbgGUI("团队翻牌",MtdDrawCard);
+            AddDbgGUI("团队翻牌", MtdDrawCard);
 
-			AddDbgGUI("视频分享",VideoShare);
+            AddDbgGUI("视频分享", VideoShare);
 
             //AddDbgGUI("OpenURL测试", OnDebugOpenURL);
 
-			//AddDbgGUI("天地战场",TiandiZhanChang);
+            //AddDbgGUI("天地战场",TiandiZhanChang);
 
-            AddDbgGUI("百忍分享",OnHNShare);
+            AddDbgGUI("百忍分享", OnHNShare);
 
             AddDbgGUI("巅峰对决", OnUK);
 
@@ -583,7 +584,7 @@ namespace KH
 
                 GUILayout.Label("dungon plot id");
                 string _RoguelikeDungonID = GUILayout.TextField(RoguelikeDungonID, 100);
-                
+
                 if (RoguelikeDungonID != _RoguelikeDungonID)
                 {
                     RoguelikeDungonID = _RoguelikeDungonID;
@@ -641,14 +642,14 @@ namespace KH
                 {
                     KHBattleManager.Instance.PluginName = RoguelikeDuplicatePlugin.pluginName;
                 }
-                
+
                 KHBattleManager.Instance.BattlePlugin.SendMessage("RequireBattle", new Action(() =>
                 {
-                    UIInvokeLater.Invoke(0.5f, () => 
+                    UIInvokeLater.Invoke(0.5f, () =>
                     {
                         RequestEnterRoguelike(true);
                     });
-                    
+
                 }));
             }
             else
@@ -797,8 +798,8 @@ namespace KH
                 }
             }
         }
-		int bundleDownloadStatus = -3;
-		string bundleId = "";
+        int bundleDownloadStatus = -3;
+        string bundleId = "";
         private void OnDbgGUI_YunYing()
         {
             //if (SGUILayout.Button("还原资源到基础版本（" + KHVer.resver + "）"))
@@ -808,174 +809,174 @@ namespace KH
             //    KHUtil.Save();
             //}
 
-			GUILayout.BeginHorizontal();
-			{
-				GUILayout.Label("输入bundle号: ");
-				GUILayout.Space(5);
-				bundleId = GUILayout.TextField(bundleId, 10);
-				if (SGUILayout.Button("加载bundle"))
-				{
-					if (!downloadFlag)
-					{
-						KHGlobalExt.StartCoroutine(DownloadBundleCo());
-					}
-				}
-				if (bundleDownloadStatus == -2)
-				{
-					GUILayout.Label("下载完毕");
-				}
-				else if (bundleDownloadStatus == -1)
-				{
-					GUILayout.Label("下载失败");
-				}
-				else if (bundleDownloadStatus == -3)
-				{
-					GUILayout.Label("状态提示");
-				}
-				else
-				{
-					GUILayout.Label("正在下载 "+bundleDownloadStatus+"%...");
-				}
-			}
-			GUILayout.EndHorizontal();
-			if (SGUILayout.Button("重登录"))
-			{
-				KH.KHGlobalExt.LogoutGame();
-			}
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.Label("输入bundle号: ");
+                GUILayout.Space(5);
+                bundleId = GUILayout.TextField(bundleId, 10);
+                if (SGUILayout.Button("加载bundle"))
+                {
+                    if (!downloadFlag)
+                    {
+                        KHGlobalExt.StartCoroutine(DownloadBundleCo());
+                    }
+                }
+                if (bundleDownloadStatus == -2)
+                {
+                    GUILayout.Label("下载完毕");
+                }
+                else if (bundleDownloadStatus == -1)
+                {
+                    GUILayout.Label("下载失败");
+                }
+                else if (bundleDownloadStatus == -3)
+                {
+                    GUILayout.Label("状态提示");
+                }
+                else
+                {
+                    GUILayout.Label("正在下载 " + bundleDownloadStatus + "%...");
+                }
+            }
+            GUILayout.EndHorizontal();
+            if (SGUILayout.Button("重登录"))
+            {
+                KH.KHGlobalExt.LogoutGame();
+            }
 
         }
-		bool downloadFlag = false;
-		IEnumerator DownloadBundleCo()
-		{
-			bundleDownloadStatus = 0;
-			string downloadUrl =  "http://dlied5.qq.com/kihan/testbundle/";
-			string downloadFileName = "";
-			if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.WindowsEditor)
-			{
-				downloadFileName = "multipleadd_"+"android_"+bundleId+".zip";
-			}
-			else if (Application.platform == RuntimePlatform.IPhonePlayer)
-			{
-				downloadFileName = "multipleadd_"+"ios_"+bundleId+".zip";
-			}
-			if (string.IsNullOrEmpty(downloadFileName))
-			{
-				bundleDownloadStatus = -1;
-				yield break;
-			}
-			downloadUrl += downloadFileName;
-			downloadFlag = true;
-			string resRootPath = VerUrl.AppData_Main_Path;
-			Debuger.LogError(resRootPath);
-			string zipFilePath = resRootPath+"TempZipFile.zip";
-			string tempZipFolder = resRootPath+"TempZipFolder/";
-			using (WWW www = new WWW(downloadUrl))  
-			{  
-				while (!www.isDone)
-				{
-					bundleDownloadStatus = (int)(www.progress*100);
-					yield return new WaitForSeconds(0.1f);  
-				}
-				downloadFlag = false;
-				if (www.error != null)
-				{
-					bundleDownloadStatus = -1;
-					yield break;
-				}
-				else
-				{
-					System.IO.File.WriteAllBytes(zipFilePath, www.bytes);
-				}
-			}  
-			if (System.IO.Directory.Exists(tempZipFolder))
-			{
-				string[] folderFiles = System.IO.Directory.GetFiles(tempZipFolder);
-				for (int index = 0; index < folderFiles.Length; index++)
-				{
-					//Debuger.LogError(files[index]);
-					System.IO.File.Delete(folderFiles[index]);
-				}
-				System.IO.Directory.Delete(tempZipFolder);
-				System.IO.Directory.CreateDirectory(tempZipFolder);
-			}
-			ZipHelper.UnZip(zipFilePath, tempZipFolder, "", true);
-			//			string resRootPath = System.IO.Directory.GetCurrentDirectory()+"\\ResTestFolder";
-			
-			
-			if (!System.IO.Directory.Exists(resRootPath))
-			{
-				System.IO.Directory.CreateDirectory(resRootPath);
-			}
-			string configPath = resRootPath+"config/";
-			string bundlePath = resRootPath+"bundle/";
-			string audioPath = resRootPath+"Audio/";
-			string moviePath = resRootPath+"Movie/";
-			if (!System.IO.Directory.Exists(configPath))
-			{
-				System.IO.Directory.CreateDirectory(configPath);
-			}
-			if (!System.IO.Directory.Exists(bundlePath))
-			{
-				System.IO.Directory.CreateDirectory(bundlePath);
-			}
-			if (!System.IO.Directory.Exists(audioPath))
-			{
-				System.IO.Directory.CreateDirectory(audioPath);
-			}
-			if (!System.IO.Directory.Exists(moviePath))
-			{
-				System.IO.Directory.CreateDirectory(moviePath);
-			}
-			string[] files = System.IO.Directory.GetFiles(tempZipFolder);
-			for (int index = 0; index < files.Length; index++)
-			{
-				string fileName = System.IO.Path.GetFileName(files[index]);
-				if (System.IO.Path.GetExtension(files[index]) == ".xml" && System.IO.Path.GetFileNameWithoutExtension(files[index]) == "bundle")
-				{
-					string destbundlefilepath = configPath+"bundle_"+VersionManager.getInstance().LoacalVersion+".xml";
-					if (System.IO.File.Exists(destbundlefilepath))
-					{
-						System.IO.File.Delete(destbundlefilepath);
-					}
-					System.IO.File.Move(files[index], destbundlefilepath);
-				}
-				if (System.IO.Path.GetExtension(files[index]) == ".assetbundle")
-				{
-					if (System.IO.File.Exists(bundlePath+fileName))
-					{
-						System.IO.File.Delete(bundlePath+fileName);
-					}
-					System.IO.File.Move(files[index], bundlePath+fileName);
-				}
-				if (System.IO.Path.GetExtension(files[index]) == ".bank")
-				{
-					if (System.IO.File.Exists(audioPath+fileName))
-					{
-						System.IO.File.Delete(audioPath+fileName);
-					}
-					System.IO.File.Move(files[index], audioPath+fileName);
-				}
-				if (System.IO.Path.GetExtension(files[index]) == ".mp4")
-				{
-					if (System.IO.File.Exists(moviePath+fileName))
-					{
-						System.IO.File.Delete(moviePath+fileName);
-					}
-					System.IO.File.Move(files[index], moviePath+fileName);
-				}
-			}
-			bundleDownloadStatus = -2;
-			///重启游戏
-			UINativeDialog.ShowNativeMessage(UINativeDialog.PriorityDef.PriorityDef2
-			                                 , "重启更新", "重启"
-			                                 , () =>
-			                                 {
-				KHGlobalExt.RebootGame();
-			});
-		}
+        bool downloadFlag = false;
+        IEnumerator DownloadBundleCo()
+        {
+            bundleDownloadStatus = 0;
+            string downloadUrl = "http://dlied5.qq.com/kihan/testbundle/";
+            string downloadFileName = "";
+            if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.WindowsEditor)
+            {
+                downloadFileName = "multipleadd_" + "android_" + bundleId + ".zip";
+            }
+            else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                downloadFileName = "multipleadd_" + "ios_" + bundleId + ".zip";
+            }
+            if (string.IsNullOrEmpty(downloadFileName))
+            {
+                bundleDownloadStatus = -1;
+                yield break;
+            }
+            downloadUrl += downloadFileName;
+            downloadFlag = true;
+            string resRootPath = VerUrl.AppData_Main_Path;
+            Debuger.LogError(resRootPath);
+            string zipFilePath = resRootPath + "TempZipFile.zip";
+            string tempZipFolder = resRootPath + "TempZipFolder/";
+            using (WWW www = new WWW(downloadUrl))
+            {
+                while (!www.isDone)
+                {
+                    bundleDownloadStatus = (int)(www.progress * 100);
+                    yield return new WaitForSeconds(0.1f);
+                }
+                downloadFlag = false;
+                if (www.error != null)
+                {
+                    bundleDownloadStatus = -1;
+                    yield break;
+                }
+                else
+                {
+                    System.IO.File.WriteAllBytes(zipFilePath, www.bytes);
+                }
+            }
+            if (System.IO.Directory.Exists(tempZipFolder))
+            {
+                string[] folderFiles = System.IO.Directory.GetFiles(tempZipFolder);
+                for (int index = 0; index < folderFiles.Length; index++)
+                {
+                    //Debuger.LogError(files[index]);
+                    System.IO.File.Delete(folderFiles[index]);
+                }
+                System.IO.Directory.Delete(tempZipFolder);
+                System.IO.Directory.CreateDirectory(tempZipFolder);
+            }
+            ZipHelper.UnZip(zipFilePath, tempZipFolder, "", true);
+            //			string resRootPath = System.IO.Directory.GetCurrentDirectory()+"\\ResTestFolder";
 
-		private bool isRichInit = false;
-		private bool richTogleValue = false;
+
+            if (!System.IO.Directory.Exists(resRootPath))
+            {
+                System.IO.Directory.CreateDirectory(resRootPath);
+            }
+            string configPath = resRootPath + "config/";
+            string bundlePath = resRootPath + "bundle/";
+            string audioPath = resRootPath + "Audio/";
+            string moviePath = resRootPath + "Movie/";
+            if (!System.IO.Directory.Exists(configPath))
+            {
+                System.IO.Directory.CreateDirectory(configPath);
+            }
+            if (!System.IO.Directory.Exists(bundlePath))
+            {
+                System.IO.Directory.CreateDirectory(bundlePath);
+            }
+            if (!System.IO.Directory.Exists(audioPath))
+            {
+                System.IO.Directory.CreateDirectory(audioPath);
+            }
+            if (!System.IO.Directory.Exists(moviePath))
+            {
+                System.IO.Directory.CreateDirectory(moviePath);
+            }
+            string[] files = System.IO.Directory.GetFiles(tempZipFolder);
+            for (int index = 0; index < files.Length; index++)
+            {
+                string fileName = System.IO.Path.GetFileName(files[index]);
+                if (System.IO.Path.GetExtension(files[index]) == ".xml" && System.IO.Path.GetFileNameWithoutExtension(files[index]) == "bundle")
+                {
+                    string destbundlefilepath = configPath + "bundle_" + VersionManager.getInstance().LoacalVersion + ".xml";
+                    if (System.IO.File.Exists(destbundlefilepath))
+                    {
+                        System.IO.File.Delete(destbundlefilepath);
+                    }
+                    System.IO.File.Move(files[index], destbundlefilepath);
+                }
+                if (System.IO.Path.GetExtension(files[index]) == ".assetbundle")
+                {
+                    if (System.IO.File.Exists(bundlePath + fileName))
+                    {
+                        System.IO.File.Delete(bundlePath + fileName);
+                    }
+                    System.IO.File.Move(files[index], bundlePath + fileName);
+                }
+                if (System.IO.Path.GetExtension(files[index]) == ".bank")
+                {
+                    if (System.IO.File.Exists(audioPath + fileName))
+                    {
+                        System.IO.File.Delete(audioPath + fileName);
+                    }
+                    System.IO.File.Move(files[index], audioPath + fileName);
+                }
+                if (System.IO.Path.GetExtension(files[index]) == ".mp4")
+                {
+                    if (System.IO.File.Exists(moviePath + fileName))
+                    {
+                        System.IO.File.Delete(moviePath + fileName);
+                    }
+                    System.IO.File.Move(files[index], moviePath + fileName);
+                }
+            }
+            bundleDownloadStatus = -2;
+            ///重启游戏
+            UINativeDialog.ShowNativeMessage(UINativeDialog.PriorityDef.PriorityDef2
+                                             , "重启更新", "重启"
+                                             , () =>
+                                             {
+                                                 KHGlobalExt.RebootGame();
+                                             });
+        }
+
+        private bool isRichInit = false;
+        private bool richTogleValue = false;
         private void OnGUI_LogToggle()
         {
             GUILayout.BeginVertical();
@@ -983,51 +984,51 @@ namespace KH
             Debuger.EnableLogToUnity = GUILayout.Toggle(Debuger.EnableLogToUnity, "Debuger.EnableLogToUnity");
             Debuger.EnableLogToFile = GUILayout.Toggle(Debuger.EnableLogToFile, "Debuger.EnableLogToFile");
 
-			#region 富文本模式开关
+            #region 富文本模式开关
 
-			// 初始化从本地读取
-			if (!isRichInit)
-			{
-				richTogleValue = Debuger.RichFormatSwitch;
-				isRichInit = true;
-			}
+            // 初始化从本地读取
+            if (!isRichInit)
+            {
+                richTogleValue = Debuger.RichFormatSwitch;
+                isRichInit = true;
+            }
 
-			string richName = "Debuger.RichFormatSwitch";
-			if (richTogleValue != Debuger.RichFormatSwitch)
-			{
-				richName += "(重启生效)";
-			}
+            string richName = "Debuger.RichFormatSwitch";
+            if (richTogleValue != Debuger.RichFormatSwitch)
+            {
+                richName += "(重启生效)";
+            }
 
-			bool tmpRichTogleValue = GUILayout.Toggle(richTogleValue, richName);
-			if (tmpRichTogleValue != richTogleValue)
-			{
-				// 点击了的时候
-				richTogleValue = tmpRichTogleValue;
+            bool tmpRichTogleValue = GUILayout.Toggle(richTogleValue, richName);
+            if (tmpRichTogleValue != richTogleValue)
+            {
+                // 点击了的时候
+                richTogleValue = tmpRichTogleValue;
 
-				PlayerPrefs.SetInt("Debuger_RichFormatSwitch", richTogleValue?1:0);
-				PlayerPrefs.Save();
-			}
+                PlayerPrefs.SetInt("Debuger_RichFormatSwitch", richTogleValue ? 1 : 0);
+                PlayerPrefs.Save();
+            }
 
-			#endregion
+            #endregion
 
             Debuger.EnableLogToMemory = GUILayout.Toggle(Debuger.EnableLogToMemory, "Debuger.EnableLogToMemory");
             Debuger.EnableLogLoop = GUILayout.Toggle(Debuger.EnableLogLoop, "Debuger.EnableLogLoop");
             Debuger.EnableTime = GUILayout.Toggle(Debuger.EnableTime, "Debuger.EnableTime");
             Debuger.EnableStack = GUILayout.Toggle(Debuger.EnableStack, "Debuger.EnableStack");
-            
+
             if (Debuger.EnableLogToFile)
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("特殊日志名：");
                 GUILayout.Space(5);
                 string tmpYourName = GUILayout.TextField(Debuger.YourName);
-				// 有更改的时候，保存该值
+                // 有更改的时候，保存该值
                 if (!tmpYourName.Equals(Debuger.YourName))
                 {
-	                Debuger.YourName = tmpYourName;
-	                PlayerPrefs.SetString("Debuger_YourName", Debuger.YourName);
-	                PlayerPrefs.Save();
-				}
+                    Debuger.YourName = tmpYourName;
+                    PlayerPrefs.SetString("Debuger_YourName", Debuger.YourName);
+                    PlayerPrefs.Save();
+                }
                 GUILayout.EndHorizontal();
 
                 GUILayout.Label("本地地址：");
@@ -1146,7 +1147,7 @@ namespace KH
                     }
                     else
                     {
-                        m_LogReportText += logStr;    
+                        m_LogReportText += logStr;
                     }
                 }
             }
@@ -1160,7 +1161,7 @@ namespace KH
         {
             if (GUILayout.Button("测试上报"))
             {
-                KHReporter.LogRemote("Test", "Slicol|Tang", 1,2,3,4.5,6);       
+                KHReporter.LogRemote("Test", "Slicol|Tang", 1, 2, 3, 4.5, 6);
             }
         }
 
@@ -1254,7 +1255,7 @@ namespace KH
                     {
                         byte[] contentBuff = new byte[fileStream.Length];
                         fileStream.Read(contentBuff, 0, (int)fileStream.Length);
-						buff = contentBuff;
+                        buff = contentBuff;
                     }
                     else
                     {
@@ -1869,17 +1870,17 @@ namespace KH
 
         }
         #endregion
-		
-		
-		void OnGUIBackToObsoleteEntrance()
-		{
-			GUILayout.BeginVertical();
-			if (GUILayout.Button("返回"))
-			{
-				AddDbgGUI("过期入口(折叠)", OnGUIObsoleteEntrance);
-			}
-			GUILayout.EndVertical();
-		}
+
+
+        void OnGUIBackToObsoleteEntrance()
+        {
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("返回"))
+            {
+                AddDbgGUI("过期入口(折叠)", OnGUIObsoleteEntrance);
+            }
+            GUILayout.EndVertical();
+        }
 
         #region 组织争霸赛
         private void OnGUIGuildHegemony()
@@ -1890,7 +1891,7 @@ namespace KH
                 //KHPluginManager.Instance.SendMessage("GuildHegemonyPlugin", "Query");
                 KHJumpSystemHelper.DoJump(SystemConfigDef.GuildHegemony, 1);
             }
-            
+
             GUILayout.Space(5);
 
             if (GUILayout.Button("获得奖励"))
@@ -1913,9 +1914,9 @@ namespace KH
             }
             GUILayout.EndVertical();
         }
-#endregion
+        #endregion
 
-#region 决斗场限时商店
+        #region 决斗场限时商店
         private void OnGUIPvpLimitShop()
         {
             GUILayout.BeginVertical();
@@ -1925,7 +1926,7 @@ namespace KH
             }
             GUILayout.EndVertical();
         }
-#endregion
+        #endregion
 
         #region 通用房间
         public string password1 = "";
@@ -1938,7 +1939,7 @@ namespace KH
         public string tip_title = "神奇的房间";
         public string tip_content = "[ffcc00]神奇的房间[-]里有一个神奇的房间。一间一间又一间。";
         public string room_title = "zi-mijingtanxian";
-        public bool RTV_enable = true; 
+        public bool RTV_enable = true;
         public bool chat_enable = true;
         public string fightCap_mode = "1";//uint
         public string mResist_mode = "1";//uint
@@ -1963,11 +1964,11 @@ namespace KH
         private void OnGUIKHRoom()
         {
             GUILayout.BeginVertical();
-            GUILayout.BeginHorizontal ();
+            GUILayout.BeginHorizontal();
             GUILayout.Label("password: ");
             GUILayout.Space(5);
             password1 = GUILayout.TextField(password1, 8);
-            GUILayout.EndHorizontal ();
+            GUILayout.EndHorizontal();
             GUILayout.Space(5);
 
             if (GUILayout.Button("创建房间"))
@@ -1981,7 +1982,7 @@ namespace KH
             GUILayout.Space(5);
             roomid = GUILayout.TextField(roomid, 8);
             //roomid = GUILayout.TextField(new Rect(100, 80, 100, 20), roomid);
-            GUILayout.EndHorizontal(); 
+            GUILayout.EndHorizontal();
             GUILayout.Space(5);
             GUILayout.BeginHorizontal();
             GUILayout.Label("password: ");
@@ -2092,12 +2093,12 @@ namespace KH
             GUILayout.BeginHorizontal();
             GUILayout.Label(name);
             GUILayout.Space(5);
-            if(addfun != null) addfun();
+            if (addfun != null) addfun();
             GUILayout.EndHorizontal();
         }
-#endregion
+        #endregion
 
-#region 版本工具
+        #region 版本工具
         public string errcode = "";
         public int selGridInt = -1;
         public string[] selStrings = new string[] { "Default", "AndRes2", "AndRes3", "IOSRes2", "IOSRes3" };
@@ -2192,11 +2193,11 @@ namespace KH
         /// </summary>
         private void ReUpdateResources()
         {
-// #if UNITY_ANDROID
-//             string file_extract_path = Application.persistentDataPath + "/" + KHVer.vernum;
-// #else
-//             string file_extract_path = Application.temporaryCachePath + "/" + KHVer.vernum;
-// #endif
+            // #if UNITY_ANDROID
+            //             string file_extract_path = Application.persistentDataPath + "/" + KHVer.vernum;
+            // #else
+            //             string file_extract_path = Application.temporaryCachePath + "/" + KHVer.vernum;
+            // #endif
             string file_extract_path = VerUrl.AppData_Main_Path;
             Debuger.Log(string.Format("[KHDebugerGUI] ReUpdateResources file_extract_path is {0}", file_extract_path));
             try
@@ -2236,7 +2237,7 @@ namespace KH
             ClearExpandResources(1);
             ClearExpandResources(2);
             ClearExpandResources(3);
-            
+
         }
 
         #endregion
@@ -2248,7 +2249,7 @@ namespace KH
         {
             GUILayout.BeginVertical();
 
-            if (GUILayout.Button("设置连接属性: " + (switchSceneConnect ? "打开":"关闭")))
+            if (GUILayout.Button("设置连接属性: " + (switchSceneConnect ? "打开" : "关闭")))
             {
                 switchSceneConnect = !switchSceneConnect;
             }
@@ -2315,7 +2316,7 @@ namespace KH
                 {
                     PlayerController mainCtr = KHPlayerManager.getInstance().mainPlayer;
                     PlayerController sourceCtr = KHPlayerManager.getInstance().getPlayerByActorID(int.Parse(_strSourceMonsterId));
-                
+
                     if (mainCtr != null && sourceCtr != null)
                     {
                         int sourceSkillId = sourceCtr.model.getSkillModel(int.Parse(_strSourceActionId)).skillID;
@@ -2327,7 +2328,7 @@ namespace KH
                     {
                         UIAPI.ShowMsgTip("参数有误, 给技能失败, 请检查.");
                     }
-                
+
                 }
 
                 GUILayout.Label("===================END===================");
@@ -2443,7 +2444,7 @@ namespace KH
                 strDungeonId = _strDungeonId;
                 KHUtil.SetString("strDungeonId", strDungeonId);
             }
-            
+
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
@@ -2511,8 +2512,8 @@ namespace KH
 
                 SvrExPkgVerArr = new ExPkgVerInfo[KHDataManager.CONFIG.dicExpandPack.Count];
                 LocalExPkgVerArr = new ExPkgVerInfo[KHDataManager.CONFIG.dicExpandPack.Count];
-                
-                for (int i=0;i<SvrExPkgVerArr.Length;++i)
+
+                for (int i = 0; i < SvrExPkgVerArr.Length; ++i)
                 {
                     SvrExPkgVerArr[i] = new ExPkgVerInfo();
                 }
@@ -2559,7 +2560,8 @@ namespace KH
                     {
                         SvrExPkgVerArr[i].ver = 0;
                         SvrExPkgVerArr[i].id = (uint)cfgInfo.id;
-                    } else
+                    }
+                    else
                     {
                         SvrExPkgVerArr[i] = new ExPkgVerInfo();
                         SvrExPkgVerArr[i].has_reward = info.has_reward;
@@ -2637,7 +2639,7 @@ namespace KH
             // TODO 如果dic不存在, 比如还没登录
             TVerCfg cfg = TVerCfgMgr.getInstance().getVer(1);
             GUILayout.BeginHorizontal(GUILayout.MaxWidth(300));
-            GUILayout.Label("dbgOpen:   "+TVerCfgMgr.dbgOpen);
+            GUILayout.Label("dbgOpen:   " + TVerCfgMgr.dbgOpen);
             if (GUILayout.Button(TVerCfgMgr.dbgOpen ? "关" : "开"))
             {
                 TVerCfgMgr.dbgOpen = !TVerCfgMgr.dbgOpen;
@@ -2646,7 +2648,8 @@ namespace KH
             if (TVerCfgMgr.dbgOpen)
             {
                 GUILayout.Label("dbgBuildType:   " + TVerCfgMgr.dbgBuildType);
-            } else
+            }
+            else
             {
                 GUILayout.Label("isGray:   " + DefineExt.isExPkgGrayUpdate);
             }
@@ -2654,8 +2657,8 @@ namespace KH
             GUILayout.Label("(其它:Gray, 1:Pub, 2:Tst)");
             dbgTypeStr = GUILayout.TextField(dbgTypeStr);
             GUILayout.EndHorizontal();
-            GUILayout.Label("TVerKey:   "+TVerCfgMgr.ToExPkgVerKey(1));
-            GUILayout.Label("Url:   "+cfg.getUrlsStr());
+            GUILayout.Label("TVerKey:   " + TVerCfgMgr.ToExPkgVerKey(1));
+            GUILayout.Label("Url:   " + cfg.getUrlsStr());
 
             if (GUILayout.Button("修改dbgBuildType"))
             {
@@ -2715,11 +2718,11 @@ namespace KH
             }
         }
 
-		void MtdDrawCard()
-		{
-			GUILayout.BeginVertical();
-			if (GUILayout.Button("团队副本翻牌"))
-			{
+        void MtdDrawCard()
+        {
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("团队副本翻牌"))
+            {
                 /*if(KHGlobalExt.app.CurrentContext is KHBootContext)
                 {
 
@@ -2728,60 +2731,66 @@ namespace KH
                 KHPluginManager.Instance.SendMessage(TeamPlugin.pluginName, TeamOperation.EnterTeamScene);*/
                 UIAPI.ShowMsgTip("哈哈哈哈");
             }
-			GUILayout.EndVertical();
+            GUILayout.EndVertical();
 
-			GUILayout.BeginVertical();
-			if (GUILayout.Button("道具掉落途经"))
-			{
-				var arg = new CommonDropParam();
-				arg.itmeID = 1006;
-				arg.jumpCallback = jumpCallBack;
-				KHPluginManager.Instance.SendMessageForLua("ActHelperPlugin", "ShowCommonPropOriginPanel",arg);
-			}
-			GUILayout.EndVertical();
-		}
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("道具掉落途经"))
+            {
+                var arg = new CommonDropParam();
+                arg.itmeID = 1006;
+                arg.jumpCallback = jumpCallBack;
+                KHPluginManager.Instance.SendMessageForLua("ActHelperPlugin", "ShowCommonPropOriginPanel", arg);
+            }
+            GUILayout.EndVertical();
+        }
 
-		#region 本地视频分享
-		void VideoShare()
-		{
+        #region 本地视频分享
+        void VideoShare()
+        {
             bool exist;
-			GUILayout.BeginVertical();
-			if (GUILayout.Button("分享到qq空间"))
-			{
-				string videoPath = KHVideoManager.shareVideoPath("Movie/104013.mp4");
-                if (ResPathUtil.isPathExist(videoPath)) {
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("分享到qq空间"))
+            {
+                string videoPath = KHVideoManager.shareVideoPath("Movie/104013.mp4");
+                if (ResPathUtil.isPathExist(videoPath))
+                {
                     SnsShare.ShareVideoToQQ(videoPath, "精彩视频");
-                } else {
+                }
+                else
+                {
                     UIAPI.ShowMsgTip("视频路径不存在，分享失败");
                 }
-			}
-			GUILayout.EndVertical();
+            }
+            GUILayout.EndVertical();
 
-			GUILayout.BeginVertical();
-			if (GUILayout.Button("分享到微信朋友圈"))
-			{	
-				string videoPath = KHVideoManager.shareVideoPath("Movie/104013.mp4");
-                if (ResPathUtil.isPathExist(videoPath)) {
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("分享到微信朋友圈"))
+            {
+                string videoPath = KHVideoManager.shareVideoPath("Movie/104013.mp4");
+                if (ResPathUtil.isPathExist(videoPath))
+                {
                     SnsShare.ShareVideoToWeChat(videoPath, "朋友圈分享", "分享测试");
-                } else {
+                }
+                else
+                {
                     UIAPI.ShowMsgTip("视频路径不存在，分享失败");
                 }
-			}
-			GUILayout.EndVertical();
-		}  
-		#endregion
+            }
+            GUILayout.EndVertical();
+        }
+        #endregion
 
-		#region 天地战场
-		void TiandiZhanChang()
-		{
-			GUILayout.BeginVertical();
-			if (GUILayout.Button("打开天地战场"))
-			{	
-				KHPluginManager.Instance.SendMessage(TianDiZhanChangPlugin.pluginName,TianDiZhanChangSystemOperation.RequestTianDiEntrance);
-			}
-			GUILayout.EndVertical();
-		}
-		#endregion
+        #region 天地战场
+        void TiandiZhanChang()
+        {
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("打开天地战场"))
+            {
+                KHPluginManager.Instance.SendMessage(TianDiZhanChangPlugin.pluginName, TianDiZhanChangSystemOperation.RequestTianDiEntrance);
+            }
+            GUILayout.EndVertical();
+        }
+        #endregion
 
         void RoomInvite()
         {
@@ -2790,7 +2799,7 @@ namespace KH
             {
                 string title = "团队挑战邀请";
                 string desc = RemoteModel.Instance.Player.PlayerName + "邀请你参加佩恩入侵";
-                if(MTDModel.myTeamData != null)
+                if (MTDModel.myTeamData != null)
                 {
                     string extInfo = "1_133_" + MTDModel.myTeamData.scene_id.ToString() + "_" + ((int)MTDModel.cacheSceneType).ToString() + "_"
                     + MTDModel.myTeamData.scene_busid.ToString() + "_" + MTDModel.myTeamData.team_id.ToString() + "_"
@@ -2851,7 +2860,7 @@ namespace KH
 
                 GUILayout.BeginHorizontal();
                 {
-                    if (GUILayout.Button((DefineExt.EnablePvPTss ? "关闭":"打开") + "PVP TSS"))
+                    if (GUILayout.Button((DefineExt.EnablePvPTss ? "关闭" : "打开") + "PVP TSS"))
                     {
                         DefineExt.EnablePvPTss = !DefineExt.EnablePvPTss;
                     }
@@ -2865,54 +2874,54 @@ namespace KH
 
         #endregion
 
-		private void jumpCallBack()
-		{
-			UIAPI.ShowMsgTip("关闭跳转主界面");
-		}
+        private void jumpCallBack()
+        {
+            UIAPI.ShowMsgTip("关闭跳转主界面");
+        }
 
 
         #region
         private void OnGuildAuctionTest()
-		{
-			GUILayout.BeginVertical();
-			if(GUILayout.Button("发送协议"))
-			{
-				KHPluginManager.Instance.SendMessage("GuildAuctionPlugin","QueryAuctionData");
-			}
-			GUILayout.EndVertical();
+        {
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("发送协议"))
+            {
+                KHPluginManager.Instance.SendMessage("GuildAuctionPlugin", "QueryAuctionData");
+            }
+            GUILayout.EndVertical();
 
-			GUILayout.BeginVertical();
-			if(GUILayout.Button("拍卖道具"))
-			{
-				KHPluginManager.Instance.SendMessage("GuildAuctionPlugin","SendOfferPriceMsg");
-			}
-			GUILayout.EndVertical();
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("拍卖道具"))
+            {
+                KHPluginManager.Instance.SendMessage("GuildAuctionPlugin", "SendOfferPriceMsg");
+            }
+            GUILayout.EndVertical();
 
-			GUILayout.BeginVertical();
-			if(GUILayout.Button("进入组织"))
-			{
-				KHJumpSystemHelper.DoJump(SystemConfigDef.Guild,null);
-			}
-			GUILayout.EndVertical();
-			GUILayout.BeginVertical();
-			if(GUILayout.Button("进入小队突袭"))
-			{
-				KHJumpSystemHelper.DoJump(SystemConfigDef.TeamPVE,null);
-			}
-			GUILayout.EndVertical();
-		}
-		#endregion
-
-
-		#region 锦标赛入口
-		string h32 = "";
-		string l31= "";
-		string busid= "";
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("进入组织"))
+            {
+                KHJumpSystemHelper.DoJump(SystemConfigDef.Guild, null);
+            }
+            GUILayout.EndVertical();
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("进入小队突袭"))
+            {
+                KHJumpSystemHelper.DoJump(SystemConfigDef.TeamPVE, null);
+            }
+            GUILayout.EndVertical();
+        }
+        #endregion
 
 
-		private void OnChampionshipTest()
-		{
-			GUILayout.BeginVertical();
+        #region 锦标赛入口
+        string h32 = "";
+        string l31 = "";
+        string busid = "";
+
+
+        private void OnChampionshipTest()
+        {
+            GUILayout.BeginVertical();
 
             if (GUILayout.Button("打开忍话剧"))
             {
@@ -2922,172 +2931,172 @@ namespace KH
             }
 
             if (GUILayout.Button("打开锦标赛"))
-			{
-				KHPluginManager.Instance.SendMessageForLua("ChampionshipPlugin", "ShowView", new ShowViewArgument("UILua/Championship/ChampionshipBattleView",
-				                                                                                                  true));
-			}
-
-			if (GUILayout.Button("打开结算界面"))
-			{
-				///显示最后的结算
-				KHBattleManager.Instance.BattlePlugin.ShowView("PVPRealTime/BattleFinalResult", false, null);
-			}
-
-			if (GUILayout.Button("开始监听拉进比赛的Ntf"))
-			{
-				KHPluginManager.Instance.GetPluginByName("ChampionshipPlugin").SendMessageForLua("Test",null);
-			}
-
-			if(GUILayout.Button("重新进入最近的场景"))
-			{
-				KHPluginManager.Instance.GetPluginByName("ChampionshipPlugin").SendMessageForLua("Test2",null);
-			}
-
-			if(GUILayout.Button("重现加入场景～"))
-			{
-				KHPluginManager.Instance.GetPluginByName("ChampionshipPlugin").SendMessageForLua("Test3",null);
-			}
-
-			h32 = GUILayout.TextField(h32);
-			l31 = GUILayout.TextField(l31);
-			busid = GUILayout.TextField(busid);
-			if (GUILayout.Button("进入房间"))
-			{
-				SceneID id = new SceneID();
-				id.h32 = uint.Parse(h32);
-				id.l32 = uint.Parse(l31);
-				DataTestForCp data = new DataTestForCp();
-				data.scene_id = id;
-				data.scene_busid = int.Parse(busid);
-
-				KHPluginManager.Instance.GetPluginByName("ChampionshipPlugin").SendMessageForLua("requireEnterScene",data);
-			}
-
-			GUILayout.EndVertical();
-		}
-		#endregion
-
-		#region 打开擂台赛
-		
-		
-		private void OnChallengeTest()
-		{
-			GUILayout.BeginVertical();
-
-			
-			if (GUILayout.Button("监听擂台赛匹配"))
-			{
-				KHPluginManager.Instance.GetPluginByName("ChallengePlugin").SendMessageForLua("Test",null);
-			}
-
-			if (GUILayout.Button("监听2v2匹配"))
-			{
-				KHPluginManager.Instance.GetPluginByName("KizunaContestRoomPlugin").SendMessageForLua("Test",null);
-			}
-
-			if (GUILayout.Button("点击发送聊天消息"))
-			{
-				KHPluginManager.Instance.GetPluginByName("ChallengePlugin").SendMessageForLua("Test2",null);
-			}
-
-			
-			GUILayout.EndVertical();
-		}
-		#endregion
-
-		#region 捏造忍者系统
-		
-		
-		private void OnLeozzzhangTest()
-		{
-			GUILayout.BeginVertical();
-
-			if (GUILayout.Button("不公平之战测试"))
-			{
-				KHPluginManager.Instance.GetPluginByName(UnfairBattlePlugin.pluginName).SendMessage("QueayUnfairBattle", null);
-			}
-
-		    if (GUILayout.Button("【巅峰赛】入口"))
-		    {
-		        KHPluginManager.Instance.GetPluginByName(PVPConquestPlugin.pluginName).SendMessage(PVPConquestOperation.ConquerGetBattleDetail, null);
-		    }
-
-            if (GUILayout.Button("请求打开暗部3v3捏造忍者系统"))
-			{
-				KHPluginManager.Instance.GetPluginByName(CommonCreateNinjaPlugin.pluginName).SendMessage("QueryAllNinjaInfo",116);
-			}
-			
-			if (GUILayout.Button("打开捏造忍者系统"))
-			{
-				KHPluginManager.Instance.GetPluginByName(CommonCreateNinjaPlugin.pluginName).SendMessage("Test",null);
-			}
-
-		    if (GUILayout.Button("打开人界Ui"))
-		    {
-		        KHPluginManager.Instance.GetPluginByName(PVPConquestPlugin.pluginName).SendMessage("test11", null);
-		    }
-
-            if (GUILayout.Button("打开黑市商人"))
-			{
-				KHPluginManager.Instance.GetPluginByName(BlackMarketeerPlugin.pluginName).SendMessage("QueryAllInfo",null);
-			}
-
-			if (GUILayout.Button("购买"))
-			{
-				KHPluginManager.Instance.GetPluginByName(BlackMarketeerPlugin.pluginName).SendMessage("Test2",null);
-			}
-
-			if (GUILayout.Button("出售"))
-			{
-				KHPluginManager.Instance.GetPluginByName(BlackMarketeerPlugin.pluginName).SendMessage("Test3",null);
-			}
-
-			if (GUILayout.Button("请求忍具背包2"))
-			{
-				KHPluginManager.Instance.GetPluginByName(NinjaWeaponPlugin.pluginName).SendMessage(NinjaWeaponOperation.QueryWeaponPkgInfo,null);
-			}
-
-		    if (GUILayout.Button("打开历史战绩"))
-		    {
-		        KHPluginManager.Instance.GetPluginByName(TianDiZhanChangPlugin.pluginName).SendMessage("GetHistory", null);
-		    }
-
-		    if (GUILayout.Button("打开百忍大战"))
-		    {
-		        KHPluginManager.Instance.GetPluginByName(HundredNinjaWarPlugin.pluginName).SendMessage("EnterHundredWarScene", null);
-		    }
-
-		    if (GUILayout.Button("打开brdz"))
-		    {
-		        KHPluginManager.Instance.GetPluginByName(HundredNinjaWarPlugin.pluginName).SendMessage("FightQueryCanEnter", null);
-		    }
-
-		    if (GUILayout.Button("监听brdz"))
-		    {
-		        KHPluginManager.Instance.GetPluginByName(HundredNinjaWarPlugin.pluginName).SendMessage("AddListeners", null);
+            {
+                KHPluginManager.Instance.SendMessageForLua("ChampionshipPlugin", "ShowView", new ShowViewArgument("UILua/Championship/ChampionshipBattleView",
+                                                                                                                  true));
             }
 
-			if(GUILayout.Button("查询巅峰对决"))
-			{
-				UltimateKillModel.isTest = true;
-				KHPluginManager.Instance.SendMessage(UltimateKillPlugin.pluginName,UltimateKillFinalOperation.QueayFinalViewInfo, null);
-			}
+            if (GUILayout.Button("打开结算界面"))
+            {
+                ///显示最后的结算
+                KHBattleManager.Instance.BattlePlugin.ShowView("PVPRealTime/BattleFinalResult", false, null);
+            }
 
-			if(GUILayout.Button("巅峰赛决赛【关闭】分开测试"))
-			{
-				UltimateKillModel.isTest = false;
-			}
+            if (GUILayout.Button("开始监听拉进比赛的Ntf"))
+            {
+                KHPluginManager.Instance.GetPluginByName("ChampionshipPlugin").SendMessageForLua("Test", null);
+            }
 
+            if (GUILayout.Button("重新进入最近的场景"))
+            {
+                KHPluginManager.Instance.GetPluginByName("ChampionshipPlugin").SendMessageForLua("Test2", null);
+            }
 
-			testBgm = GUILayout.TextField(testBgm, 50);
+            if (GUILayout.Button("重现加入场景～"))
+            {
+                KHPluginManager.Instance.GetPluginByName("ChampionshipPlugin").SendMessageForLua("Test3", null);
+            }
 
-			if(GUILayout.Button("音乐播放"))
-			{
-				KHAudioManager.PlayMusic(int.Parse(testBgm));
-			}
-            
+            h32 = GUILayout.TextField(h32);
+            l31 = GUILayout.TextField(l31);
+            busid = GUILayout.TextField(busid);
+            if (GUILayout.Button("进入房间"))
+            {
+                SceneID id = new SceneID();
+                id.h32 = uint.Parse(h32);
+                id.l32 = uint.Parse(l31);
+                DataTestForCp data = new DataTestForCp();
+                data.scene_id = id;
+                data.scene_busid = int.Parse(busid);
+
+                KHPluginManager.Instance.GetPluginByName("ChampionshipPlugin").SendMessageForLua("requireEnterScene", data);
+            }
+
             GUILayout.EndVertical();
-		}
+        }
+        #endregion
+
+        #region 打开擂台赛
+
+
+        private void OnChallengeTest()
+        {
+            GUILayout.BeginVertical();
+
+
+            if (GUILayout.Button("监听擂台赛匹配"))
+            {
+                KHPluginManager.Instance.GetPluginByName("ChallengePlugin").SendMessageForLua("Test", null);
+            }
+
+            if (GUILayout.Button("监听2v2匹配"))
+            {
+                KHPluginManager.Instance.GetPluginByName("KizunaContestRoomPlugin").SendMessageForLua("Test", null);
+            }
+
+            if (GUILayout.Button("点击发送聊天消息"))
+            {
+                KHPluginManager.Instance.GetPluginByName("ChallengePlugin").SendMessageForLua("Test2", null);
+            }
+
+
+            GUILayout.EndVertical();
+        }
+        #endregion
+
+        #region 捏造忍者系统
+
+
+        private void OnLeozzzhangTest()
+        {
+            GUILayout.BeginVertical();
+
+            if (GUILayout.Button("不公平之战测试"))
+            {
+                KHPluginManager.Instance.GetPluginByName(UnfairBattlePlugin.pluginName).SendMessage("QueayUnfairBattle", null);
+            }
+
+            if (GUILayout.Button("【巅峰赛】入口"))
+            {
+                KHPluginManager.Instance.GetPluginByName(PVPConquestPlugin.pluginName).SendMessage(PVPConquestOperation.ConquerGetBattleDetail, null);
+            }
+
+            if (GUILayout.Button("请求打开暗部3v3捏造忍者系统"))
+            {
+                KHPluginManager.Instance.GetPluginByName(CommonCreateNinjaPlugin.pluginName).SendMessage("QueryAllNinjaInfo", 116);
+            }
+
+            if (GUILayout.Button("打开捏造忍者系统"))
+            {
+                KHPluginManager.Instance.GetPluginByName(CommonCreateNinjaPlugin.pluginName).SendMessage("Test", null);
+            }
+
+            if (GUILayout.Button("打开人界Ui"))
+            {
+                KHPluginManager.Instance.GetPluginByName(PVPConquestPlugin.pluginName).SendMessage("test11", null);
+            }
+
+            if (GUILayout.Button("打开黑市商人"))
+            {
+                KHPluginManager.Instance.GetPluginByName(BlackMarketeerPlugin.pluginName).SendMessage("QueryAllInfo", null);
+            }
+
+            if (GUILayout.Button("购买"))
+            {
+                KHPluginManager.Instance.GetPluginByName(BlackMarketeerPlugin.pluginName).SendMessage("Test2", null);
+            }
+
+            if (GUILayout.Button("出售"))
+            {
+                KHPluginManager.Instance.GetPluginByName(BlackMarketeerPlugin.pluginName).SendMessage("Test3", null);
+            }
+
+            if (GUILayout.Button("请求忍具背包2"))
+            {
+                KHPluginManager.Instance.GetPluginByName(NinjaWeaponPlugin.pluginName).SendMessage(NinjaWeaponOperation.QueryWeaponPkgInfo, null);
+            }
+
+            if (GUILayout.Button("打开历史战绩"))
+            {
+                KHPluginManager.Instance.GetPluginByName(TianDiZhanChangPlugin.pluginName).SendMessage("GetHistory", null);
+            }
+
+            if (GUILayout.Button("打开百忍大战"))
+            {
+                KHPluginManager.Instance.GetPluginByName(HundredNinjaWarPlugin.pluginName).SendMessage("EnterHundredWarScene", null);
+            }
+
+            if (GUILayout.Button("打开brdz"))
+            {
+                KHPluginManager.Instance.GetPluginByName(HundredNinjaWarPlugin.pluginName).SendMessage("FightQueryCanEnter", null);
+            }
+
+            if (GUILayout.Button("监听brdz"))
+            {
+                KHPluginManager.Instance.GetPluginByName(HundredNinjaWarPlugin.pluginName).SendMessage("AddListeners", null);
+            }
+
+            if (GUILayout.Button("查询巅峰对决"))
+            {
+                UltimateKillModel.isTest = true;
+                KHPluginManager.Instance.SendMessage(UltimateKillPlugin.pluginName, UltimateKillFinalOperation.QueayFinalViewInfo, null);
+            }
+
+            if (GUILayout.Button("巅峰赛决赛【关闭】分开测试"))
+            {
+                UltimateKillModel.isTest = false;
+            }
+
+
+            testBgm = GUILayout.TextField(testBgm, 50);
+
+            if (GUILayout.Button("音乐播放"))
+            {
+                KHAudioManager.PlayMusic(int.Parse(testBgm));
+            }
+
+            GUILayout.EndVertical();
+        }
 
         private void OnBobcczhengTest()
         {
@@ -3110,8 +3119,15 @@ namespace KH
 
             if (GUILayout.Button("鼠标自动化测试"))
             {
-                MouseAction mouseevent = msgManager.deserializeFromLocal<MouseAction>(MessageManager.DEST_PATH_MOUSE_EVENT, 0);
-                mouseevent.execute();
+                // MouseAction mouseevent = msgManager.deserializeFromLocal<MouseAction>(MessageManager.DEST_PATH_MOUSE_EVENT, 0);
+
+                // MouseAction mouseevent = (MouseAction)msgManager.deserializeFromLocalByTimeStamp();
+
+                GameObject mouseActManager = new GameObject("MouseActionManager");
+                mouseActManager.AddComponent<MouseActionManager>();
+                // mouseevent.execute();
+                // GameObject mouseSimulator = new GameObject("MouseSimulator");
+
             }
 
             if (GUILayout.Button("鼠标监控"))
@@ -3123,10 +3139,13 @@ namespace KH
                 }
             }
 
-            if (GUILayout.Button("test"))
+            if (GUILayout.Button("清理缓存"))
             {
-                MouseSimulator.MoveTo(0.88, 1.12);
+                File.Delete(MessageManager.DEST_PATH_MOUSE_EVENT);
+                File.Delete(MessageManager.DEST_PATH_CSharp);
+                Debug.Log("文件已删除");
             }
+
 
 
 
@@ -3134,14 +3153,14 @@ namespace KH
 
         }
 
-		static string testBgm = "9001";
-		public delegate void myDelegate();
+        static string testBgm = "9001";
+        public delegate void myDelegate();
 
-		void tttt()
-		{
-			Debuger.LogError("tttt!!!!!!");
-		}
-		#endregion
+        void tttt()
+        {
+            Debuger.LogError("tttt!!!!!!");
+        }
+        #endregion
 
         #region 摇一摇
         ShakeAShake shakeAshake = null;
@@ -3182,7 +3201,7 @@ namespace KH
                 }
             }
 
-            if (GUILayout.Button("ABTest切换  当前方案：" + (DefineExt.NewUserGuideMode == NEW_USER_GUIDE_TYPE.NewConfig ? "A":"B")))
+            if (GUILayout.Button("ABTest切换  当前方案：" + (DefineExt.NewUserGuideMode == NEW_USER_GUIDE_TYPE.NewConfig ? "A" : "B")))
             {
                 if (DefineExt.NewUserGuideMode == NEW_USER_GUIDE_TYPE.OldConfig)
                     DefineExt.NewUserGuideMode = NEW_USER_GUIDE_TYPE.NewConfig;
@@ -3280,7 +3299,7 @@ namespace KH
                     if (res != null)
                     {
                         Debuger.Log("city = " + res.city + " citycode = " + res.citycode);
-                        locationInfo ="city = " + res.city + " citycode = " + res.citycode;
+                        locationInfo = "city = " + res.city + " citycode = " + res.citycode;
                     }
                 });
             }
@@ -3293,15 +3312,19 @@ namespace KH
             GUILayout.EndVertical();
         }
 
-        
+
         private void OnLocationGotNotify(Apollo.ApolloLocation alocation)
         {
             locationInfo += "            msdk return time : " + RemoteModel.Instance.CurrentDateTime.ToString("yyyy-MM-dd HH:mm:ss");
-            LBSUtil.GetCityCodeByLngLat(alocation, (LBSRes res) => { if (res != null) { 
-                Debuger.Log("lat = " + res.latitude + "lng = " + res.longitude + " city = " + res.city + " citycode = " + res.citycode);
-                locationInfo += "               web service return time : " + RemoteModel.Instance.CurrentDateTime.ToString("yyyy-MM-dd HH:mm:ss");
-                locationInfo += "lat = " + res.latitude + "lng = " + res.longitude + " city = " + res.city + " citycode = " + res.citycode;
-            } });
+            LBSUtil.GetCityCodeByLngLat(alocation, (LBSRes res) =>
+            {
+                if (res != null)
+                {
+                    Debuger.Log("lat = " + res.latitude + "lng = " + res.longitude + " city = " + res.city + " citycode = " + res.citycode);
+                    locationInfo += "               web service return time : " + RemoteModel.Instance.CurrentDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                    locationInfo += "lat = " + res.latitude + "lng = " + res.longitude + " city = " + res.city + " citycode = " + res.citycode;
+                }
+            });
         }
 
         #endregion
@@ -3340,7 +3363,7 @@ namespace KH
             }
         }
         #endregion
-        
+
         #region 新叛忍来袭
         private static string testBadNinjaAddScore = "";
         private void OnDebugBadNinja()
@@ -3364,18 +3387,18 @@ namespace KH
             {
                 KHPluginManager.Instance.GetPluginByName(BadNinjaPlugin.pluginName).ShowView(UIDef.BAD_NINJA_DETAIL_VIEW_MODAL, false);
             }
-            
+
             if (GUILayout.Button("匹配BOSS"))
             {
                 KHPluginManager.Instance.SendMessage(BadNinjaPlugin.pluginName, BadNinjaSceneOperation.RequestMatchBoss);
             }
-            
+
             if (GUILayout.Button("打开活动结算界面"))
             {
                 KHPluginManager.Instance.GetPluginByName(BadNinjaPlugin.pluginName)
                     .ShowView(UIDef.BAD_NINJA_ACTIVITY_END_VIEW);
             }
-            
+
             GUILayout.BeginHorizontal();
             {
                 testBadNinjaAddScore = GUILayout.TextField(testBadNinjaAddScore);
@@ -3385,7 +3408,7 @@ namespace KH
                     if (GUILayout.Button("客户端加积分"))
                     {
                         (KHPluginManager.Instance.GetPluginByName(BadNinjaPlugin.pluginName)
-                            .Model as BadNinjaModel).TestAddScore((uint) score);
+                            .Model as BadNinjaModel).TestAddScore((uint)score);
                     }
                 }
             }
@@ -3393,15 +3416,15 @@ namespace KH
         }
         #endregion
 
-		#region
-		private void OnAnBuPVP()
-		{
-			GUILayout.BeginHorizontal();
-			{
-				if (GUILayout.Button("开始暗部无差别匹配"))
-				{
-					KHPluginManager.Instance.GetPluginByName(AnBuPVPPlugin.PLUGIN_NAME).SendMessage(AnBuPVPUIOperation.RequireMatch);
-				}
+        #region
+        private void OnAnBuPVP()
+        {
+            GUILayout.BeginHorizontal();
+            {
+                if (GUILayout.Button("开始暗部无差别匹配"))
+                {
+                    KHPluginManager.Instance.GetPluginByName(AnBuPVPPlugin.PLUGIN_NAME).SendMessage(AnBuPVPUIOperation.RequireMatch);
+                }
                 if (GUILayout.Button("技能一览"))
                 {
                     KHPluginManager.Instance.SendMessage(AnBuPVPPlugin.PLUGIN_NAME, "RequireSkillDetail");
@@ -3434,22 +3457,22 @@ namespace KH
                     }
                     KHPluginManager.Instance.SendMessage(AnBuPVPPlugin.PLUGIN_NAME, "ShowView", new ShowViewArgument(UIDef.AnBuPVP_BESTSKILLRANK_PANEL_VIEW, false, resp));
                 }
-			}
-			GUILayout.EndHorizontal();
-			GUILayout.BeginHorizontal();
-			{
-				if (GUILayout.Button("查询战报"))
-				{
-					KHPluginManager.Instance.GetPluginByName(AnBuPVPPlugin.PLUGIN_NAME).SendMessage("RequireFightRecord");
-				}
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            {
+                if (GUILayout.Button("查询战报"))
+                {
+                    KHPluginManager.Instance.GetPluginByName(AnBuPVPPlugin.PLUGIN_NAME).SendMessage("RequireFightRecord");
+                }
                 if (GUILayout.Button("打开主入口(临时UI)"))
                 {
                     // KHJumpSystemHelper.DoJump(117, null);
                     KHPluginManager.Instance.SendMessage(AnBuPVPPlugin.PLUGIN_NAME, "OpenAnBuPVPEntrance", null);
                 }
-			}
-			GUILayout.EndHorizontal();
-		}
+            }
+            GUILayout.EndHorizontal();
+        }
 
         #endregion
 
@@ -3491,7 +3514,7 @@ namespace KH
             }
             GUILayout.EndHorizontal();
         }
-#endregion
+        #endregion
 
         #region cube
         private void OnCube()
@@ -3822,7 +3845,7 @@ namespace KH
                 }
                 else
                 {
-                    bundle_result =  "resCount:"+info.res_list.Count;
+                    bundle_result = "resCount:" + info.res_list.Count;
                     foreach (var _url in info.res_list)
                     {
                         KHResource.LoadRes(_url, (string url, UnityEngine.Object obj, LOADSTATUS result, object extra) =>
@@ -3856,7 +3879,7 @@ namespace KH
 
             effectID = GUILayout.TextField(effectID, 100, GUILayout.MinWidth(100f));
 
-            if (GUILayout.Button("Hide/Show GameUI", GUILayout.MinWidth(100)) )
+            if (GUILayout.Button("Hide/Show GameUI", GUILayout.MinWidth(100)))
             {
                 _uiRoot.SetActive(!_uiRoot.activeSelf);
             }
@@ -3867,8 +3890,9 @@ namespace KH
                 {
                     if (obj == null)
                     {
-                        Debuger.Log("[OnResLoadTest], effect:" + url+", no_exist");
-                    } else
+                        Debuger.Log("[OnResLoadTest], effect:" + url + ", no_exist");
+                    }
+                    else
                     {
                         GameObject go = GameObject.Instantiate(obj) as GameObject;
                         pools.Add(go);
@@ -3933,10 +3957,10 @@ namespace KH
                 PrintComponent(go.particleSystem, log);
 
             Transform trans = go.transform;
-            for (int i=0;i< trans.childCount; ++i)
+            for (int i = 0; i < trans.childCount; ++i)
             {
                 //Debuger.Log("====>"+ trans.GetChild(i).gameObject);
-                PrintGameObject(trans.GetChild(i).gameObject, level+1);
+                PrintGameObject(trans.GetChild(i).gameObject, level + 1);
                 log.Append("\r\n");
             }
 
@@ -3962,7 +3986,7 @@ namespace KH
                     PrintMat(mat, log);
                 }
             }
-            
+
             log.Append("},");
             log.Append("shared_mats{");
 
@@ -4049,7 +4073,7 @@ namespace KH
                 leakTxt = _PrintObjectCache(0);
             }
 
-                if (GUILayout.Button("Print Atlas Leaker"))
+            if (GUILayout.Button("Print Atlas Leaker"))
             {
                 StringBuilder sb = new StringBuilder();
                 Dictionary<string, int> nums = new Dictionary<string, int>();
@@ -4096,7 +4120,7 @@ namespace KH
             GUILayout.EndVertical();
 
             GUILayout.Space(20);
-            GUILayout.Label("<color=yellow>" + leakTxt+"</color>");
+            GUILayout.Label("<color=yellow>" + leakTxt + "</color>");
         }
 
         private static string _PrintObjectCache(int refcount_min)
@@ -4194,7 +4218,7 @@ namespace KH
             {
                 needTips = true;
                 leakCount_obj_his = leakCount_obj;
-                AddTip("发现疑似泄露object:"+leakCount_obj+ "个, 请使用ResLeakPrinter工具查看详情!");
+                AddTip("发现疑似泄露object:" + leakCount_obj + "个, 请使用ResLeakPrinter工具查看详情!");
             }
 
             if (leakCount_bd > 0 && leakCount_bd != leakCount_bd_his)
@@ -4217,9 +4241,9 @@ namespace KH
             }
         }
         #endregion
-        
 
-#region 能源监控
+
+        #region 能源监控
         private CoreAffinityAsyncTaskBase TestCAATask = new CoreAffinityAsyncTaskBase();
         private string PowerInfo = string.Empty;
         private string Fps = "30";
@@ -4318,7 +4342,7 @@ namespace KH
             yield return TestCAATask.WaitFor;
             UIAPI.ShowMsgOK("完成");
         }
-#endregion
+        #endregion
 
         static string recordFileDirForJerry = DefineExt.PVPRecordFile_LocalDIR;
         static string recordFileNameForJerry = "RecentSave";
@@ -4424,7 +4448,7 @@ namespace KH
             Slim.SlimDefine.SlimClientPlaySpeed = (int)GUILayout.HorizontalSlider((float)Slim.SlimDefine.SlimClientPlaySpeed, 1, 1800);
         }
 
-#region 设备模拟
+        #region 设备模拟
         static string tDeviceSilmName = DEFINE.COMMON_SIMULATION_DEVICE;
 
         // 开启设备模拟函数
@@ -4524,13 +4548,13 @@ namespace KH
             GUILayout.EndVertical();
         }
 
-#endregion
+        #endregion
 
         #region 玩家时间
         static void OnShowPlayerTime()
         {
             GUILayout.Label("player svr time:");
-            GUILayout.Label(""+RemoteModel.Instance.CurrentDateTime);
+            GUILayout.Label("" + RemoteModel.Instance.CurrentDateTime);
             GUILayout.Label("" + RemoteModel.Instance.CurrentTime);
 
             GUILayout.Space(30);
@@ -4556,7 +4580,7 @@ namespace KH
             GUILayout.Space(10);
             if (cfg != null && cfg.Count > 0)
             {
-                foreach(Recruit3DAnimCfg cfgitem in cfg.Values)
+                foreach (Recruit3DAnimCfg cfgitem in cfg.Values)
                 {
                     GUILayout.Space(10);
                     GUILayout.BeginHorizontal();
@@ -4569,7 +4593,7 @@ namespace KH
                 GUILayout.Label("配置为空, 无法设置");
             }
 
-            
+
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("是否强制播放:" + (DefineExt.Recruit_Play3dAnim == 1 ? "开" : "关"));
@@ -4602,8 +4626,8 @@ namespace KH
                 }
             }
 
-            
-            
+
+
         }
         #endregion
 
@@ -4617,7 +4641,7 @@ namespace KH
             {
                 BlackSharkMgr.Instance().CallBSEvent(blacksharkMod);
             }
-            
+
             GUILayout.EndVertical();
             GUILayout.BeginVertical();
             {
@@ -4625,7 +4649,7 @@ namespace KH
                 GUILayout.Label("黑鲨事件ID:");
                 blacksharkID = GUILayout.TextField(blacksharkID);
                 int id = 0;
-                if(int.TryParse(blacksharkID, out id))
+                if (int.TryParse(blacksharkID, out id))
                 {
                     blacksharkMod = (BlackSharkMgr.SHARK_MOD)id;
                 }
@@ -4670,7 +4694,7 @@ namespace KH
             }
             GUILayout.EndVertical();
 
-            if(ninjaShowFlag)
+            if (ninjaShowFlag)
             {
                 GUILayout.BeginVertical();
                 GUILayout.Label("填写3D忍者ID");
@@ -4882,7 +4906,7 @@ namespace KH
                 {
                     //KHMovieManager.getInstance().NewPlayMovie(cgName, 0, null, 1, cgDepth, null);
                     KHMovieManager.getInstance().PlayMovieByParam(cgName, 0, widthScale, heightScale, xPos, yPos, false);
-                }   
+                }
             }
             if (GUILayout.Button("播放一段QTE"))
             {
@@ -4896,7 +4920,7 @@ namespace KH
                     List<string> lstArgs = new List<string>();
                     lstArgs.Add(cgDepth.ToString());
                     CallGlobalLuaFunctionHandle(lstArgs, strFuncName);
-                }   
+                }
             }
             //if (GUILayout.Button("执行lua脚本-Play3DSceneFlux"))
             //{
@@ -5019,7 +5043,7 @@ namespace KH
 
 
         #region 百忍分享
-         
+
         static void OnHNShare()
         {
             if (GUILayout.Button("打开分享界面"))
@@ -5067,9 +5091,9 @@ namespace KH
                     if (temp != null)
                     {
                         s += "MaskID:" + ShaderStencilManager.getInstance().getStencil(temp.objName);
-                        
+
                     }
-                    
+
                 }
                 UIAPI.ShowMsgTip(s);
                 Debuger.LogError(s);
@@ -5077,7 +5101,7 @@ namespace KH
             if (GUILayout.Button("Ark模版3"))
             {
                 var share_handle = new SnsShareHandle();
-                var template = new ArkTemplate3("火影忍者：百忍大战", 
+                var template = new ArkTemplate3("火影忍者：百忍大战",
                     "超燃百忍大战一触即发！你敢来挑战么",
                     "本场战绩",
                     "淘汰人数", "1",
@@ -5087,16 +5111,16 @@ namespace KH
                     "火影忍者：百忍大战",
                     "超燃百忍大战一触即发！你敢来挑战么",
                     "火影叫你来吃鸡！",
-                    "74", 
+                    "74",
                     "http://dlied5.qq.com/kihan/ark/bairendazhan.png");
                 share_handle.ShareToQSessionArk(template.GetArkData());
-                
+
             }
             if (GUILayout.Button("Ark模版7"))
             {
                 var share_handle = new SnsShareHandle();
                 var template = new ArkTemplate7(
-                    "_Title","_Desc",
+                    "_Title", "_Desc",
                     "http://dlied5.qq.com/kihan/app/icon2.png",
                     "火影忍者三周年庆盛大开启", "百万玩家同庆！我在木叶等你！",
                     "【火影忍者】3周年庆盛大开启", "68",
@@ -5132,8 +5156,8 @@ namespace KH
                     {
                         var PFDateTime = new DateTime(Int32.Parse(temp[0]), Int32.Parse(temp[1]), Int32.Parse(temp[2]), Int32.Parse(temp[3]), 0, 0, DateTimeKind.Utc);
                         var LocaclTime = new DateTime(Int32.Parse(temp[0]), Int32.Parse(temp[1]), Int32.Parse(temp[2]), Int32.Parse(temp[3]), 0, 0);
-                        UIAPI.ShowMsg_OK_Close("Raw:" + PFDateTime.ToShortDateString()+" "+ PFDateTime.ToLongTimeString() + "\nToUTC:" + PFDateTime.ToUniversalTime().ToShortDateString() + " " + PFDateTime.ToUniversalTime().ToLongTimeString() + "\nLocalRaw:"+ LocaclTime.ToShortDateString() + " " + LocaclTime.ToLongTimeString() + "\nLocalToUTC:" + LocaclTime.ToUniversalTime().ToShortDateString()+ " " + LocaclTime.ToUniversalTime().ToLongTimeString(), "OK", null);
-                    }              
+                        UIAPI.ShowMsg_OK_Close("Raw:" + PFDateTime.ToShortDateString() + " " + PFDateTime.ToLongTimeString() + "\nToUTC:" + PFDateTime.ToUniversalTime().ToShortDateString() + " " + PFDateTime.ToUniversalTime().ToLongTimeString() + "\nLocalRaw:" + LocaclTime.ToShortDateString() + " " + LocaclTime.ToLongTimeString() + "\nLocalToUTC:" + LocaclTime.ToUniversalTime().ToShortDateString() + " " + LocaclTime.ToUniversalTime().ToLongTimeString(), "OK", null);
+                    }
                 }
             }
             GUILayout.EndHorizontal();
@@ -5148,7 +5172,7 @@ namespace KH
                     if (DateTime.TryParse(TimeData + "Z", out date))
                     {
                         UIAPI.ShowMsg_OK_Close("Raw:" + date.ToShortDateString() + " " + date.ToLongTimeString() + "\nToUTC:" + date.ToUniversalTime().ToShortDateString() + " " + date.ToUniversalTime().ToLongTimeString(), "tt", null);
-                    }                    
+                    }
                 }
             }
             GUILayout.EndHorizontal();
@@ -5186,9 +5210,9 @@ namespace KH
             }
             if (GUILayout.Button("打开输入界面"))
             {
-                InputWinArgument argument = new InputWinArgument(19, "ZhuFu", (string a)=> { UIAPI.ShowMsgTip(a); });
+                InputWinArgument argument = new InputWinArgument(19, "ZhuFu", (string a) => { UIAPI.ShowMsgTip(a); });
                 KHPluginManager.Instance.SendMessage(UltimateKillPlugin.pluginName, "ShowView", new ShowViewArgument(UIDef.UK_INPUT_WINDOW, false, argument));
-            } 
+            }
             if (GUILayout.Button("随机100"))
             {
                 UIAPI.ShowMsgTip(UnityEngine.Random.Range(1, 101).ToString());
@@ -5208,7 +5232,7 @@ namespace KH
             }
             if (GUILayout.Button("0错误码"))
             {
-                 var _errormsg = ErrorCodeCenter.GetErrorStringEx(0,"");
+                var _errormsg = ErrorCodeCenter.GetErrorStringEx(0, "");
                 UIAPI.alert("提示", _errormsg, 0, null, null, true);
 
             }
@@ -5263,7 +5287,7 @@ namespace KH
                 }
             }
         }
-        
+
 
         #endregion
 

@@ -566,7 +566,7 @@ namespace KH.Network
 
         public void serializeToLocalWithType(List<object> msgs, Type messageType, uint cmdID, ulong timeStamp, uint serial, MessageSource source)
         {
-            MessageBody packedMessageBody = new MessageBody(messageType, cmdID, timeStamp, serial, source);
+            NetworkMessage packedMessageBody = new NetworkMessage(messageType, cmdID, timeStamp, serial, source);
             try
             {
                 switch (source)

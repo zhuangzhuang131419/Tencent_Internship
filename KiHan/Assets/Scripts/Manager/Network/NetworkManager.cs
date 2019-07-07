@@ -153,7 +153,7 @@ namespace KH
             MessageManager msgManager = MessageManager.Instance;
             RemoteModel remoteModel = RemoteModel.Instance;
             // ulong time = 1560234066;
-            MessageBody NTFMessageBody = msgManager.deserializeFromLocalByTimeStamp(remoteModel.CurrentTime);
+            NetworkMessage NTFMessageBody = msgManager.deserializeFromLocalByTimeStamp<NetworkMessage>(MessageManager.DEST_PATH_CSharp, remoteModel.CurrentTime);
             if (NTFMessageBody != null)
             {
                 List<object> messagesBody = new List<object>();
@@ -168,6 +168,7 @@ namespace KH
                 }
                 __Proxy.__QueueAddMessage(NTFMessageBody.CmdID, 0, messagesBody);
             }
+
         }
 
         static public void FixUpdate()

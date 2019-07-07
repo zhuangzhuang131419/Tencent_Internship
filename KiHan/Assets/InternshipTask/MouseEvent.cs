@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using UnityEditor;
 using KH;
+using System.Threading;
 
 [Serializable]
 public enum MouseType
@@ -15,7 +16,8 @@ public enum MouseType
 /// 记录一个鼠标的事件
 /// </summary>
 [Serializable]
-public class MouseAction {
+public class MouseAction : Message
+{
 
 
     private MouseEvent startEvent;
@@ -26,6 +28,7 @@ public class MouseAction {
     {
         startEvent = start;
         endEvent = end;
+        TimeStamp = startEvent.TimeStamp;
     }
 
     public MouseAction()
@@ -42,14 +45,21 @@ public class MouseAction {
         switch (startEvent.Type)
         {
             case MouseType.Left:
-                Debug.Log("开始事件" + startEvent.PosX + ", " + startEvent.PosY);
-                MouseSimulator.LeftDown(startEvent.PosX, startEvent.PosY);
-                Debug.Log("结束事件" + endEvent.PosX + ", " + endEvent.PosY);
+                if (startEvent.PosX == endEvent.PosX && startEvent.PosY == endEvent.PosY)
+                {
+                    Debug.Log("点击事件" + startEvent.TimeStamp);
+                    MouseSimulator.LeftClick(startEvent.PosX, startEvent.PosY);
+                }
+                else
+                {
+                    Debug.Log("拖拽事件");
+                    Debug.Log("开始事件" + startEvent.PosX + ", " + startEvent.PosY);
+                    MouseSimulator.LeftDown(startEvent.PosX, startEvent.PosY);
+                    Thread.Sleep((int)(endEvent.TimeStamp - startEvent.TimeStamp) * 1000);
+                    Debug.Log("结束事件" + endEvent.PosX + ", " + endEvent.PosY);
+                    MouseSimulator.LeftUp(endEvent.PosX, endEvent.PosY);
+                }
 
-                // MouseSimulator.MoveTo(endEvent.PosX, endEvent.PosY);
-                MouseSimulator.LeftUp(endEvent.PosX, endEvent.PosY);
-                // MouseSimulator.MoveTo(endEvent.PosX, endEvent.PosY);
-                // MouseSimulator.SetCursorPos(1100, 200);
                 break;
             case MouseType.Right:
                 MouseSimulator.RightDown(startEvent.PosX, startEvent.PosY);
@@ -62,26 +72,18 @@ public class MouseAction {
 }
 
 [Serializable]
-public class MouseEvent
+public class MouseEvent : Message
 {
     private float viewportPosX;
     private float viewportPosY;
-    private ulong timeStamp;
     private MouseType mouseType;
-
-    public MouseEvent(float x, float y, MouseType type)
-    {
-        viewportPosX = x;
-        viewportPosY = y;
-        mouseType = type;
-    }
 
     public MouseEvent(float x, float y, MouseType type, ulong timeStamp)
     {
         viewportPosX = x;
         viewportPosY = y;
         mouseType = type;
-        this.timeStamp = timeStamp;
+        TimeStamp = timeStamp;
     }
 
     public float PosX
@@ -98,6 +100,4 @@ public class MouseEvent
     {
         get { return mouseType; }
     }
-
-
 }

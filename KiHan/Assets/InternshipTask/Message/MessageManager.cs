@@ -7,7 +7,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System;
 
-
 namespace KH
 {
     public class MessageManager
@@ -18,7 +17,11 @@ namespace KH
         public static readonly string DEST_PATH_MOUSE_EVENT = DEST_PATH + "mouse.dat";
         // public static readonly string BATTLE_RESULT = "F:\\Tencent_Internship\\KiHan\\log\\Result.dat";
         // 内存中保存的一系列message，方便在给定cmdID的情况下取出 （利用cmdID作key，避免重复）
-        public Dictionary<uint, List<MessageBody>> messagesBodySet = null;
+        public List<Message> messages = new List<Message>();
+        public Dictionary<uint, List<NetworkMessage>> messagesBodySet = null;
+
+        // 已加载的message地址
+        private HashSet<string> paths = new HashSet<string>();
 
         // 录播
         private bool isSerializeToLocal = false;
@@ -54,7 +57,7 @@ namespace KH
         /// 把服务器接收来的消息包序列化到本地
         /// </summary>
         /// <param name="destinationPath">要存放的地址</param>
-        public void serializeToLocal<T>(T messageBody, string destinationPath)
+        public void serializeToLocal(Message messageBody, string destinationPath)
         {
             // 要把type也序列化进去
             FileStream fileStream = null;
@@ -90,20 +93,20 @@ namespace KH
                     Debug.LogWarning(e.Message);
                 }
 
-                
+
                 long messageBodyLength = fileStream.Length - originalFileStreamLength;
 
                 byte[] messageBodyBuffer = new byte[messageBodyLength];
                 fileStream.Position = beginPosition;
                 fileStream.Read(messageBodyBuffer, 0, (int)messageBodyLength);
-                Debug.Log("messageBody序列化成功! 文件大小: " + fileStream.Length);
+                // Debug.Log("messageBody序列化成功! 文件大小: " + fileStream.Length);
                 if (messageBodyLength > 0)
                 {
                     fileStream.Position = beginPosition;
                     // 写入message head （因为这一步会把之前写的messagebody覆盖了，所以重新写入）
-                    fileStream.Write(BitConverter.GetBytes(messageBodyLength), 0, MessageBody.MessageHeadLength);
+                    fileStream.Write(BitConverter.GetBytes(messageBodyLength), 0, NetworkMessage.MessageHeadLength);
                     fileStream.Write(messageBodyBuffer, 0, (int)messageBodyLength);
-                    Debug.Log("messageHead写入成功! 文件大小: " + fileStream.Length);
+                    // Debug.Log("messageHead写入成功! 文件大小: " + fileStream.Length);
                 }
                 else
                 {
@@ -122,7 +125,7 @@ namespace KH
         public List<object> deserializeFromLocal(uint cmdID)
         {
             //从这个地址固定读取
-            MessageBody packedMessage01 = deserializeFromLocalByCmdIDCache(cmdID);
+            NetworkMessage packedMessage01 = deserializeFromLocalByCmdIDCache(MessageManager.DEST_PATH_CSharp, cmdID);
             if (packedMessage01 != null)
             {
                 // Debug.Log("利用cmdID成功读取");
@@ -152,15 +155,7 @@ namespace KH
                 // 成功解析出message
                 return messageBodyResult;
             }
-            else
-            {
-                if (cmdID != 50397186) // 过滤掉心跳包
-                {
-                    
-                }
-                Debug.LogWarning(cmdID + "没有对应的message");
-                return null;
-            }
+            return null;
         }
 
         /// <summary>
@@ -169,9 +164,9 @@ namespace KH
         /// <param name="messageBuffer"></param>
         /// <param name="count">取出第count个message</param>
         /// <returns>消息主体</returns>
-        public T deserializeFromLocal<T>(string sourcePath, int count = 0)
+        public Message deserializeFromLocal(string sourcePath, int count = 0)
         {
-            T message = default(T);
+            Message message = new Message();
             FileStream fileStream = null;
             BinaryFormatter bf = new BinaryFormatter();
             try
@@ -189,14 +184,14 @@ namespace KH
 
             if (fileStream != null)
             {
-                byte[] messageHeadBuffer = new byte[MessageBody.MessageHeadLength];
+                byte[] messageHeadBuffer = new byte[NetworkMessage.MessageHeadLength];
                 byte[] messageBodyBuffer;
                 int messageBodyLength = 0;
                 // 开始读取
                 while (count > 0)
                 {
                     // 读取message head来获得message body的长度
-                    if (fileStream.Read(messageHeadBuffer, 0, MessageBody.MessageHeadLength) == MessageBody.MessageHeadLength)
+                    if (fileStream.Read(messageHeadBuffer, 0, NetworkMessage.MessageHeadLength) == NetworkMessage.MessageHeadLength)
                     {
                         messageBodyLength = BitConverter.ToInt32(messageHeadBuffer, 0);
                         // 跳过message body
@@ -206,7 +201,7 @@ namespace KH
                     else
                     {
                         Debug.LogWarning("超出message包的范围");
-                        return default(T);
+                        return null;
                     }
                 }
 
@@ -214,9 +209,9 @@ namespace KH
                 {
                     // 当前位置是我们所要的message
                     // 读取message head来获得message body的长度
-                    if (fileStream.Read(messageHeadBuffer, 0, MessageBody.MessageHeadLength) != MessageBody.MessageHeadLength)
+                    if (fileStream.Read(messageHeadBuffer, 0, NetworkMessage.MessageHeadLength) != NetworkMessage.MessageHeadLength)
                     {
-                        return default(T);
+                        return null;
                     }
                     messageBodyLength = BitConverter.ToInt32(messageHeadBuffer, 0);
                     messageBodyBuffer = new byte[messageBodyLength];
@@ -228,14 +223,14 @@ namespace KH
                         mStream.Seek(0, SeekOrigin.Begin);
                         try
                         {
-                            message = (T)bf.Deserialize(mStream);
+                            message = (Message)bf.Deserialize(mStream);
                         }
                         catch (Exception e)
                         {
                             Debug.LogWarning("反序列化战斗包出错");
                             Debug.LogWarning(e.Message);
                         }
-                        
+
                         mStream.Close();
                     }
 
@@ -258,115 +253,38 @@ namespace KH
         /// </summary>
         /// <param name="cmdID"></param>
         /// <returns>对应的包</returns>
-        public MessageBody deserializeFromLocalByCmdIDCache(uint cmdID)
+        public NetworkMessage deserializeFromLocalByCmdIDCache(string targetPath, uint cmdID)
         {
+            if (paths.Add(targetPath))
+            {
+                loadToMemory(targetPath);
+                // 直接从提前存好的内存中读取
+            }
+
             if (messagesBodySet == null)
             {
-                loadFromLocalDisk();
-                // 直接从提前存好的内存中读取
+                sortMessagesByCmd();
             }
             return getMessageBodyByCmdIDFromResults(cmdID);
         }
 
-        //public MessageBody deserializeFromLocalByCmdID(uint cmdID)
-        //{
-        //    // 将本地文件读进内存
-        //    MessageBody tempMessageBody = null;
-        //    MessageBody resultMessageBody = null;
-        //    FileStream fileStream = null;
-        //    BinaryFormatter bf = new BinaryFormatter();
-        //    try
-        //    {
-        //        fileStream = new FileStream(DEST_PATH_CSharp, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        //    }
-        //    catch (DirectoryNotFoundException)
-        //    {
-        //        Debug.LogWarning("读取路径出现问题");
-        //    }
-        //    catch (FileNotFoundException)
-        //    {
-        //        Debug.LogWarning("无法找到文件");
-        //    }
-
-        //    if (fileStream != null)
-        //    {
-        //        byte[] messageHeadBuffer = new byte[MessageBody.MessageHeadLength];
-        //        byte[] messageBodyBuffer;
-        //        int messageBodyLength;
-        //        // 开始读取
-        //        do
-        //        {
-        //            // 读取message head来获得message body的长度
-        //            long beginPosition = fileStream.Position;
-        //            if (fileStream.Read(messageHeadBuffer, 0, MessageBody.MessageHeadLength) == MessageBody.MessageHeadLength)
-        //            {
-        //                messageBodyLength = BitConverter.ToInt32(messageHeadBuffer, 0);
-        //                // Debug.Log("message body length: " + messageBodyLength);
-        //                messageBodyBuffer = new byte[messageBodyLength];
-
-        //                if (fileStream.Read(messageBodyBuffer, 0, messageBodyLength) == messageBodyLength)
-        //                {
-        //                    // 通过获得的message body长度来获取message body的buffer
-        //                    long endPosition = fileStream.Position;
-        //                    using (MemoryStream mStream = new MemoryStream())
-        //                    {
-        //                        mStream.Write(messageBodyBuffer, 0, messageBodyLength);
-        //                        mStream.Flush();
-        //                        mStream.Seek(0, SeekOrigin.Begin);
-        //                        tempMessageBody = (MessageBody)bf.Deserialize(mStream);
-        //                        mStream.Close();
-        //                    }
-
-        //                    if (tempMessageBody.CmdID == cmdID)
-        //                    {
-        //                        // deleteBuffer(fileStream, beginPosition, endPosition);
-        //                        resultMessageBody = tempMessageBody;
-        //                        Debug.Log("读取成功");
-        //                        return resultMessageBody;
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    Debug.LogWarning("CmdID::超出message包的范围");
-        //                    fileStream.Close();
-        //                    return null;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                if (resultMessageBody == null)
-        //                {
-        //                    Debug.LogWarning("CmdID::超出message包的范围");
-        //                }
-        //                fileStream.Close();
-        //                return resultMessageBody;
-        //            }
-        //        } while (true);
-        //    }
-        //    else
-        //    {
-        //        Debug.LogWarning("file stream == null");
-        //        return null;
-        //    }
-        //}
-
-        public MessageBody deserializeFromLocalByTimeStamp(ulong timeStamp)
+        public T deserializeFromLocalByTimeStamp<T>(string targetPath, ulong timeStamp) where T: Message
         {
-            if (messagesBodySet == null)
+            if (paths.Add(targetPath))
             {
-                loadFromLocalDisk();
+                loadToMemory(targetPath);
             }
             // 直接从提前存好的内存中读取
-            return getMessageBodyByTimeStampFromResults(timeStamp);
+            return getMessageBodyByTimeStampFromResults<T>(timeStamp);
         }
 
-        private MessageBody getMessageBodyByCmdIDFromResults(uint cmdID)
+        private NetworkMessage getMessageBodyByCmdIDFromResults(uint cmdID)
         {
             if (messagesBodySet.ContainsKey(cmdID))
             {
                 if (messagesBodySet[cmdID].Count > 0)
                 {
-                    MessageBody result = messagesBodySet[cmdID][0];
+                    NetworkMessage result = messagesBodySet[cmdID][0] as NetworkMessage;
                     messagesBodySet[cmdID].RemoveAt(0);
                     return result;
                 }
@@ -375,35 +293,65 @@ namespace KH
             return null;
         }
 
-        private MessageBody getMessageBodyByTimeStampFromResults(ulong timeStamp)
+        private T getMessageBodyByTimeStampFromResults<T>(ulong timeStamp) where T : Message
         {
-            foreach (var messageBodyList in messagesBodySet.Values)
+            T result = null;
+            try
             {
-                foreach (var item in messageBodyList)
+                foreach (Message item in messages)
                 {
-                    if (item.TimeStamp == timeStamp && item.Serial == 0)
+                    if (item is T)
                     {
-                        return item;
+                        if (item is NetworkMessage)
+                        {
+                            if (item.TimeStamp == timeStamp && (item as NetworkMessage).Serial == 0)
+                            {
+                                messages.Remove(item);
+                                result = (T)item;
+                                break;
+                            }
+                        }
+
+                        if (item is MouseAction)
+                        {
+                            Debug.Log(timeStamp + ", " + item.TimeStamp);
+                            if (item.TimeStamp == timeStamp)
+                            {
+
+                                messages.Remove(item);
+                                result = (T)item;
+                                Debug.Log("获得鼠标事件" + timeStamp);
+                                break;
+                            }
+                        }
                     }
                 }
             }
-            return null;
+            catch (InvalidCastException e)
+            {
+                Debug.LogWarning(timeStamp);
+                Debug.LogWarning(e.Message);
+            }
+            
+            
+            return result;
         }
 
         /// <summary>
         /// // 将本地文件读进内存
         /// </summary>
-        private void loadFromLocalDisk()
+        private void loadToMemory(string targetPath)
         {
-            if (messagesBodySet != null) return;
-            messagesBodySet = new Dictionary<uint, List<MessageBody>>();
+            // if (messagesBodySet != null) return;
+            // Dictionary<uint, List<T>> messagesBodySet = new Dictionary<uint, List<T>>();
+
             // 将本地文件读进内存
-            MessageBody tempMessageBody = null;
+            Message tempMessage = null;
             FileStream fileStream = null;
             BinaryFormatter bf = new BinaryFormatter();
             try
             {
-                fileStream = new FileStream(DEST_PATH_CSharp, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                fileStream = new FileStream(targetPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             }
             catch (DirectoryNotFoundException)
             {
@@ -420,14 +368,14 @@ namespace KH
                 return;
             }
 
-            byte[] messageHeadBuffer = new byte[MessageBody.MessageHeadLength];
+            byte[] messageHeadBuffer = new byte[NetworkMessage.MessageHeadLength];
             byte[] messageBodyBuffer;
             int messageBodyLength;
             // 开始读取
             do
             {
                 // 读取message head来获得message body的长度
-                if (fileStream.Read(messageHeadBuffer, 0, MessageBody.MessageHeadLength) == MessageBody.MessageHeadLength)
+                if (fileStream.Read(messageHeadBuffer, 0, NetworkMessage.MessageHeadLength) == NetworkMessage.MessageHeadLength)
                 {
                     messageBodyLength = BitConverter.ToInt32(messageHeadBuffer, 0);
                     // Debug.Log("message body length: " + messageBodyLength);
@@ -440,20 +388,15 @@ namespace KH
                         {
                             mStream.Write(messageBodyBuffer, 0, messageBodyLength);
                             mStream.Seek(0, SeekOrigin.Begin);
-                            tempMessageBody = (MessageBody)bf.Deserialize(mStream);
+                            tempMessage = (Message)bf.Deserialize(mStream);
                             mStream.Close();
                         }
-                        if (!messagesBodySet.ContainsKey(tempMessageBody.CmdID))
-                        {
-                            messagesBodySet[tempMessageBody.CmdID] = new List<MessageBody>();
-                            
-                        }
-                        messagesBodySet[tempMessageBody.CmdID].Add(tempMessageBody);
+                        messages.Add(tempMessage);
                     }
                     else
                     {
                         Debug.LogWarning("CmdID::超出message包的范围");
-                        Debug.Log("一共有" + messagesBodySet.Count + "消息包");
+                        Debug.Log("一共有" + messages.Count + "消息包");
                         fileStream.Close();
                         return;
                     }
@@ -461,10 +404,28 @@ namespace KH
                 else
                 {
                     fileStream.Close();
-                    Debug.Log("一共有" + messagesBodySet.Count + "消息包");
+                    Debug.Log("一共有" + messages.Count + "消息包");
                     return;
                 }
             } while (true);
+        }
+
+
+        private void sortMessagesByCmd()
+        {
+            messagesBodySet = new Dictionary<uint, List<NetworkMessage>>();
+            foreach (Message message in messages)
+            {
+                if (message is NetworkMessage)
+                {
+                    if (!messagesBodySet.ContainsKey(((NetworkMessage)message).CmdID))
+                    {
+                        messagesBodySet[((NetworkMessage)message).CmdID] = new List<NetworkMessage>();
+                    }
+                    messagesBodySet[((NetworkMessage)message).CmdID].Add(((NetworkMessage)message));
+                }
+
+            }
         }
     }
 }

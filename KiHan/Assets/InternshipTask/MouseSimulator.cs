@@ -4,7 +4,8 @@ using System;
 using UnityEditor;
 using System.Runtime.InteropServices;
 
-public class MouseSimulator {
+public class MouseSimulator
+{
 
     #region DLLs
     [DllImport("user32.dll")]
@@ -65,11 +66,11 @@ public class MouseSimulator {
             GetCursorPos(out curX, out curY);
             offset = new Vector2(curX - Input.mousePosition.x, curY + Input.mousePosition.y);
         }
-        Debug.Log("offset" + offset);
-        Debug.Log("Input" + Input.mousePosition.x + ", " + Input.mousePosition.y);
+        // Debug.Log("offset" + offset);
+        // Debug.Log("Input" + Input.mousePosition.x + ", " + Input.mousePosition.y);
         Vector3 screePos = Camera.main.ViewportToScreenPoint(new Vector3((float)x, (float)y, 0));
         SetCursorPos((int)(screePos.x + offset.x), (int)(- screePos.y + offset.y));
-        Debug.Log("moveTo" + (int)(screePos.x + offset.x) + ", " + (int)(-screePos.y + offset.y));
+        // Debug.Log("moveTo" + (int)(screePos.x + offset.x) + ", " + (int)(-screePos.y + offset.y));
         return true;
     }
 

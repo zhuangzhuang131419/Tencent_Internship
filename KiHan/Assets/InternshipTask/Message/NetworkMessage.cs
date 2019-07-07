@@ -18,7 +18,7 @@ namespace KH
     /// 保存在本地的包
     /// </summary>
     [Serializable]
-    public class MessageBody
+    public class NetworkMessage : Message
     {
         private static readonly int MESSAGEHEADLENGTH = 4;
         private uint cmdId;
@@ -27,34 +27,34 @@ namespace KH
         private Type messageType;
         // 已经被序列化成byte字符串的消息包
         private List<byte[]> messageBodyBuffer = new List<byte[]>();
-        private ulong timeStamp;
+        
         private uint serial;
         // 这个消息包是来源于Lua, C#还是混合的
         private MessageSource source;
 
-        public MessageBody()
+        public NetworkMessage()
         {
 
         }
 
-        public MessageBody(Type messageType, byte[] messageBodyBuffer, uint cmdID)
+        public NetworkMessage(Type messageType, byte[] messageBodyBuffer, uint cmdID)
         {
             this.messageType = messageType;
             this.messageBodyBuffer.Add(messageBodyBuffer);
             this.cmdId = cmdID;
         }
 
-        public MessageBody(Type messageType, uint cmdID)
+        public NetworkMessage(Type messageType, uint cmdID)
         {
             this.messageType = messageType;
             this.cmdId = cmdID;
         }
 
-        public MessageBody(Type messageType, uint cmdID, ulong timeStamp, uint serial, MessageSource source)
+        public NetworkMessage(Type messageType, uint cmdID, ulong timeStamp, uint serial, MessageSource source)
         {
             this.messageType = messageType;
             this.cmdId = cmdID;
-            this.timeStamp = timeStamp;
+            TimeStamp = timeStamp;
             this.serial = serial;
             this.source = source;
         }
@@ -80,11 +80,6 @@ namespace KH
         public uint CmdID
         {
             get { return cmdId; }
-        }
-
-        public ulong TimeStamp
-        {
-            get { return timeStamp; }
         }
 
         public uint Serial
