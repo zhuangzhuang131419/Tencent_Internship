@@ -614,12 +614,11 @@ public class MapEditor
                         Debug.LogWarning("加载出错" + e.Message);
                     }
                     fileStream.Close();
-
-                    Debug.Log("int.Parse(Path.GetFileNameWithoutExtension(path)):" + int.Parse(Path.GetFileNameWithoutExtension(path)));
+                    Debug.Log("导入的index" + int.Parse(Path.GetFileNameWithoutExtension(path).Substring(Path.GetFileNameWithoutExtension(path).Length - 3)));
                     if (!generators.ContainsKey(int.Parse(Path.GetFileNameWithoutExtension(path))))
                     {
                         MapGenerator mapGenerator = InstantializeGenerator(
-                            generators.Count,
+                            int.Parse(Path.GetFileNameWithoutExtension(path).Substring(Path.GetFileNameWithoutExtension(path).Length - 3)),
                             int.Parse(Path.GetFileNameWithoutExtension(path)),
                             GameObject.Find("MonsterGenerator"));
                         generators.Add(mapGenerator.ID, mapGenerator);
