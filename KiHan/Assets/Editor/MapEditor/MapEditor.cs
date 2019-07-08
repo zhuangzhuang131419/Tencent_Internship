@@ -587,12 +587,13 @@ public class MapEditor
     /// <param name="mapID"></param>
     private static void loadGeneratorXML(string mapID)
     {
-        Dictionary<int, MapGenerator> generators = new Dictionary<int, MapGenerator>();
+        Dictionary<int, MapGenerator> oldGenerators = new Dictionary<int, MapGenerator>();
+        Dictionary<int, MapGenerator> newGenerators = new Dictionary<int, MapGenerator>();
         foreach (MapGenerator generator in Resources.FindObjectsOfTypeAll<MapGenerator>())
         {
             if (string.IsNullOrEmpty(AssetDatabase.GetAssetPath(generator)))
             {
-                generators.Add(generator.ID, generator);
+                oldGenerators.Add(generator.ID, generator);
             }
         }
 
@@ -602,29 +603,63 @@ public class MapEditor
             {
                 if (Path.GetExtension(path) == ".bytes")
                 {
-                    // 依次加载每一个generator
-                    XmlDocument xmlFile = new XmlDocument();
-                    FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
-                    try
-                    {
-                        xmlFile.Load(fileStream);
-                    }
-                    catch (XmlException e)
-                    {
-                        Debug.LogWarning("加载出错" + e.Message);
-                    }
-                    fileStream.Close();
+                    // 先判断是否需要重置generator
                     Debug.Log("导入的index" + int.Parse(Path.GetFileNameWithoutExtension(path).Substring(Path.GetFileNameWithoutExtension(path).Length - 3)));
-                    if (!generators.ContainsKey(int.Parse(Path.GetFileNameWithoutExtension(path))))
+                    if (!oldGenerators.ContainsKey(int.Parse(Path.GetFileNameWithoutExtension(path))))
                     {
                         MapGenerator mapGenerator = InstantializeGenerator(
                             int.Parse(Path.GetFileNameWithoutExtension(path).Substring(Path.GetFileNameWithoutExtension(path).Length - 3)),
                             int.Parse(Path.GetFileNameWithoutExtension(path)),
                             GameObject.Find("MonsterGenerator"));
-                        generators.Add(mapGenerator.ID, mapGenerator);
+                        newGenerators.Add(mapGenerator.ID, mapGenerator);
                     }
-                    loadUnitToGeneratorXML(xmlFile, generators[int.Parse(Path.GetFileNameWithoutExtension(path))]);
+                    else
+                    {
+                        newGenerators.Add(int.Parse(Path.GetFileNameWithoutExtension(path)), oldGenerators[int.Parse(Path.GetFileNameWithoutExtension(path))]);
+                        oldGenerators.Remove(int.Parse(Path.GetFileNameWithoutExtension(path)));
+                    }
                 }
+            }
+        }
+
+        if (oldGenerators.Count > 0)
+        {
+            MessageWindow.CreateMessageBox(
+                "Generator需要重置",
+                delegate (EditorWindow window) 
+                {
+                    foreach (var generator in oldGenerators.Values)
+                    {
+                        UnityEngine.Object.DestroyImmediate(generator.gameObject);
+                    }
+
+                    window.Close();
+                },
+                delegate (EditorWindow window) 
+                {
+                    window.Close();
+                    return;
+                }
+            );
+        }
+
+        foreach (var path in Directory.GetFiles(MAP_ID_PATH + "/" + mapID + "/MapGenerator"))
+        {
+            if (Path.GetExtension(path) == ".bytes")
+            {
+                // 依次加载每一个generator
+                XmlDocument xmlFile = new XmlDocument();
+                FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+                try
+                {
+                    xmlFile.Load(fileStream);
+                }
+                catch (XmlException e)
+                {
+                    Debug.LogWarning("加载出错" + e.Message);
+                }
+                fileStream.Close();
+                loadUnitToGeneratorXML(xmlFile, newGenerators[int.Parse(Path.GetFileNameWithoutExtension(path))]);
             }
         }
     }
@@ -647,30 +682,69 @@ public class MapEditor
         units.Reverse();
         Debug.Log(generator.Index + "有" + units.Count + "个units");
         int index = 0;
-        foreach (XmlNode item in xmlFile.SelectSingleNode("MonsterPackConfig").SelectSingleNode("ary").SelectNodes("item"))
+
+
+        XmlNodeList items = xmlFile.SelectSingleNode("MonsterPackConfig").SelectSingleNode("ary").SelectNodes("item");
+        Debug.Log(generator.Index + "有" + items.Count + "个items");
+        if (items.Count != units.Count)
         {
+            MessageWindow.CreateMessageBox(
+                "Unit需要重置",
+                delegate (EditorWindow window) 
+                {
+                    foreach (XmlNode item in items)
+                    {
+                        // 更新数据
+                        if (units.Count <= index)
+                        {
+                            // item数量多于unit, 新建unit
+                            Unit newUnit = InitializeUnit(units.Count + 1, generator.gameObject);
+                            units.Add(newUnit);
+                        }
 
-            // 更新数据
-            if (units.Count <= index)
-            {
-                // item数量多于unit, 新建unit
-                Unit newUnit = InitializeUnit(units.Count + 1, generator.gameObject);
-                units.Add(newUnit);
-            }
+                        loadItemToUnitXML(units[index++], item);
+                    }
 
-            units[index].ID = int.Parse(item.SelectSingleNode("actorID").InnerText);
-            units[index].transform.position = new Vector3(
-                float.Parse(item.SelectSingleNode("map_pos_x").InnerText) / 10000,
-                float.Parse(item.SelectSingleNode("map_pos_z").InnerText) / 10000,
-                units[index].transform.position.z
-                );
-            units[index].CreateAction = int.Parse(item.SelectSingleNode("defaultVKey").InnerText);
-            units[index].CreateHeight = float.Parse(item.SelectSingleNode("map_pos_y").InnerText) / 10000;
-            units[index].Direction = int.Parse(item.SelectSingleNode("direction").InnerText);
-            units[index].DelayCreateTime = int.Parse(item.SelectSingleNode("delayCreateTime").InnerText);
-            units[index].CenterToPlayer = int.Parse(item.SelectSingleNode("centerToPlayer").InnerText);
-            index++;
+                    if (units.Count > index)
+                    {
+                        // 有多余的unit
+                        for (int i = index; i < units.Count; i++)
+                        {
+                            UnityEngine.Object.DestroyImmediate(units[i].gameObject);
+                        }
+                    }
+                    window.Close();
+                },
+                delegate (EditorWindow window) 
+                {
+                    window.Close();
+                    return;
+                }
+            );
         }
+        else
+        {
+            foreach (XmlNode item in items)
+            {
+                loadItemToUnitXML(units[index++], item);
+            }
+        }
+
+    }
+
+    private static void loadItemToUnitXML(Unit unit, XmlNode item)
+    {
+        unit.ID = int.Parse(item.SelectSingleNode("actorID").InnerText);
+        unit.transform.position = new Vector3(
+            float.Parse(item.SelectSingleNode("map_pos_x").InnerText) / 10000,
+            float.Parse(item.SelectSingleNode("map_pos_z").InnerText) / 10000,
+            unit.transform.position.z
+            );
+        unit.CreateAction = int.Parse(item.SelectSingleNode("defaultVKey").InnerText);
+        unit.CreateHeight = float.Parse(item.SelectSingleNode("map_pos_y").InnerText) / 10000;
+        unit.Direction = int.Parse(item.SelectSingleNode("direction").InnerText);
+        unit.DelayCreateTime = int.Parse(item.SelectSingleNode("delayCreateTime").InnerText);
+        unit.CenterToPlayer = int.Parse(item.SelectSingleNode("centerToPlayer").InnerText);
     }
 
     //[MenuItem("MapEditor/test")]

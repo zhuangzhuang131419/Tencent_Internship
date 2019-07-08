@@ -49,7 +49,7 @@ public class OpenWindow : EditorWindow
     {
         if (SearchRelatedPrefab())
         {
-            MapEditor.refreshFromXML();
+            // MapEditor.refreshFromXML();
         }
         Close();
     }
