@@ -148,3 +148,16 @@ KiHan/Assets/Scripts/LuaStaticScript/UI/PVPRealTimeMain/*
 
 !KiHan/Assets/Scripts/LuaStaticScript/UI/PVPRealTimeMain/PVPRealTimePsyItem.lua.txt
 !KiHan/Assets/Scripts/LuaStaticScript/UI/PVPRealTimeMain/RightPanel.lua.txt
+
+# 滑动操作
+!KiHan/Assets/NGUI
+KiHan/Assets/NGUI/*
+!KiHan/Assets/NGUI/Scripts
+KiHan/Assets/NGUI/Scripts/*
+!KiHan/Assets/NGUI/Scripts/UI
+KiHan/Assets/NGUI/Scripts/UI/*
+!KiHan/Assets/NGUI/Scripts/UI/UIPanel.cs
+
+!KiHan/Assets/NGUI/Scripts/Interaction
+KiHan/Assets/NGUI/Scripts/Interaction/*
+!KiHan/Assets/NGUI/Scripts/Interaction/UIWrapContentEx.cs
