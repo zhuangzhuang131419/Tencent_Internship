@@ -161,3 +161,4 @@ KiHan/Assets/NGUI/Scripts/UI/*
 !KiHan/Assets/NGUI/Scripts/Interaction
 KiHan/Assets/NGUI/Scripts/Interaction/*
 !KiHan/Assets/NGUI/Scripts/Interaction/UIWrapContentEx.cs
+!KiHan/Assets/NGUI/Scripts/Interaction/UIScrollView.cs
