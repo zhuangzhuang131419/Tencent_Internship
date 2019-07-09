@@ -162,3 +162,9 @@ KiHan/Assets/NGUI/Scripts/UI/*
 KiHan/Assets/NGUI/Scripts/Interaction/*
 !KiHan/Assets/NGUI/Scripts/Interaction/UIWrapContentEx.cs
 !KiHan/Assets/NGUI/Scripts/Interaction/UIScrollView.cs
+
+!KiHan/Assets/EasyTouch
+KiHan/Assets/EasyTouch/*
+!KiHan/Assets/EasyTouch/Plugins
+KiHan/Assets/EasyTouch/Plugins/*
+!KiHan/Assets/EasyTouch/Plugins/EasyTouch.cs
