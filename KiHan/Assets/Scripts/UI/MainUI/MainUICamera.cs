@@ -252,6 +252,7 @@ namespace KH
 		// 移动镜头
 		public void move (float dx, float dy)
 		{
+            if (MessageManager.Instance.IsActivate && !MessageManager.Instance.IsSerializeToLocal) { return; }
             if (this.scene != null && this.scene.gameObject != null)
 			{
                 Vector3 pos = cameraPos;// this.unityCamera.position;

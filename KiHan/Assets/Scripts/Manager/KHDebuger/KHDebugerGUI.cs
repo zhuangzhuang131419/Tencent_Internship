@@ -3149,7 +3149,9 @@ namespace KH
 
             if (GUILayout.Button("test1"))
             {
-                MessageManager.Instance.serializeDragEvent = true;
+                UIPanel targetPanel = GameObject.Find("RankScrollView").GetComponent<UIPanel>();
+                GameObject.Find("RankScrollView").GetComponent<UIScrollView>().MoveAbsolute(new Vector3(0, 9.2f, 0));
+                targetPanel.onClipMove(targetPanel);
             }
 
 

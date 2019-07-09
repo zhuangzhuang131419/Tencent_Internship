@@ -19,13 +19,17 @@ namespace KH
         // public static readonly string BATTLE_RESULT = "F:\\Tencent_Internship\\KiHan\\log\\Result.dat";
         // 内存中保存的一系列message，方便在给定cmdID的情况下取出 （利用cmdID作key，避免重复）
         public List<Message> messages = new List<Message>();
+
+        public Dictionary<ulong, List<Message>> messagesWithTimeStamp = null;
+
+        // 用cmdID作为key
         public Dictionary<uint, List<NetworkMessage>> messagesBodySet = null;
 
         // 已加载的message地址
         private HashSet<string> paths = new HashSet<string>();
 
+        public Vector3 totalOffset = new Vector3();
 
-        public bool serializeDragEvent = false;
 
         // 录播
         private bool isSerializeToLocal = false;
@@ -430,6 +434,51 @@ namespace KH
 
             }
         }
+
+        /// <summary>
+        /// 把拖拽事件按时间戳保存
+        /// </summary>
+        private void sortMessagesByTimeStamp()
+        {
+            messagesWithTimeStamp = new Dictionary<ulong, List<Message>>();
+            foreach (Message message in messages)
+            {
+                if (message is DragAction || message is SwipeAction)
+                {
+                    if (!messagesWithTimeStamp.ContainsKey(message.TimeStamp))
+                    {
+                        messagesWithTimeStamp[message.TimeStamp] = new List<Message>();
+                    }
+                    messagesWithTimeStamp[message.TimeStamp].Add(message);
+                }
+            }
+        }
+
+        //private void calculateOffset()
+        //{
+        //    foreach (var messageList in messagesWithTimeStamp.Values)
+        //    {
+        //        Vector3 totalOffset = new Vector3();
+        //        if (messageList[0] is DragAction)
+        //        {
+        //            string uiPanel = messageList[0].Panel;
+        //            // 每一个同一时间的timeStamp
+        //            foreach (var message in messageList)
+        //            {
+        //                if (message is DragAction)
+        //                {
+        //                    totalOffset += ((DragAction)message).Absolute;
+        //                }
+        //            }
+        //        }
+
+
+
+                
+
+        //        DragAction compoundAction = new DragAction()
+        //    }
+        //}
     }
 }
 

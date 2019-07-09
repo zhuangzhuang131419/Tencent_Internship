@@ -180,7 +180,7 @@ public class UIScrollView : MonoBehaviour
 	protected Plane mPlane;
 	protected Vector3 mLastPos;
 	protected bool mPressed = false;
-	protected Vector3 mMomentum = Vector3.zero;
+	public Vector3 mMomentum = Vector3.zero;
 	protected float mScroll = 0f;
 	protected Bounds mBounds;
 	public bool mCalculatedBounds = false;
@@ -779,7 +779,6 @@ public class UIScrollView : MonoBehaviour
 
 	public void MoveAbsolute (Vector3 absolute)
 	{
-        // Debug.LogWarning("MoveAbsolute" + absolute + "" + GetComponentInParent<UIPanel>().name);
 		Vector3 a = mTrans.InverseTransformPoint(absolute);
 		Vector3 b = mTrans.InverseTransformPoint(Vector3.zero);
 		MoveRelative(a - b);
@@ -868,6 +867,7 @@ public class UIScrollView : MonoBehaviour
 
 	public void Drag ()
 	{
+        if (MessageManager.Instance.IsActivate && !MessageManager.Instance.IsSerializeToLocal) { return; }
         if (enabled && NGUITools.GetActive(gameObject) && mShouldMove)
 		{
 			if (mDragID == -10) mDragID = UICamera.currentTouchID;
@@ -927,16 +927,18 @@ public class UIScrollView : MonoBehaviour
 					offset = mTrans.TransformDirection(offset);
 				}
 
-				// Adjust the momentum
-				mMomentum = Vector3.Lerp(mMomentum, mMomentum + offset * (0.01f * momentumAmount), 0.67f);
-				if(mMomentum.x<0&&direction==1){
-					mMomentum = Vector3.zero;
-				}
-				if(mMomentum.x>0&&direction==-1){
-					mMomentum = Vector3.zero;
-				}
+                // Adjust the momentum
+                mMomentum = Vector3.Lerp(mMomentum, mMomentum + offset * (0.01f * momentumAmount), 0.67f);
+                if (mMomentum.x < 0 && direction == 1)
+                {
+                    mMomentum = Vector3.zero;
+                }
+                if (mMomentum.x > 0 && direction == -1)
+                {
+                    mMomentum = Vector3.zero;
+                }
 
-                //// Move the scroll view
+                // Move the scroll view
                 if (!iOSDragEmulation || dragEffect != DragEffect.MomentumAndSpring)
                 {
                     MoveAbsolute(offset);
@@ -978,8 +980,9 @@ public class UIScrollView : MonoBehaviour
                     ulong timeStamp = RemoteModel.Instance.CurrentTime;
                     // if (offset.x != 0f || offset.y != 0f || offset.z != 0f)
                     {
-                        DragAction dragEvent = new DragAction(gameObject.GetComponent<UIPanel>(), offset, timeStamp);
-                        Debuger.Log("序列化拖拽事件成功" + timeStamp);
+                        DragAction dragEvent = new DragAction(gameObject.GetComponent<UIPanel>(), offset, mMomentum, timeStamp);
+                        // Debuger.Log("序列化拖拽事件成功" + timeStamp);
+                        MessageManager.Instance.totalOffset += offset;
                         msgManager.serializeToLocal(dragEvent, MessageManager.DEST_PATH_DRAG_EVENT);
                     }
                     // else
@@ -989,8 +992,6 @@ public class UIScrollView : MonoBehaviour
                 }
                 
                 
-
-
                 // We want to constrain the UI to be within bounds
                 if (restrictWithinPanel &&
                     mPanel.clipping != UIDrawCall.Clipping.None &&
@@ -1030,7 +1031,8 @@ public class UIScrollView : MonoBehaviour
 	void LateUpdate ()
 	{
 		if (!Application.isPlaying) return;
-		float delta = RealTime.deltaTime;
+        if (MessageManager.Instance.IsActivate && !MessageManager.Instance.IsSerializeToLocal) { return; }
+        float delta = RealTime.deltaTime;
 
 		// Fade the scroll bars if needed
 		if (showScrollBars != ShowCondition.Always && (verticalScrollBar || horizontalScrollBar))
@@ -1097,8 +1099,24 @@ public class UIScrollView : MonoBehaviour
 				Vector3 offset = NGUIMath.SpringDampen(ref mMomentum, 9f, delta);
 				MoveAbsolute(offset);
 
-				// Restrict the contents to be within the scroll view's bounds
-				if (restrictWithinPanel && mPanel.clipping != UIDrawCall.Clipping.None)
+                // Update by Chicheng
+                MessageManager msgManager = MessageManager.Instance;
+                if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
+                // if (msgManager.serializeDragEvent)
+                {
+                    ulong timeStamp = RemoteModel.Instance.CurrentTime;
+                    if (offset.x != 0f || offset.y != 0f || offset.z != 0f)
+                    {
+                        DragAction dragEvent = new DragAction(gameObject.GetComponent<UIPanel>(), offset, mMomentum, timeStamp);
+                        // Debuger.Log("序列化拖拽事件成功" + timeStamp);
+                        MessageManager.Instance.totalOffset += offset;
+                        msgManager.serializeToLocal(dragEvent, MessageManager.DEST_PATH_DRAG_EVENT);
+                    }
+                }
+
+
+                // Restrict the contents to be within the scroll view's bounds
+                if (restrictWithinPanel && mPanel.clipping != UIDrawCall.Clipping.None)
 					RestrictWithinBounds(false, canMoveHorizontally, canMoveVertically);
 				
 				if (mMomentum.magnitude < 0.0001f && onDragFinished != null) 
