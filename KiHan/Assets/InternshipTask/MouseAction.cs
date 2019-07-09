@@ -16,7 +16,7 @@ public enum MouseType
 /// 记录一个鼠标的事件
 /// </summary>
 [Serializable]
-public class MouseAction : Message
+public class MouseAction : Message, ICommand
 {
 
     private MouseEvent startEvent;
@@ -46,19 +46,9 @@ public class MouseAction : Message
             case MouseType.Left:
                 if (startEvent.PosX == endEvent.PosX && startEvent.PosY == endEvent.PosY)
                 {
-                    Debug.Log("点击事件" + startEvent.TimeStamp);
+                    Debuger.Log("点击事件" + startEvent.TimeStamp);
                     MouseSimulator.LeftClick(startEvent.PosX, startEvent.PosY);
                 }
-                else
-                {
-                    Debug.Log("拖拽事件");
-                    Debug.Log("开始事件" + startEvent.PosX + ", " + startEvent.PosY);
-                    MouseSimulator.LeftDown(startEvent.PosX, startEvent.PosY);
-                    Thread.Sleep((int)(endEvent.TimeStamp - startEvent.TimeStamp) * 1000);
-                    Debug.Log("结束事件" + endEvent.PosX + ", " + endEvent.PosY);
-                    MouseSimulator.LeftUp(endEvent.PosX, endEvent.PosY);
-                }
-
                 break;
             case MouseType.Right:
                 MouseSimulator.RightDown(startEvent.PosX, startEvent.PosY);

@@ -111,6 +111,18 @@ namespace KH
         private float deltaSpeedX;
         private bool mNewMoveEvt = false;
 
+        public float DeltaSpeedX
+        {
+            get { return deltaSpeedX; }
+            set { deltaSpeedX = value; }
+        }
+
+        public bool IsmNewMoveEvt
+        {
+            get { return mNewMoveEvt; }
+            set { mNewMoveEvt = value; }
+        }
+
         private float startCameraPosX = 0.0f;
         private void On_SimpleTap(Gesture gesture)
         {
@@ -128,6 +140,7 @@ namespace KH
         private void On_Swipe(Gesture gesture)
         {
             if (!this.TouchSwitcher) { return; }
+            if (MessageManager.Instance.IsActivate && !MessageManager.Instance.IsSerializeToLocal) { return; }
             if (touchBegined)
             {
                 deltaSpeedX = -gesture.deltaPosition.x;
@@ -135,7 +148,17 @@ namespace KH
                 float destX = (gesture.startPosition.x - gesture.position.x) * destRate + startCameraPosX;
                 //MainUICamera.getInstance().move(distanceX, 0);
                 //Debuger.Log("aaaa destX = " + destX + "  startCameraPosX = " + startCameraPosX + "  gesture.startPosition = " + gesture.startPosition + "   gesture.position = " + gesture.position);
+
                 MainUICamera.getInstance().moveTo(destX, 0);
+
+                if (MessageManager.Instance.IsActivate && MessageManager.Instance.IsSerializeToLocal)
+                {
+                    SwipeAction swipeAction = new SwipeAction(destX, deltaSpeedX, RemoteModel.Instance.CurrentTime);
+                    MessageManager.Instance.serializeToLocal(swipeAction, MessageManager.DEST_PATH_DRAG_EVENT);
+                }
+
+
+                Debuger.Log("destX:" + destX);
                 mNewMoveEvt = true;
             }
         }

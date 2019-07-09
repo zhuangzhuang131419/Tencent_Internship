@@ -978,7 +978,7 @@ public class UIScrollView : MonoBehaviour
                     ulong timeStamp = RemoteModel.Instance.CurrentTime;
                     // if (offset.x != 0f || offset.y != 0f || offset.z != 0f)
                     {
-                        DragEvent dragEvent = new DragEvent(gameObject.GetComponent<UIPanel>(), offset, timeStamp);
+                        DragAction dragEvent = new DragAction(gameObject.GetComponent<UIPanel>(), offset, timeStamp);
                         Debuger.Log("序列化拖拽事件成功" + timeStamp);
                         msgManager.serializeToLocal(dragEvent, MessageManager.DEST_PATH_DRAG_EVENT);
                     }

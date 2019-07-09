@@ -4,7 +4,7 @@ using KH;
 using System;
 
 [Serializable]
-public class DragEvent : Message {
+public class DragAction : Message, ICommand {
 
     // private UIPanel targetPanel;
     private string UIPanelName;
@@ -12,7 +12,7 @@ public class DragEvent : Message {
     private float absoluteY;
     private float absoluteZ;
 
-    public DragEvent(UIPanel uiPanel, Vector3 absolute, ulong timeStamp)
+    public DragAction(UIPanel uiPanel, Vector3 absolute, ulong timeStamp)
     {
         TimeStamp = timeStamp;
         UIPanelName = uiPanel.gameObject.name;
@@ -20,7 +20,6 @@ public class DragEvent : Message {
         absoluteY = absolute.y;
         absoluteZ = absolute.z;
     }
-
 
     public void execute()
     {
