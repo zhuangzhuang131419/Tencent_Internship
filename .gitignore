@@ -105,6 +105,11 @@ KiHan/Assets/Scripts/UI/PVPRealTimeUI/*
 KiHan/Assets/Scripts/UI/MainUI/*
 !KiHan/Assets/Scripts/UI/MainUI/MainUICamera.cs
 
+# 登陆
+!KiHan/Assets/Scripts/UI/Login
+KiHan/Assets/Scripts/UI/Login/*
+!KiHan/Assets/Scripts/UI/Login/DefaultZoneWin.cs
+
 # 保留UIPVPRealTimeMatchEnemy
 # !KiHan/Assets/Scripts/UI/PVPRealTimeUI/UIPVPRealTimeMatchEnemy.cs
 
