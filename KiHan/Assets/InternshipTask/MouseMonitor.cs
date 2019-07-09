@@ -42,14 +42,17 @@ public class MouseMonitor : MonoBehaviour {
             if (leftMouseDown != null)
             {
                 Vector2 v = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-                Debug.Log("序列化鼠标左键抬起操作成功" + v.x + ", " + v.y);
-                leftMouseUp = new MouseEvent(v.x, v.y, MouseType.Left, RemoteModel.Instance.CurrentTime);
-                MouseAction mouseAction = new MouseAction(leftMouseDown, leftMouseUp);
-                msgManager.serializeToLocal(mouseAction, MessageManager.DEST_PATH_MOUSE_EVENT);
+                if (v.x == leftMouseDown.PosX && v.y == leftMouseDown.PosY)
+                {
+                    Debuger.Log("序列化鼠标左键抬起操作成功" + v.x + ", " + v.y);
+                    leftMouseUp = new MouseEvent(v.x, v.y, MouseType.Left, RemoteModel.Instance.CurrentTime);
+                    MouseAction mouseAction = new MouseAction(leftMouseDown, leftMouseUp);
+                    msgManager.serializeToLocal(mouseAction, MessageManager.DEST_PATH_MOUSE_EVENT);
+                }
             }
             else
             {
-                Debug.Log("有问题");
+                Debuger.Log("有问题");
             }
 
             // 清空

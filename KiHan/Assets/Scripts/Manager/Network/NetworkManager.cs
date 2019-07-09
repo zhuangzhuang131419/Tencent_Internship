@@ -153,20 +153,20 @@ namespace KH
             MessageManager msgManager = MessageManager.Instance;
             RemoteModel remoteModel = RemoteModel.Instance;
             // ulong time = 1560234066;
-            NetworkMessage NTFMessageBody = msgManager.deserializeFromLocalByTimeStamp<NetworkMessage>(MessageManager.DEST_PATH_CSharp, remoteModel.CurrentTime);
-            if (NTFMessageBody != null)
+            List<NetworkMessage> NTFMessageBody = msgManager.deserializeFromLocalByTimeStamp<NetworkMessage>(MessageManager.DEST_PATH_CSharp, remoteModel.CurrentTime);
+            if (NTFMessageBody.Count > 0)
             {
                 List<object> messagesBody = new List<object>();
                 try
                 {
-                    messagesBody.Add(NTFMessageBody.MessagesBodyBuffer[0]);
-                    messagesBody.Add(PBSerializer.NDeserialize(NTFMessageBody.MessagesBodyBuffer[1], NTFMessageBody.MessageType));
+                    messagesBody.Add(NTFMessageBody[0].MessagesBodyBuffer[0]);
+                    messagesBody.Add(PBSerializer.NDeserialize(NTFMessageBody[0].MessagesBodyBuffer[1], NTFMessageBody[0].MessageType));
                 }
                 catch (Exception e)
                 {
                     Debug.LogWarning(e.Message);
                 }
-                __Proxy.__QueueAddMessage(NTFMessageBody.CmdID, 0, messagesBody);
+                __Proxy.__QueueAddMessage(NTFMessageBody[0].CmdID, 0, messagesBody);
             }
 
         }

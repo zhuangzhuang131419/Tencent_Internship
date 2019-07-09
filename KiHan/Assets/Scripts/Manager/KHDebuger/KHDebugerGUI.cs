@@ -3143,8 +3143,15 @@ namespace KH
             {
                 File.Delete(MessageManager.DEST_PATH_MOUSE_EVENT);
                 File.Delete(MessageManager.DEST_PATH_CSharp);
+                File.Delete(MessageManager.DEST_PATH_DRAG_EVENT);
                 Debug.Log("文件已删除");
             }
+
+            if (GUILayout.Button("test1"))
+            {
+                MessageManager.Instance.serializeDragEvent = true;
+            }
+
 
 
 

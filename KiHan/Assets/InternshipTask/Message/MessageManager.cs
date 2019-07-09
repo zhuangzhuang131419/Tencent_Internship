@@ -15,6 +15,7 @@ namespace KH
         private static readonly string DEST_PATH = "Assets/InternshipTask/";
         public static readonly string DEST_PATH_CSharp = DEST_PATH + "Message.dat";
         public static readonly string DEST_PATH_MOUSE_EVENT = DEST_PATH + "mouse.dat";
+        public static readonly string DEST_PATH_DRAG_EVENT = DEST_PATH + "DragEvent.dat";
         // public static readonly string BATTLE_RESULT = "F:\\Tencent_Internship\\KiHan\\log\\Result.dat";
         // 内存中保存的一系列message，方便在给定cmdID的情况下取出 （利用cmdID作key，避免重复）
         public List<Message> messages = new List<Message>();
@@ -22,6 +23,9 @@ namespace KH
 
         // 已加载的message地址
         private HashSet<string> paths = new HashSet<string>();
+
+
+        public bool serializeDragEvent = false;
 
         // 录播
         private bool isSerializeToLocal = false;
@@ -268,7 +272,7 @@ namespace KH
             return getMessageBodyByCmdIDFromResults(cmdID);
         }
 
-        public T deserializeFromLocalByTimeStamp<T>(string targetPath, ulong timeStamp) where T: Message
+        public List<T> deserializeFromLocalByTimeStamp<T>(string targetPath, ulong timeStamp) where T: Message
         {
             if (paths.Add(targetPath))
             {
@@ -293,9 +297,9 @@ namespace KH
             return null;
         }
 
-        private T getMessageBodyByTimeStampFromResults<T>(ulong timeStamp) where T : Message
+        private List<T> getMessageBodyByTimeStampFromResults<T>(ulong timeStamp) where T : Message
         {
-            T result = null;
+            List<T> results = new List<T>();
             try
             {
                 foreach (Message item in messages)
@@ -306,22 +310,16 @@ namespace KH
                         {
                             if (item.TimeStamp == timeStamp && (item as NetworkMessage).Serial == 0)
                             {
-                                messages.Remove(item);
-                                result = (T)item;
-                                break;
+                                results.Add((T)item);
                             }
                         }
 
-                        if (item is MouseAction)
-                        {
-                            Debug.Log(timeStamp + ", " + item.TimeStamp);
+                        // if (item is MouseAction)
+                        else {
+                            Debuger.Log(timeStamp + ", " + item.TimeStamp);
                             if (item.TimeStamp == timeStamp)
                             {
-
-                                messages.Remove(item);
-                                result = (T)item;
-                                Debug.Log("获得鼠标事件" + timeStamp);
-                                break;
+                                results.Add((T)item);
                             }
                         }
                     }
@@ -332,9 +330,14 @@ namespace KH
                 Debug.LogWarning(timeStamp);
                 Debug.LogWarning(e.Message);
             }
+
+            foreach (var item in results)
+            {
+                messages.Remove(item);
+            }
             
             
-            return result;
+            return results;
         }
 
         /// <summary>

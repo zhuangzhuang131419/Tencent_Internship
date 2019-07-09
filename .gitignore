@@ -111,7 +111,7 @@ KiHan/Assets/Scripts/UI/PVPRealTimeUI/*
 KiHan/Assets/Resources/*
 
 # 保留Resources/Scene
-!KiHan/Assets/Resources/Scene
+# !KiHan/Assets/Resources/Scene
 
 # 保留NewTalentOperation.lua.txt
 !KiHan/Assets/Resources/LuaScript

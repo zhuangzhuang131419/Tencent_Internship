@@ -4,6 +4,7 @@
 //----------------------------------------------
 
 using UnityEngine;
+using KH;
 
 /// <summary>
 /// This script, when attached to a panel turns it into a scroll view.
@@ -778,6 +779,7 @@ public class UIScrollView : MonoBehaviour
 
 	public void MoveAbsolute (Vector3 absolute)
 	{
+        // Debug.LogWarning("MoveAbsolute" + absolute + "" + GetComponentInParent<UIPanel>().name);
 		Vector3 a = mTrans.InverseTransformPoint(absolute);
 		Vector3 b = mTrans.InverseTransformPoint(Vector3.zero);
 		MoveRelative(a - b);
@@ -866,12 +868,13 @@ public class UIScrollView : MonoBehaviour
 
 	public void Drag ()
 	{
-		if (enabled && NGUITools.GetActive(gameObject) && mShouldMove)
+        if (enabled && NGUITools.GetActive(gameObject) && mShouldMove)
 		{
 			if (mDragID == -10) mDragID = UICamera.currentTouchID;
 			UICamera.currentTouch.clickNotification = UICamera.ClickNotification.BasedOnDelta;
 
-			// Prevents the drag "jump". Contributed by 'mixd' from the Tasharen forums.
+            // Prevents the drag "jump". Contributed by 'mixd' from the Tasharen forums.
+            
 			if (smoothDragStart && !mDragStarted)
 			{
 				mDragStarted = true;
@@ -933,14 +936,14 @@ public class UIScrollView : MonoBehaviour
 					mMomentum = Vector3.zero;
 				}
 
-				// Move the scroll view
-				if (!iOSDragEmulation || dragEffect != DragEffect.MomentumAndSpring)
-				{
-					MoveAbsolute(offset);	
-				}
-				else
-				{
-					Vector3 constraint = mPanel.CalculateConstrainOffset(bounds.min, bounds.max);
+                //// Move the scroll view
+                if (!iOSDragEmulation || dragEffect != DragEffect.MomentumAndSpring)
+                {
+                    MoveAbsolute(offset);
+                }
+                else
+                {
+                    Vector3 constraint = mPanel.CalculateConstrainOffset(bounds.min, bounds.max);
 
                     //Debuger.Log(string.Format("constraint: {0}, magnitude: {1}",constraint.ToString(), constraint.magnitude));
                     // 优化iOSDragEmulation的响应逻辑 20150511 by symonwu
@@ -955,31 +958,53 @@ public class UIScrollView : MonoBehaviour
                         constraint.z = 0f;
                     }
                     //Debuger.LogWarning(string.Format("x:{0} y:{1}", constraint.x, constraint.y));
-					if (constraint.magnitude > 1f)
-					{
-						MoveAbsolute(offset * 0.5f);
-						mMomentum *= 0.5f;
-					}
-					else
-					{
-						MoveAbsolute(offset);
-					}
-				}
+                    if (constraint.magnitude > 1f)
+                    {
+                        MoveAbsolute(offset * 0.5f);
+                        offset *= 0.5f;
+                        mMomentum *= 0.5f;
+                    }
+                    else
+                    {
+                        MoveAbsolute(offset);
+                    }
+                }
 
-				// We want to constrain the UI to be within bounds
-				if (restrictWithinPanel &&
-					mPanel.clipping != UIDrawCall.Clipping.None &&
-					dragEffect != DragEffect.MomentumAndSpring)
-				{
-					RestrictWithinBounds(true, canMoveHorizontally, canMoveVertically);
-				}
+                // Update by Chicheng
+                MessageManager msgManager = MessageManager.Instance;
+                if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
+                // if (msgManager.serializeDragEvent)
+                {
+                    ulong timeStamp = RemoteModel.Instance.CurrentTime;
+                    // if (offset.x != 0f || offset.y != 0f || offset.z != 0f)
+                    {
+                        DragEvent dragEvent = new DragEvent(gameObject.GetComponent<UIPanel>(), offset, timeStamp);
+                        Debuger.Log("序列化拖拽事件成功" + timeStamp);
+                        msgManager.serializeToLocal(dragEvent, MessageManager.DEST_PATH_DRAG_EVENT);
+                    }
+                    // else
+                    {
+                        // Debug.Log(offset);
+                    }
+                }
+                
+                
+
+
+                // We want to constrain the UI to be within bounds
+                if (restrictWithinPanel &&
+                    mPanel.clipping != UIDrawCall.Clipping.None &&
+                    dragEffect != DragEffect.MomentumAndSpring)
+                {
+                    RestrictWithinBounds(true, canMoveHorizontally, canMoveVertically);
+                }
 
                 if (onDragging != null)
                 {
                     Vector3 constraint = mPanel.CalculateConstrainOffset(bounds.min, bounds.max);
                     onDragging(constraint);
                 }
-			}
+            }
 		}
 	}
 

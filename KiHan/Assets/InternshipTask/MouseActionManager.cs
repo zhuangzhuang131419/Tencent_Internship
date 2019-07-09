@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using KH;
 using System.Threading;
 
@@ -49,15 +49,23 @@ public class MouseActionManager : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         ulong timeStamp = RemoteModel.Instance.CurrentTime;
-        MouseAction mouseAct = MessageManager.Instance.deserializeFromLocalByTimeStamp<MouseAction>(MessageManager.DEST_PATH_MOUSE_EVENT, RemoteModel.Instance.CurrentTime);
-        if (mouseAct != null)
+        List<MouseAction> mouseActs = MessageManager.Instance.deserializeFromLocalByTimeStamp<MouseAction>(MessageManager.DEST_PATH_MOUSE_EVENT, RemoteModel.Instance.CurrentTime);
+        List<DragEvent> dragActs = MessageManager.Instance.deserializeFromLocalByTimeStamp<DragEvent>(MessageManager.DEST_PATH_DRAG_EVENT, RemoteModel.Instance.CurrentTime);
+        if (mouseActs != null)
         {
-            Debug.Log(mouseAct.TimeStamp);
-            mouseAct.execute();
+            foreach (var action in mouseActs)
+            {
+                action.execute();
+            }
+            
         }
-        else if (timeStamp == 1562480407)
+        
+        if (dragActs != null)
         {
-            Debug.Log("有鬼了");
+            foreach (var action in dragActs)
+            {
+                action.execute();
+            }
         }
     }
 }

@@ -19,7 +19,6 @@ public enum MouseType
 public class MouseAction : Message
 {
 
-
     private MouseEvent startEvent;
     private MouseEvent endEvent;
 
