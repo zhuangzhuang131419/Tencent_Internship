@@ -104,6 +104,7 @@ KiHan/Assets/Scripts/UI/PVPRealTimeUI/*
 !KiHan/Assets/Scripts/UI/MainUI
 KiHan/Assets/Scripts/UI/MainUI/*
 !KiHan/Assets/Scripts/UI/MainUI/MainUICamera.cs
+!KiHan/Assets/Scripts/UI/MainUI/UIMainScene.cs
 
 # 登陆
 !KiHan/Assets/Scripts/UI/Login
