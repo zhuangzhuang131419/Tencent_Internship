@@ -156,7 +156,8 @@ public class MapEditor
             // 自动生成index
             int maxIndex = 0;
             int maxID = UnityEngine.Object.FindObjectOfType<MapData>().ID * 1000;
-            foreach (var generator in generatorRoot.GetComponentsInChildren<MapGenerator>())
+            loadHierarchyInfoToMapDataCache();
+            foreach (var generator in cacheMapData.Keys)
             {
                 if (generator.Index > maxIndex)
                 {
@@ -279,9 +280,9 @@ public class MapEditor
             XmlNode centerToPlayer = xmlFile.CreateElement("centerToPlayer");
 
             actorID.InnerText = Convert.ToString(unit.ID);
-            map_pos_x.InnerText = Convert.ToDecimal(unit.transform.position.x * 10000).ToString();
-            map_pos_y.InnerText = Convert.ToDecimal(unit.CreateHeight * 10000).ToString();
-            map_pos_z.InnerText = Convert.ToDecimal(unit.transform.position.y * 10000).ToString();
+            map_pos_x.InnerText = ((long)(Convert.ToDecimal(unit.transform.position.x) * 10000)).ToString();
+            map_pos_y.InnerText = ((long)(Convert.ToDecimal(unit.CreateHeight) * 10000)).ToString();
+            map_pos_z.InnerText = ((long)(Convert.ToDecimal(unit.transform.position.y) * 10000)).ToString();
             defaultVKey.InnerText = Convert.ToString(unit.CreateAction);
             direction.InnerText = Convert.ToString(unit.Direction);
             delayCreateTime.InnerText = Convert.ToString(unit.DelayCreateTime);
