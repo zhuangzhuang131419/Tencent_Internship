@@ -40,19 +40,16 @@ public class MouseAction : Message, ICommand
     /// </summary>
     public void execute()
     {
-        
+
         switch (startEvent.Type)
         {
             case MouseType.Left:
-                if (startEvent.PosX == endEvent.PosX && startEvent.PosY == endEvent.PosY)
-                {
-                    Debuger.Log("点击事件" + startEvent.TimeStamp);
-                    MouseSimulator.LeftClick(startEvent.PosX, startEvent.PosY);
-                }
+                Debug.Log("点击事件" + startEvent.TimeStamp);
+                MouseSimulator.LeftClick(endEvent.ViewportPos.x, endEvent.ViewportPos.y);
                 break;
             case MouseType.Right:
-                MouseSimulator.RightDown(startEvent.PosX, startEvent.PosY);
-                MouseSimulator.RightUp(endEvent.PosX, endEvent.PosY);
+                MouseSimulator.RightDown(startEvent.ViewportPos.x, startEvent.ViewportPos.y);
+                MouseSimulator.RightUp(endEvent.ViewportPos.x, endEvent.ViewportPos.y);
                 break;
             default:
                 break;
@@ -67,22 +64,21 @@ public class MouseEvent : Message
     private float viewportPosY;
     private MouseType mouseType;
 
-    public MouseEvent(float x, float y, MouseType type, ulong timeStamp)
+    public MouseEvent(Vector2 v, MouseType type, ulong timeStamp)
     {
-        viewportPosX = x;
-        viewportPosY = y;
+        ViewportPos = v;
         mouseType = type;
         TimeStamp = timeStamp;
     }
 
-    public float PosX
+    public Vector2 ViewportPos
     {
-        get { return viewportPosX; }
-    }
-
-    public float PosY
-    {
-        get { return viewportPosY; }
+        get { return new Vector2(viewportPosX, viewportPosY); }
+        set
+        {
+            viewportPosX = value.x;
+            viewportPosY = value.y;
+        }
     }
 
     public MouseType Type

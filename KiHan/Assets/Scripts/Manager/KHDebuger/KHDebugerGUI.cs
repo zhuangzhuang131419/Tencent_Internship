@@ -3117,28 +3117,6 @@ namespace KH
                 msgManager.IsSerializeToLocal = !msgManager.IsSerializeToLocal;
             }
 
-            if (GUILayout.Button("鼠标自动化测试"))
-            {
-                // MouseAction mouseevent = msgManager.deserializeFromLocal<MouseAction>(MessageManager.DEST_PATH_MOUSE_EVENT, 0);
-
-                // MouseAction mouseevent = (MouseAction)msgManager.deserializeFromLocalByTimeStamp();
-
-                GameObject mouseActManager = new GameObject("MouseActionManager");
-                mouseActManager.AddComponent<MouseActionManager>();
-                // mouseevent.execute();
-                // GameObject mouseSimulator = new GameObject("MouseSimulator");
-
-            }
-
-            if (GUILayout.Button("鼠标监控"))
-            {
-                if (GameObject.Find("MouseMonitor") == null)
-                {
-                    GameObject mouseMonitor = new GameObject("MouseMonitor");
-                    mouseMonitor.AddComponent<MouseMonitor>();
-                }
-            }
-
             if (GUILayout.Button("清理缓存"))
             {
                 File.Delete(MessageManager.DEST_PATH_MOUSE_EVENT);
@@ -3149,9 +3127,18 @@ namespace KH
 
             if (GUILayout.Button("test1"))
             {
+                UIPanel targetPanel = GameObject.Find("Scroll View").GetComponent<UIPanel>();
+                // GameObject.Find("Scroll View").GetComponent<UIScrollView>().MoveRelative(new Vector3(-160f, 0, 0));
+                GameObject.Find("Scroll View").GetComponent<UIScrollView>().transform.localPosition = new Vector3(-4800, 0, 0);
+                targetPanel.clipOffset = new Vector3(4800, 0, 0);
+                GameObject.Find("Scroll View").GetComponent<UIScrollView>().UpdateScrollbars(false);
+                // targetPanel.onClipMove(targetPanel);
+            }
+
+            if (GUILayout.Button("test2"))
+            {
                 UIPanel targetPanel = GameObject.Find("RankScrollView").GetComponent<UIPanel>();
-                GameObject.Find("RankScrollView").GetComponent<UIScrollView>().MoveAbsolute(new Vector3(0, 9.2f, 0));
-                targetPanel.onClipMove(targetPanel);
+                GameObject.Find("RankScrollView").GetComponent<UIScrollView>().MoveAbsolute(new Vector3(0, 0.1f, 0));
             }
 
 

@@ -229,7 +229,6 @@ namespace KH
         {
             _sysSetting = new SysSetting();
             _watcher = new PVPRTQuitWatcher(_InterruptGuide);
-            Debug.LogWarning("初始化PVPRealTimeOperation");
         }
         
         [Operation(BattleOperation.RequireBattle)]

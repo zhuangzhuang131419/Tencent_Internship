@@ -20,15 +20,17 @@ namespace KH
         // 内存中保存的一系列message，方便在给定cmdID的情况下取出 （利用cmdID作key，避免重复）
         public List<Message> messages = new List<Message>();
 
-        public Dictionary<ulong, List<Message>> messagesWithTimeStamp = null;
-
         // 用cmdID作为key
         public Dictionary<uint, List<NetworkMessage>> messagesBodySet = null;
 
         // 已加载的message地址
         private HashSet<string> paths = new HashSet<string>();
 
-        public Vector3 totalOffset = new Vector3();
+        // cache 缓存已经dragAction
+        public List<DragAction> dragActionsCache = new List<DragAction>();
+
+        // test
+        public float totalOffset = 0;
 
 
         // 录播
@@ -60,6 +62,34 @@ namespace KH
         }
 
         private MessageManager() { }
+
+        public void addDragAction(DragAction dragAct)
+        {
+            if (dragActionsCache.Count == 0)
+            {
+                dragActionsCache.Add(dragAct);
+                return;
+            }
+            else if (dragActionsCache.Count == 1)
+            {
+
+                if (dragActionsCache[0].TimeStamp == dragAct.TimeStamp && dragActionsCache[0].Panel.gameObject.name == dragAct.Panel.gameObject.name)
+                {
+                    dragActionsCache.Clear();
+                    dragActionsCache.Add(dragAct);
+                }
+                else
+                {
+                    serializeToLocal(dragActionsCache[0], DEST_PATH_MOUSE_EVENT);
+                    dragActionsCache.Clear();
+                    dragActionsCache.Add(dragAct);
+                }
+            }
+            else
+            {
+                Debug.LogError("见鬼了");
+            }
+        }
 
         /// <summary>
         /// 把服务器接收来的消息包序列化到本地
@@ -122,7 +152,6 @@ namespace KH
                 }
                 fileStream.Close();
             }
-            Debug.Log("file stream has already been closed.");
         }
 
 
@@ -276,7 +305,7 @@ namespace KH
             return getMessageBodyByCmdIDFromResults(cmdID);
         }
 
-        public List<T> deserializeFromLocalByTimeStamp<T>(string targetPath, ulong timeStamp) where T: Message
+        public List<T> deserializeFromLocalByTimeStamp<T>(string targetPath, ulong timeStamp) where T : Message
         {
             if (paths.Add(targetPath))
             {
@@ -319,7 +348,8 @@ namespace KH
                         }
 
                         // if (item is MouseAction)
-                        else {
+                        else
+                        {
                             Debuger.Log(timeStamp + ", " + item.TimeStamp);
                             if (item.TimeStamp == timeStamp)
                             {
@@ -339,8 +369,8 @@ namespace KH
             {
                 messages.Remove(item);
             }
-            
-            
+
+
             return results;
         }
 
@@ -435,24 +465,7 @@ namespace KH
             }
         }
 
-        /// <summary>
-        /// 把拖拽事件按时间戳保存
-        /// </summary>
-        private void sortMessagesByTimeStamp()
-        {
-            messagesWithTimeStamp = new Dictionary<ulong, List<Message>>();
-            foreach (Message message in messages)
-            {
-                if (message is DragAction || message is SwipeAction)
-                {
-                    if (!messagesWithTimeStamp.ContainsKey(message.TimeStamp))
-                    {
-                        messagesWithTimeStamp[message.TimeStamp] = new List<Message>();
-                    }
-                    messagesWithTimeStamp[message.TimeStamp].Add(message);
-                }
-            }
-        }
+
 
         //private void calculateOffset()
         //{
@@ -474,7 +487,7 @@ namespace KH
 
 
 
-                
+
 
         //        DragAction compoundAction = new DragAction()
         //    }

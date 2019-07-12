@@ -76,7 +76,26 @@ namespace KH
                 return;
             }
 			plugin.SendMessage("Login.LoginGame");
-		}
+            Debug.Log("OnBtnStart");
+
+            if (MessageManager.Instance.IsActivate)
+            {
+                if (!MessageManager.Instance.IsSerializeToLocal)
+                {
+                    GameObject mouseActManager = new GameObject("MouseActionManager");
+                    mouseActManager.AddComponent<MouseActionManager>();
+                    // mouseevent.execute();
+                    // GameObject mouseSimulator = new GameObject("MouseSimulator");
+                    DontDestroyOnLoad(mouseActManager);
+                }
+                else {
+                    GameObject mouseMonitor = new GameObject("MouseMonitor");
+                    mouseMonitor.AddComponent<MouseMonitor>();
+                    DontDestroyOnLoad(mouseMonitor);
+                }
+            }
+            
+        }
 
         public void ShowForceUpGradeTip(string attr)
         {

@@ -497,10 +497,27 @@ public class UIScrollView : MonoBehaviour
 				pos.y = Mathf.Round(pos.y);
 				SpringPanel sp = SpringPanel.Begin(mPanel.gameObject, pos, 13f);
                 sp.onFinished = onRestrictOver;
-			}
+
+                //// Update by Chicheng
+                //MessageManager msgManager = MessageManager.Instance;
+                //if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
+                //{
+                //    ulong timeStamp = RemoteModel.Instance.CurrentTime;
+                //    {
+                //        DragAction dragEvent = new DragAction(gameObject.GetComponent<UIPanel>(), constraint, onRestrictOver, timeStamp);
+                //        Debuger.LogWarning("序列化拖拽自动校正事件成功" + timeStamp);
+                //        //MessageManager.Instance.totalOffset += offset.y;
+                //        //Debug.Log(MessageManager.Instance.totalOffset);
+                //        msgManager.addDragAction(dragEvent);
+                //        // msgManager.serializeToLocal(dragEvent, MessageManager.DEST_PATH_DRAG_EVENT);
+                //    }
+                //}
+
+
+            }
 			else
 			{
-				// Jump back into place
+                // Jump back into place
 				MoveRelative(constraint);
 				mMomentum = Vector3.zero;
 				mScroll = 0f;
@@ -763,15 +780,29 @@ public class UIScrollView : MonoBehaviour
 
 	public virtual void MoveRelative (Vector3 relative)
 	{
-		mTrans.localPosition += relative;
-		Vector2 co = mPanel.clipOffset;
-		co.x -= relative.x;
-		co.y -= relative.y;
-		mPanel.clipOffset = co;
+        mTrans.localPosition += relative;
+        Vector2 co = mPanel.clipOffset;
+        co.x -= relative.x;
+        co.y -= relative.y;
+        mPanel.clipOffset = co;
 
-		// Update the scroll bars
-		UpdateScrollbars(false);
-	}
+        // Update the scroll bars
+        UpdateScrollbars(false);
+
+        MessageManager msgManager = MessageManager.Instance;
+        if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
+        {
+            ulong timeStamp = RemoteModel.Instance.CurrentTime;
+            {
+                DragAction dragEvent = new DragAction(gameObject.GetComponent<UIPanel>(), mPanel.clipOffset, mTrans.localPosition, timeStamp);
+                Debug.Log("序列化拖拽事件成功" + mPanel.name);
+                //MessageManager.Instance.totalOffset += offset.y;
+                //Debug.Log(MessageManager.Instance.totalOffset);
+                //msgManager.addDragAction(dragEvent);
+                msgManager.serializeToLocal(dragEvent, MessageManager.DEST_PATH_DRAG_EVENT);
+            }
+        }
+    }
 
 	/// <summary>
 	/// Move the scroll view by the specified amount.
@@ -830,7 +861,22 @@ public class UIScrollView : MonoBehaviour
 				v.x = Mathf.Round(v.x);
 				v.y = Mathf.Round(v.y);
 				mTrans.localPosition = v;
-			}
+
+                // Update by Chicheng
+                MessageManager msgManager = MessageManager.Instance;
+                if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
+                {
+                    ulong timeStamp = RemoteModel.Instance.CurrentTime;
+                    {
+                        DragAction dragEvent = new DragAction(gameObject.GetComponent<UIPanel>(), mPanel.clipOffset, mTrans.localPosition, timeStamp);
+                        // Debuger.Log("序列化拖拽事件成功" + timeStamp);
+                        //MessageManager.Instance.totalOffset += offset.y;
+                        //Debug.Log(MessageManager.Instance.totalOffset);
+                        // msgManager.addDragAction(dragEvent);
+                        msgManager.serializeToLocal(dragEvent, MessageManager.DEST_PATH_DRAG_EVENT);
+                    }
+                }
+            }
 			else
 			{
 				if (restrictWithinPanel && mPanel.clipping != UIDrawCall.Clipping.None && dragEffect == DragEffect.MomentumAndSpring)
@@ -962,8 +1008,8 @@ public class UIScrollView : MonoBehaviour
                     //Debuger.LogWarning(string.Format("x:{0} y:{1}", constraint.x, constraint.y));
                     if (constraint.magnitude > 1f)
                     {
-                        MoveAbsolute(offset * 0.5f);
                         offset *= 0.5f;
+                        MoveAbsolute(offset);
                         mMomentum *= 0.5f;
                     }
                     else
@@ -972,26 +1018,6 @@ public class UIScrollView : MonoBehaviour
                     }
                 }
 
-                // Update by Chicheng
-                MessageManager msgManager = MessageManager.Instance;
-                if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
-                // if (msgManager.serializeDragEvent)
-                {
-                    ulong timeStamp = RemoteModel.Instance.CurrentTime;
-                    // if (offset.x != 0f || offset.y != 0f || offset.z != 0f)
-                    {
-                        DragAction dragEvent = new DragAction(gameObject.GetComponent<UIPanel>(), offset, mMomentum, timeStamp);
-                        // Debuger.Log("序列化拖拽事件成功" + timeStamp);
-                        MessageManager.Instance.totalOffset += offset;
-                        msgManager.serializeToLocal(dragEvent, MessageManager.DEST_PATH_DRAG_EVENT);
-                    }
-                    // else
-                    {
-                        // Debug.Log(offset);
-                    }
-                }
-                
-                
                 // We want to constrain the UI to be within bounds
                 if (restrictWithinPanel &&
                     mPanel.clipping != UIDrawCall.Clipping.None &&
@@ -1031,7 +1057,6 @@ public class UIScrollView : MonoBehaviour
 	void LateUpdate ()
 	{
 		if (!Application.isPlaying) return;
-        if (MessageManager.Instance.IsActivate && !MessageManager.Instance.IsSerializeToLocal) { return; }
         float delta = RealTime.deltaTime;
 
 		// Fade the scroll bars if needed
@@ -1063,8 +1088,10 @@ public class UIScrollView : MonoBehaviour
 			}
 		}
 
-		// Apply momentum
-		if (mShouldMove && !mPressed)
+        if (MessageManager.Instance.IsActivate && !MessageManager.Instance.IsSerializeToLocal) { return; }
+
+        // Apply momentum
+        if (mShouldMove && !mPressed)
 		{
 			if(mMomentum.x<0&&direction==1){
 				mMomentum = Vector3.zero;
@@ -1098,22 +1125,6 @@ public class UIScrollView : MonoBehaviour
 				// Move the scroll view
 				Vector3 offset = NGUIMath.SpringDampen(ref mMomentum, 9f, delta);
 				MoveAbsolute(offset);
-
-                // Update by Chicheng
-                MessageManager msgManager = MessageManager.Instance;
-                if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
-                // if (msgManager.serializeDragEvent)
-                {
-                    ulong timeStamp = RemoteModel.Instance.CurrentTime;
-                    if (offset.x != 0f || offset.y != 0f || offset.z != 0f)
-                    {
-                        DragAction dragEvent = new DragAction(gameObject.GetComponent<UIPanel>(), offset, mMomentum, timeStamp);
-                        // Debuger.Log("序列化拖拽事件成功" + timeStamp);
-                        MessageManager.Instance.totalOffset += offset;
-                        msgManager.serializeToLocal(dragEvent, MessageManager.DEST_PATH_DRAG_EVENT);
-                    }
-                }
-
 
                 // Restrict the contents to be within the scroll view's bounds
                 if (restrictWithinPanel && mPanel.clipping != UIDrawCall.Clipping.None)

@@ -48,6 +48,7 @@ namespace KH
         public Vector3 DestPos
         {
             get { return destPos; }
+            set { destPos = value; }
         }
 
 		private UIMainScene scene;
@@ -151,11 +152,11 @@ namespace KH
 
                 MainUICamera.getInstance().moveTo(destX, 0);
 
-                if (MessageManager.Instance.IsActivate && MessageManager.Instance.IsSerializeToLocal)
-                {
-                    SwipeAction swipeAction = new SwipeAction(destX, deltaSpeedX, RemoteModel.Instance.CurrentTime);
-                    MessageManager.Instance.serializeToLocal(swipeAction, MessageManager.DEST_PATH_DRAG_EVENT);
-                }
+                //if (MessageManager.Instance.IsActivate && MessageManager.Instance.IsSerializeToLocal)
+                //{
+                //    SwipeAction swipeAction = new SwipeAction(destX, 0, deltaSpeedX, RemoteModel.Instance.CurrentTime);
+                //    MessageManager.Instance.serializeToLocal(swipeAction, MessageManager.DEST_PATH_DRAG_EVENT);
+                //}
 
 
                 Debuger.Log("destX:" + destX);
@@ -165,7 +166,6 @@ namespace KH
 
         private void On_SwipeEnd(Gesture gesture)
         {
-            //Debuger.Log("MCamera.On_SwipeEnd");
             touchBegined = false;
         }
 
@@ -268,6 +268,7 @@ namespace KH
         // 还是会带上拖拽的速度。
         public void moveTo(float dx, float dy)
         {
+            if (MessageManager.Instance.IsActivate && !MessageManager.Instance.IsSerializeToLocal) { return; }
             if (scene.gameObject)
             {
                 Vector3 pos = cameraPos;// this.unityCamera.position;
@@ -283,6 +284,7 @@ namespace KH
         // 忽略手指拖拽的速度。
         public void locateAt(float x, float y)
         {
+            if (MessageManager.Instance.IsActivate && !MessageManager.Instance.IsSerializeToLocal) { return; }
             if (scene.gameObject)
             {
                 this.deltaSpeedX = 0;
@@ -432,7 +434,14 @@ namespace KH
 
             //Debuger.LogWarning(string.Format("adjustPosition {0}", pos.ToString()));
 
-			return pos;
+            if (MessageManager.Instance.IsActivate && MessageManager.Instance.IsSerializeToLocal)
+            {
+                SwipeAction swipeAction = new SwipeAction(pos, RemoteModel.Instance.CurrentTime);
+                MessageManager.Instance.serializeToLocal(swipeAction, MessageManager.DEST_PATH_DRAG_EVENT);
+            }
+            // Debug.LogWarning(pos);
+
+            return pos;
 		}
 
 		// 计算镜头 最大和当前的 可移动范围
@@ -455,7 +464,7 @@ namespace KH
 		}
 
 		// 计算当前位置的百分比
-		private void calculatePositionPercent()
+		public void calculatePositionPercent()
 		{
             //Vector3 pos = this.unityCamera.position;
             this._positionPercent.x = this.positionLimitRectMax.x == 0 ? 0 : (cameraPos.x / this.positionLimitRectMax.x);
