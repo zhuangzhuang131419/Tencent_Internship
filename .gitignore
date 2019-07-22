@@ -40,10 +40,6 @@ KiHan/*
 !KiHan/Assets
 KiHan/Assets/*
 
-
-# 保留InternshipTask
-!KiHan/Assets/InternshipTask
-
 !KiHan/Assets/Scripts
 KiHan/Assets/Scripts/*
 
@@ -52,7 +48,7 @@ KiHan/Assets/Scripts/*
 !KiHan/Assets/Editor
 KiHan/Assets/Editor/*
 !KiHan/Assets/Editor/MapEditor
-!KiHan/Assets/Scripts/MapEditor
+!KiHan/Assets/Scripts/MessageTool
 
 
 !KiHan/Assets/Scripts/Manager

@@ -12,7 +12,7 @@ namespace KH
     public class MessageManager
     {
         static private MessageManager messageManagerInstance = null;
-        private static readonly string DEST_PATH = "Assets/InternshipTask/";
+        private static readonly string DEST_PATH = "Assets/Scripts/MessageTool/";
         public static readonly string DEST_PATH_CSharp = DEST_PATH + "Message.dat";
         public static readonly string DEST_PATH_MOUSE_EVENT = DEST_PATH + "mouse.dat";
         public static readonly string DEST_PATH_DRAG_EVENT = DEST_PATH + "DragEvent.dat";
