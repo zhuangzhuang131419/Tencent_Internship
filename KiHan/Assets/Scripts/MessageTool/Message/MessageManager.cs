@@ -12,7 +12,7 @@ namespace KH
     public class MessageManager
     {
         static private MessageManager messageManagerInstance = null;
-        private static readonly string DEST_PATH = "Assets/Scripts/MessageTool/";
+        private static readonly string DEST_PATH = Application.persistentDataPath + "MessageTool";
         public static readonly string DEST_PATH_CSharp = DEST_PATH + "Message.dat";
         public static readonly string DEST_PATH_MOUSE_EVENT = DEST_PATH + "mouse.dat";
         public static readonly string DEST_PATH_DRAG_EVENT = DEST_PATH + "DragEvent.dat";
@@ -162,6 +162,7 @@ namespace KH
         public List<object> deserializeFromLocal(uint cmdID)
         {
             //从这个地址固定读取
+            Debug.LogWarning("从这里读" + DEST_PATH_CSharp);
             NetworkMessage packedMessage01 = deserializeFromLocalByCmdIDCache(MessageManager.DEST_PATH_CSharp, cmdID);
             if (packedMessage01 != null)
             {

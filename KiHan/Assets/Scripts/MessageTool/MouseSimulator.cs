@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
-using UnityEditor;
 using System.Runtime.InteropServices;
 
 public class MouseSimulator

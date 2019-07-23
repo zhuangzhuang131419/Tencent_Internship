@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
-using UnityEditor;
 using KH;
-using System.Threading;
 
 [Serializable]
 public enum MouseType
@@ -44,7 +41,7 @@ public class MouseAction : Message, ICommand
         switch (startEvent.Type)
         {
             case MouseType.Left:
-                Debug.Log("点击事件" + startEvent.TimeStamp);
+                Debuger.Log("点击事件" + startEvent.TimeStamp);
                 MouseSimulator.LeftClick(endEvent.ViewportPos.x, endEvent.ViewportPos.y);
                 break;
             case MouseType.Right:
