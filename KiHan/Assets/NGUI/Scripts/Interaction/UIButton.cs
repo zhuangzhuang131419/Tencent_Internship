@@ -193,7 +193,7 @@ public class UIButton : UIButtonColor
 	/// Call the listener function.
 	/// </summary>
 
-	protected virtual void OnClick ()
+	public virtual void OnClick ()
 	{
 		if (current == null && isEnabled)
 		{
@@ -205,9 +205,8 @@ public class UIButton : UIButtonColor
             if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
             {
                 ulong timeStamp = RemoteModel.Instance.CurrentTime;
-                {
-                    
-                }
+                MouseAction mouseAction = new MouseAction(this, timeStamp);
+                msgManager.serializeToLocal(mouseAction, MessageManager.DEST_PATH_MOUSE_EVENT);
             }
         }
 	}

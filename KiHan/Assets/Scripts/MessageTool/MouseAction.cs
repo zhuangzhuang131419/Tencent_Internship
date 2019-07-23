@@ -16,15 +16,39 @@ public enum MouseType
 public class MouseAction : Message, ICommand
 {
 
-    private MouseEvent startEvent;
-    private MouseEvent endEvent;
+    private string clickedButton = null;
+    private string clickedListener = null;
+    private float PosX;
+    private float PosY;
+    private float PosZ;
 
-
-    public MouseAction(MouseEvent start, MouseEvent end)
+    public Vector3 Pos
     {
-        startEvent = start;
-        endEvent = end;
-        TimeStamp = startEvent.TimeStamp;
+        get
+        {
+            return new Vector3(PosX, PosY, PosZ);
+        }
+        set
+        {
+            PosX = value.x;
+            PosY = value.y;
+            PosZ = value.z;
+        }
+    }
+
+
+    public MouseAction(UIButton clickedButton, ulong timeStamp)
+    {
+        this.clickedButton = clickedButton.name;
+        Pos = clickedButton.gameObject.transform.position;
+        TimeStamp = timeStamp;
+    }
+
+    public MouseAction(UIEventListener clickedUIListener, ulong timeStamp)
+    {
+        this.clickedListener = clickedUIListener.name;
+        Pos = clickedUIListener.gameObject.transform.position;
+        TimeStamp = timeStamp;
     }
 
     public MouseAction()
@@ -37,19 +61,25 @@ public class MouseAction : Message, ICommand
     /// </summary>
     public void execute()
     {
-
-        switch (startEvent.Type)
+        if (clickedButton != null)
         {
-            case MouseType.Left:
-                Debuger.Log("点击事件" + startEvent.TimeStamp);
-                MouseSimulator.LeftClick(endEvent.ViewportPos.x, endEvent.ViewportPos.y);
-                break;
-            case MouseType.Right:
-                MouseSimulator.RightDown(startEvent.ViewportPos.x, startEvent.ViewportPos.y);
-                MouseSimulator.RightUp(endEvent.ViewportPos.x, endEvent.ViewportPos.y);
-                break;
-            default:
-                break;
+            foreach (var item in UnityEngine.Object.FindObjectsOfType<GameObject>())
+            {
+                if (item.name == clickedButton && item.transform.position.Equals(Pos))
+                {
+                    item.GetComponent<UIButton>().OnClick();
+                }
+            }
+        }
+        else if (clickedListener != null)
+        {
+            foreach (var item in UnityEngine.Object.FindObjectsOfType<GameObject>())
+            {
+                if (item.name == clickedListener && item.transform.position.Equals(Pos))
+                {
+                    item.GetComponent<UIEventListener>().OnClick();
+                }
+            }
         }
     }
 }

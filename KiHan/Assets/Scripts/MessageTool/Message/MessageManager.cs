@@ -162,7 +162,6 @@ namespace KH
         public List<object> deserializeFromLocal(uint cmdID)
         {
             //从这个地址固定读取
-            Debug.LogWarning("从这里读" + DEST_PATH_CSharp);
             NetworkMessage packedMessage01 = deserializeFromLocalByCmdIDCache(MessageManager.DEST_PATH_CSharp, cmdID);
             if (packedMessage01 != null)
             {

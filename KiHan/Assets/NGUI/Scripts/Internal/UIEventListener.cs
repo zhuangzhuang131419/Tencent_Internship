@@ -4,6 +4,7 @@
 //----------------------------------------------
 
 using UnityEngine;
+using KH;
 
 /// <summary>
 /// Event Hook class lets you easily add remote event listener functions to an object.
@@ -34,7 +35,19 @@ public class UIEventListener : MonoBehaviour
 	public KeyCodeDelegate onKey;
 
 	void OnSubmit ()				{ if (onSubmit != null) onSubmit(gameObject); }
-	void OnClick ()					{ if (onClick != null) onClick(gameObject); }
+	public void OnClick ()
+    {
+        if (onClick != null)
+            onClick(gameObject);
+
+        MessageManager msgManager = MessageManager.Instance;
+        if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
+        {
+            ulong timeStamp = RemoteModel.Instance.CurrentTime;
+            MouseAction mouseAction = new MouseAction(this, timeStamp);
+            msgManager.serializeToLocal(mouseAction, MessageManager.DEST_PATH_MOUSE_EVENT);
+        }
+    }
 	void OnDoubleClick ()			{ if (onDoubleClick != null) onDoubleClick(gameObject); }
 	void OnHover (bool isOver)		{ if (onHover != null) onHover(gameObject, isOver); }
 	void OnPress (bool isPressed)	{ if (onPress != null) onPress(gameObject, isPressed); }

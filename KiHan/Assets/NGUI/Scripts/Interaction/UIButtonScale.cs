@@ -67,7 +67,7 @@ public class UIButtonScale : MonoBehaviour
 	{
 		if (enabled)
 		{
-			if (!mStarted) Start();
+                if (!mStarted) Start();
 			TweenScale ts = TweenScale.Begin(tweenTarget.gameObject, isPressed ? duration : durationUp, isPressed ? Vector3.Scale(mScale, pressed) :
 			                                 Vector3.Scale(mScale, hover));
 				//(UICamera.IsHighlighted(gameObject) ? Vector3.Scale(mScale, hover) : mScale));
@@ -76,7 +76,7 @@ public class UIButtonScale : MonoBehaviour
 				ts.animationCurve = curve;
 				ts.method = method;
 			}
-		}
+        }
 	}
 
 	/*void OnHover (bool isOver)

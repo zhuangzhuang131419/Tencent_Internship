@@ -3149,12 +3149,20 @@ namespace KH
 
             //if (GUILayout.Button("test1"))
             //{
-            //    UIPanel targetPanel = GameObject.Find("Scroll View").GetComponent<UIPanel>();
+            //    UIButtonScale targetPanel = GameObject.Find("CloseBtn").GetComponent<UIButtonScale>();
+            //    GameObject.Find("CloseBtn").GetComponent<UIButton>().OnClick();
             //    // GameObject.Find("Scroll View").GetComponent<UIScrollView>().MoveRelative(new Vector3(-160f, 0, 0));
-            //    GameObject.Find("Scroll View").GetComponent<UIScrollView>().transform.localPosition = new Vector3(-4800, 0, 0);
-            //    targetPanel.clipOffset = new Vector3(4800, 0, 0);
-            //    GameObject.Find("Scroll View").GetComponent<UIScrollView>().UpdateScrollbars(false);
-            //    // targetPanel.onClipMove(targetPanel);
+            //    // GameObject.Find("Scroll View").GetComponent<UIScrollView>().transform.localPosition = new Vector3(-4800, 0, 0);
+            //    if (targetPanel != null)
+            //    {
+            //        //targetPanel.OnPress(true);
+            //        //targetPanel.OnPress(false);
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("没找到");
+            //    }
+
             //}
 
             //if (GUILayout.Button("test2"))
