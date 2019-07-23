@@ -173,6 +173,10 @@ KiHan/Assets/NGUI/Scripts/Interaction/*
 !KiHan/Assets/NGUI/Scripts/Interaction/UIButtonScale.cs
 !KiHan/Assets/NGUI/Scripts/Interaction/UIButton.cs
 
+!KiHan/Assets/NGUI/Scripts/Internal
+KiHan/Assets/NGUI/Scripts/Internal/*
+!KiHan/Assets/NGUI/Scripts/Internal/UIEventListener.cs
+
 !KiHan/Assets/EasyTouch
 KiHan/Assets/EasyTouch/*
 !KiHan/Assets/EasyTouch/Plugins
