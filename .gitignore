@@ -107,6 +107,10 @@ KiHan/Assets/Scripts/UI/MainUI/*
 KiHan/Assets/Scripts/UI/Login/*
 !KiHan/Assets/Scripts/UI/Login/DefaultZoneWin.cs
 
+!KiHan/Assets/Scripts/UI/Level
+KiHan/Assets/Scripts/UI/Level/*
+!KiHan/Assets/Scripts/UI/Level/UILevelSelectChapterItem.cs
+
 # 保留UIPVPRealTimeMatchEnemy
 # !KiHan/Assets/Scripts/UI/PVPRealTimeUI/UIPVPRealTimeMatchEnemy.cs
 
