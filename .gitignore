@@ -112,6 +112,11 @@ KiHan/Assets/Scripts/UI/Login/*
 KiHan/Assets/Scripts/UI/Level/*
 !KiHan/Assets/Scripts/UI/Level/UILevelSelectChapterItem.cs
 
+# 菜单
+!KiHan/Assets/Scripts/UI/Common
+KiHan/Assets/Scripts/UI/Common/*
+!KiHan/Assets/Scripts/UI/Common/UIPlayerInteractMenuItem.cs
+
 # 保留UIPVPRealTimeMatchEnemy
 # !KiHan/Assets/Scripts/UI/PVPRealTimeUI/UIPVPRealTimeMatchEnemy.cs
 
