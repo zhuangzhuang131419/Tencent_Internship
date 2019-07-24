@@ -3147,32 +3147,58 @@ namespace KH
                 Debug.Log("文件已删除");
             }
 
-            //if (GUILayout.Button("test1"))
-            //{
-            //    UIButtonScale targetPanel = GameObject.Find("CloseBtn").GetComponent<UIButtonScale>();
-            //    GameObject.Find("CloseBtn").GetComponent<UIButton>().OnClick();
-            //    // GameObject.Find("Scroll View").GetComponent<UIScrollView>().MoveRelative(new Vector3(-160f, 0, 0));
-            //    // GameObject.Find("Scroll View").GetComponent<UIScrollView>().transform.localPosition = new Vector3(-4800, 0, 0);
-            //    if (targetPanel != null)
-            //    {
-            //        //targetPanel.OnPress(true);
-            //        //targetPanel.OnPress(false);
-            //    }
-            //    else
-            //    {
-            //        Debug.Log("没找到");
-            //    }
+            if (GUILayout.Button("test1"))
+            {
+                //UILevelSelectChapterItem targetPanel = GameObject.Find("LevelSelectChapterItem(Clone)").GetComponent<UILevelSelectChapterItem>();
 
-            //}
+                //// GameObject.Find("Scroll View").GetComponent<UIScrollView>().MoveRelative(new Vector3(-160f, 0, 0));
+                //// GameObject.Find("Scroll View").GetComponent<UIScrollView>().transform.localPosition = new Vector3(-4800, 0, 0);
+                //Debug.Log(targetPanel.transform.position);
+                //Debug.Log(targetPanel.gameObject.transform.position);
+                //Debug.Log(targetPanel.gameObject.gameObject.transform.position);
+                // List<MouseAction> mouseActs = MessageManager.Instance.deserializeFromLocalByTimeStamp<MouseAction>(MessageManager.DEST_PATH_MOUSE_EVENT, 1563957274);
+                // Debug.Log(mouseActs[0].targetComponentInfo);
+                foreach (var item in UnityEngine.Object.FindObjectsOfType<GameObject>())
+                {
+                    if (item.name == "ViewPlayerContainer")
+                    {
+                        item.GetComponent<UIButton>().OnClick();
+                    }
+                }
 
-            //if (GUILayout.Button("test2"))
-            //{
-            //    UIPanel targetPanel = GameObject.Find("RankScrollView").GetComponent<UIPanel>();
-            //    GameObject.Find("RankScrollView").GetComponent<UIScrollView>().MoveAbsolute(new Vector3(0, 0.1f, 0));
-            //}
+                //if (targetPanel != null)
+                //{
+                //    targetPanel.OnClick();
+                //}
+                //else
+                //{
+                //    Debug.Log("没找到");
+                //}
 
+            }
 
+            if (GUILayout.Button("test2"))
+            {
+                List<MouseAction> mouseActs = MessageManager.Instance.deserializeFromLocalByTimeStamp<MouseAction>(MessageManager.DEST_PATH_MOUSE_EVENT, 1563957274);
+                if (mouseActs != null)
+                {
+                    foreach (var action in mouseActs)
+                    {
+                        action.execute();
+                    }
+                }
+            }
 
+            if (GUILayout.Button("test3"))
+            {
+                foreach (var item in UnityEngine.Object.FindObjectsOfType<GameObject>())
+                {
+                    if (item.name == "ViewPlayerContainer")
+                    {
+                        item.GetComponent<UIButton>().OnClick();
+                    }
+                }
+            }
 
 
             GUILayout.EndVertical();

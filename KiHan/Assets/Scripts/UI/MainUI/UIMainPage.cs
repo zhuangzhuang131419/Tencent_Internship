@@ -502,6 +502,15 @@ namespace KH
                 tTargetDest = ((UIEntryButton)evt.data).MyDest;
             }
             this.OnClickButton(tTargetDest);
+
+            MessageManager msgManager = MessageManager.Instance;
+            if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
+            {
+                ulong timeStamp = RemoteModel.Instance.CurrentTime;
+                MouseAction mouseAction = new MouseAction(this, timeStamp, tTargetDest);
+                msgManager.serializeToLocal(mouseAction, MessageManager.DEST_PATH_MOUSE_EVENT);
+                Debug.LogWarning("序列化成功" + name);
+            }
         }
 
         void SaveEntryElementOnBuild()

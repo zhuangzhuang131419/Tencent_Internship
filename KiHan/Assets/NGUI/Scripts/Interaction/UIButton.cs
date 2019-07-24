@@ -197,17 +197,21 @@ public class UIButton : UIButtonColor
 	{
 		if (current == null && isEnabled)
 		{
-			current = this;
+            MessageManager msgManager = MessageManager.Instance;
+            current = this;
 			EventDelegate.Execute(onClick);
 			current = null;
 
-            MessageManager msgManager = MessageManager.Instance;
+            
             if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
             {
                 ulong timeStamp = RemoteModel.Instance.CurrentTime;
                 MouseAction mouseAction = new MouseAction(this, timeStamp);
                 msgManager.serializeToLocal(mouseAction, MessageManager.DEST_PATH_MOUSE_EVENT);
+                Debug.Log(name + ", " + timeStamp + ", " + transform.position);
             }
+
+
         }
 	}
 

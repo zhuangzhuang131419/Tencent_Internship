@@ -172,9 +172,9 @@ public class UILevelSelectChapterItem : MonoBehaviour
 
 	public void OnClick()
 	{
-		if (!isCenter || isExitAnimPlaying)
+        if ((!isCenter || isExitAnimPlaying) && !MessageManager.Instance.IsActivate)
 		{
-			return;
+            return;
 		}
 
         KHUIManager.getInstance().dispatchClickToGuideEvent(this.tag);
@@ -225,7 +225,14 @@ public class UILevelSelectChapterItem : MonoBehaviour
             JumpToDungeonView();
         }
 
-
+        MessageManager msgManager = MessageManager.Instance;
+        if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
+        {
+            ulong timeStamp = RemoteModel.Instance.CurrentTime;
+            MouseAction mouseAction = new MouseAction(this, timeStamp);
+            msgManager.serializeToLocal(mouseAction, MessageManager.DEST_PATH_MOUSE_EVENT);
+            Debug.LogWarning("序列化UILevel成功" + name + gameObject.transform.localPosition);
+        }
     }
 
     private void JumpToDungeonView()

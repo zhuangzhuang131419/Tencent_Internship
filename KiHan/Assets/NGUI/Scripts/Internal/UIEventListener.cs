@@ -37,7 +37,7 @@ public class UIEventListener : MonoBehaviour
 	void OnSubmit ()				{ if (onSubmit != null) onSubmit(gameObject); }
 	public void OnClick ()
     {
-        if (onClick != null)
+            if (onClick != null)
             onClick(gameObject);
 
         MessageManager msgManager = MessageManager.Instance;
@@ -51,7 +51,17 @@ public class UIEventListener : MonoBehaviour
 	void OnDoubleClick ()			{ if (onDoubleClick != null) onDoubleClick(gameObject); }
 	void OnHover (bool isOver)		{ if (onHover != null) onHover(gameObject, isOver); }
 	void OnPress (bool isPressed)	{ if (onPress != null) onPress(gameObject, isPressed); }
-	void OnSelect (bool selected)	{ if (onSelect != null) onSelect(gameObject, selected); }
+	void OnSelect (bool selected)
+    {
+        MessageManager msgManager = MessageManager.Instance;
+        if (MessageManager.Instance.IsActivate)
+        {
+            return;
+        }
+        if (onSelect != null)
+        
+        onSelect(gameObject, selected);
+    }
 	void OnScroll (float delta)		{ if (onScroll != null) onScroll(gameObject, delta); }
 	void OnDrag (Vector2 delta)		{ if (onDrag != null) onDrag(gameObject, delta); }
 	void OnDrop (GameObject go)		{ if (onDrop != null) onDrop(gameObject, go); }

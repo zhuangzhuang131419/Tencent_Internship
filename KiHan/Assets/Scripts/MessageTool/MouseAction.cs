@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 using KH;
 
 [Serializable]
 public enum MouseType
 {
-    Left,
-    Right,
+    UIButton,
+    UIEventListener,
+    UILevelSelectChapterItem,
+    UIMainPage,
+    UIPlayerInteractMenuItem
 }
 
 /// <summary>
@@ -16,11 +20,11 @@ public enum MouseType
 public class MouseAction : Message, ICommand
 {
 
-    private string clickedButton = null;
-    private string clickedListener = null;
+    public string targetComponentInfo = null;
     private float PosX;
     private float PosY;
     private float PosZ;
+    private MouseType mouseType;
 
     public Vector3 Pos
     {
@@ -37,18 +41,47 @@ public class MouseAction : Message, ICommand
     }
 
 
-    public MouseAction(UIButton clickedButton, ulong timeStamp)
+    public MouseAction(UIButton component, ulong timeStamp)
     {
-        this.clickedButton = clickedButton.name;
-        Pos = clickedButton.gameObject.transform.position;
+        this.targetComponentInfo = component.name;
+        // Pos = GameObject.Find("UI Root").transform.TransformPoint(component.transform.localPosition);
+        Pos = component.transform.position;
+        Debug.Log("Construct button" + Pos);
         TimeStamp = timeStamp;
+        mouseType = MouseType.UIButton;
     }
 
-    public MouseAction(UIEventListener clickedUIListener, ulong timeStamp)
+    public MouseAction(UIEventListener component, ulong timeStamp)
     {
-        this.clickedListener = clickedUIListener.name;
-        Pos = clickedUIListener.gameObject.transform.position;
+        this.targetComponentInfo = component.name;
+        // Pos = GameObject.Find("UI Root").transform.TransformPoint(component.transform.localPosition);
+        Pos = component.transform.position;
+        Debug.Log("Construct Listen" + Pos);
         TimeStamp = timeStamp;
+        mouseType = MouseType.UIEventListener;
+    }
+
+    public MouseAction(UILevelSelectChapterItem component, ulong timeStamp)
+    {
+        this.targetComponentInfo = component.name;
+        // Pos = GameObject.Find("UI Root").transform.TransformPoint(component.transform.localPosition);
+        Pos = component.transform.position;
+        TimeStamp = timeStamp;
+        mouseType = MouseType.UILevelSelectChapterItem;
+    }
+
+    public MouseAction(UIMainPage componnet, ulong timeStamp, UIPlayerBar.BtnDestination targetDes)
+    {
+        targetComponentInfo = targetDes.ToString();
+        TimeStamp = timeStamp;
+        mouseType = MouseType.UIMainPage;
+    }
+
+    public MouseAction(UIPlayerInteractMenuItem componnet, ulong timeStamp)
+    {
+        targetComponentInfo = componnet.name;
+        TimeStamp = timeStamp;
+        mouseType = MouseType.UIPlayerInteractMenuItem;
     }
 
     public MouseAction()
@@ -61,55 +94,64 @@ public class MouseAction : Message, ICommand
     /// </summary>
     public void execute()
     {
-        if (clickedButton != null)
+        switch (mouseType)
         {
-            foreach (var item in UnityEngine.Object.FindObjectsOfType<GameObject>())
+            case MouseType.UIButton:
+                getTargetUIComponnet<UIButton>().OnClick();
+                Debug.LogWarning("UIButton被执行" + Pos);
+                break;
+            case MouseType.UIEventListener:
+                getTargetUIComponnet<UIEventListener>().OnClick();
+                break;
+            case MouseType.UILevelSelectChapterItem:
+                getTargetUIComponnet<UILevelSelectChapterItem>().OnClick();
+                break;
+            case MouseType.UIMainPage:
+                UnityEngine.Object.FindObjectOfType<UIMainPage>().OnClickButton((UIPlayerBar.BtnDestination)Enum.Parse(typeof(UIPlayerBar.BtnDestination), targetComponentInfo));
+                break;
+            case MouseType.UIPlayerInteractMenuItem:
+                getTargetUIComponnet<UIPlayerInteractMenuItem>().OnClick();
+                break;
+        }
+    }
+
+    private T getTargetUIComponnet<T>() where T : MonoBehaviour
+    {
+        GameObject UIRoot = GameObject.Find("UI Root");
+        List<T> components = new List<T>();
+        foreach (var item in UnityEngine.Object.FindObjectsOfType<GameObject>())
+        {
+            //if (item.name == targetComponentInfo
+            //    && (int)UIRoot.transform.TransformPoint(item.transform.localPosition).x == Pos.x
+            //    && (int)UIRoot.transform.TransformPoint(item.transform.localPosition).y == Pos.y
+            //    && (int)UIRoot.transform.TransformPoint(item.transform.localPosition).z == Pos.z
+            //    )
+            //{
+            //    return item.GetComponent<T>();
+            //}
+
+            if (item.name == targetComponentInfo) 
             {
-                if (item.name == clickedButton && item.transform.position.Equals(Pos))
-                {
-                    item.GetComponent<UIButton>().OnClick();
-                }
+                components.Add(item.GetComponent<T>());
             }
         }
-        else if (clickedListener != null)
+
+        if (components.Count > 1)
         {
-            foreach (var item in UnityEngine.Object.FindObjectsOfType<GameObject>())
+            T targetComponent = components[0];
+            float magnitude = int.MaxValue;
+            foreach (var item in components)
             {
-                if (item.name == clickedListener && item.transform.position.Equals(Pos))
+                if ((item.transform.position - Pos).magnitude < magnitude)
                 {
-                    item.GetComponent<UIEventListener>().OnClick();
+                    magnitude = (item.transform.position - Pos).magnitude;
+                    targetComponent = item;
                 }
             }
+
+            return targetComponent;
         }
-    }
-}
 
-[Serializable]
-public class MouseEvent : Message
-{
-    private float viewportPosX;
-    private float viewportPosY;
-    private MouseType mouseType;
-
-    public MouseEvent(Vector2 v, MouseType type, ulong timeStamp)
-    {
-        ViewportPos = v;
-        mouseType = type;
-        TimeStamp = timeStamp;
-    }
-
-    public Vector2 ViewportPos
-    {
-        get { return new Vector2(viewportPosX, viewportPosY); }
-        set
-        {
-            viewportPosX = value.x;
-            viewportPosY = value.y;
-        }
-    }
-
-    public MouseType Type
-    {
-        get { return mouseType; }
+        return components[0];
     }
 }

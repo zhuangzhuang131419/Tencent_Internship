@@ -4,11 +4,6 @@ using KH;
 
 public class MouseMonitor : MonoBehaviour
 {
-
-    MouseEvent leftMouseDown = null;
-    MouseEvent leftMouseUp = null;
-    MouseEvent rightMouseDown = null;
-    MouseEvent rightMouseUp = null;
     MessageManager msgManager;
 
     // Use this for initialization
