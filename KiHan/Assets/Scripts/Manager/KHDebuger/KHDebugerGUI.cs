@@ -3147,58 +3147,58 @@ namespace KH
                 Debug.Log("文件已删除");
             }
 
-            if (GUILayout.Button("test1"))
-            {
-                //UILevelSelectChapterItem targetPanel = GameObject.Find("LevelSelectChapterItem(Clone)").GetComponent<UILevelSelectChapterItem>();
+            //if (GUILayout.Button("test1"))
+            //{
+            //    //UILevelSelectChapterItem targetPanel = GameObject.Find("LevelSelectChapterItem(Clone)").GetComponent<UILevelSelectChapterItem>();
 
-                //// GameObject.Find("Scroll View").GetComponent<UIScrollView>().MoveRelative(new Vector3(-160f, 0, 0));
-                //// GameObject.Find("Scroll View").GetComponent<UIScrollView>().transform.localPosition = new Vector3(-4800, 0, 0);
-                //Debug.Log(targetPanel.transform.position);
-                //Debug.Log(targetPanel.gameObject.transform.position);
-                //Debug.Log(targetPanel.gameObject.gameObject.transform.position);
-                // List<MouseAction> mouseActs = MessageManager.Instance.deserializeFromLocalByTimeStamp<MouseAction>(MessageManager.DEST_PATH_MOUSE_EVENT, 1563957274);
-                // Debug.Log(mouseActs[0].targetComponentInfo);
-                foreach (var item in UnityEngine.Object.FindObjectsOfType<GameObject>())
-                {
-                    if (item.name == "ViewPlayerContainer")
-                    {
-                        item.GetComponent<UIButton>().OnClick();
-                    }
-                }
+            //    //// GameObject.Find("Scroll View").GetComponent<UIScrollView>().MoveRelative(new Vector3(-160f, 0, 0));
+            //    //// GameObject.Find("Scroll View").GetComponent<UIScrollView>().transform.localPosition = new Vector3(-4800, 0, 0);
+            //    //Debug.Log(targetPanel.transform.position);
+            //    //Debug.Log(targetPanel.gameObject.transform.position);
+            //    //Debug.Log(targetPanel.gameObject.gameObject.transform.position);
+            //    // List<MouseAction> mouseActs = MessageManager.Instance.deserializeFromLocalByTimeStamp<MouseAction>(MessageManager.DEST_PATH_MOUSE_EVENT, 1563957274);
+            //    // Debug.Log(mouseActs[0].targetComponentInfo);
+            //    foreach (var item in UnityEngine.Object.FindObjectsOfType<GameObject>())
+            //    {
+            //        if (item.name == "ViewPlayerContainer")
+            //        {
+            //            item.GetComponent<UIButton>().OnClick();
+            //        }
+            //    }
 
-                //if (targetPanel != null)
-                //{
-                //    targetPanel.OnClick();
-                //}
-                //else
-                //{
-                //    Debug.Log("没找到");
-                //}
+            //    //if (targetPanel != null)
+            //    //{
+            //    //    targetPanel.OnClick();
+            //    //}
+            //    //else
+            //    //{
+            //    //    Debug.Log("没找到");
+            //    //}
 
-            }
+            //}
 
-            if (GUILayout.Button("test2"))
-            {
-                List<MouseAction> mouseActs = MessageManager.Instance.deserializeFromLocalByTimeStamp<MouseAction>(MessageManager.DEST_PATH_MOUSE_EVENT, 1563957274);
-                if (mouseActs != null)
-                {
-                    foreach (var action in mouseActs)
-                    {
-                        action.execute();
-                    }
-                }
-            }
+            //if (GUILayout.Button("test2"))
+            //{
+            //    List<MouseAction> mouseActs = MessageManager.Instance.deserializeFromLocalByTimeStamp<MouseAction>(MessageManager.DEST_PATH_MOUSE_EVENT, 1563957274);
+            //    if (mouseActs != null)
+            //    {
+            //        foreach (var action in mouseActs)
+            //        {
+            //            action.execute();
+            //        }
+            //    }
+            //}
 
-            if (GUILayout.Button("test3"))
-            {
-                foreach (var item in UnityEngine.Object.FindObjectsOfType<GameObject>())
-                {
-                    if (item.name == "ViewPlayerContainer")
-                    {
-                        item.GetComponent<UIButton>().OnClick();
-                    }
-                }
-            }
+            //if (GUILayout.Button("test3"))
+            //{
+            //    foreach (var item in UnityEngine.Object.FindObjectsOfType<GameObject>())
+            //    {
+            //        if (item.name == "ViewPlayerContainer")
+            //        {
+            //            item.GetComponent<UIButton>().OnClick();
+            //        }
+            //    }
+            //}
 
 
             GUILayout.EndVertical();
@@ -4382,10 +4382,13 @@ namespace KH
         }
 #endregion
 
-        static string recordFileDirForJerry = DefineExt.PVPRecordFile_LocalDIR;
+        static string recordFileDirForJerry = "";
         static string recordFileNameForJerry = "RecentSave";
         static void OnJerryTest()
         {
+            if (string.IsNullOrEmpty(recordFileDirForJerry))
+                recordFileDirForJerry = DefineExt.PVPRecordFile_LocalDIR;
+
             PVPRecorder.EnableSF = GUILayout.Toggle(PVPRecorder.EnableSF, "秘境录像开关");
             GUILayout.Space(10);
             GUILayout.BeginHorizontal();

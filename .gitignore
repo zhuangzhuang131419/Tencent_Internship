@@ -82,16 +82,6 @@ KiHan/Assets/Scripts/Manager/Network/FSP/Client/*
 !KiHan/Assets/Scripts/Plugin
 KiHan/Assets/Scripts/Plugin/*
 
-# 保留PVPRealTimeMainUIOperation
-!KiHan/Assets/Scripts/Plugin/PVPRealTimeUI
-KiHan/Assets/Scripts/Plugin/PVPRealTimeUI/*
-!KiHan/Assets/Scripts/Plugin/PVPRealTimeUI/PVPRealTimeMainUIOperation.cs
-
-# 保留PVPRealTimeOperation
-!KiHan/Assets/Scripts/Plugin/PVPRealTime
-KiHan/Assets/Scripts/Plugin/PVPRealTime/*
-!KiHan/Assets/Scripts/Plugin/PVPRealTime/PVPRealTimeOperation.cs
-
 !KiHan/Assets/Scripts/UI
 KiHan/Assets/Scripts/UI/*
 !KiHan/Assets/Scripts/UI/PVPRealTimeUI

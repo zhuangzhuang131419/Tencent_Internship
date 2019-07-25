@@ -160,7 +160,7 @@ namespace KH
 		//public bool UseCard;
 		public bool ShowFightAgain;
         public int fightAgainValidSeconds = 10; // 与其再战的等待时间
-    }
+	}
 
     /// <summary>
     /// 实时PVP操作
@@ -1312,8 +1312,9 @@ namespace KH
             ZoneTssBattleEndReq req = new ZoneTssBattleEndReq();
             req.type = modelPRT.pvpServerType; //TssManager.Instance.GetPvpFightType();
             req.tss_reqs.AddRange(modelPRT.pvpCurrentRTData.tss_reqs);
+			Debug.LogError("***************PvpGameId 为： " + req.tss_reqs[0].PvpGameId);
 
-            NetworkManager.Instance.Send<ZoneTssBattleEndReq>((uint)ZoneCmd.ZONE_TSS_LOG_BATTLE_END, req,
+			NetworkManager.Instance.Send<ZoneTssBattleEndReq>((uint)ZoneCmd.ZONE_TSS_LOG_BATTLE_END, req,
                 _OnRoundAllEndCallback, false, _OnRoundAllEndTimeout, 5);
         }
 
@@ -1768,8 +1769,8 @@ namespace KH
                         }
                         else
                         {
-                            ///显示最后的结算
-                            KHBattleManager.Instance.BattlePlugin.ShowView(UIDef.PVP_REALTIME_BATTLE_FINAL_RESULT, false,
+							///显示最后的结算
+							KHBattleManager.Instance.BattlePlugin.ShowView(UIDef.PVP_REALTIME_BATTLE_FINAL_RESULT, false,
                                 data);
                         }
 
