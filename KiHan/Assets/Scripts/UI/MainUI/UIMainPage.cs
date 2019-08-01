@@ -503,14 +503,10 @@ namespace KH
             }
             this.OnClickButton(tTargetDest);
 
-            MessageManager msgManager = MessageManager.Instance;
-            if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
-            {
-                ulong timeStamp = RemoteModel.Instance.CurrentTime;
-                MouseAction mouseAction = new MouseAction(this, timeStamp, tTargetDest);
-                msgManager.serializeToLocal(mouseAction, MessageManager.DEST_PATH_MOUSE_EVENT);
-                Debug.LogWarning("序列化成功" + name);
-            }
+            MessageManager.Instance.serializeToLocal(
+                new MouseAction(this, RemoteModel.Instance.CurrentTime, tTargetDest),
+                MessageManager.DEST_PATH_MOUSE_EVENT
+                );
         }
 
         void SaveEntryElementOnBuild()

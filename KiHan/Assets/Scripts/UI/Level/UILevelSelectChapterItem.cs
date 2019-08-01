@@ -225,14 +225,9 @@ public class UILevelSelectChapterItem : MonoBehaviour
             JumpToDungeonView();
         }
 
-        MessageManager msgManager = MessageManager.Instance;
-        if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
-        {
-            ulong timeStamp = RemoteModel.Instance.CurrentTime;
-            MouseAction mouseAction = new MouseAction(this, timeStamp);
-            msgManager.serializeToLocal(mouseAction, MessageManager.DEST_PATH_MOUSE_EVENT);
-            Debug.LogWarning("序列化UILevel成功" + name + gameObject.transform.localPosition);
-        }
+        MessageManager.Instance.serializeToLocal(
+            new MouseAction(this, RemoteModel.Instance.CurrentTime), 
+            MessageManager.DEST_PATH_MOUSE_EVENT);
     }
 
     private void JumpToDungeonView()

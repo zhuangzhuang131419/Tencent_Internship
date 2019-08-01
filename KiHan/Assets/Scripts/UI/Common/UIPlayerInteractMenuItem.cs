@@ -24,13 +24,10 @@ namespace KH
             if (MenuItemArg == null) return;
             // 触发菜单功能
             MenuItemArg.OnClick(TargetPlayer);
-            MessageManager msgManager = MessageManager.Instance;
-            if (msgManager.IsActivate && msgManager.IsSerializeToLocal)
-            {
-                ulong timeStamp = RemoteModel.Instance.CurrentTime;
-                MouseAction mouseAction = new MouseAction(this, timeStamp);
-                msgManager.serializeToLocal(mouseAction, MessageManager.DEST_PATH_MOUSE_EVENT);
-            }
+
+            MessageManager.Instance.serializeToLocal(
+                new MouseAction(this, RemoteModel.Instance.CurrentTime),
+                MessageManager.DEST_PATH_MOUSE_EVENT);
         }
 
     }

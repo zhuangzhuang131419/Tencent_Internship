@@ -46,7 +46,6 @@ public class MouseAction : Message, ICommand
         this.targetComponentInfo = component.name;
         // Pos = GameObject.Find("UI Root").transform.TransformPoint(component.transform.localPosition);
         Pos = component.transform.position;
-        Debug.Log("Construct button" + Pos);
         TimeStamp = timeStamp;
         mouseType = MouseType.UIButton;
     }
@@ -97,11 +96,12 @@ public class MouseAction : Message, ICommand
         switch (mouseType)
         {
             case MouseType.UIButton:
-                getTargetUIComponnet<UIButton>().OnClick();
-                Debug.LogWarning("UIButton被执行" + Pos);
+                UIButton button = getTargetUIComponnet<UIButton>();
+                EventDelegate.Execute(button.onClick);
                 break;
             case MouseType.UIEventListener:
-                getTargetUIComponnet<UIEventListener>().OnClick();
+                UIEventListener listener = getTargetUIComponnet<UIEventListener>();
+                listener.onClick(listener.gameObject);
                 break;
             case MouseType.UILevelSelectChapterItem:
                 getTargetUIComponnet<UILevelSelectChapterItem>().OnClick();

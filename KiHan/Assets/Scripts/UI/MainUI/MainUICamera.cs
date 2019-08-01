@@ -5,8 +5,8 @@ using KH.CameraBehaviour;
 
 namespace KH
 {
-	public class MainUICamera
-	{
+    public class MainUICamera
+    {
         public const string EVT_MainUICamera_MOVE = "EVT_MainUICamera_MOVE";
 
         static private MainUICamera _Instnace;
@@ -51,7 +51,7 @@ namespace KH
             set { destPos = value; }
         }
 
-		private UIMainScene scene;
+        private UIMainScene scene;
         private Vector2 positionLimitRectMax; // 镜头的 最大 可移动范围，对称的，[-x, x]
         private Rectangle positionLimitRectCurrent;// 镜头的 当前 可移动范围
         private PlayerController focus;
@@ -81,28 +81,28 @@ namespace KH
                     && MainUICamera.isInPandoraPanel == false;
             }
 
-            set 
+            set
             {
-                    if (_touchSwitcher != value)
+                if (_touchSwitcher != value)
+                {
+                    _touchSwitcher = value;
+                    Dispatcher.dispatchEvent(new KHEvent(TouchSwitchChanged)
                     {
-                        _touchSwitcher = value;
-                        Dispatcher.dispatchEvent(new KHEvent(TouchSwitchChanged)
-                        {
-                            data = _touchSwitcher
-                        });
-                        if (_touchSwitcher)
-                        {
-                            EasyTouch.SetEnabled(true);
-                        }
+                        data = _touchSwitcher
+                    });
+                    if (_touchSwitcher)
+                    {
+                        EasyTouch.SetEnabled(true);
                     }
+                }
             }
         }
 
-		private Vector2 _positionPercent; // 镜头当前位置的百分比，[-1, 1]
-		public Vector2 positionPercent
-		{
-			get {return _positionPercent;}
-		}
+        private Vector2 _positionPercent; // 镜头当前位置的百分比，[-1, 1]
+        public Vector2 positionPercent
+        {
+            get { return _positionPercent; }
+        }
 
         public float halfCameraWidth;
 
@@ -132,7 +132,7 @@ namespace KH
             //Debuger.Log("00000000 On_SwipeStart ");
         }
 
-        private void On_SwipeStart(Gesture gesture) 
+        private void On_SwipeStart(Gesture gesture)
         {
             if (!this.TouchSwitcher) { return; }
             startCameraPosX = destPos.x;
@@ -171,15 +171,15 @@ namespace KH
 
         public static float InitCameraLookAtPos = 1.2f;
 
-		public void initialize (UIMainScene scene)
-		{
+        public void initialize(UIMainScene scene)
+        {
             if (Application.platform == RuntimePlatform.Android)
             {
                 //安卓机型一测时手感速度提升
                 speedRate = 0.064f;
             }
             destRate = 0.004f * (Screen.width / 960f);
-			this.scene = scene;
+            this.scene = scene;
             this.scene.dispatcher.addEventListener(KHEvent.COMPLETE, this.onSceneInit);
             Debuger.Log("test0");
 
@@ -194,11 +194,11 @@ namespace KH
 
             this.unityCamera = uicamera.transform;
             Debuger.Log("[初始化主场景相机] uicamera.name = " + uicamera.gameObject.name);
-           
+
             cameraPos = new Vector3(InitCameraLookAtPos, 0, 0);//Vector3.zero;
             destPos = new Vector3(InitCameraLookAtPos, 0, 0); //Vector3.zero;
             this.cameraBehaviourList = new List<KHCameraBehaviour>();
-            this.positionLimitRectCurrent = new Rectangle ();
+            this.positionLimitRectCurrent = new Rectangle();
             offset = Camera.main.orthographicSize * Camera.main.aspect * 0.3f;
             Debuger.Log("test3");
 
@@ -207,17 +207,17 @@ namespace KH
             calculatePositionPercent();
 
             //CreateBound();
-		}
+        }
 
-	    public void InitUICamera()
-	    {
-	        GameObject root = GameObject.Find("UI Root");
-	        if (root == null) return;
-	        Transform camera = root.transform.FindChild("Camera");
-	        if (camera == null) return;
-	        Debuger.Log("[sniperlin] InitUICamera()");
-	        uicamera = camera.GetComponent<UICamera>();
-	    }
+        public void InitUICamera()
+        {
+            GameObject root = GameObject.Find("UI Root");
+            if (root == null) return;
+            Transform camera = root.transform.FindChild("Camera");
+            if (camera == null) return;
+            Debuger.Log("[sniperlin] InitUICamera()");
+            uicamera = camera.GetComponent<UICamera>();
+        }
 
         private void RegisterGesture()
         {
@@ -242,28 +242,28 @@ namespace KH
         }
 
         // 每次切换场景
-		private void onSceneInit(KHEvent evt)
-		{
+        private void onSceneInit(KHEvent evt)
+        {
             //UICamera.currentCamera.nearClipPlane = KHSceneUtil.CameraNear;
             //UICamera.currentCamera.farClipPlane = KHSceneUtil.CameraFar;
-			this.calculatePositionLimitRect ();
-		}
+            this.calculatePositionLimitRect();
+        }
 
-		// 移动镜头
-		public void move (float dx, float dy)
-		{
+        // 移动镜头
+        public void move(float dx, float dy)
+        {
             if (MessageManager.Instance.IsActivate && !MessageManager.Instance.IsSerializeToLocal) { return; }
             if (this.scene != null && this.scene.gameObject != null)
-			{
+            {
                 Vector3 pos = cameraPos;// this.unityCamera.position;
                 pos.z = 0;
-				pos.x += dx;
-				pos.y += dy;
+                pos.x += dx;
+                pos.y += dy;
                 destPos = this.adjustPosition(pos);
 
-				this.calculatePositionPercent();
-			}
-		}
+                this.calculatePositionPercent();
+            }
+        }
 
         // 还是会带上拖拽的速度。
         public void moveTo(float dx, float dy)
@@ -288,18 +288,18 @@ namespace KH
             if (scene.gameObject)
             {
                 this.deltaSpeedX = 0;
-				Vector3 pos = cameraPos;
+                Vector3 pos = cameraPos;
                 pos.z = 0;
                 pos.x = x;
                 pos.y = y;
                 destPos = this.adjustPosition(pos);
 
-				/*
+                /*
 				 * 因为是一次性计算
 				 * 需要立即收敛到目标位置
 				 * by williamtyma
 				 */
-				cameraPos = destPos;
+                cameraPos = destPos;
                 this.calculatePositionPercent();
             }
         }
@@ -362,7 +362,7 @@ namespace KH
             //cameraPos = (destPos - cameraPos) * 0.3f + cameraPos;
             this.RefreshCameraPosBy_DestPos();
 
-			//Debuger.LogWarning("cameraPos.." + cameraPos.ToString());
+            //Debuger.LogWarning("cameraPos.." + cameraPos.ToString());
 
             if (mNewMoveEvt && Mathf.Abs(destPos.x - cameraPos.x) < 0.01f)
             {
@@ -410,43 +410,40 @@ namespace KH
         //    this.locateAt(cameraPos, true);
         //}
 
-		// 纠正镜头
-		private Vector3 adjustPosition(Vector3 pos)
-		{
+        // 纠正镜头
+        private Vector3 adjustPosition(Vector3 pos)
+        {
             if (pos.x < this.positionLimitRectCurrent.x)
-			{
+            {
                 pos.x = this.positionLimitRectCurrent.x;
-			}
+            }
             else if (pos.x > this.positionLimitRectCurrent.right)
-			{
+            {
                 pos.x = this.positionLimitRectCurrent.right;
-			}
+            }
 
             if (pos.y > this.positionLimitRectCurrent.y)
-			{
+            {
                 pos.y = this.positionLimitRectCurrent.y;
-			}
+            }
             else if (pos.y < this.positionLimitRectCurrent.bottom)
-			{
+            {
                 pos.y = this.positionLimitRectCurrent.bottom;
-			}
+            }
             pos.z = 0;
 
             //Debuger.LogWarning(string.Format("adjustPosition {0}", pos.ToString()));
 
-            if (MessageManager.Instance.IsActivate && MessageManager.Instance.IsSerializeToLocal)
-            {
-                SwipeAction swipeAction = new SwipeAction(pos, RemoteModel.Instance.CurrentTime);
-                MessageManager.Instance.serializeToLocal(swipeAction, MessageManager.DEST_PATH_DRAG_EVENT);
-            }
-            // Debug.LogWarning(pos);
+            MessageManager.Instance.serializeToLocal(
+                    new SwipeAction(pos, RemoteModel.Instance.CurrentTime),
+                    MessageManager.DEST_PATH_DRAG_EVENT);
 
             return pos;
-		}
+        }
 
-		// 计算镜头 最大和当前的 可移动范围
-		private void calculatePositionLimitRect()
-		{
+        // 计算镜头 最大和当前的 可移动范围
+        private void calculatePositionLimitRect()
+        {
             Camera camera = Camera.main;
             this.halfCameraWidth = camera.orthographicSize * camera.aspect;
             KHSceneInfo sceneInfo = this.scene.sceneInfo;
@@ -458,20 +455,20 @@ namespace KH
             this.positionLimitRectMax.y = this.positionLimitRectMax.y < 0 ? 0 : this.positionLimitRectMax.y;
 
             this.positionLimitRectCurrent.x = -this.positionLimitRectMax.x;
-            this.positionLimitRectCurrent.width = Mathf.Abs(this.positionLimitRectMax.x*2);
+            this.positionLimitRectCurrent.width = Mathf.Abs(this.positionLimitRectMax.x * 2);
             this.positionLimitRectCurrent.y = this.positionLimitRectMax.y;
-            this.positionLimitRectCurrent.height = Mathf.Abs(this.positionLimitRectMax.y*2);
-		}
+            this.positionLimitRectCurrent.height = Mathf.Abs(this.positionLimitRectMax.y * 2);
+        }
 
-		// 计算当前位置的百分比
-		public void calculatePositionPercent()
-		{
+        // 计算当前位置的百分比
+        public void calculatePositionPercent()
+        {
             //Vector3 pos = this.unityCamera.position;
             this._positionPercent.x = this.positionLimitRectMax.x == 0 ? 0 : (cameraPos.x / this.positionLimitRectMax.x);
             this._positionPercent.y = this.positionLimitRectMax.y == 0 ? 0 : (cameraPos.y / this.positionLimitRectMax.y);
 
             //Debuger.LogWarning(string.Format("calculatePositionPercent {0},{1}", this._positionPercent.x, this._positionPercent.y));
-		}
+        }
 
         public Vector3 position
         {
@@ -549,5 +546,5 @@ namespace KH
         //    Camera.main.orthographicSize = tmp;
         //    return this.adjustPosition(_target);
         //}
-	}
+    }
 }

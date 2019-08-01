@@ -29,9 +29,6 @@ namespace KH
         // cache 缓存已经dragAction
         public List<DragAction> dragActionsCache = new List<DragAction>();
 
-        // test
-        public float totalOffset = 0;
-
 
         // 录播
         private bool isSerializeToLocal = false;
@@ -97,6 +94,11 @@ namespace KH
         /// <param name="destinationPath">要存放的地址</param>
         public void serializeToLocal(Message messageBody, string destinationPath)
         {
+            if (!Instance.IsActivate || !Instance.IsSerializeToLocal)
+            {
+                return;
+            }
+
             // 要把type也序列化进去
             FileStream fileStream = null;
 
